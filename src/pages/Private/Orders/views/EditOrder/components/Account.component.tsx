@@ -43,12 +43,13 @@ interface Props {
  * Componente for create bills
  * @version v1.1 22-12-2023 Adds create bills
  * @version v1.2 02-01-2024 Fix bug: total order to pay
+ * @version v1.3 21-04-2024 Fix bug: details with quantity 0
  */
 export const Account: FC<Props> = ({ order }) => {
+
   const details = order.details.filter(
     (detail) => detail.qtyPaid !== detail.quantity
   );
-
   const { handleBackStep } = useInvoiceStore((state) => state);
 
   const dispatch = useDispatch();
@@ -58,8 +59,6 @@ export const Account: FC<Props> = ({ order }) => {
   const [selectAll, setSelectAll] = useState(false);
 
   const [total, setTotal] = useState(0);
-
-  const { activeCashRegister } = useCashRegisterStore((state) => state);
 
   const { mutate: createBill, isLoading } = useCreateBill();
 
@@ -81,13 +80,6 @@ export const Account: FC<Props> = ({ order }) => {
   };
 
   const handleToggleSelectAll = (allDetails: boolean) => {
-    // if (allDetails) {
-    //   console.log("total" + order.total);
-    //   setTotal(order.total);
-    // }
-    // {
-    //   setTotal(getTotal());
-    // }
     setSelectAll(() => {
       setTotal(
         allDetails ? getTotalToPay() : getTotalSelectedDetails(selectedDetails)
@@ -123,13 +115,15 @@ export const Account: FC<Props> = ({ order }) => {
       }));
     } else {
       // Enviar solo los seleccionados
-      data.details = Object.keys(selectedDetails).map((id) => {
-        const selectedDetail = selectedDetails[id];
-        return {
-          orderDetailId: selectedDetail.detail.id,
-          quantity: selectedDetail.quantity,
-        };
-      });
+      data.details = Object.keys(selectedDetails)
+        .filter((id) => selectedDetails[id].quantity > 0)
+        .map((id) => {
+          const selectedDetail = selectedDetails[id];
+          return {
+            orderDetailId: selectedDetail.detail.id,
+            quantity: selectedDetail.quantity,
+          };
+        });
     }
     console.log(data);
     createBill(data, {
@@ -251,7 +245,6 @@ export const Account: FC<Props> = ({ order }) => {
               </Typography>
             ) : (
               <Grid container spacing={3} p={2} width="auto">
-               
                 <Grid item xs={8}>
                   <Typography
                     variant="h6"
@@ -278,7 +271,7 @@ export const Account: FC<Props> = ({ order }) => {
             endIcon={<Send />}
             onClick={onSubmit}
             loading={isLoading}
-            disabled={ total === 0}
+            disabled={total === 0}
           >
             Crear cuenta
           </LoadingButton>

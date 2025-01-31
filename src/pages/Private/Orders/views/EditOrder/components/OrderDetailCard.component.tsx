@@ -19,6 +19,7 @@ import {
   Popover,
   MenuItem,
   FormControlLabel,
+  Button,
 } from "@mui/material";
 
 import {
@@ -29,6 +30,7 @@ import {
   CheckCircleOutline,
   MoreVert,
   Visibility,
+  Done,
 } from "@mui/icons-material";
 import { IOrderDetail } from "../../../../../../models";
 
@@ -140,25 +142,9 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
       <Card>
         <CardHeader
           // avatar={<Typography variant="h6">{detail.quantity}</Typography>}
-          title={
-            <Box sx={{ display: "flex", alignItems: "center", width: "150px" }}>
-              <Box sx={{ width: "100%", mr: 1 }}>
-                <LinearProgress
-                  variant="determinate"
-                  value={(detail.qtyDelivered * 100) / detail.quantity}
-                  color="success"
-                />
-              </Box>
-              <Box sx={{ minWidth: 35 }}>
-                <Typography fontSize="0.7rem" color="text.secondary">
-                  {detail.qtyDelivered}
-                </Typography>
-              </Box>
-            </Box>
-          }
           subheader={
             <Typography variant="h5" component="div" mt={0.5}>
-              {detail.product.name}{" "}
+              {detail.quantity} {detail.product.name}{" "}
               {detail.productOption && (
                 <Chip
                   sx={{ ml: 1 }}
@@ -174,13 +160,49 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
             </IconButton>
           }
         />
-        {detail.description && (
-          <CardContent>
+        <Box px={2}>
+          {detail.description && (
             <Typography variant="h6" whiteSpace="pre-wrap">
               {detail.description}
             </Typography>
-          </CardContent>
-        )}
+          )}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              mt: 1,
+            }}
+          >
+            <Box sx={{ width: "100px", mr: 1 }}>
+              <LinearProgress
+                variant="determinate"
+                value={(detail.qtyDelivered * 100) / detail.quantity}
+                color="success"
+              />
+            </Box>
+            <Box sx={{ minWidth: 100, display: "flex", alignItems: "center" }}>
+              {detail.quantity === detail.qtyDelivered ? (
+                <Typography
+                  fontSize="0.7rem"
+                  component="div"
+                  color="warning"
+                  variant="h5"
+                  alignItems="center"
+                >
+                  Entregado
+                </Typography>
+              ) : (
+                <>
+                  <Typography fontSize="0.7rem" color="text.secondary">
+                    {detail.quantity - detail.qtyDelivered} por entregar
+                  </Typography>
+                  <Button size="small">+1</Button>
+                </>
+              )}
+            </Box>
+          </Box>
+        </Box>
         <CardActions
           sx={{
             justifyContent: "space-between",
@@ -214,6 +236,20 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
             </Typography>
           </Box>
         </CardActions>
+        <Box px={2}>
+          <Box>
+            {detail.qtyDelivered > quantity && (
+              <Typography
+                variant="subtitle1"
+                fontSize="0.8rem"
+                component="div"
+                color="error"
+              >
+                La cantidad debe ser mayor o igual a la entregada
+              </Typography>
+            )}
+          </Box>
+        </Box>
       </Card>
 
       <Popover

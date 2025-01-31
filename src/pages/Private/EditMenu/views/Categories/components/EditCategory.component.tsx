@@ -48,7 +48,7 @@ const initialForm = (sectionId: string): ICreateCategory => {
 
 interface Props {}
 
-export const EditCategory: FC<Props> = ({}) => {
+export const EditCategory: FC<Props> = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();

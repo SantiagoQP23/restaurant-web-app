@@ -50,6 +50,7 @@ interface Props {
  */
 export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const modal = useModal();
+  console.log("detail", detail);
   const product = detail?.product;
   const availableOptions = product?.options
     ? product?.options.filter((option) => option.isAvailable)

@@ -77,7 +77,7 @@ export const ModalEditCategory = NiceModal.create<Props>(({ category }) => {
     reset({
       id: category.id,
       name: category.name,
-      sectionId: category.section.id,
+      sectionId:  category.section ? category.section.id : "",
     });
   }, []);
 

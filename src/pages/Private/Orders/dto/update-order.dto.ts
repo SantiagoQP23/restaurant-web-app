@@ -1,10 +1,6 @@
-import { TypeOrder } from '../../../../models/orders.model';
+import { TypeOrder } from "../../../../models/orders.model";
 
-
-
-
-export interface UpdateOrderDto{
-
+export interface UpdateOrderDto {
   id: string;
   tableId?: string;
   clientId?: string;
@@ -17,14 +13,9 @@ export interface UpdateOrderDto{
   notes?: string;
   deliveryTime?: Date;
   isClosed?: boolean;
-
 }
 
-
-
-export interface PayOrderDto{
+export interface PayOrderDto {
   id: string;
   discount?: number;
 }
-
-  

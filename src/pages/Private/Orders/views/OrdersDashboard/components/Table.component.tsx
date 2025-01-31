@@ -44,26 +44,35 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
 
   return (
     <Card
-      sx={
-        {
-          // border: (theme) =>
-          //   isAvailable ? `1.5px solid ${theme.palette.success.light}` : "",
-          //boxShadow: (theme) =>
-          //isAvailable ? `0px 0px 4px ${theme.palette.success.light}` : "",
-        }
-      }
+      sx={{
+        border: (theme) =>
+          isAvailable
+            ? `2px solid ${theme.palette.success.light}`
+            // : `2px solid ${theme.palette.warning.light}`,
+            : ``,
+            boxShadow: (theme) =>
+              isAvailable
+            ? `0px 0px 4px ${theme.palette.success.light}`
+            // : `0px 0px 4px ${theme.palette.warning.light}`,
+            : ``,
+      }}
     >
       <CardActionArea onClick={showOrdersTableDrawer}>
         <CardHeader
-          avatar={
-            <TableBar
-              fontSize="small"
-              color={isAvailable ? "secondary" : "inherit"}
-            />
+          title={
+            <Box display="flex" justifyContent="center" gap={1}>
+              <TableBar
+                fontSize="small"
+                // color={isAvailable ? "secondary" : "inherit"}
+              />
+              <Typography variant="h5" textAlign="center">
+                {table.name}
+              </Typography>
+            </Box>
           }
-          title={`${table.name}`}
           titleTypographyProps={{
             variant: "h5",
+            textAlign: "center",
           }}
         />
         <Box
@@ -77,42 +86,47 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
           }}
         >
           {ordersTable.length > 0 ? (
-            <Box display="flex" justifyContent="space-between">
-              <Box display="flex" gap={1}>
-                {ordersTable.map((order) => (
+            <Box display="flex" gap={1} flexDirection="column">
+              {ordersTable.map((order) => (
+                <Box
+                  key={order.id}
+                  width="100%"
+                  display="flex"
+                  gap={1}
+                  border={`2px solid #eee`}
+                  borderRadius="5px"
+                  p={0.5}
+                  justifyContent="space-between"
+                >
                   <Badge
-                    key={order.id}
                     sx={{
                       border: "1px solid",
                       borderRadius: "5px",
                       borderColor: `${colorStatusMap.get(order.status)}.main`,
                     }}
                   >
-                    {orderStatusIconMap.get(order.status)}{" "}
-                    <Typography>
-
-                   
-                    </Typography>
+                    {orderStatusIconMap.get(order.status)}
                   </Badge>
-                ))}
-              </Box>
-              <Box display="flex" gap={1} alignItems="center">
-                <People fontSize="small" />
-                <Typography fontSize="0.8rem">{people}</Typography>
-              </Box>
+                  <Typography>
+                    {format(new Date(order.createdAt), "HH:mm")}
+                  </Typography>
+                  <Box display="flex" gap={1} alignItems="center">
+                    <People fontSize="small" />
+                    <Typography fontSize="0.8rem">{order.people}</Typography>
+                  </Box>
+                </Box>
+              ))}
             </Box>
           ) : (
             <Box
               alignItems="center"
               display="flex"
-              sx={{
-                color: `${isAvailable ? "secondary" : "error"}.main`,
-              }}
+              justifyContent="center"
               gap={1}
             >
               <Circle fontSize="small" sx={{ fontSize: 10 }} />
-              <Typography fontSize="0.8rem">
-                {isAvailable ? "Disponible" : "Ocupada"}
+              <Typography fontSize="0.8rem" textAlign="center">
+                {isAvailable ? "Disponible" : ""}
               </Typography>
             </Box>
           )}

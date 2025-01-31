@@ -46,7 +46,7 @@ export const OrderDetails: FC<Props> = ({ order }) => {
   return (
     <>
       <CardHeader
-        title={`${details.length} productos`}
+        title={`Productos`}
         action={
           <Button
             color="primary"

@@ -63,7 +63,7 @@ export const Tables = () => {
   return (
     <>
       <Stack direction="row" justifyContent="right" alignItems="center" mb={2}>
-        <Stack
+        {/* <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
@@ -85,7 +85,7 @@ export const Tables = () => {
               <MenuItem value={StatusTable.FREE}>Disponibles</MenuItem>
             </Select>
           </FormControl>
-        </Stack>
+        </Stack> */}
       </Stack>
 
       <Grid container spacing={1}>

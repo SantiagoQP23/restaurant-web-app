@@ -232,8 +232,6 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                     </Typography>
                   </Grid>
                 </Grid>
-
-                
               </CardContent>
             </Card>
 

@@ -1,7 +1,6 @@
 import React, { createContext, FC, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Socket } from "socket.io-client";
-import { useAppSelector } from "../hooks/useRedux";
 import { useSocket } from "../hooks/useSocket";
 import { selectAuth } from "../redux/slices/auth";
 import { getEnvVariables } from "../helpers/getEnvVariables";

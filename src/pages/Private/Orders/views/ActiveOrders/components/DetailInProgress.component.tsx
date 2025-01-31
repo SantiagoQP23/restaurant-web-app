@@ -17,7 +17,10 @@ import { IOrderDetail } from "../../../../../../models";
 import {
   CheckCircle,
   CheckCircleOutline,
+  More,
   MoreVertOutlined,
+  PlusOne,
+  PlusOneOutlined,
 } from "@mui/icons-material";
 import { UpdateOrderDetailDto } from "../../../dto";
 import { useUpdateOrderDetail } from "../../../hooks";
@@ -83,6 +86,12 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
     update(data);
   };
 
+  const handleAddOne = () => {
+    updateQtyDelivered(detail.qtyDelivered + 1);
+  };
+
+  
+
   return (
     <>
       <Box
@@ -140,13 +149,13 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
           }}
           secondary={
             <>
-              <Typography whiteSpace="pre-wrap" variant="body1">
+              <Typography whiteSpace="pre-wrap" variant="body1" mb={1}>
                 {detail.description}
               </Typography>
               {detail.quantity !== detail.qtyDelivered &&
                 detail.quantity > 1 && (
-                  <>
-                    <Stack direction="column" alignItems="right" mt={0.5}>
+                  <Box display="flex" alignItems="center" width="100%" gap={1}>
+                    <Stack direction="column" alignItems="right" mt={0.5} flexGrow={1}>
                       <LinearProgressWrapper
                         value={(detail.qtyDelivered * 100) / detail.quantity}
                         color="info"
@@ -156,40 +165,42 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
                         }}
                       />
                       <Typography variant="subtitle1" fontSize={12}>
-                        {detail.qtyDelivered} / {detail.quantity}
+                        {detail.quantity - detail.qtyDelivered} por entregar
                       </Typography>
                     </Stack>
-                  </>
+                    <IconButton size="small" onClick={handleAddOne} >
+                      <PlusOneOutlined />
+                    </IconButton>
+{/* <Checkbox
+  icon={<CheckCircleOutline />}
+  checkedIcon={<CheckCircle />}
+  checked={checked}
+  onChange={handleChangeChecked}
+  inputProps={{ "aria-label": "controlled" }}
+  color="success"
+/> */}
+                  </Box>
                 )}
 
-              <Box display="flex" justifyContent="space-between">
+              {/* <Box display="flex" justifyContent="space-between">
                 <Typography>
                   {formatDistance(new Date(detail.createdAt), new Date(), {
-    locale: es,
-  })
-                  }
-                  {/* {detail.createtAt} */}
+                    locale: es,
+                  })}
+                
                 </Typography>
                 <Typography>
                   {formatDistance(new Date(detail.updatedAt), new Date(), {
-    locale: es,
-  })}
-                  {/* {detail.updatedAt} */}
+                    locale: es,
+                  })}
+                 
                 </Typography>
-              </Box>
+              </Box> */}
             </>
           }
         />
 
         <Stack direction="row" spacing={0.5}>
-          <Checkbox
-            icon={<CheckCircleOutline />}
-            checkedIcon={<CheckCircle />}
-            checked={checked}
-            onChange={handleChangeChecked}
-            inputProps={{ "aria-label": "controlled" }}
-            color="success"
-          />
 
           <IconButton onClick={editDetail} size="small">
             <MoreVertOutlined />
