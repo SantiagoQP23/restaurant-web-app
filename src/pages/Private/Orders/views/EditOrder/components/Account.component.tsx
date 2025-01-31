@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useInvoiceStore } from "../../../store/invoiceStore";
 import { FC, useState } from "react";
-import { IOrder, IOrderDetail } from "../../../../../../models";
+import { Order, IOrderDetail } from "../../../../../../models";
 import { CounterInput } from "../../../components";
 import { CardHeader } from "@mui/material/";
 import { ArrowBackIos, Send } from "@mui/icons-material";
@@ -36,7 +36,7 @@ interface SelectedDetails {
 }
 
 interface Props {
-  order: IOrder;
+  order: Order;
 }
 
 /**
@@ -264,8 +264,8 @@ export const Account: FC<Props> = ({ order }) => {
           </TableContainer>
         </Card>
 
-        <Stack direction="row" spacing={1} justifyContent="space-between">
-          <BtnBack />
+        <Stack direction="row" spacing={1} justifyContent="right">
+          {/* <BtnBack /> */}
           <LoadingButton
             variant="contained"
             endIcon={<Send />}

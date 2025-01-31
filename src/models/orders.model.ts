@@ -41,7 +41,7 @@ export enum OrderStatusSpanish {
  * Order Model
  * @version v1.1 22-12-2023 Adds the field bills and remove invoices
  */
-export interface IOrder {
+export interface  Order {
   notes: string;
   deliveryTime: Date;
   createdAt: Date;

@@ -1,6 +1,6 @@
 import {FC} from 'react';
 
-import { IOrder, OrderStatus } from "../../../../models"
+import { Order, OrderStatus } from "../../../../models"
 import { PendingOutlined, Restaurant, DoneAllOutlined } from '@mui/icons-material';
 import { Tabs, Tab, Typography, Chip } from '@mui/material';
 
@@ -8,7 +8,7 @@ import { Tabs, Tab, Typography, Chip } from '@mui/material';
 interface Props{
   statusOrderFilter: OrderStatus | null;
   setStatusOrderFilter: (status: OrderStatus | null) => void;
-  orders: IOrder[];
+  orders: Order[];
 
 }
 

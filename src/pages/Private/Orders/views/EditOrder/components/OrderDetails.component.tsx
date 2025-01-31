@@ -21,7 +21,7 @@ import {
 import { LinearProgressWrapper, OrderDetail } from "./OrderDetail.component";
 import { useNavigate } from "react-router-dom";
 import { OrderContext } from "../../../context/Order.context";
-import { IOrder, IOrderDetail } from "../../../../../../models";
+import { Order, IOrderDetail } from "../../../../../../models";
 import { ModalUpdateDetail } from "../../../components/EditOrder/ModalUpdateDescriptionDetail.component";
 import { AddShoppingCartOutlined, MoreVert } from "@mui/icons-material";
 import { formatMoney } from "../../../../Common/helpers/format-money.helper";
@@ -29,7 +29,7 @@ import { CounterInput } from "../../../components";
 import { OrderDetailCard } from "./OrderDetailCard.component";
 
 interface Props {
-  order: IOrder;
+  order: Order;
 }
 
 export const OrderDetails: FC<Props> = ({ order }) => {

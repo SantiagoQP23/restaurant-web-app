@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
 import { CreateInvoiceDto } from '../dto/invoices/create-invoice-dto';
 import { InvoicesResponse, createInvoice, getInvoice, getInvoices, removeInvoice } from "../services/invoices.service";
-import { IOrder } from "../../../../models";
+import { Order } from "../../../../models";
 import { useDispatch } from "react-redux";
 import { setActiveOrder } from "../../../../redux";
 import { useFilterInvoices } from "./useFilterInvoices.dto";
@@ -87,7 +87,7 @@ export const useCreateInvoice = () => {
   const dispatch = useDispatch();
 
 
-  return useMutation<IOrder, unknown, CreateInvoiceDto>(createInvoice, {
+  return useMutation<Order, unknown, CreateInvoiceDto>(createInvoice, {
 
     onSuccess: (data) => {
       enqueueSnackbar('Pago credo correctamente', {
@@ -127,7 +127,7 @@ export const useRemoveInvoice = () => {
 
   const dispatch = useDispatch();
 
-  return useMutation<IOrder, unknown, string>((id) => removeInvoice(id), {
+  return useMutation<Order, unknown, string>((id) => removeInvoice(id), {
     onSuccess: (data) => {
       enqueueSnackbar('Pago eliminado', { variant: 'success' });
 

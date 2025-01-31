@@ -1,4 +1,4 @@
-import { IOrder } from "../../../../../../models";
+import { Order } from "../../../../../../models";
 import { FC, useEffect, useState } from "react";
 import {
   Dialog,
@@ -27,7 +27,7 @@ interface Props {}
 export const ModalOrderAdded: FC<Props> = () => {
   const { handleClose, isOpen, setOpen } = useModal();
 
-  const [order, setOrder] = useState<IOrder>();
+  const [order, setOrder] = useState<Order>();
 
   const suscription$ = statusModalAddOrder.getSubject();
 

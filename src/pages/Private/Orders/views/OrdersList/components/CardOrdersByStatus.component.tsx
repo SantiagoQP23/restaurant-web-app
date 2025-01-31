@@ -10,13 +10,13 @@ import {
 } from "@mui/material";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { IOrder, OrderStatus } from "../../../../../../models";
+import { Order, OrderStatus } from "../../../../../../models";
 import { FC } from "react";
 import { Label } from "../../../../../../components/ui";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  orders: IOrder[];
+  orders: Order[];
   title: string;
   color: "success" | "error" | "warning" | "info" | "primary" | "secondary";
   status?: OrderStatus;

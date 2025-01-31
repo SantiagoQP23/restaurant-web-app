@@ -1,4 +1,4 @@
-import { IOrder } from "./orders.model";
+import { Order } from "./orders.model";
 
 export interface ITable {
   id: string;
@@ -7,7 +7,7 @@ export interface ITable {
   chairs: number;
   isAvailable: boolean;
   order: number;
-  orders: IOrder[];
+  orders: Order[];
   isActive: boolean;
 }
 

@@ -34,7 +34,7 @@ import { format } from "date-fns";
 import { IUser } from "../../../../../../models";
 
 import {
-  IOrder,
+  Order,
   OrderStatus,
   TypeOrder,
 } from "../../../../../../models/orders.model";
@@ -86,7 +86,7 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
 }));
 
 interface PropsOrder {
-  order: IOrder;
+  order: Order;
 }
 
 /**

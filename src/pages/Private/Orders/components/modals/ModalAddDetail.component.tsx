@@ -19,7 +19,7 @@ import {
   Radio,
 } from "@mui/material/";
 
-import { ICreateOrderDetail, IOrder } from "../../../../../models/orders.model";
+import { ICreateOrderDetail, Order } from "../../../../../models/orders.model";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 import { selectOrders } from "../../../../../redux/slices/orders/orders.slice";
@@ -87,7 +87,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   /**
    * @version 1.1 20/12/2023 Adds product option
    */
-  const addProductoToOrder = (order: IOrder) => {
+  const addProductoToOrder = (order: Order) => {
     const data: CreateOrderDetailDto = {
       orderId: order.id,
       productId: detail!.product.id,

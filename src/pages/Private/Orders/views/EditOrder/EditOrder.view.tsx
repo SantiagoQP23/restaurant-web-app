@@ -58,6 +58,7 @@ import {
   bindTrigger,
   usePopupState,
 } from "material-ui-popup-state/hooks";
+import { CreateBillModal } from "./components/CreateBillModal.component";
 
 /**
  * Componente for edit order
@@ -100,6 +101,11 @@ export const EditOrder = () => {
     if (activeOrder) NiceModal.show(ModalCloseOrder, { order: activeOrder });
   };
 
+  const openCreateBillModal = () => {
+    console.log('openModal')
+    if (activeOrder) NiceModal.show(CreateBillModal, { order: activeOrder });
+  };
+
   const openPDF = async () => {
     if (activeOrder) {
       const pdf = await generateOrderPdf(activeOrder);
@@ -115,7 +121,8 @@ export const EditOrder = () => {
     popupState.close();
   };
 
-  const paidBills = activeOrder?.bills.filter(bill => bill.isPaid).length || 0;
+  const paidBills =
+    activeOrder?.bills.filter((bill) => bill.isPaid).length || 0;
 
   const isDeleteableOrder =
     activeOrder?.status === OrderStatus.PENDING && paidBills === 0;
@@ -204,7 +211,7 @@ export const EditOrder = () => {
                 startIcon={<PointOfSaleOutlined />}
                 variant="contained"
                 size="small"
-                onClick={() => changeStep(1)}
+                onClick={() => openCreateBillModal()}
               >
                 Crear cuentas
               </Button>
@@ -219,11 +226,7 @@ export const EditOrder = () => {
                 Cerrar pedido
               </Button>
             )}
-            <Button
-              variant="text"
-              {...bindTrigger(popupState)}
-              size="small"
-            >
+            <Button variant="text" {...bindTrigger(popupState)} size="small">
               <MoreVert />
             </Button>
           </Stack>
@@ -292,7 +295,9 @@ export const EditOrder = () => {
           <Print fontSize="small" sx={{ mr: 2 }} />
           Imprimir
         </MenuItem>
-        <MenuItem onClick={eliminarPedido} disabled={!isDeleteableOrder}
+        <MenuItem
+          onClick={eliminarPedido}
+          disabled={!isDeleteableOrder}
           sx={{ color: "error.main" }}
         >
           <DeleteOutline fontSize="small" sx={{ mr: 2 }} />

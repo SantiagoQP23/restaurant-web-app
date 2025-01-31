@@ -1,4 +1,4 @@
-import { IClient, IOrder, IOrderDetail } from "../../../../models";
+import { IClient, Order, IOrderDetail } from "../../../../models";
 import { CreateInvoiceDto } from "../dto";
 import { PaymentMethod } from "../models/Invoice.model";
 
@@ -6,7 +6,7 @@ import { create } from "zustand";
 
 interface InvoiceState {
   client: IClient | null;
-  order: IOrder | null;
+  order: Order | null;
   paymentMethod: PaymentMethod;
   discount: number;
   amountPaid: number;
@@ -23,7 +23,7 @@ interface InvoiceState {
 
   setClient: (client: IClient | null) => void;
 
-  setOrder: (order: IOrder) => void;
+  setOrder: (order: Order) => void;
 
   reset: () => void;
 
@@ -68,7 +68,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
     }),
   setAmountPaid: (amountPaid: number) => set({ amountPaid }),
   setClient: (client: IClient | null) => set({ client }),
-  setOrder: (order: IOrder) => set({ order }),
+  setOrder: (order: Order) => set({ order }),
   reset: () =>
     set({
       client: null,

@@ -4,7 +4,7 @@ export * from './Day.component';
 export * from './FilterOrders';
 export * from '../views/Dashboard/components/IncomesSummary.component';
 export * from './MuiDateRangePicker.component';
-export * from './OrdersReports/Order.component';
+export * from './OrdersReports/OrderSummaryCard.component';
 export * from './OrdersReports/OrdersByDate.component';
 export * from './OrdersReports/OrdersReports.component';
 export * from './OrdersReports/ReceiptOrderReport.component';

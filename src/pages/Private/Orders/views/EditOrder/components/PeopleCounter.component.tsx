@@ -18,10 +18,10 @@ import { EventsEmitSocket } from "../../../interfaces/events-sockets.interface";
 import { SocketResponseOrder } from "../../../interfaces/responses-sockets.interface";
 import { useUpdateOrder } from "../../../hooks";
 import { CounterInput } from "../../../components/CounterInput.component";
-import { IOrder } from "../../../../../../models";
+import { Order } from "../../../../../../models";
 
 interface Props {
-  order: IOrder;
+  order: Order;
 }
 
 export const PeopleCounter: FC<Props> = ({ order }) => {

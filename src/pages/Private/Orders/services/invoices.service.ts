@@ -1,5 +1,5 @@
 import { restauranteApi } from "../../../../api";
-import { IOrder } from "../../../../models";
+import { Order } from "../../../../models";
 import { CreateInvoiceDto } from "../dto";
 import { FilterInvoicesDto } from "../dto/invoices/filter-invoices.dto";
 import { Invoice } from "../models/Invoice.model";
@@ -41,12 +41,12 @@ export const getInvoices = async (filterDto: FilterInvoicesDto) => {
 
 }
 
-export const createInvoice = async (invoice: CreateInvoiceDto): Promise<IOrder> => {
+export const createInvoice = async (invoice: CreateInvoiceDto): Promise<Order> => {
 
 
   console.log('invoice', invoice);
 
-  const { data } = await restauranteApi.post<IOrder>(`invoices`, invoice);
+  const { data } = await restauranteApi.post<Order>(`invoices`, invoice);
 
   return data;
 
@@ -54,9 +54,9 @@ export const createInvoice = async (invoice: CreateInvoiceDto): Promise<IOrder> 
 }
 
 
-export const removeInvoice = async (invoiceId: string): Promise<IOrder> => {
+export const removeInvoice = async (invoiceId: string): Promise<Order> => {
 
-  const { data } = await restauranteApi.delete<IOrder>(`invoices/${invoiceId}`);
+  const { data } = await restauranteApi.delete<Order>(`invoices/${invoiceId}`);
 
   return data;
 

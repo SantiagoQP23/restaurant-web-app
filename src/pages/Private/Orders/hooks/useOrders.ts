@@ -14,7 +14,7 @@ import {
   getOrder,
   getOrders,
 } from "../services/orders.service";
-import { IOrder, OrderStatus } from "../../../../models";
+import { Order, OrderStatus } from "../../../../models";
 import { usePaginationAsync } from "../../../../hooks/usePaginationAsync";
 import { Period } from "../../Common/dto/period.model";
 import { useFilterOrders } from "./useFilterOrders";
@@ -74,7 +74,7 @@ export const useActiveOrders = () => {
 
   const dispatch = useDispatch();
 
-  const activeOrdersQuery = useQuery<IOrder[]>(
+  const activeOrdersQuery = useQuery<Order[]>(
     ["orders", "actives"],
     () =>
       getActiveOrders({
@@ -108,7 +108,7 @@ export const useActiveOrders = () => {
 export const useOrder = (id: string) => {
   const dispatch = useDispatch();
 
-  return useQuery<IOrder>(["order", id], () => getOrder(id), {
+  return useQuery<Order>(["order", id], () => getOrder(id), {
     enabled: !!id,
     onSuccess: (order) => {
       dispatch(setActiveOrder(order));
@@ -121,7 +121,7 @@ export const useOrderHelper = () => {
 
   const dispatch = useDispatch();
 
-  const sortOrdersByDeliveryTime = (orders: IOrder[]) => {
+  const sortOrdersByDeliveryTime = (orders: Order[]) => {
     const ordersSorted = orders.sort((a, b) => {
       const aDate = new Date(a.deliveryTime).getTime();
       const bDate = new Date(b.deliveryTime).getTime();
@@ -134,7 +134,7 @@ export const useOrderHelper = () => {
     dispatch(loadOrders(ordersSorted));
   };
 
-  const getFirstPendingOrder = (): IOrder => {
+  const getFirstPendingOrder = (): Order => {
     const order = orders.find((order) => order.status === OrderStatus.PENDING);
 
     if (!order) {

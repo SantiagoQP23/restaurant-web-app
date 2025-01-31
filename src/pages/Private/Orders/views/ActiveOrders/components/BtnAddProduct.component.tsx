@@ -3,14 +3,14 @@ import { useState, FC } from "react";
 import { Add, CancelOutlined } from "@mui/icons-material";
 import { Button, Card, CardContent, Stack } from "@mui/material";
 import { ComboBoxProducts } from "../../../../EditMenu/components/products/ComboBoxProducts.component";
-import { IOrder, IProduct } from "../../../../../../models";
+import { Order, IProduct } from "../../../../../../models";
 import { useDispatch } from "react-redux";
 import { setActiveOrder } from "../../../../../../redux";
 import NiceModal from "@ebay/nice-modal-react";
 import { ModalAddDetail } from "../../../components";
 
 interface Props {
-  order: IOrder;
+  order: Order;
 }
 
 export const BtnAddProduct: FC<Props> = ({ order }) => {

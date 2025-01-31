@@ -28,7 +28,7 @@ import {
   Alert,
 } from "@mui/material";
 import { format, formatDistance, formatRelative } from "date-fns";
-import { IOrder, OrderStatus, TypeOrder } from "../../../../../../models";
+import { Order, OrderStatus, TypeOrder } from "../../../../../../models";
 import { FC } from "react";
 import { LabelStatusOrder } from "../../../components/LabelStatusOrder.component";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +45,7 @@ import {
 import NiceModal from "@ebay/nice-modal-react";
 
 interface Props {
-  order: IOrder;
+  order: Order;
   onClick?: () => void;
 }
 

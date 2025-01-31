@@ -1,4 +1,4 @@
-import { IOrder } from "../../../../models";
+import { Order } from "../../../../models";
 import { SocketEvent } from "../../../../models/socket-event.dto";
 import {
   updateOrder,
@@ -22,9 +22,9 @@ export const useOnOrderUpdated = () => {
   const dispatch = useDispatch();
   const { activeOrder } = useSelector(selectOrders);
 
-  useOnWebSocketsEvent<IOrder>(
+  useOnWebSocketsEvent<Order>(
     EventsOnSocket.updateOrder,
-    ({ data: order }: SocketEvent<IOrder>) => {
+    ({ data: order }: SocketEvent<Order>) => {
       dispatch(updateOrder(order!));
 
       if (activeOrder?.id === order?.id) {
@@ -49,7 +49,7 @@ export const useOnOrderCreated = () => {
 
   useOnWebSocketsEvent(
     EventsOnSocket.newOrder,
-    ({ data, msg }: SocketEvent<IOrder>) => {
+    ({ data, msg }: SocketEvent<Order>) => {
       enqueueSnackbar(msg, { variant: "info" });
       dispatch(addOrder(data));
 
@@ -69,7 +69,7 @@ export const useOnOrderDeleted = () => {
 
   useOnWebSocketsEvent(
     EventsOnSocket.deleteOrder,
-    ({ data }: SocketEvent<IOrder>) => {
+    ({ data }: SocketEvent<Order>) => {
       dispatch(deleteOrder(data!.id));
       dispatch(setLastUpdatedOrders(new Date().toISOString()));
     }

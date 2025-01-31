@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-import { IOrder, OrderStatus } from "../../../../../../models";
+import { Order, OrderStatus } from "../../../../../../models";
 import { Tab, Tabs } from "@mui/material";
 
 interface Props {
-  orders: IOrder[];
+  orders: Order[];
   statusOrderFilter: OrderStatus | null;
   changeStatus: (value: OrderStatus | null) => void;
   isPaid: boolean | null;

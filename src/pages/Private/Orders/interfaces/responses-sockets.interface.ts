@@ -1,4 +1,4 @@
-import { IOrder } from '../../../../models/orders.model';
+import { Order } from '../../../../models/orders.model';
 import { ITable } from '../../../../models/table.model';
 
 export interface SocketResponse {
@@ -8,7 +8,7 @@ export interface SocketResponse {
 
 
 export interface SocketResponseOrder extends SocketResponse {
-  order?: IOrder;
+  order?: Order;
 }
 
 export interface SocketResponseTable extends SocketResponse {

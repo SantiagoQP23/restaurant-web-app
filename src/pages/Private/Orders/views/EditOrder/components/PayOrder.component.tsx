@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { IOrder } from "../../../../../../models";
+import { Order } from "../../../../../../models";
 import {
   Stack,
   Typography,
@@ -36,7 +36,7 @@ import { LoadingButton } from "@mui/lab";
 import { formatMoney } from "../../../../Common/helpers/format-money.helper";
 
 interface Props {
-  order: IOrder;
+  order: Order;
 }
 
 export const PayOrder: FC<Props> = ({ order }) => {

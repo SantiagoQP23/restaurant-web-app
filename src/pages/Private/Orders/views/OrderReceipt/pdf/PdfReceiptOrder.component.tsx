@@ -2,7 +2,7 @@
 import { FC } from 'react';
 
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import { IOrder } from '../../../../../../models/orders.model';
+import { Order } from '../../../../../../models/orders.model';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  order: IOrder
+  order: Order
 }
 
 

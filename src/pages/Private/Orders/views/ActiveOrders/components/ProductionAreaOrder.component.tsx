@@ -1,4 +1,4 @@
-import { IOrder, IOrderDetail, OrderStatus } from "../../../../../../models";
+import { Order, IOrderDetail, OrderStatus } from "../../../../../../models";
 import { ProductionArea } from "../../../../Common/models/production-area.model";
 import {
   Accordion,
@@ -19,7 +19,7 @@ interface Props {
   orderId: string;
   details: IOrderDetail[];
   productionArea: ProductionArea;
-  order: IOrder;
+  order: Order;
 }
 
 export const ProductionAreaOrder = ({

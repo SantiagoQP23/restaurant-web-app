@@ -1,13 +1,13 @@
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { IOrder, IOrderDetail } from "../../../models";
+import { Order, IOrderDetail } from "../../../models";
 import { RootState } from "../../store";
 
 
 export interface PedidosState {
-  orders: IOrder[]
-  activeOrder: IOrder | null;
+  orders: Order[]
+  activeOrder: Order | null;
   lastUpdatedOrders: string;
   detailActive: IOrderDetail | null;
 
@@ -25,15 +25,15 @@ export const ordersSlice = createSlice({
   initialState,
   reducers: {
 
-    setActiveOrder: (state, action: PayloadAction<IOrder | null>) => {
+    setActiveOrder: (state, action: PayloadAction<Order | null>) => {
       state.activeOrder = action.payload;
     },
 
-    addOrder: (state, action: PayloadAction<IOrder>) => {
+    addOrder: (state, action: PayloadAction<Order>) => {
       state.orders = [...state.orders, action.payload]
     },
 
-    updateOrder: (state, { payload }: PayloadAction<IOrder>) => {
+    updateOrder: (state, { payload }: PayloadAction<Order>) => {
       state.orders = state.orders.map(
         p => (p.id === payload.id)
           ? payload
@@ -51,7 +51,7 @@ export const ordersSlice = createSlice({
       )
     },
 
-    loadOrders: (state, action: PayloadAction<IOrder[]>) => {
+    loadOrders: (state, action: PayloadAction<Order[]>) => {
 
       // sort by date
       // action.payload.sort((a, b) => {

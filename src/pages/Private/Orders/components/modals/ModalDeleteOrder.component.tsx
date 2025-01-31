@@ -12,7 +12,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { IOrder, TypeOrder } from "../../../../../models/orders.model";
+import { Order, TypeOrder } from "../../../../../models/orders.model";
 import { statusModalDeleteOrder } from "../../services/orders.service";
 import { useNavigate } from "react-router-dom";
 import { useDeleteOrder } from "../../hooks";
@@ -22,7 +22,7 @@ import { useDeleteOrder } from "../../hooks";
  * @version 1.1 28/12/2023 Adds useDeleteOrder hook
  */
 export const ModalDeleteOrder: FC = () => {
-  const [order, setOrder] = useState<IOrder>();
+  const [order, setOrder] = useState<Order>();
 
   const [open, setOpen] = useState<boolean>(false);
 

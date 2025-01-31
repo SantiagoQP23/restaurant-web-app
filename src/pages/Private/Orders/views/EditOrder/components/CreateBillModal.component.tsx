@@ -1,0 +1,64 @@
+import React from "react";
+import { Account } from "./Account.component";
+import NiceModal, {
+  muiDialogV5,
+  useModal as useNiceModal,
+} from "@ebay/nice-modal-react";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { CloseOutlined } from "@mui/icons-material";
+import { Order } from "@/models";
+// import { useModal } from "@/hooks";
+
+interface Props {
+  order: Order;
+}
+
+export const CreateBillModal = NiceModal.create<Props>(({ order }) => {
+  // const { handleClose, isOpen, handleOpen } = useModal();
+  const modal = useNiceModal();
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  return (
+    <>
+      <Dialog {...muiDialogV5(modal)} fullScreen={fullScreen} maxWidth="lg">
+        <DialogTitle>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography variant="h4">Add bill</Typography>
+            </Box>
+            <Stack direction="row" spacing={2} alignItems="center">
+              <IconButton onClick={modal.hide} size="small">
+                <CloseOutlined fontSize="small" />
+              </IconButton>
+            </Stack>
+          </Stack>
+        </DialogTitle>
+        <DialogContent>
+          <Account order={order} />
+        </DialogContent>
+        {/* <DialogActions>
+          <Button>
+            Close
+          </Button>
+        </DialogActions> */}
+      </Dialog>
+    </>
+  );
+});

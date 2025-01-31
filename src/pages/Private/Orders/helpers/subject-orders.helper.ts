@@ -1,7 +1,7 @@
 
 
 import { Subject } from 'rxjs';
-import { IOrderDetail, IOrder } from '../../../../models/orders.model';
+import { IOrderDetail, Order } from '../../../../models/orders.model';
 
 
 export class SubjectEditOrderDetail {
@@ -44,27 +44,27 @@ export class SubjectDispatchDetail {
   }
 }
 export class SubjectModalDeleteOrder {
-  subject$ = new Subject<{value: boolean, order: IOrder}>();
+  subject$ = new Subject<{value: boolean, order: Order}>();
 
   getSubject(){
 
     return this.subject$.asObservable();
   }
 
-  setSubject(value: boolean, order: IOrder){
+  setSubject(value: boolean, order: Order){
     this.subject$.next({value, order});
   }
 }
 
 export class SubjectModalPayOrder {
-  subject$ = new Subject<{value: boolean, order: IOrder}>();
+  subject$ = new Subject<{value: boolean, order: Order}>();
 
   getSubject(){
 
     return this.subject$.asObservable();
   }
 
-  setSubject(value: boolean, order: IOrder){
+  setSubject(value: boolean, order: Order){
     this.subject$.next({value, order});
   }
 }

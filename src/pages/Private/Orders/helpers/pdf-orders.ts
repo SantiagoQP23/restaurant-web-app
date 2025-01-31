@@ -1,5 +1,5 @@
 import { ICreatePDF, Img, PdfMakeWrapper, Txt } from "pdfmake-wrapper";
-import { IOrder, TypeOrder } from "../../../../models";
+import { Order, TypeOrder } from "../../../../models";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -7,7 +7,7 @@ import { formatMoney } from "../../Common/helpers/format-money.helper";
 
 import logo from "../../../../assets/logo3.png";
 
-export const generateOrderPdf = async (order: IOrder): Promise<ICreatePDF> => {
+export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
   PdfMakeWrapper.setFonts(pdfFonts);
 
   const pdf = new PdfMakeWrapper();

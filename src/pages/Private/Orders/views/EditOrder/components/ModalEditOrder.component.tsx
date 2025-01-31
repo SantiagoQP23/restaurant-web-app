@@ -13,7 +13,7 @@ import {
   InputBase,
   Box,
 } from "@mui/material";
-import { IOrder, TypeOrder } from "../../../../../../models";
+import { Order, TypeOrder } from "../../../../../../models";
 import { OrderTable } from "./OrderTable.component";
 import { OrderTypeSelector } from "./OrderTypeSelector.component";
 import { MobileDateTimePicker } from "@mui/x-date-pickers";
@@ -26,7 +26,7 @@ import { useModal } from "../../../../../../hooks";
 interface Props {
   open: boolean;
   closeModal: () => void;
-  order: IOrder;
+  order: Order;
 }
 
 export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {

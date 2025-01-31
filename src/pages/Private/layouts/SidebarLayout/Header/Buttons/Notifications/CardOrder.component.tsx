@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { IOrder, OrderStatus, TypeOrder } from "../../../../../../../models";
+import { Order, OrderStatus, TypeOrder } from "../../../../../../../models";
 import { formatMoney } from "../../../../../Common/helpers/format-money.helper";
 import { getTypeOrder } from "../../../../../Common/helpers/get-type-order.helper";
 import { LabelStatusOrder, ModalCloseOrder } from "../../../../../Orders/components";
@@ -27,7 +27,7 @@ import NiceModal from "@ebay/nice-modal-react";
 
 interface Props {
   onEdit?: () => void;
-  order: IOrder;
+  order: Order;
 }
 
 export const CardOrder: FC<Props> = ({ onEdit, order }) => {

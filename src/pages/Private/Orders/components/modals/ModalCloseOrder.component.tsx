@@ -11,7 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import { useContext } from "react";
-import { IOrder, TypeOrder } from "../../../../../models/orders.model";
+import { Order, TypeOrder } from "../../../../../models/orders.model";
 import { EventsEmitSocket } from "../../interfaces/events-sockets.interface";
 import { SocketResponse } from "../../interfaces/responses-sockets.interface";
 import { useSnackbar } from "notistack";
@@ -22,7 +22,7 @@ import { deleteOrder } from "../../../../../redux";
 import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
 
 interface Props {
-  order: IOrder;
+  order: Order;
 }
 
 

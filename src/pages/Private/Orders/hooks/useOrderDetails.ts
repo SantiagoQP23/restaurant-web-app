@@ -2,7 +2,7 @@ import { CreateOrderDetailDto } from "../dto/create-order.dto";
 import { EventsEmitSocket } from "../interfaces/events-sockets.interface";
 import { useSnackbar } from "notistack";
 import { useEmitWebSocketsEvent } from "../../../../hooks";
-import { IOrder } from "../../../../models";
+import { Order } from "../../../../models";
 import { DeleteOrderDetailDto, UpdateOrderDetailDto } from "../dto";
 
 /**
@@ -12,7 +12,7 @@ import { DeleteOrderDetailDto, UpdateOrderDetailDto } from "../dto";
 export const useCreateOrderDetail = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useEmitWebSocketsEvent<IOrder, CreateOrderDetailDto>(
+  return useEmitWebSocketsEvent<Order, CreateOrderDetailDto>(
     EventsEmitSocket.addOrderDetail,
     {
       onSuccess: (resp) => {
@@ -32,7 +32,7 @@ export const useCreateOrderDetail = () => {
 export const useUpdateOrderDetail = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useEmitWebSocketsEvent<IOrder, UpdateOrderDetailDto>(
+  return useEmitWebSocketsEvent<Order, UpdateOrderDetailDto>(
     EventsEmitSocket.updateOrderDetail,
     {
       onSuccess: (resp) => {
@@ -52,7 +52,7 @@ export const useUpdateOrderDetail = () => {
 export const useDeleteOrderDetail = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useEmitWebSocketsEvent<IOrder, DeleteOrderDetailDto>(
+  return useEmitWebSocketsEvent<Order, DeleteOrderDetailDto>(
     EventsEmitSocket.deleteOrderDetail,
     {
       onSuccess: (resp) => {

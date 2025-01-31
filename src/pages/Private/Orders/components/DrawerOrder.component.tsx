@@ -1,4 +1,4 @@
-import { IOrder, ITable, TypeOrder } from "../../../../models";
+import { Order, ITable, TypeOrder } from "../../../../models";
 
 import NiceModal from "@ebay/nice-modal-react";
 
@@ -131,7 +131,7 @@ export const DrawerOrder = NiceModal.create<Props>(({ table }) => {
         <Scrollbar height={"100%"}>
           {ordersTable.length >= 1 ? (
             <Stack spacing={2} direction="column" p={1}>
-              {ordersTable.map((order: IOrder) => (
+              {ordersTable.map((order: Order) => (
                 <OrderCard order={order} key={order.id} onClick={closeDrawer} />
               ))}
             </Stack>

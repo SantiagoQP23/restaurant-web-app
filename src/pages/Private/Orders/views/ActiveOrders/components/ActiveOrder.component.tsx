@@ -32,7 +32,7 @@ import { es } from "date-fns/locale";
 import { UpdateOrderDto } from "../../../dto/update-order.dto";
 import { OrderStatus, TypeOrder } from "../../../../../../models/orders.model";
 
-import { IOrder } from "../../../../../../models";
+import { Order } from "../../../../../../models";
 import { statusModalStartOrder } from "../../../services/orders.service";
 import { BtnAddProduct } from "./BtnAddProduct.component";
 import { useQueryClient } from "@tanstack/react-query";
@@ -44,7 +44,7 @@ import { useProductionAreasStore } from "../../../../Common/store/production-are
 import { ProductionAreaOrder } from "./ProductionAreaOrder.component";
 
 interface Props {
-  order: IOrder;
+  order: Order;
   setStatusFilter?: (status: OrderStatus) => void;
   color: "success" | "error" | "warning" | "info" | "primary" | "secondary";
   index: number;
@@ -82,7 +82,7 @@ export const ActiveOrder: FC<Props> = ({
 
   const { mutate: updateOrder } = useUpdateOrder();
 
-  const handleStartOrder = (order: IOrder) => {
+  const handleStartOrder = (order: Order) => {
     const firstOrder = getFirstPendingOrder();
 
     if (firstOrder.id === order.id) {

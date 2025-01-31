@@ -1,5 +1,5 @@
 import { useSnackbar } from "notistack";
-import { IOrder } from "../../../../models";
+import { Order } from "../../../../models";
 import { EventsEmitSocket } from "../../Orders/interfaces/events-sockets.interface";
 import { CreateBillDto, RemoveBillDto, UpdateBillDto } from "../dto";
 import { useQuery } from "@tanstack/react-query";
@@ -9,7 +9,7 @@ import { useEmitWebSocketsEvent } from "../../../../hooks/useEmitWebSocketsEvent
 export const useCreateBill = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useEmitWebSocketsEvent<IOrder, CreateBillDto>(
+  return useEmitWebSocketsEvent<Order, CreateBillDto>(
     EventsEmitSocket.createBill,
     {
       onSuccess: (resp) => {
@@ -35,7 +35,7 @@ export const useBills = () => {
 export const useDeleteBill = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useEmitWebSocketsEvent<IOrder, RemoveBillDto>(
+  return useEmitWebSocketsEvent<Order, RemoveBillDto>(
     EventsEmitSocket.deleteBill,
     {
       onSuccess: (resp) => {
@@ -51,7 +51,7 @@ export const useDeleteBill = () => {
 export const useUpdateBill = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useEmitWebSocketsEvent<IOrder, UpdateBillDto>(
+  return useEmitWebSocketsEvent<Order, UpdateBillDto>(
     EventsEmitSocket.updateBill,
     {
       onSuccess: (resp) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { statusModalStartOrder } from "../../../services/orders.service";
-import { IOrder, OrderStatus } from "../../../../../../models";
+import { Order, OrderStatus } from "../../../../../../models";
 import { useModal } from "../../../../../../hooks";
 import {
   Dialog,
@@ -19,7 +19,7 @@ import { LoadingButton } from "@mui/lab";
  * @version 1.1 28/12/2023 Updates useUpdateOrder hook.
  */
 export const ModalStartOrder = () => {
-  const [order, setOrder] = useState<IOrder | null>(null);
+  const [order, setOrder] = useState<Order | null>(null);
 
   const { isOpen, handleClose, setOpen } = useModal();
 

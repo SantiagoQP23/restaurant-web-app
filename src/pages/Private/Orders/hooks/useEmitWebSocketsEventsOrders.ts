@@ -1,6 +1,6 @@
 import { useSnackbar } from "notistack";
 import { useEmitWebSocketsEvent } from "../../../../hooks";
-import { IOrder } from "../../../../models";
+import { Order } from "../../../../models";
 import { CreateOrderDto } from "../dto/create-order.dto";
 import { EventsEmitSocket } from "../interfaces/events-sockets.interface";
 import { statusModalAddOrder } from "../services/orders.service";
@@ -15,7 +15,7 @@ import { setActiveOrder } from "../../../../redux";
 export const useCreateOrder = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useEmitWebSocketsEvent<IOrder, CreateOrderDto>(
+  return useEmitWebSocketsEvent<Order, CreateOrderDto>(
     EventsEmitSocket.createOrder,
     {
       onSuccess: (resp) => {
@@ -37,7 +37,7 @@ export const useUpdateOrder = () => {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
 
-  return useEmitWebSocketsEvent<IOrder, UpdateOrderDto>(
+  return useEmitWebSocketsEvent<Order, UpdateOrderDto>(
     EventsEmitSocket.updateOrder,
     {
       onSuccess: (resp) => {
@@ -58,7 +58,7 @@ export const useUpdateOrder = () => {
 export const useDeleteOrder = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useEmitWebSocketsEvent<IOrder, string>(
+  return useEmitWebSocketsEvent<Order, string>(
     EventsEmitSocket.deleteOrder,
     {
       onSuccess: (resp) => {

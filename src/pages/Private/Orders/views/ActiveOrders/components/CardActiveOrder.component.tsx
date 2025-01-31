@@ -1,11 +1,11 @@
 import { Card, CardHeader, Box, Stack } from "@mui/material";
-import { IOrder, OrderStatus } from "../../../../../../models";
+import { Order, OrderStatus } from "../../../../../../models";
 import { FC } from "react";
 import { ActiveOrder } from "./ActiveOrder.component";
 import { Label } from "../../../../../../components/ui";
 
 interface Props {
-  orders: IOrder[];
+  orders: Order[];
   title: string;
   color: "success" | "error" | "warning" | "info" | "primary" | "secondary";
   status?: OrderStatus;
