@@ -20,6 +20,9 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 
 import { ValidRoles } from "../../../Common/models/valid-roles.model";
 
+/**
+ * @version 1.1 31-01-2025 Remove finance
+ */
 const generalSection: MenuSection = {
   title: "GENERAL",
   allowedRoles: [ValidRoles.admin],
@@ -29,28 +32,28 @@ const generalSection: MenuSection = {
       icon: <DashboardOutlinedIcon />,
       to: "/reports",
     },
-    {
-      title: "Finanzas",
-      icon: <AccountBalanceWallet />,
-      to: "/financial",
-      subItems: [
-        {
-          title: "Transacciones",
-          to: "/financial/transactions",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-        },
-        {
-          title: "Caja",
-          to: "/financial/cash-register/actives",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-        },
-        {
-          title: "Cuentas",
-          to: "/financial/accounts",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-        },
-      ],
-    },
+    // {
+    //   title: "Finanzas",
+    //   icon: <AccountBalanceWallet />,
+    //   to: "/financial",
+    //   subItems: [
+    //     {
+    //       title: "Transacciones",
+    //       to: "/financial/transactions",
+    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+    //     },
+    //     {
+    //       title: "Caja",
+    //       to: "/financial/cash-register/actives",
+    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+    //     },
+    //     {
+    //       title: "Cuentas",
+    //       to: "/financial/accounts",
+    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+    //     },
+    //   ],
+    // },
   ],
 };
 

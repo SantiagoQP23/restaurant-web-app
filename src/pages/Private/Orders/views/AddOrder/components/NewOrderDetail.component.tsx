@@ -15,7 +15,7 @@ interface Props {
 }
 
 /**
- * Component to show the details of the new order, it is used in the modal to add a new detail and in the order details component
+ * Component to show the details of the new order, which is used in the modal to add a new detail and in the order details component
  * @version 1.1 20/12/2023 Adds product options chip
  */
 export const NewOrderDetail: FC<Props> = ({ detalle }) => {
@@ -61,7 +61,7 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
           <Stack>
             <Typography variant="h4" whiteSpace={"normal"}>
               {detalle.quantity} - {detalle.product.name}
-              {detalle.productOption && (
+              {/* {detalle.productOption && (
                 <Chip
                   sx={{ ml: 1 }}
                   label={`${detalle.productOption?.name} (${formatMoney(
@@ -69,7 +69,7 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
                   )})`}
                   size="small"
                 />
-              )}
+              )} */}
             </Typography>
 
             <Typography variant="subtitle1" whiteSpace="pre-wrap">

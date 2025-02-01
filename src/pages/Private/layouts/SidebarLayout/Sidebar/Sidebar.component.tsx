@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import { SidebarContext } from "../../../Common/contexts/SidebarContext";
 
-import logo from "../../../../../assets/logo3.png";
-
 import { Box, Divider, Typography, IconButton, Drawer } from "@mui/material";
 
 import MuiDrawer from "@mui/material/Drawer";

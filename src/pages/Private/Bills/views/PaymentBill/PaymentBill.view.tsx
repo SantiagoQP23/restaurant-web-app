@@ -81,7 +81,9 @@ export const PaymentBill = () => {
   const handleChangeClient = (client: IClient | null) => setClient(client);
   const [receivedAmount, setReceivedAmount] = useState<number>(0);
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.CASH);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
+    PaymentMethod.CASH
+  );
 
   const handleChangePaymentMethod = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -230,6 +232,7 @@ export const PaymentBill = () => {
                   </CardContent>
                 )}
               </Card>
+              {/* 
               <Card>
                 <CardHeader
                   title="Forma de pago"
@@ -348,20 +351,20 @@ export const PaymentBill = () => {
                     </Box>
                   </CardContent>
                 )}
-              </Card>
+              </Card> */}
 
               <Card>
                 <CardHeader
                   title="Detalles de pago"
                   avatar={
                     <Chip
-                      label={3}
+                      label={2}
                       size="small"
-                      variant={step === 3 ? "filled" : "outlined"}
+                      variant={step === 2 ? "filled" : "outlined"}
                     />
                   }
                 />
-                {step === 3 && (
+                {step === 2 && (
                   <CardContent>
                     <Typography
                       variant="subtitle2"

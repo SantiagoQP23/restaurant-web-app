@@ -70,12 +70,6 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 
-  // [`@media (min-width: ${theme.breakpoints.values.lg}px)`]: {
-  //   // Estilos que se aplicarán cuando se cumpla la media query
-  //   left: theme.sidebar.width,
-  //   width: 'auto',
-  //   // Otros estilos...
-  // },
 }));
 
 function Header() {
@@ -87,7 +81,7 @@ function Header() {
       <Box display="flex" alignItems="center" justifyContent="space-between" mt={1}>
         {/* <HeaderMenu /> */}
       <Typography ml={{xs: 3, lg: '310px'}} variant="h4" color='text.primary'>
-        QuiEats
+        {/* QuiEats */}
       </Typography>
 
         <Stack direction="row" spacing={1} alignItems="center">

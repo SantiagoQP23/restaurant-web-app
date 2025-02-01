@@ -110,13 +110,13 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
           <Box>
             <b>{detail?.product.name}</b>
 
-            {detail?.productOption && (
+            {/* {detail?.productOption && (
               <Chip
                 sx={{ ml: 1 }}
                 label={`${detail?.productOption?.name} `}
                 size="small"
               />
-            )}
+            )} */}
           </Box>
 
           <IconButton onClick={closeModal}>
@@ -126,7 +126,7 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
 
         <DialogContent>
           <Grid container spacing={1} alignItems="center">
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               {availableOptions.length > 0 && (
                 <Scrollbar autoHeight height="auto">
                   <Box
@@ -152,7 +152,7 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
                   </Box>
                 </Scrollbar>
               )}
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <Typography
                 variant="body2"

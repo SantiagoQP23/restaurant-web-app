@@ -47,6 +47,7 @@ interface Props {
  * @version 1.1 18/12/2023 Adds NiceModal and remove rxjs
  * @version 1.2 19/12/2023 Adds product options chip
  * @version 1.3 28/12/2023 Adds useCreateOrderDetail hook
+ * @version 1.4 31/01/2025 Options hidden
  */
 export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const modal = useModal();
@@ -163,7 +164,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
                 </ListItem>
               ))}
             </List> */}
-            {availableOptions.length > 0 && (
+            {/* {availableOptions.length > 0 && (
               <FormControl>
                 <FormLabel id="demo-radio-buttons-group-label">
                   Opciones
@@ -189,7 +190,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
                   ))}
                 </RadioGroup>
               </FormControl>
-            )}
+            )} */}
 
             <Box>
               {/* <Autocomplete
