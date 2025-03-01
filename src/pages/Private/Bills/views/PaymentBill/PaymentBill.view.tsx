@@ -37,6 +37,12 @@ import { UpdateBillDto } from "../../dto";
 import { useCashRegisterStore } from "../../../Common/store/useCashRegisterStore";
 import { CashRegisterItem } from "./components/CashRegisterItem.component";
 
+/**
+ * Component for pay a bill 
+ * 
+ * @author Santiago Quirumbay
+ * @version 1.1 28-02-2025 Remove payment method
+ */
 export const PaymentBill = () => {
   const { id } = useParams();
 
@@ -108,12 +114,14 @@ export const PaymentBill = () => {
 
   const submitPayment = () => {
     if (
-      !bill ||
-      !paymentMethod ||
-      (withClient && !client) ||
-      !activeCashRegister
-    )
+      !bill 
+      // !paymentMethod ||
+      // (withClient && !client) ||
+      // !activeCashRegister
+    ){
+      alert("Error al registrar el pago");
       return;
+    }
 
     const data: UpdateBillDto = {
       id: bill.id,
@@ -121,7 +129,7 @@ export const PaymentBill = () => {
       paymentMethod,
       receivedAmount,
       isPaid: true,
-      cashRegisterId: activeCashRegister.id,
+      // cashRegisterId: activeCashRegister!.id,
     };
 
     if (!withClient) {
@@ -440,7 +448,7 @@ export const PaymentBill = () => {
                         }
                         disabled={
                           receivedAmount < bill.total - discount ||
-                          !activeCashRegister ||
+                          // !activeCashRegister ||
                           !isOnline
                         }
                       >

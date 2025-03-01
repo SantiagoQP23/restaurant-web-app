@@ -62,7 +62,12 @@ import { CreateBillModal } from "./components/CreateBillModal.component";
 
 /**
  * Componente for edit order
+ * 
+ * @author Santiago Quirumbay 
  * @version v1.1 22-12-2023 Adds bills
+ * 
+ * @author Santiago Quirumbay
+ * @version v1.2 18-02-2025 Fix: Validation to close order
  */
 export const EditOrder = () => {
   const navigate = useNavigate();
@@ -216,7 +221,7 @@ export const EditOrder = () => {
                 Crear cuentas
               </Button>
             )}
-            {isCloseableOrder && (
+            {isCloseableOrder && !activeOrder.isClosed && (
               <Button
                 variant="contained"
                 size="small"
@@ -269,8 +274,7 @@ export const EditOrder = () => {
               </>
             )}
 
-            {/* <Grid item xs={12} md={4}>
-              </Grid> */}
+          
           </>
         )}
       </Container>

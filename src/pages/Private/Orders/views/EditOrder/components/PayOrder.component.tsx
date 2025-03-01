@@ -305,6 +305,7 @@ export const PayOrder: FC<Props> = ({ order }) => {
                 )}
                 <Stack direction="row" justifyContent="center">
                   <LoadingButton
+                  disabled={loading}
                     loading={loading}
                     variant="contained"
                     onClick={submitPayment}
