@@ -39,7 +39,6 @@ export const BillsList: FC<Props> = ({ bills }) => {
         <CardContent>
           <Stack>
             {bills.map((bill) => (
-              <>
                 <ListItemButton
                   onClick={() => showDrawerBill(bill)}
                   key={bill.id}
@@ -82,7 +81,6 @@ export const BillsList: FC<Props> = ({ bills }) => {
                     </Typography>
                   </ListItemSecondaryAction>
                 </ListItemButton>
-              </>
             ))}
           </Stack>
         </CardContent>

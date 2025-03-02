@@ -50,8 +50,10 @@ interface Props {
 
 /**
  * Component to show the details of the order in progress
+ * @author Santiago Quirumbay
  * @version 1.1 20/12/2023 Adds product options chip
  * @version 1.2 28/12/2023 Adds useUpdateOrderDetail hook
+ * @version 1.3 01/03/2025 Fix: Buttons to increase quantity delivered
  */
 export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
   const { mutate: update } = useUpdateOrderDetail();
@@ -89,8 +91,6 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
   const handleAddOne = () => {
     updateQtyDelivered(detail.qtyDelivered + 1);
   };
-
-  
 
   return (
     <>
@@ -152,35 +152,28 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
               <Typography whiteSpace="pre-wrap" variant="body1" mb={1}>
                 {detail.description}
               </Typography>
-              {detail.quantity !== detail.qtyDelivered &&
-                detail.quantity > 1 && (
-                  <Box display="flex" alignItems="center" width="100%" gap={1}>
-                    <Stack direction="column" alignItems="right" mt={0.5} flexGrow={1}>
-                      <LinearProgressWrapper
-                        value={(detail.qtyDelivered * 100) / detail.quantity}
-                        color="info"
-                        variant="determinate"
-                        sx={{
-                          width: "100%",
-                        }}
-                      />
-                      <Typography variant="subtitle1" fontSize={12}>
-                        {detail.quantity - detail.qtyDelivered} por entregar
-                      </Typography>
-                    </Stack>
-                    <IconButton size="small" onClick={handleAddOne} >
-                      <PlusOneOutlined />
-                    </IconButton>
-{/* <Checkbox
-  icon={<CheckCircleOutline />}
-  checkedIcon={<CheckCircle />}
-  checked={checked}
-  onChange={handleChangeChecked}
-  inputProps={{ "aria-label": "controlled" }}
-  color="success"
-/> */}
-                  </Box>
-                )}
+              {detail.quantity !== detail.qtyDelivered && (
+                <Box display="flex" alignItems="center" width="100%" gap={1}>
+                  <Stack
+                    direction="column"
+                    alignItems="right"
+                    mt={0.5}
+                    flexGrow={1}
+                  >
+                    <LinearProgressWrapper
+                      value={(detail.qtyDelivered * 100) / detail.quantity}
+                      color="info"
+                      variant="determinate"
+                      sx={{
+                        width: "100%",
+                      }}
+                    />
+                    <Typography variant="subtitle1" fontSize={12}>
+                      {detail.quantity - detail.qtyDelivered} por entregar
+                    </Typography>
+                  </Stack>
+                </Box>
+              )}
 
               {/* <Box display="flex" justifyContent="space-between">
                 <Typography>
@@ -201,7 +194,19 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
         />
 
         <Stack direction="row" spacing={0.5}>
-
+          {detail.quantity > 1 && (
+            <IconButton size="small" onClick={handleAddOne}>
+              <PlusOneOutlined />
+            </IconButton>
+          )}
+          <Checkbox
+            icon={<CheckCircleOutline />}
+            checkedIcon={<CheckCircle />}
+            checked={checked}
+            onChange={handleChangeChecked}
+            inputProps={{ "aria-label": "controlled" }}
+            color="success"
+          />
           <IconButton onClick={editDetail} size="small">
             <MoreVertOutlined />
           </IconButton>

@@ -25,12 +25,23 @@ interface Props {
   order: Order;
 }
 
+/**
+ * Modal to create a bill 
+ * 
+ * @author Santiago Quirumbay
+ *
+ */
 export const CreateBillModal = NiceModal.create<Props>(({ order }) => {
   // const { handleClose, isOpen, handleOpen } = useModal();
   const modal = useNiceModal();
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  
+  const closeModal = () => {
+    modal.hide();
+  };
+
   return (
     <>
       <Dialog {...muiDialogV5(modal)} fullScreen={fullScreen} maxWidth="lg">
@@ -51,7 +62,7 @@ export const CreateBillModal = NiceModal.create<Props>(({ order }) => {
           </Stack>
         </DialogTitle>
         <DialogContent>
-          <Account order={order} />
+          <Account order={order} onSuccess={closeModal} />
         </DialogContent>
         {/* <DialogActions>
           <Button>

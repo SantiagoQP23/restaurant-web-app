@@ -48,6 +48,7 @@ interface Props {
  * @version 1.2 19/12/2023 Adds product options chip
  * @version 1.3 28/12/2023 Adds useCreateOrderDetail hook
  * @version 1.4 31/01/2025 Options hidden
+ * @version 1.5 01/03/2025 Fix: Validation to add product to order
  */
 export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const modal = useModal();
@@ -275,8 +276,8 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
               loading={isLoading}
               startIcon={<ShoppingCartIcon />}
               disabled={
-                !isOnline ||
-                (detail.product.options.length > 0 && !selectedOption)
+                !isOnline
+                // (detail.product.options.length > 0 && !selectedOption)
               }
             >
               Añadir

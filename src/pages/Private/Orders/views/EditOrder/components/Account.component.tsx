@@ -37,16 +37,18 @@ interface SelectedDetails {
 
 interface Props {
   order: Order;
+  onSuccess?: () => void;
 }
 
 /**
  * Componente for create bills
+ * @author Santiaago Quirumbay 
  * @version v1.1 22-12-2023 Adds create bills
  * @version v1.2 02-01-2024 Fix bug: total order to pay
  * @version v1.3 21-04-2024 Fix bug: details with quantity 0
+ * @version 1.4. 01-03-2025 Add onSuccess prop
  */
-export const Account: FC<Props> = ({ order }) => {
-
+export const Account: FC<Props> = ({ order, onSuccess }) => {
   const details = order.details.filter(
     (detail) => detail.qtyPaid !== detail.quantity
   );
@@ -128,8 +130,10 @@ export const Account: FC<Props> = ({ order }) => {
     console.log(data);
     createBill(data, {
       onSuccess: ({ data: order }) => {
+        console.log(order);
         dispatch(setActiveOrder(order!));
-        handleBackStep();
+        onSuccess && onSuccess();
+        // handleBackStep();
       },
     });
   };
