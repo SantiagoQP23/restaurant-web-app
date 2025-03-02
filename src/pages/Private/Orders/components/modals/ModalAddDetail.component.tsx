@@ -17,6 +17,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Checkbox,
 } from "@mui/material/";
 
 import { ICreateOrderDetail, Order } from "../../../../../models/orders.model";
@@ -48,7 +49,7 @@ interface Props {
  * @version 1.2 19/12/2023 Adds product options chip
  * @version 1.3 28/12/2023 Adds useCreateOrderDetail hook
  * @version 1.4 31/01/2025 Options hidden
- * @version 1.5 01/03/2025 Fix: Validation to add product to order
+ * @version 1.5 01/03/2025 Fix: Validation to add product to order and quantity delivered
  */
 export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const modal = useModal();
@@ -59,6 +60,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
     : [];
 
   const [description, setDescription] = useState("");
+  const [detailDelivered, setDetailDelivered] = useState(false);
   const [quantity, setQuantity] = useState(detail?.quantity || 1);
   const [selectedOption, setSelectedOption] = useState<
     ProductOption | undefined
@@ -81,6 +83,10 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
     setQuantity(value);
   };
 
+  const handleProductDelivered = () => {
+    setDetailDelivered(!detailDelivered);
+  }
+
   const closeModal = () => {
     modal.hide();
     setDescription("");
@@ -95,6 +101,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
       productId: detail!.product.id,
       price: detail!.product.price,
       quantity,
+      qtyDelivered: detailDelivered ? quantity : 0,
     };
 
     if (description) {
@@ -263,6 +270,11 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
                 </FormControl>
               </>
             )}
+
+            <FormControlLabel
+              control={<Checkbox onChange={handleProductDelivered} />}
+              label="Producto ya fue entregado"
+            />
           </Stack>
         </DialogContent>
 

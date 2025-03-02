@@ -194,19 +194,23 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
         />
 
         <Stack direction="row" spacing={0.5}>
-          {detail.quantity > 1 && (
-            <IconButton size="small" onClick={handleAddOne}>
-              <PlusOneOutlined />
-            </IconButton>
+          {detail.quantity !== detail.qtyDelivered && (
+            <>
+              {detail.quantity > 1 && (
+                <IconButton size="small" onClick={handleAddOne}>
+                  <PlusOneOutlined />
+                </IconButton>
+              )}
+              <Checkbox
+                icon={<CheckCircleOutline />}
+                checkedIcon={<CheckCircle />}
+                checked={checked}
+                onChange={handleChangeChecked}
+                inputProps={{ "aria-label": "controlled" }}
+                color="success"
+              />
+            </>
           )}
-          <Checkbox
-            icon={<CheckCircleOutline />}
-            checkedIcon={<CheckCircle />}
-            checked={checked}
-            onChange={handleChangeChecked}
-            inputProps={{ "aria-label": "controlled" }}
-            color="success"
-          />
           <IconButton onClick={editDetail} size="small">
             <MoreVertOutlined />
           </IconButton>
