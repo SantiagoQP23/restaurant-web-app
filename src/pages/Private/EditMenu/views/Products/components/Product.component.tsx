@@ -16,7 +16,6 @@ import {
   DeleteOutline,
   EditOutlined,
   MoreHoriz,
-  Visibility,
 } from "@mui/icons-material";
 
 import { IProduct } from "../../../../../../models";
@@ -31,6 +30,10 @@ import { bindPopover } from "material-ui-popup-state";
 import { bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { LabelProductStatus } from "../../../../../../components/ui/LabelProductStatus.component";
 
+/**
+ * @author Steven Rosales
+ * @version 1.0 15/03/2025 Update product card
+ */
 interface Props {
   producto: IProduct;
 }
@@ -51,9 +54,9 @@ export const Product: FC<Props> = ({ producto }) => {
     navigate(`/menu/products/${producto.id}/edit`);
   };
 
-  const navigateToViewProduct = () => {
-    navigate(`/menu/products/${producto.id}`);
-  };
+  // const navigateToViewProduct = () => {
+  //   navigate(`/menu/products/${producto.id}`);
+  // };
 
   const handleDelete = () => {
     popupState.close();
@@ -62,7 +65,11 @@ export const Product: FC<Props> = ({ producto }) => {
 
   return (
     <>
-      <Card sx={{ display: "flex" }}>
+      <Card sx={{
+        width: "100%",
+        height: "100%", // Hace que todos los elementos tengan la misma altura
+        display: "flex",
+      }}>
         <CardMedia
           component="img"
           sx={{ width: 160 }}
@@ -123,10 +130,10 @@ export const Product: FC<Props> = ({ producto }) => {
           <EditOutlined fontSize="small" sx={{ mr: 2 }} />
           Editar
         </MenuItem>
-        <MenuItem onClick={navigateToViewProduct}>
+        {/* <MenuItem onClick={navigateToViewProduct}>
           <Visibility fontSize="small" sx={{ mr: 2 }} />
           Ver
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
           <DeleteOutline fontSize="small" sx={{ mr: 2 }} />
           Eliminar
