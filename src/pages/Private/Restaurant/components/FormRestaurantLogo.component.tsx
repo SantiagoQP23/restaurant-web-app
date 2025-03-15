@@ -24,7 +24,10 @@ import { useRestaurantStore } from "../../Common/store/restaurantStore";
 const AvatarWrapper = styled(Card)(
   ({ theme }) => `
   
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-top: -${theme.spacing(0)};
     border: none;
     box-shadow: none;
@@ -44,13 +47,11 @@ const ButtonUploadWrapper = styled(Box)(
   left: ${theme.spacing(1)}; 
     .MuiIconButton-root {
       border-radius: 100%;
-      background: ${theme.colors.primary.main};
+      background: ${theme.colors.primary.light};
       color: ${theme.palette.primary.contrastText};
       box-shadow: ${theme.colors.shadows.primary};
       width: ${theme.spacing(4)};
       height: ${theme.spacing(4)};
-      padding: 0;
-  
       &:hover {
         background: ${theme.colors.primary.dark};
       }
@@ -104,74 +105,72 @@ export const FormRestaurantLogo: FC<Props> = ({ restaurant }) => {
   }, [watch("file")]);
 
   return (
-    <>
-      <Card>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <AvatarWrapper>
-              {image || restaurant?.logo ? (
-                <Avatar
-                  variant="rounded"
-                  alt={restaurant.name}
-                  src={image || restaurant?.logo}
-                />
-              ) : (
-                <label htmlFor="icon-button-file">
-                  <Box
-                    sx={{
-                      //drop file
-                      border: "1px dashed",
-                      borderColor: "divider",
-                      borderRadius: 1,
-                      color: "text.disabled",
-                      textAlign: "center",
-                      width: 200,
-                      height: 100,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
+    <Card  >
+      <CardContent>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <AvatarWrapper>
+            {image || restaurant?.logo ? (
+              <Avatar
+                variant="rounded"
+                alt={restaurant.name}
+                src={image || restaurant?.logo}
+              />
+            ) : (
+              <label htmlFor="icon-button-file">
+                <Box
+                  sx={{
+                    //drop file
+                    border: "1px dashed",
+                    borderColor: "divider",
+                    borderRadius: 1,
+                    color: "text.disabled",
+                    textAlign: "center",
+                    width: 200,
+                    height: 100,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
 
-                      ":hover": {
-                        cursor: "pointer",
-                        borderColor: "primary.main",
-                        color: "primary.main",
-                      },
-                    }}
-                  >
-                    <PhotoSharp />
-                    <Typography>Imagen</Typography>
-                  </Box>
-                </label>
-              )}
-              <ButtonUploadWrapper>
-                <input
-                  id="icon-button-file"
-                  type="file"
-                  accept="image/*"
-                  {...register("file")}
-                  hidden
-                />
-                <label htmlFor="icon-button-file">
-                  <IconButton component="span" color="primary">
-                    <UploadTwoToneIcon />
-                  </IconButton>
-                </label>
-              </ButtonUploadWrapper>
-            </AvatarWrapper>
+                    ":hover": {
+                      cursor: "pointer",
+                      borderColor: "primary.main",
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  <PhotoSharp />
+                  <Typography>Imagen</Typography>
+                </Box>
+              </label>
+            )}
+            <ButtonUploadWrapper>
+              <input
+                id="icon-button-file"
+                type="file"
+                accept="image/*"
+                {...register("file")}
+                hidden
+              />
+              <label htmlFor="icon-button-file">
+                <IconButton component="span" color="primary">
+                  <UploadTwoToneIcon />
+                </IconButton>
+              </label>
+            </ButtonUploadWrapper>
+          </AvatarWrapper>
 
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <LoadingButton
-                loading={isLoading}
-                type="submit"
-                variant="outlined"
-              >
-                Actualizar
-              </LoadingButton>
-            </Box>
-          </form>
-        </CardContent>
-      </Card>
-    </>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <LoadingButton
+              loading={isLoading}
+              type="submit"
+              variant="outlined"
+            >
+              Actualizar
+            </LoadingButton>
+          </Box>
+        </form>
+      </CardContent>
+    </Card>
   );
 };

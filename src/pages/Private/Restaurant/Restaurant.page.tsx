@@ -1,4 +1,3 @@
-import React from "react";
 import { TitlePage } from "../components";
 import {
   Container,
@@ -16,7 +15,6 @@ import { UpdateRestaurantDto } from "../Reports/dto/update-restaurant.dto";
 import { useUpdateRestaurant } from "./hooks/useRestaurant";
 import { LoadingButton } from "@mui/lab";
 import { FormRestaurantLogo } from "./components/FormRestaurantLogo.component";
-import { ProductionAreas } from "./views/ProductionAreas/ProductionAreas.view";
 import { ProductionAreasList } from "./components/ProductionAreasList.component";
 
 const Restaurant = () => {
@@ -32,6 +30,10 @@ const Restaurant = () => {
     defaultValues: {
       name: restaurant?.name,
       capacity: restaurant?.capacity,
+      address: restaurant?.address,
+      identification: restaurant?.identification,
+      phone: restaurant?.phone,
+      email: restaurant?.email,
     },
   });
 
@@ -44,7 +46,7 @@ const Restaurant = () => {
   return (
     <>
       <Container maxWidth="lg">
-        <TitlePage title="Restaurante" />
+        <TitlePage title="Configuración del restaurante" />
 
         {restaurant ? (
           <Grid container spacing={2}>
@@ -55,10 +57,9 @@ const Restaurant = () => {
               <Card>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <CardHeader title="Información" />
-
                   <CardContent>
                     <Grid container spacing={2}>
-                      <Grid item xs={12}>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           label="Nombre"
                           type="text"
@@ -71,8 +72,59 @@ const Restaurant = () => {
                           error={!!errors.name}
                         />
                       </Grid>
-
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="RUC / NIT / CIF"
+                          type="text"
+                          fullWidth
+                          required
+                          {...register("identification", {
+                            required: "Este es un campo requerido",
+                          })}
+                          helperText={errors.identification?.message}
+                          error={!!errors.identification}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Teléfono de contacto"
+                          type="text"
+                          fullWidth
+                          required
+                          {...register("phone", {
+                            required: "Este es un campo requerido",
+                          })}
+                          helperText={errors.phone?.message}
+                          error={!!errors.phone}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Correo electrónico"
+                          type="email"
+                          fullWidth
+                          required
+                          {...register("email", {
+                            required: "Este es un campo requerido",
+                          })}
+                          helperText={errors.email?.message}
+                          error={!!errors.email}
+                        />
+                      </Grid>
                       <Grid item xs={12}>
+                        <TextField
+                          label="Dirección fiscal y/o sucursal"
+                          type="text"
+                          fullWidth
+                          required
+                          {...register("address", {
+                            required: "Este es un campo requerido",
+                          })}
+                          helperText={errors.address?.message}
+                          error={!!errors.address}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           label="Capacidad"
                           type="number"
@@ -90,6 +142,7 @@ const Restaurant = () => {
                           error={!!errors.capacity}
                         />
                       </Grid>
+
                     </Grid>
                   </CardContent>
 

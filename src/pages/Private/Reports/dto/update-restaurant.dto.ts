@@ -7,6 +7,9 @@ export interface UpdateRestaurantDto {
   name?: string;
   address?: string;
   capacity?: number;
+  identification?: string;
+  phone?: string;
+  email?: string;
   percentageAttendance?: number;
   simulationStartDate?: string;
   simulationEndDate?: string;

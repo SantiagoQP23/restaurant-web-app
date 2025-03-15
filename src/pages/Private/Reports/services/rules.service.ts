@@ -89,10 +89,11 @@ export const updateRulesWeather = (rulesWeather: UpdateRuleWeatherDto[]) => {
 export const getRestaurant = async (
   restaurantId: string
 ): Promise<Restaurant> => {
+  console.log({ restaurantId });
   const resp = await restauranteApi.get<Restaurant>(
     `restaurant/${restaurantId}`
   );
-
+  console.log(resp.data);
   return resp.data;
 };
 
