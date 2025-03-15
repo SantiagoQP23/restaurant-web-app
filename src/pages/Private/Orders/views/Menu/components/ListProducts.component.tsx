@@ -15,8 +15,8 @@ export const ListProducts: FC<ProductsListProps> = ({ products }) => {
         {products.map((product) => {
           if (product.isActive)
             return (
-              <Grid key={product.id} item xs={6} sm={6} lg={2}>
-                <Product product={product} onClick={() => {}}/>
+              <Grid key={product.id} item xs={6} sm={4} md={3} lg={2}>
+                <Product product={product} onClick={() => { }} />
               </Grid>
             );
         })}
