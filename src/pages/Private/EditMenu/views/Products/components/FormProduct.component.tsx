@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { IProduct, ProductStatus } from "../../../../../../models";
-import { Add, AttachMoney, Save } from "@mui/icons-material";
+import { Add, AttachMoney, Save, Percent } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Card,
@@ -33,6 +33,7 @@ import { useProductionAreasStore } from "../../../../Common/store/production-are
 import NiceModal from "@ebay/nice-modal-react";
 import { ModalCreateProductOption } from "./ModalCreateProductOption.component";
 import { ProductOptionItem } from "./ProductOptionItem.component";
+import { getPriceWithoutIva } from "@/helpers/product.helper";
 
 interface Props {
   product: IProduct;
@@ -50,19 +51,20 @@ const initialForm: UpdateProductDto = {
   productionAreaId: 0,
   quantity: 0,
   unitCost: 0,
+  iva: 0,
 };
 
 /**
  * Component to edit a product
  * @author Santiago Quirumbay
  * @version 1.1 19/12/2023 Adds Product Options and use activeProduct
+ * @author Steven Rosales
+ * @version 1.2 15/03/2025 Add iva to product
  */
 export const FormProduct: FC<Props> = ({ product }) => {
   const [selectedProduct, setSelectedProduct] = useState<IProduct>(product);
 
   const { productionAreas } = useProductionAreasStore();
-
-  const { category, productionArea, images, options, ...restProduct } = selectedProduct;
 
   const { sections } = useSelector(selectMenu);
 
@@ -73,11 +75,15 @@ export const FormProduct: FC<Props> = ({ product }) => {
   const { isLoading, mutateAsync } = useUpdateProduct();
 
   const getUpdateProductDto = (product: IProduct) => {
-    const updateProductDto = {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { options, images, productionArea, category, ...restProduct } =
+      product;
+    const updateProductDto: UpdateProductDto = {
       ...restProduct,
-      categoryId: product.category.id,
-      productionAreaId: product.productionArea.id,
+      categoryId: category.id,
+      productionAreaId: productionArea.id,
     };
+    console.log({ updateProductDto });
     return updateProductDto;
   };
 
@@ -92,7 +98,6 @@ export const FormProduct: FC<Props> = ({ product }) => {
   });
 
   const onSubmit = (data: UpdateProductDto) => {
-    console.log({ data });
     mutateAsync(data)
       .then((updatedProduct) => {
         reset(getUpdateProductDto(updatedProduct));
@@ -382,6 +387,63 @@ export const FormProduct: FC<Props> = ({ product }) => {
                       })}
                       helperText={errors.unitCost?.message}
                       error={!!errors.unitCost}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      label="IVA"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Percent />
+                          </InputAdornment>
+                        ),
+                      }}
+                      fullWidth
+                      type="number"
+                      inputProps={{
+                        step: 0.1,
+                      }}
+                      {...register("iva", {
+                        min: {
+                          value: 0,
+                          message: "El valor debe ser mayor a 0",
+                        },
+                        max: {
+                          value: 100,
+                          message: "El valor debe ser menor a 100",
+                        },
+                        valueAsNumber: true,
+                      })}
+                      helperText={errors.iva?.message}
+                      error={!!errors.iva}
+                    />
+                  </Grid>
+                  <Grid item xs={6} md={3}>
+                    <TextField
+                      label="$ sin IVA"
+                      fullWidth
+                      disabled
+                      type="number"
+                      value={getPriceWithoutIva(
+                        selectedProduct.price,
+                        selectedProduct.iva
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={6} md={3}>
+                    <TextField
+                      label="$ unitario sin IVA"
+                      fullWidth
+                      disabled
+                      type="number"
+                      inputProps={{
+                        step: 0.05,
+                      }}
+                      value={getPriceWithoutIva(
+                        selectedProduct.unitCost,
+                        selectedProduct.iva
+                      )}
                     />
                   </Grid>
                 </Grid>

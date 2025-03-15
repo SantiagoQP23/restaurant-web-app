@@ -22,11 +22,13 @@ import { es } from "date-fns/locale";
 
 import { formatMoney } from "../../../Common/helpers/format-money.helper";
 import { useBill } from "../../hooks/useBills";
+import { formatPercentage, getIvaValue, getPriceWithoutIva } from "@/helpers/product.helper";
 // import { generateInvoicePdf } from "../../helpers/generateInvoicePdf.helper";
 
 /**
  * View to display the bill
  * @version v1.0 24-12-2023
+ * @version v1.1 15-03-2025 Add iva to bill
  */
 export const Bill = () => {
   const { id } = useParams();
@@ -101,7 +103,7 @@ export const Bill = () => {
             <Stack
               spacing={2}
               direction={{ xs: "column", sm: "row" }}
-              // Establecer el tamaño de los elementos
+            // Establecer el tamaño de los elementos
             >
               <Box flexBasis="50%">
                 <Typography variant="h5" mb={1}>
@@ -159,6 +161,7 @@ export const Bill = () => {
                     <TableCell>Cantidad</TableCell>
                     <TableCell>Producto</TableCell>
                     <TableCell align="right">Precio</TableCell>
+                    <TableCell align="right">IVA</TableCell>
                     <TableCell align="right">Subtotal</TableCell>
                   </TableRow>
                 </TableHead>
@@ -181,10 +184,17 @@ export const Bill = () => {
                           {detail.orderDetail.product.name}
                         </TableCell>
                         <TableCell align="right">
-                          {formatMoney(detail.price)}
+                          {formatMoney(getPriceWithoutIva(detail.price, detail.orderDetail.product.iva))}
+                        </TableCell>
+                        <TableCell align="right">
+                          {formatMoney(getIvaValue(detail.price, detail.orderDetail.product.iva))}
+                          <Typography variant="caption" color="textSecondary">
+                            {` (${formatPercentage(Number(detail.orderDetail.product.iva))})`}
+                          </Typography>
                         </TableCell>
                         <TableCell align="right">
                           {formatMoney(detail.total)}
+
                         </TableCell>
                       </TableRow>
                     );

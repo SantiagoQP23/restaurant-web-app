@@ -1,7 +1,6 @@
 
-import {lazy} from 'react';
+import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import { PrivateRoutes } from '../../../../models';
 import { IncomesReports } from '../views/IncomesReports/IncomesReports.view';
 import { OrdersReports } from '../components/OrdersReports/OrdersReports.component';
 import { ReceiptOrderReport } from '../components/OrdersReports/ReceiptOrderReport.component';

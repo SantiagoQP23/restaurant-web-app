@@ -2,7 +2,7 @@ import { configureStore , ThunkAction, Action} from '@reduxjs/toolkit';
 
 import { authSlice } from './slices/auth';
 import { clientsSlice } from './slices/clients';
-import { sectionsSlice,categoriesSlice, productsSlice, menuSlice,  } from './slices/menu';
+import { menuSlice } from './slices/menu';
 import { detailsSlice, ordersSlice } from './slices/orders';
 import { tablesSlice } from './slices/tables';
 import { userSlice } from './slices/users';

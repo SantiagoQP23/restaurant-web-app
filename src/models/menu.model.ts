@@ -57,6 +57,8 @@ export enum ProductStatusSpanish {
  * @version 1.1 16/12/2023 Adds productionArea field.
  * @version 1.2 17/12/2023 Adds unitCost and quantity fields.
  * @version 1.3 18/12/2023 Adds options field.
+ * @author Steven Rosales
+ * @version 1.4 15/03/2025 Add iva to product
  */
 export interface IProduct {
   id: string;
@@ -72,6 +74,7 @@ export interface IProduct {
   unitCost: number;
   quantity: number;
   options: ProductOption[];
+  iva: number;
 }
 
 /**

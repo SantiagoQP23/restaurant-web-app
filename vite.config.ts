@@ -6,6 +6,11 @@ export default defineConfig({
   plugins: [react({
     include: "**/*.tsx",
   })],
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
+  },
   server: {
     port: 3030
   },

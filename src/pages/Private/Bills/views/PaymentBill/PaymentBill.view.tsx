@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useBill, useUpdateBill } from "../../hooks/useBills";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {
-  Alert,
   Box,
   Button,
   Card,
@@ -34,14 +33,15 @@ import { LoadingButton } from "@mui/lab";
 import { Label } from "../../../../../components/ui";
 import { format } from "date-fns";
 import { UpdateBillDto } from "../../dto";
-import { useCashRegisterStore } from "../../../Common/store/useCashRegisterStore";
-import { CashRegisterItem } from "./components/CashRegisterItem.component";
+// import { useCashRegisterStore } from "../../../Common/store/useCashRegisterStore";
 
 /**
  * Component for pay a bill 
  * 
  * @author Santiago Quirumbay
  * @version 1.1 28-02-2025 Remove payment method
+ * @author Steven Rosales
+ * @version 1.2 15-03-2025 Add iva to bill
  */
 export const PaymentBill = () => {
   const { id } = useParams();
@@ -51,14 +51,14 @@ export const PaymentBill = () => {
   const { isLoading, data: bill } = useBill(+id);
 
   const navigate = useNavigate();
-  const { cashRegisters } = useCashRegisterStore((state) => state);
+  // const { cashRegisters } = useCashRegisterStore((state) => state);
   const {
     mutate: updateBill,
     isLoading: isUpdating,
     isOnline,
   } = useUpdateBill();
 
-  const { activeCashRegister } = useCashRegisterStore((state) => state);
+  // const { activeCashRegister } = useCashRegisterStore((state) => state);
 
   const [step, setStep] = useState(1);
 
@@ -87,22 +87,22 @@ export const PaymentBill = () => {
   const handleChangeClient = (client: IClient | null) => setClient(client);
   const [receivedAmount, setReceivedAmount] = useState<number>(0);
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
+  const [paymentMethod] = useState<PaymentMethod>(
     PaymentMethod.CASH
   );
 
-  const handleChangePaymentMethod = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPaymentMethod(() => {
-      const value = event.target.value as PaymentMethod;
+  // const handleChangePaymentMethod = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setPaymentMethod(() => {
+  //     const value = event.target.value as PaymentMethod;
 
-      if (value === PaymentMethod.TRANSFER) setReceivedAmount(bill?.total || 0);
-      else setReceivedAmount(0);
+  //     if (value === PaymentMethod.TRANSFER) setReceivedAmount(bill?.total || 0);
+  //     else setReceivedAmount(0);
 
-      return value;
-    });
-  };
+  //     return value;
+  //   });
+  // };
 
   const handleChangeAmountPaid = (event: React.ChangeEvent<HTMLInputElement>) =>
     setReceivedAmount(+event.target.value);
@@ -114,11 +114,11 @@ export const PaymentBill = () => {
 
   const submitPayment = () => {
     if (
-      !bill 
+      !bill
       // !paymentMethod ||
       // (withClient && !client) ||
       // !activeCashRegister
-    ){
+    ) {
       alert("Error al registrar el pago");
       return;
     }
