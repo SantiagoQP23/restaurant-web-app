@@ -8,8 +8,9 @@ import {
   IconButton,
   MenuItem,
   Popover,
-  CardMedia,
-  Stack
+  Stack,
+  useTheme,
+  useMediaQuery
 } from '@mui/material/';
 
 import { DeleteOutline, EditOutlined, MoreHoriz } from '@mui/icons-material';
@@ -36,6 +37,12 @@ interface Props {
 
 export const Product: FC<Props> = ({ producto }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
+
+  const isXs = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
+
+  const ImageWidth = isXs ? 80 : isMd ? 120 : 160;
 
   const popupState = usePopupState({
     variant: 'popover',
@@ -65,21 +72,25 @@ export const Product: FC<Props> = ({ producto }) => {
         sx={{
           width: '100%',
           height: '100%', // Hace que todos los elementos tengan la misma altura
-          display: 'flex'
         }}
       >
-        <CardMedia
-          component='img'
-          sx={{ width: 160 }}
-          image={
-            producto.images
-              ? producto.images
-              : '/static/images/products/no-image.png'
-          }
-          alt='Product'
-        />
-        <CardContent sx={{ width: 1 }}>
-          <Stack direction='column' spacing={1}>
+        <CardContent sx={{ width: '100%', gap: 2, height: '100%', display: 'flex', flexDirection: 'row' }}>
+          <img
+            src={
+              producto.images
+                ? producto.images
+                : '/static/images/products/no-image.png'
+            }
+            alt='Product'
+            style={{
+              width: ImageWidth,
+              height: 280,
+              objectFit: 'cover',
+              aspectRatio: 16 / 9,
+              borderRadius: 7
+            }}
+          />
+          <Stack direction='column' spacing={1} width='100%'>
             <Box
               sx={{
                 display: 'flex',

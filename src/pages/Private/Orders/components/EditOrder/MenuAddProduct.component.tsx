@@ -11,8 +11,8 @@ import {
 } from '../../../../../redux';
 
 import { findProductsByName, getProducts } from '../../../../../helpers';
-import { useModal } from '../../../../../hooks';
-import { ICreateOrderDetail } from '../../../../../models/orders.model';
+// import { useModal } from '../../../../../hooks';
+// import { ICreateOrderDetail } from '../../../../../models/orders.model';
 
 import { ProductListAddToOrder } from './MenuAddProduct/ProductListAddToOrder.component';
 
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const Categories: FC<Props> = ({ categories }) => {
-  const { activeSection, activeCategory } = useSelector(selectMenu);
+  const { activeCategory } = useSelector(selectMenu);
 
   const dispatch = useDispatch();
 
@@ -44,7 +44,7 @@ export const Categories: FC<Props> = ({ categories }) => {
         alignItems='center'
       >
         {' '}
-        {categories.map((category, index) => {
+        {categories.map((category) => {
           if (category.isActive)
             return (
               <Box
@@ -87,17 +87,17 @@ export const Categories: FC<Props> = ({ categories }) => {
 };
 
 const AllMenu: FC = () => {
-  const { sections, activeSection, categories, activeCategory } =
+  const { activeCategory } =
     useSelector(selectMenu);
 
-  const { isOpen, handleClose, handleOpen } = useModal();
+  // const { isOpen, handleClose, handleOpen } = useModal();
 
-  const [detail, setDetail] = useState<ICreateOrderDetail | null>(null);
+  // const [detail, setDetail] = useState<ICreateOrderDetail | null>(null);
 
-  const newDetail = (detail: ICreateOrderDetail) => {
-    setDetail(detail);
-    handleOpen();
-  };
+  // const newDetail = (detail: ICreateOrderDetail) => {
+  //   setDetail(detail);
+  //   handleOpen();
+  // };
 
   return (
     <>

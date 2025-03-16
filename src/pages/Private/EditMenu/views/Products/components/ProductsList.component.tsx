@@ -19,7 +19,7 @@ import { Product } from './Product.component';
 
 import { selectMenu, setActiveCategory } from '../../../../../../redux';
 
-interface Props {}
+interface Props { }
 
 export const ProductsList: FC<Props> = () => {
   const dispatch = useDispatch();
