@@ -7,12 +7,8 @@ import {
   IconButton,
   Container,
   CircularProgress,
-  Stepper,
-  Step,
-  StepLabel,
   Button,
   Stack,
-  Tooltip,
   Box,
   Typography,
   Popover,
@@ -29,16 +25,13 @@ import { PayOrder } from "./components/PayOrder.component";
 import { useInvoiceStore } from "../../store/invoiceStore";
 import { Account } from "./components/Account.component";
 import {
-  ArrowRight,
   ArrowBackIos,
   PointOfSaleOutlined,
   Print,
   DeleteOutline,
   RemoveCircle,
   ChevronLeft,
-  MoreHoriz,
   EditOutlined,
-  Done,
   MoreVert,
 } from "@mui/icons-material";
 import { DrawerInvoice } from "./components/DrawerInvoice.component";
@@ -48,7 +41,7 @@ import { statusModalDeleteOrder } from "../../services/orders.service";
 import { OrderStatus } from "../../../../../models";
 import { ModalDeleteInvoice } from "../../components/modals/ModalDeleteInvoice.component";
 
-import { generateOrderPdf } from "../../helpers/pdf-orders";
+// import { generateOrderPdf } from "../../helpers/pdf-orders";
 import { LabelStatusOrder } from "../../components/LabelStatusOrder.component";
 import { LabelStatusPaid } from "../../components/LabelStatusPaid.component";
 import NiceModal from "@ebay/nice-modal-react";
@@ -68,6 +61,8 @@ import { CreateBillModal } from "./components/CreateBillModal.component";
  * 
  * @author Santiago Quirumbay
  * @version v1.2 18-02-2025 Fix: Validation to close order
+ * @author Steven Rosales
+ * @version v1.3 17/03/2025 Adds type order
  */
 export const EditOrder = () => {
   const navigate = useNavigate();
@@ -89,8 +84,8 @@ export const EditOrder = () => {
     step: activeStep,
     setStep: changeStep,
     handleBackStep,
-    handleNextStep,
-    resetDetails,
+    // handleNextStep,
+    // resetDetails,
     reset,
   } = useInvoiceStore((state) => state);
 
@@ -98,7 +93,7 @@ export const EditOrder = () => {
 
   const { activeOrder } = useSelector(selectOrders);
 
-  let orderDelivered = false;
+  // const orderDelivered = false;
 
   const { isLoading } = useOrder(orderId!);
 
@@ -111,20 +106,20 @@ export const EditOrder = () => {
     if (activeOrder) NiceModal.show(CreateBillModal, { order: activeOrder });
   };
 
-  const openPDF = async () => {
-    if (activeOrder) {
-      const pdf = await generateOrderPdf(activeOrder);
-      pdf.open();
-    }
-  };
+  // const openPDF = async () => {
+  //   if (activeOrder) {
+  //     const pdf = await generateOrderPdf(activeOrder);
+  //     pdf.open();
+  //   }
+  // };
 
   const handleEdit = () => {
     popupState.close();
   };
 
-  const handleClose = () => {
-    popupState.close();
-  };
+  // const handleClose = () => {
+  //   popupState.close();
+  // };
 
   const paidBills =
     activeOrder?.bills.filter((bill) => bill.isPaid).length || 0;
@@ -135,16 +130,16 @@ export const EditOrder = () => {
   const isCloseableOrder =
     activeOrder?.status === OrderStatus.DELIVERED && activeOrder?.isPaid;
 
-  const BtnNext = () => (
-    <Button
-      color="inherit"
-      onClick={handleNextStep}
-      endIcon={<ArrowRight fontSize="small" />}
-      size="small"
-    >
-      Siguiente
-    </Button>
-  );
+  // const BtnNext = () => (
+  //   <Button
+  //     color="inherit"
+  //     onClick={handleNextStep}
+  //     endIcon={<ArrowRight fontSize="small" />}
+  //     size="small"
+  //   >
+  //     Siguiente
+  //   </Button>
+  // );
 
   const BtnBack = () => (
     <Button
@@ -161,11 +156,11 @@ export const EditOrder = () => {
     if (activeOrder) statusModalDeleteOrder.setSubject(true, activeOrder);
   };
 
-  orderDelivered = activeOrder?.details?.find(
-    (detail) => detail.qtyDelivered >= 1
-  )
-    ? true
-    : false;
+  // orderDelivered = activeOrder?.details?.find(
+  //   (detail) => detail.qtyDelivered >= 1
+  // )
+  //   ? true
+  //   : false;
 
   useEffect(() => {
     changeStep(0);
@@ -274,7 +269,7 @@ export const EditOrder = () => {
               </>
             )}
 
-          
+
           </>
         )}
       </Container>

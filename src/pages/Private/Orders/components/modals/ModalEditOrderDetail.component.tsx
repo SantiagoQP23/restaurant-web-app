@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { IOrderDetail, ProductOption } from "../../../../../models";
+import { IOrderDetail, ProductOption, TypeOrder } from "../../../../../models";
 
-import { statusModalDeleteOrderDetail } from "../../services/orders.service";
+// import { statusModalDeleteOrderDetail } from "../../services/orders.service";
 
 import {
   Box,
@@ -15,20 +15,20 @@ import {
   TextField,
   Grid,
   InputAdornment,
-  Chip,
-  useMediaQuery,
   Button,
+  FormControl,
+  RadioGroup,
+  Stack,
+  Radio,
+  FormControlLabel,
 } from "@mui/material";
 
-import { useCounter, useUpdateOrderDetail } from "../../hooks";
-import { Close, Delete, AttachMoney, Save } from "@mui/icons-material";
+import { useUpdateOrderDetail } from "../../hooks";
+import { Close, AttachMoney, Save } from "@mui/icons-material";
 import { UpdateOrderDetailDto } from "../../dto/update-order-detail.dto";
 import { LoadingButton } from "@mui/lab";
 import { CounterInput } from "../CounterInput.component";
 import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
-import { formatMoney } from "../../../Common/helpers/format-money.helper";
-import { Scrollbar } from "../../../components";
-import { Theme } from "@mui/material/styles";
 
 interface Props {
   detail: IOrderDetail;
@@ -45,24 +45,18 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
     // const [detail, setDetail] = useState<IOrderDetail>();
     const modal = useModal();
 
-    const availableOptions = detail.product?.options
-      ? detail.product?.options.filter((option) => option.isAvailable)
-      : [];
 
     const [quantity, setQuantity] = useState(detail.quantity);
     const [qtyDelivered, setQtyDelivered] = useState(detail.qtyDelivered);
+    const [typeOrder, setTypeOrder] = useState(detail.typeOrderDetail);
 
     // form
     const [description, setDescription] = useState(detail.description);
     const [price, setPrice] = useState(detail.price);
 
-    const [selectedOption, setSelectedOption] = useState<
+    const [selectedOption] = useState<
       ProductOption | undefined
     >(detail.productOption ? detail.productOption : undefined);
-
-    const qtyCounter = useCounter(0, 1, 100, detail?.qtyDelivered);
-
-    const qtyDeliveredCounter = useCounter(0, 1, detail?.quantity);
 
     const { mutate: update, isLoading, isOnline } = useUpdateOrderDetail();
 
@@ -74,6 +68,7 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
         quantity,
         description,
         price,
+        typeOrderDetail: typeOrder,
       };
 
       if (selectedOption) {
@@ -89,14 +84,18 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
       modal.hide();
     };
 
-    const showModalDeleteDetail = () => {
-      statusModalDeleteOrderDetail.setSubject(true, detail!, orderId!);
-      closeModal();
-    };
+    // const showModalDeleteDetail = () => {
+    //   statusModalDeleteOrderDetail.setSubject(true, detail!, orderId!);
+    //   closeModal();
+    // };
 
     const handleChangeQuantity = (value: number) => {
       setQuantity(value);
     };
+
+    const handleTypeChange = (type: TypeOrder) => {
+      setTypeOrder(type);
+    }
 
     return (
       <Dialog {...muiDialogV5(modal)} maxWidth="xs">
@@ -162,7 +161,32 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
                 {detail?.product.description}
               </Typography>
             </Grid>
+            <FormControl>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue={TypeOrder.IN_PLACE}
+                name="radio-buttons-group"
+                onChange={(e) => {
+                  handleTypeChange(e.target.value as TypeOrder);
+                }}
+                value={typeOrder}
+              >
+                <Stack direction="row" spacing={2}>
+                  <FormControlLabel
+                    value={TypeOrder.IN_PLACE}
+                    control={<Radio />}
+                    label={'Para servir'}
+                  />
+                  <FormControlLabel
+                    value={TypeOrder.TAKE_AWAY}
+                    control={<Radio />}
+                    label={'Para llevar'}
+                  />
+                </Stack>
+              </RadioGroup>
+            </FormControl>
             <Grid item xs={12} display="flex" justifyContent="right">
+
               <CounterInput
                 value={quantity}
                 onChange={handleChangeQuantity}

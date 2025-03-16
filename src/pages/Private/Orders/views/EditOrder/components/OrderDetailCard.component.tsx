@@ -7,13 +7,9 @@ import {
   IconButton,
   Typography,
   LinearProgress,
-  TableCell,
-  TableRow,
-  Stack,
   Checkbox,
   Chip,
   Card,
-  CardContent,
   CardHeader,
   CardActions,
   Popover,
@@ -29,23 +25,17 @@ import {
   CheckCircle,
   CheckCircleOutline,
   MoreVert,
-  Visibility,
-  Done,
 } from "@mui/icons-material";
-import { IOrderDetail } from "../../../../../../models";
+import { IOrderDetail, TypeOrder } from "../../../../../../models";
 
 import { UpdateOrderDetailDto } from "../../../dto/update-order-detail.dto";
 import { selectOrders } from "../../../../../../redux/slices/orders/orders.slice";
 import { statusModalDeleteOrderDetail } from "../../../services/orders.service";
-import { styled } from "@mui/material/styles";
 import { useUpdateOrderDetail } from "../../../hooks";
 import { CounterInput } from "../../../components/CounterInput.component";
 import { formatMoney } from "../../../../Common/helpers/format-money.helper";
 import NiceModal from "@ebay/nice-modal-react";
-import {
-  LinearProgressWrapper,
-  ModalEditOrderDetail,
-} from "../../../components";
+import { ModalEditOrderDetail } from "../../../components";
 import { bindPopover } from "material-ui-popup-state";
 import { bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 
@@ -55,6 +45,8 @@ interface Props {
 
 /**
  * @version 1.0 17-01-2024
+ * @author Steven Rosales
+ * @version 1.1 17/03/2025 Adds type order
  */
 export const OrderDetailCard: FC<Props> = ({ detail }) => {
   const popupState = usePopupState({
@@ -130,7 +122,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
 
   const isDeleteable = detail.qtyDelivered === 0;
 
-  const qtyToDeliver = detail.quantity - detail.qtyDelivered;
+  // const qtyToDeliver = detail.quantity - detail.qtyDelivered;
 
   const quantityChanged =
     quantity !== detail.quantity &&
@@ -143,16 +135,28 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
         <CardHeader
           // avatar={<Typography variant="h6">{detail.quantity}</Typography>}
           subheader={
-            <Typography variant="h5" component="div" mt={0.5}>
-              {detail.quantity} {detail.product.name}{" "}
-              {detail.productOption && (
-                <Chip
-                  sx={{ ml: 1 }}
-                  label={detail.productOption?.name}
-                  size="small"
-                />
+            <>
+              <Typography variant="h5" component="div" mt={0.5}>
+                {detail.quantity} {detail.product.name}{" "}
+                {detail.productOption && (
+                  <Chip
+                    sx={{ ml: 1 }}
+                    label={detail.productOption?.name}
+                    size="small"
+                  />
+                )}
+              </Typography>
+              {detail.typeOrderDetail === TypeOrder.TAKE_AWAY && (
+                <Typography
+                  alignItems="center"
+                  display="flex"
+                  sx={{ color: `warning.main` }}
+                  gap={1}
+                >
+                  <Typography>Para llevar</Typography>
+                </Typography>
               )}
-            </Typography>
+            </>
           }
           action={
             <IconButton {...bindTrigger(popupState)}>

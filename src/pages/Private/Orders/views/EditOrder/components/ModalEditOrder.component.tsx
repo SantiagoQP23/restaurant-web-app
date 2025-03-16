@@ -29,6 +29,11 @@ interface Props {
   order: Order;
 }
 
+/**
+ * Modal to edit an order
+ * @author Steven Rosales
+ * @version 1.0 17/03/2025 Adds type order
+ */
 export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
   const [type, setType] = useState<TypeOrder>(order.type);
 

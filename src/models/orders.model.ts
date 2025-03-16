@@ -60,6 +60,11 @@ export interface  Order {
   bills: Bill[];
 }
 
+/**
+ * Order Detail Model
+ * @author Steven Rosales
+ * @version v1.1 22-12-2023 Adds type order
+ */
 export interface IOrderDetail {
   id: string;
 
@@ -83,6 +88,7 @@ export interface IOrderDetail {
 
   price: number;
 
+  typeOrderDetail: TypeOrder;
   productOption?: ProductOption;
 }
 

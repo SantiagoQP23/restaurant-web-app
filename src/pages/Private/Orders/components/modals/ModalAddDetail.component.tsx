@@ -10,17 +10,13 @@ import {
   Typography,
   Box,
   Stack,
-  Chip,
-  useMediaQuery,
-  useTheme,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
   Checkbox,
 } from "@mui/material/";
 
-import { ICreateOrderDetail, Order } from "../../../../../models/orders.model";
+import { ICreateOrderDetail, Order, TypeOrder } from "../../../../../models/orders.model";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 import { selectOrders } from "../../../../../redux/slices/orders/orders.slice";
@@ -34,8 +30,6 @@ import { ProductOption, ProductStatus } from "../../../../../models";
 import { Label } from "../../../../../components/ui";
 import { useNewOrderStore } from "../../store/newOrderStore";
 import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
-import { Scrollbar } from "../../../components";
-import { formatMoney } from "../../../Common/helpers/format-money.helper";
 import { useCreateOrderDetail } from "../../hooks";
 
 interface Props {
@@ -50,21 +44,24 @@ interface Props {
  * @version 1.3 28/12/2023 Adds useCreateOrderDetail hook
  * @version 1.4 31/01/2025 Options hidden
  * @version 1.5 01/03/2025 Fix: Validation to add product to order and quantity delivered
+ * @author Steven Rosales
+ * @version 1.6 17/03/2025 Adds type order
  */
 export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const modal = useModal();
   console.log("detail", detail);
-  const product = detail?.product;
-  const availableOptions = product?.options
-    ? product?.options.filter((option) => option.isAvailable)
-    : [];
+  // const product = detail?.product;
+  // const availableOptions = product?.options
+  //   ? product?.options.filter((option) => option.isAvailable)
+  //   : [];
 
   const [description, setDescription] = useState("");
   const [detailDelivered, setDetailDelivered] = useState(false);
   const [quantity, setQuantity] = useState(detail?.quantity || 1);
-  const [selectedOption, setSelectedOption] = useState<
+  const [selectedOption] = useState<
     ProductOption | undefined
   >(detail.productOption ? detail.productOption : undefined);
+  const [typeOrder, setTypeOrder] = useState<TypeOrder>(TypeOrder.IN_PLACE);
 
   const { addDetail, details, updateDetail } = useNewOrderStore(
     (state) => state
@@ -95,13 +92,14 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   /**
    * @version 1.1 20/12/2023 Adds product option
    */
-  const addProductoToOrder = (order: Order) => {
+  const addProductToOrder = (order: Order) => {
     const data: CreateOrderDetailDto = {
       orderId: order.id,
       productId: detail!.product.id,
       price: detail!.product.price,
       quantity,
       qtyDelivered: detailDelivered ? quantity : 0,
+      typeOrderDetail: typeOrder,
     };
 
     if (description) {
@@ -115,7 +113,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
 
   const handleCreateDetail = () => {
     if (activeOrder) {
-      addProductoToOrder(activeOrder);
+      addProductToOrder(activeOrder);
     } else {
       const detailExists = details.find(
         (currentDetail) =>
@@ -147,6 +145,10 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
     closeModal();
   };
 
+  const handleTypeChange = (type: TypeOrder) => {
+    setTypeOrder(type);
+  }
+
   return (
     <>
       <Dialog {...muiDialogV5(modal)}>
@@ -172,33 +174,29 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
                 </ListItem>
               ))}
             </List> */}
-            {/* {availableOptions.length > 0 && (
-              <FormControl>
-                <FormLabel id="demo-radio-buttons-group-label">
-                  Opciones
-                </FormLabel>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
-                  onChange={(e) => {
-                    const option = availableOptions.find(
-                      (option) => `${option.id}` === e.target.value
-                    );
-                    setSelectedOption(option);
-                  }}
-                >
-                  {availableOptions.map((option) => (
-                    <FormControlLabel
-                      key={option.id}
-                      value={option.id}
-                      control={<Radio />}
-                      label={`${option?.name} ${formatMoney(option?.price)}`}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            )} */}
+            <FormControl>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue={TypeOrder.IN_PLACE}
+                name="radio-buttons-group"
+                onChange={(e) => {
+                  handleTypeChange(e.target.value as TypeOrder);
+                }}
+              >
+                <Stack direction="row" spacing={2}>
+                  <FormControlLabel
+                    value={TypeOrder.IN_PLACE}
+                    control={<Radio />}
+                    label={'Para servir'}
+                  />
+                  <FormControlLabel
+                    value={TypeOrder.TAKE_AWAY}
+                    control={<Radio />}
+                    label={'Para llevar'}
+                  />
+                </Stack>
+              </RadioGroup>
+            </FormControl>
 
             <Box>
               {/* <Autocomplete

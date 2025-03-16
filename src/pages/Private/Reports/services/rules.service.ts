@@ -93,7 +93,6 @@ export const getRestaurant = async (
   const resp = await restauranteApi.get<Restaurant>(
     `restaurant/${restaurantId}`
   );
-  console.log(resp.data);
   return resp.data;
 };
 
