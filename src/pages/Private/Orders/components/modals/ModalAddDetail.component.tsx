@@ -158,7 +158,10 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
       <Dialog {...muiDialogV5(modal)}>
         <DialogContent
           sx={{
-            width: 300
+            width: {
+              xs: '100%',
+              md: 600,
+            }
           }}
         >
           <Stack spacing={2}>
@@ -231,7 +234,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
             </Box>
 
             {detail?.product.description && (
-              <Box>
+              <Box sx={{ border: '1px solid #e0e0e0', p: 1, borderRadius: 1 }}>
                 <Typography variant='body1' style={{ whiteSpace: 'pre-wrap' }}>
                   {detail?.product.description}
                 </Typography>
@@ -244,31 +247,35 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
               </>
             ) : (
               <>
-                <Stack
-                  direction='row'
-                  alignItems='center'
-                  justifyContent='flex-end'
-                  my={2}
-                >
-                  <CounterInput
-                    value={detail?.quantity || 1}
-                    onChange={handleQuantityChange}
-                  />
-                </Stack>
-
                 <FormControl fullWidth>
-                  <TextField
-                    id='descripcion-pedido'
-                    label='Notas'
-                    margin='dense'
-                    multiline
-                    rows={3}
-                    defaultValue={description}
-                    onBlur={(e) => {
-                      console.log(e.target.value);
-                      setDescription(e.target.value);
-                    }}
-                  />
+                  <Stack
+                    flexWrap='wrap'
+                    flexDirection='column'
+                    spacing={2}
+                    alignItems='end'
+                    width='100%'
+                  >
+                    <TextField
+                      id='descripcion-pedido'
+                      label='Notas'
+                      margin='dense'
+                      multiline
+                      rows={3}
+                      sx={{
+                        width: '100%'
+                      }}
+                      defaultValue={description}
+                      onBlur={(e) => {
+                        console.log(e.target.value);
+                        setDescription(e.target.value);
+                      }}
+                    />
+                    <CounterInput
+                      value={detail?.quantity || 1}
+                      onChange={handleQuantityChange}
+                    />
+
+                  </Stack>
                 </FormControl>
               </>
             )}
