@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ICreateClient } from "../../../../models/client.model";
+import { IClient, ICreateClient } from "../../../../models/client.model";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -10,6 +10,7 @@ import {
   Typography,
   FormControl,
   InputLabel,
+  Button,
 } from "@mui/material";
 import { TypeIdentification } from "../../../../models/common.model";
 
@@ -38,7 +39,7 @@ export const FormClient: FC<Props> = ({ client, onSubmit, loading, msg }) => {
   return (
     <>
       <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ mt: 1 }}>
           <Grid item xs={12} sm={6}>
             <TextField
               label="Nombres"
