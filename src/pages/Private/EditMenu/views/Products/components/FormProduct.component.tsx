@@ -66,6 +66,9 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   const { productionAreas } = useProductionAreasStore();
 
+  const [priceWithoutIva, setPriceWithoutIva] = useState<number>(getPriceWithoutIva(selectedProduct.price, selectedProduct.iva));
+  const [unitCostWithoutIva, setUnitCostWithoutIva] = useState<number>(getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva));
+
   const { sections } = useSelector(selectMenu);
 
   const { changeProductCategory } = useEditMenuStore();
@@ -85,6 +88,16 @@ export const FormProduct: FC<Props> = ({ product }) => {
     };
     console.log({ updateProductDto });
     return updateProductDto;
+  };
+
+  const onPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(event.target.value || '0');
+    setPriceWithoutIva(getPriceWithoutIva(value, selectedProduct.iva));
+  };
+
+  const onUnitCostChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(event.target.value || '0');
+    setUnitCostWithoutIva(getPriceWithoutIva(value, selectedProduct.iva));
   };
 
   const {
@@ -118,10 +131,14 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   useEffect(() => {
     reset(getUpdateProductDto(selectedProduct));
+    setPriceWithoutIva(getPriceWithoutIva(selectedProduct.price, selectedProduct.iva));
+    setUnitCostWithoutIva(getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva));
   }, [selectedProduct, sections]);
 
   useEffect(() => {
     reset(getUpdateProductDto(selectedProduct));
+    setPriceWithoutIva(getPriceWithoutIva(selectedProduct.price, selectedProduct.iva));
+    setUnitCostWithoutIva(getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva));
   }, []);
 
   function showModalCreateOption(): void {
@@ -360,6 +377,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                       })}
                       helperText={errors.price?.message}
                       error={!!errors.price}
+                      onChange={onPriceChange}
                     />
                   </Grid>
 
@@ -387,6 +405,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                       })}
                       helperText={errors.unitCost?.message}
                       error={!!errors.unitCost}
+                      onChange={onUnitCostChange}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -425,10 +444,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                       fullWidth
                       disabled
                       type='number'
-                      value={getPriceWithoutIva(
-                        selectedProduct.price,
-                        selectedProduct.iva
-                      )}
+                      value={priceWithoutIva}
                     />
                   </Grid>
                   <Grid item xs={6} md={3}>
@@ -440,10 +456,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                       inputProps={{
                         step: 0.05
                       }}
-                      value={getPriceWithoutIva(
-                        selectedProduct.unitCost,
-                        selectedProduct.iva
-                      )}
+                      value={unitCostWithoutIva}
                     />
                   </Grid>
                 </Grid>
