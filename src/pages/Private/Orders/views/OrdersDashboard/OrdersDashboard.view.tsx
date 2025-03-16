@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Tabs,
   Tab,
@@ -11,25 +11,31 @@ import {
   CardHeader,
   CardContent,
   Typography,
-  Tooltip,
-} from "@mui/material";
-import { TitlePage } from "../../../components";
-import { Tables } from "./components/Tables.component";
-import { Add, Assignment, LocalDining, PendingActions, SoupKitchen } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import { OrderStatus, TypeOrder } from "../../../../../models";
-import { useNewOrderStore } from "../../store/newOrderStore";
-import { Users } from "./components/Users.component";
-import { Label } from "../../../../../components/ui";
-import { TakeAwayOrders } from "./components/TakeAwayOrders.component";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../redux";
-import { LinearProgressWrapper } from "../../components";
+  Tooltip
+} from '@mui/material';
+import { TitlePage } from '../../../components';
+import { Tables } from './components/Tables.component';
+import {
+  Add,
+  Assignment,
+  LocalDining,
+  PendingActions,
+  SoupKitchen
+} from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { OrderStatus, TypeOrder } from '../../../../../models';
+import { useNewOrderStore } from '../../store/newOrderStore';
+import { Users } from './components/Users.component';
+import { Label } from '../../../../../components/ui';
+import { TakeAwayOrders } from './components/TakeAwayOrders.component';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../redux';
+import { LinearProgressWrapper } from '../../components';
 
 enum DashboardViews {
-  TABLES = "TABLES",
-  USERS = "USERS",
-  TAKE_AWAY = "TAKE_AWAY",
+  TABLES = 'TABLES',
+  USERS = 'USERS',
+  TAKE_AWAY = 'TAKE_AWAY'
 }
 
 export const OrdersDashboard = () => {
@@ -44,7 +50,7 @@ export const OrdersDashboard = () => {
   const createOrderTakeAway = () => {
     setOrderType(TypeOrder.TAKE_AWAY);
 
-    navigate("/orders/add/menu");
+    navigate('/orders/add/menu');
   };
 
   const totalOrders = orders.length;
@@ -69,16 +75,16 @@ export const OrdersDashboard = () => {
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth='lg'>
         <TitlePage
-          title="Pedidos"
+          title='Pedidos'
           action={
-            <Stack direction="row" spacing={1}>
+            <Stack direction='row' spacing={1}>
               <Button
-                variant="contained"
+                variant='contained'
                 startIcon={<Add />}
                 onClick={createOrderTakeAway}
-                size="small"
+                size='small'
               >
                 Crear pedido para llevar
               </Button>
@@ -89,14 +95,17 @@ export const OrdersDashboard = () => {
         <Grid container spacing={2} mb={2}>
           <Grid item xs={6} md={6} lg={3}>
             <Card>
-              <CardHeader avatar={<Assignment color="primary" />} title="Total de pedidos" />
+              <CardHeader
+                avatar={<Assignment color='primary' />}
+                title='Total de pedidos'
+              />
               <CardContent>
-                <Typography variant="h1">{orders.length}</Typography>
-                <Tooltip title="Pedidos pagados">
+                <Typography variant='h1'>{orders.length}</Typography>
+                <Tooltip title='Pedidos pagados'>
                   <LinearProgressWrapper
                     value={(paidOrders * 100) / totalOrders}
-                    variant="determinate"
-                    color="primary"
+                    variant='determinate'
+                    color='primary'
                   />
                 </Tooltip>
               </CardContent>
@@ -105,15 +114,15 @@ export const OrdersDashboard = () => {
           <Grid item xs={6} md={6} lg={3}>
             <Card>
               <CardHeader
-                avatar={<PendingActions color="warning" />}
-                title="Pendientes"
+                avatar={<PendingActions color='warning' />}
+                title='Pendientes'
               />
               <CardContent>
-                <Typography variant="h1">{pendingOrders}</Typography>
+                <Typography variant='h1'>{pendingOrders}</Typography>
                 <LinearProgressWrapper
                   value={(pendingOrders * 100) / totalOrders}
-                  variant="determinate"
-                  color="warning"
+                  variant='determinate'
+                  color='warning'
                 />
               </CardContent>
             </Card>
@@ -121,15 +130,15 @@ export const OrdersDashboard = () => {
           <Grid item xs={6} md={6} lg={3}>
             <Card>
               <CardHeader
-                avatar={<SoupKitchen color="info" />}
-                title="En proceso"
+                avatar={<SoupKitchen color='info' />}
+                title='En proceso'
               />
               <CardContent>
-                <Typography variant="h1">{inProgressOrders}</Typography>
+                <Typography variant='h1'>{inProgressOrders}</Typography>
                 <LinearProgressWrapper
                   value={(inProgressOrders * 100) / totalOrders}
-                  variant="determinate"
-                  color="info"
+                  variant='determinate'
+                  color='info'
                 />
               </CardContent>
             </Card>
@@ -137,15 +146,15 @@ export const OrdersDashboard = () => {
           <Grid item xs={6} md={6} lg={3}>
             <Card>
               <CardHeader
-                avatar={<LocalDining color="success" />}
-                title="Entregados"
+                avatar={<LocalDining color='success' />}
+                title='Entregados'
               />
               <CardContent>
-                <Typography variant="h1">{deliveredOrders}</Typography>
+                <Typography variant='h1'>{deliveredOrders}</Typography>
                 <LinearProgressWrapper
                   value={(deliveredOrders * 100) / totalOrders}
-                  variant="determinate"
-                  color="success"
+                  variant='determinate'
+                  color='success'
                 />
               </CardContent>
             </Card>
@@ -153,17 +162,17 @@ export const OrdersDashboard = () => {
         </Grid>
 
         <Tabs value={view} onChange={(e, value) => setView(value)}>
-          <Tab value={DashboardViews.TABLES} label="Mesas" />
+          <Tab value={DashboardViews.TABLES} label='Mesas' />
           {/* <Tab value={DashboardViews.USERS} label="Usuarios" icon={<Label sx={{ml: 1}} color="info">new</Label>} iconPosition="end" /> */}
           <Tab
             value={DashboardViews.TAKE_AWAY}
-            label="Para llevar"
+            label='Para llevar'
             icon={
-              <Label sx={{ ml: 1 }} color="info">
+              <Label sx={{ ml: 1 }} color='info'>
                 {ordersTakeAway}
               </Label>
             }
-            iconPosition="end"
+            iconPosition='end'
           />
         </Tabs>
 

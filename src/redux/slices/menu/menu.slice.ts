@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
 
-import { ICategory, IProduct, ISection, Menu } from "../../../models";
+import { ICategory, IProduct, ISection, Menu } from '../../../models';
 
 export interface MenuState {
   sections: ISection[];
@@ -18,18 +18,17 @@ const initialState: MenuState = {
   products: [],
   activeSection: null,
   activeCategory: null,
-  activeProduct: null,
+  activeProduct: null
 };
-
 
 /**
  * @description Redux slice for menu
- * 
+ *
  * @author Santiago Quirumbay
  * @version 1.1 28/11/2023 Added crud products and categories to the state
  */
 export const menuSlice = createSlice({
-  name: "menu",
+  name: 'menu',
   initialState,
   reducers: {
     addSection: (state, action: PayloadAction<ISection>) => {
@@ -113,8 +112,8 @@ export const menuSlice = createSlice({
     resetProducts: () => ({ ...initialState }),
     resetActiveProduct: (state) => {
       state.activeProduct = null;
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -141,7 +140,7 @@ export const {
   setActiveSection,
   updateCategory,
   updateProduct,
-  updateSection,
+  updateSection
 } = menuSlice.actions;
 
 export const selectMenu = (state: RootState) => state.menu;

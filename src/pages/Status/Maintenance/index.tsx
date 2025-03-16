@@ -99,9 +99,6 @@
 
 // export default StatusMaintenance;
 
-
 export const index = () => {
-  return (
-    <div>index</div>
-  )
-}
+  return <div>index</div>;
+};

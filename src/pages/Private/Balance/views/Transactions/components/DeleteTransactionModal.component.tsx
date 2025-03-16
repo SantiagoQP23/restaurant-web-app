@@ -1,7 +1,7 @@
-import NiceModal, { muiDialogV5 } from "@ebay/nice-modal-react";
-import React from "react";
-import { Transaction } from "../../../models/transaction.model";
-import { LoadingButton } from "@mui/lab";
+import NiceModal, { muiDialogV5 } from '@ebay/nice-modal-react';
+import React from 'react';
+import { Transaction } from '../../../models/transaction.model';
+import { LoadingButton } from '@mui/lab';
 import {
   Dialog,
   DialogTitle,
@@ -10,8 +10,8 @@ import {
   Box,
   DialogActions,
   Button,
-  Stack,
-} from "@mui/material";
+  Stack
+} from '@mui/material';
 
 interface Props {
   transaction: Transaction;
@@ -32,18 +32,18 @@ export const DeleteTransactionModal = NiceModal.create<Props>(
     return (
       <Dialog {...muiDialogV5(modal)}>
         <DialogTitle>
-          <Typography variant="h4" my={1}>
+          <Typography variant='h4' my={1}>
             Eliminar transacción
           </Typography>
         </DialogTitle>
 
         <DialogContent>
-          <Stack spacing={1} direction="column" justifyContent="center">
+          <Stack spacing={1} direction='column' justifyContent='center'>
             <Box>
-              <Typography variant="body1" color="text.primary">
+              <Typography variant='body1' color='text.primary'>
                 {`¿Está seguro de eliminar la transacción ${transaction.title}?`}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant='body2' color='text.secondary'>
                 {transaction.title} {transaction.amount}
               </Typography>
             </Box>
@@ -51,15 +51,15 @@ export const DeleteTransactionModal = NiceModal.create<Props>(
         </DialogContent>
         <DialogActions
           sx={{
-            justifyContent: "center",
+            justifyContent: 'center'
           }}
         >
-          <Button onClick={closeModal} color="inherit">
+          <Button onClick={closeModal} color='inherit'>
             Cancelar
           </Button>
           <LoadingButton
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             onClick={submitDeleteTransaction}
             // loading={isLoading}
             // disabled={!isOnline}

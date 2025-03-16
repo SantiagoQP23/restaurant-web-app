@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { TitlePage } from "../../../components";
+import { useEffect } from 'react';
+import { TitlePage } from '../../../components';
 import {
   Box,
   Card,
@@ -13,29 +13,29 @@ import {
   ListSubheader,
   MenuItem,
   Select,
-  TextField,
-} from "@mui/material";
-import { CreateProductDto } from "../../dto";
-import { Controller, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { addProduct, selectMenu } from "../../../../../redux";
-import { IProduct, ProductStatus } from "../../../../../models";
-import { AttachMoney } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import { useCreateProduct } from "../../hooks/useProducts";
-import { useNavigate } from "react-router-dom";
-import { useEditMenuStore } from "../../hooks/useEditMenuStore";
-import { useProductionAreasStore } from "../../../Common/store/production-areas-store";
+  TextField
+} from '@mui/material';
+import { CreateProductDto } from '../../dto';
+import { Controller, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct, selectMenu } from '../../../../../redux';
+import { IProduct, ProductStatus } from '../../../../../models';
+import { AttachMoney } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import { useCreateProduct } from '../../hooks/useProducts';
+import { useNavigate } from 'react-router-dom';
+import { useEditMenuStore } from '../../hooks/useEditMenuStore';
+import { useProductionAreasStore } from '../../../Common/store/production-areas-store';
 
 const initialForm: CreateProductDto = {
-  name: "",
-  description: "",
+  name: '',
+  description: '',
   price: 0,
   status: ProductStatus.AVAILABLE,
-  categoryId: "",
+  categoryId: '',
   productionAreaId: 0,
   unitCost: 0,
-  quantity: 0,
+  quantity: 0
 };
 
 export const CreateProduct = () => {
@@ -53,9 +53,9 @@ export const CreateProduct = () => {
     handleSubmit,
     formState: { errors },
     control,
-    reset,
+    reset
   } = useForm<CreateProductDto>({
-    defaultValues: initialForm,
+    defaultValues: initialForm
   });
 
   const updateCategoryProducts = (product: IProduct) => {
@@ -83,36 +83,35 @@ export const CreateProduct = () => {
     reset({
       ...initialForm,
       status: ProductStatus.AVAILABLE,
-      categoryId: activeCategory?.id,
+      categoryId: activeCategory?.id
     });
   }, []);
 
   return (
     <>
-      <TitlePage title="Crear producto" />
+      <TitlePage title='Crear producto' />
 
       <Container>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Card>
-                <CardHeader title="Información del producto" />
+                <CardHeader title='Información del producto' />
                 <CardContent>
                   <Grid item xs={12}>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <TextField
                           autoFocus
-                         
-                          label="Nombre del producto"
-                          type="text"
+                          label='Nombre del producto'
+                          type='text'
                           fullWidth
-                          {...register("name", {
-                            required: "Este campo es requerido",
+                          {...register('name', {
+                            required: 'Este campo es requerido',
                             minLength: {
                               value: 2,
-                              message: "Minimo 2 caracteres",
-                            },
+                              message: 'Minimo 2 caracteres'
+                            }
                           })}
                           helperText={errors.name?.message}
                           error={!!errors.name}
@@ -120,16 +119,15 @@ export const CreateProduct = () => {
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
-                          label="Descripcion del producto"
-                         
+                          label='Descripcion del producto'
                           multiline
                           rows={4}
                           fullWidth
-                          {...register("description", {
+                          {...register('description', {
                             minLength: {
                               value: 2,
-                              message: "Minimo 2 caracteres",
-                            },
+                              message: 'Minimo 2 caracteres'
+                            }
                           })}
                           helperText={errors.description?.message}
                           error={!!errors.description}
@@ -137,18 +135,18 @@ export const CreateProduct = () => {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Controller
-                          name="categoryId"
+                          name='categoryId'
                           control={control}
                           render={({ field: { onChange, onBlur, value } }) => (
                             <>
                               <FormControl fullWidth>
-                                <InputLabel htmlFor="grouped-select">
+                                <InputLabel htmlFor='grouped-select'>
                                   Categoría
                                 </InputLabel>
                                 <Select
-                                  id="grouped-select"
-                                  label="Categoría"
-                                  margin="dense"
+                                  id='grouped-select'
+                                  label='Categoría'
+                                  margin='dense'
                                   fullWidth
                                   value={value}
                                   onChange={onChange}
@@ -159,7 +157,7 @@ export const CreateProduct = () => {
                                     <ListSubheader
                                       key={section.id}
                                       sx={{
-                                        fontWeight: "bold",
+                                        fontWeight: 'bold'
                                       }}
                                     >
                                       {section.name}
@@ -173,7 +171,7 @@ export const CreateProduct = () => {
                                       >
                                         {category.name}
                                       </MenuItem>
-                                    )),
+                                    ))
                                   ])}
                                 </Select>
                               </FormControl>
@@ -183,19 +181,19 @@ export const CreateProduct = () => {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Controller
-                          name="productionAreaId"
+                          name='productionAreaId'
                           control={control}
-                          rules={{ required: "Este campo es requerido" }}
+                          rules={{ required: 'Este campo es requerido' }}
                           render={({ field: { onChange, onBlur, value } }) => (
                             <>
                               <FormControl fullWidth>
-                                <InputLabel id="select-area">
+                                <InputLabel id='select-area'>
                                   Área de producción
                                 </InputLabel>
                                 <Select
-                                  labelId="select-area"
-                                  label="Área de producción"
-                                  margin="dense"
+                                  labelId='select-area'
+                                  label='Área de producción'
+                                  margin='dense'
                                   // disabled
                                   value={value}
                                   onChange={onChange}
@@ -221,23 +219,23 @@ export const CreateProduct = () => {
 
             <Grid item xs={12} md={6}>
               <Card>
-                <CardHeader title="Inventario" />
+                <CardHeader title='Inventario' />
                 <CardContent>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                       <Controller
-                        name="status"
+                        name='status'
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
                           <>
                             <FormControl fullWidth>
-                              <InputLabel id="select-estado">Estado</InputLabel>
+                              <InputLabel id='select-estado'>Estado</InputLabel>
 
                               <Select
-                                labelId="select-estado"
-                                label="Estado"
+                                labelId='select-estado'
+                                label='Estado'
                                 fullWidth
-                                margin="dense"
+                                margin='dense'
                                 value={value}
                                 onChange={onChange}
                                 onBlur={onBlur}
@@ -260,19 +258,19 @@ export const CreateProduct = () => {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        label="Cantidad disponible"
+                        label='Cantidad disponible'
                         fullWidth
-                        type="number"
+                        type='number'
                         inputProps={{
                           min: 0,
-                          step: 1,
+                          step: 1
                         }}
-                        {...register("quantity", {
+                        {...register('quantity', {
                           min: {
                             value: 0,
-                            message: "El valor debe ser mayor a 0",
+                            message: 'El valor debe ser mayor a 0'
                           },
-                          valueAsNumber: true,
+                          valueAsNumber: true
                         })}
                         helperText={errors.quantity?.message}
                         error={!!errors.quantity}
@@ -285,31 +283,31 @@ export const CreateProduct = () => {
 
             <Grid item xs={12} md={6}>
               <Card>
-                <CardHeader title="Precios" />
+                <CardHeader title='Precios' />
                 <CardContent>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        label="Precio"
+                        label='Precio'
                         InputProps={{
                           startAdornment: (
-                            <InputAdornment position="start">
+                            <InputAdornment position='start'>
                               <AttachMoney />
                             </InputAdornment>
-                          ),
+                          )
                         }}
                         fullWidth
-                        type="number"
+                        type='number'
                         inputProps={{
-                          step: 0.05,
+                          step: 0.05
                         }}
-                        {...register("price", {
-                          required: "Este campo es requerido",
+                        {...register('price', {
+                          required: 'Este campo es requerido',
                           min: {
                             value: 0.25,
-                            message: "El valor debe ser mayor a $0.25",
+                            message: 'El valor debe ser mayor a $0.25'
                           },
-                          valueAsNumber: true,
+                          valueAsNumber: true
                         })}
                         helperText={errors.price?.message}
                         error={!!errors.price}
@@ -318,25 +316,25 @@ export const CreateProduct = () => {
 
                     <Grid item xs={12} md={6}>
                       <TextField
-                        label="Costo unitario"
+                        label='Costo unitario'
                         InputProps={{
                           startAdornment: (
-                            <InputAdornment position="start">
+                            <InputAdornment position='start'>
                               <AttachMoney />
                             </InputAdornment>
-                          ),
+                          )
                         }}
                         fullWidth
-                        type="number"
+                        type='number'
                         inputProps={{
-                          step: 0.05,
+                          step: 0.05
                         }}
-                        {...register("unitCost", {
+                        {...register('unitCost', {
                           min: {
                             value: 0,
-                            message: "El valor debe ser mayor a $0",
+                            message: 'El valor debe ser mayor a $0'
                           },
-                          valueAsNumber: true,
+                          valueAsNumber: true
                         })}
                         helperText={errors.unitCost?.message}
                         error={!!errors.unitCost}
@@ -347,10 +345,10 @@ export const CreateProduct = () => {
               </Card>
             </Grid>
           </Grid>
-          <Box display="flex" justifyContent="flex-end" mt={2}>
+          <Box display='flex' justifyContent='flex-end' mt={2}>
             <LoadingButton
-              variant="contained"
-              type="submit"
+              variant='contained'
+              type='submit'
               // disabled={isDirty && !isValid}
               loading={isLoading}
             >

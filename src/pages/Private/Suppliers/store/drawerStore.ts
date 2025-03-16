@@ -1,10 +1,7 @@
-import { create } from "zustand";
-import { Supplier } from "../models/supplier.model";
-
-
+import { create } from 'zustand';
+import { Supplier } from '../models/supplier.model';
 
 interface DrawerState<T> {
-
   activeSupplier: T | null;
 
   open: boolean;
@@ -29,21 +26,18 @@ const useStoreDrawerBase = create<DrawerState<any>>((set, get) => ({
 
   setOpen: (open: boolean) => set({ open }),
 
-  setActiveSupplier: (activeSupplier: Supplier | null) => set({ activeSupplier }),
+  setActiveSupplier: (activeSupplier: Supplier | null) =>
+    set({ activeSupplier }),
 
   reset: () => set({ activeSupplier: null }),
 
   handleOpenDrawer: () => set({ open: true }),
 
-  handleCloseDrawer: () => set({ open: false, activeSupplier: null }),
-
-
+  handleCloseDrawer: () => set({ open: false, activeSupplier: null })
 }));
 
 export const useDrawerStore = <T, Slice>(
   selector: (state: DrawerState<T>) => Slice
 ) => useStoreDrawerBase(selector);
 
-
-const {} = (state: DrawerState<Supplier>) => (state)
-
+const {} = (state: DrawerState<Supplier>) => state;

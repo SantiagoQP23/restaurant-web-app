@@ -471,7 +471,7 @@ export const PureLightTheme = createTheme({
         }
       }
     },
-   
+
     MuiCardHeader: {
       styleOverrides: {
         action: {
@@ -580,7 +580,7 @@ export const PureLightTheme = createTheme({
         }
       }
     },
-    
+
     MuiButton: {
       defaultProps: {
         disableRipple: true
@@ -822,8 +822,7 @@ export const PureLightTheme = createTheme({
           minHeight: 38,
           borderRadius: 6,
           border: '1px solid ' + colors.primary.dark,
-          boxShadow: '0px 2px 10px ' + colors.primary.light,
-          
+          boxShadow: '0px 2px 10px ' + colors.primary.light
         },
         scrollableX: {
           overflow: 'visible !important'
@@ -848,7 +847,7 @@ export const PureLightTheme = createTheme({
           },
           '&.Mui-selected, &.Mui-selected:hover': {
             color: colors.alpha.white[100],
-           
+
             zIndex: 5
           },
           '&:hover': {

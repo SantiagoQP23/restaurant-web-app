@@ -1,4 +1,4 @@
-import { TypeOrder } from "@/models";
+import { TypeOrder } from '@/models';
 
 /**
  * Update Order Detail DTO

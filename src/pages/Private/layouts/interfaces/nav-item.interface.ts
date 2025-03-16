@@ -1,4 +1,4 @@
-import { ValidRoles } from "../../Common/models/valid-roles.model";
+import { ValidRoles } from '../../Common/models/valid-roles.model';
 
 export interface NavItem {
   title: string;

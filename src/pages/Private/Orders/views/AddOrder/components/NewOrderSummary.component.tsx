@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 
 import {
   Card,
@@ -9,22 +9,22 @@ import {
   Stack,
   Divider,
   TextField,
-  InputLabel,
-} from "@mui/material";
-import { TypeOrder } from "../../../../../../models";
+  InputLabel
+} from '@mui/material';
+import { TypeOrder } from '../../../../../../models';
 
 import {
   CreateOrderDetailDto,
-  CreateOrderDto,
-} from "../../../dto/create-order.dto";
+  CreateOrderDto
+} from '../../../dto/create-order.dto';
 
-import { useCreateOrder } from "../../../hooks";
-import { LoadingButton } from "@mui/lab";
+import { useCreateOrder } from '../../../hooks';
+import { LoadingButton } from '@mui/lab';
 
-import { PeopleCounter } from "./PeopleCounter.component";
+import { PeopleCounter } from './PeopleCounter.component';
 
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { useNewOrderStore } from "../../../store/newOrderStore";
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { useNewOrderStore } from '../../../store/newOrderStore';
 
 interface Props {
   step: number;
@@ -46,21 +46,21 @@ export const NewOrderSummary: FC<Props> = () => {
 
   const submitAddOrder = () => {
     const order: CreateOrderDto = {
-      tableId: table?.id || "",
+      tableId: table?.id || '',
       details: details.map((detail) => {
         const orderDetail: CreateOrderDetailDto = {
           productId: detail.product.id,
           quantity: detail.quantity,
           description: detail.description,
           price: detail.product.price,
-          productOptionId: detail.productOption?.id,
+          productOptionId: detail.productOption?.id
         };
         return orderDetail;
       }),
       notes,
 
       people,
-      typeOrder: orderType,
+      typeOrder: orderType
     };
 
     if (orderType === TypeOrder.TAKE_AWAY) delete order.tableId;
@@ -68,7 +68,7 @@ export const NewOrderSummary: FC<Props> = () => {
     createOrder(order, {
       onSuccess: () => {
         reset();
-      },
+      }
     });
   };
 
@@ -77,14 +77,14 @@ export const NewOrderSummary: FC<Props> = () => {
       <Card sx={{ mb: 2 }}>
         <Stack spacing={1} divider={<Divider />}>
           <Box>
-            <CardHeader title="Información del pedido" />
+            <CardHeader title='Información del pedido' />
             <CardContent>
-              <Stack direction="column" spacing={2} textAlign="center">
+              <Stack direction='column' spacing={2} textAlign='center'>
                 {orderType === TypeOrder.IN_PLACE && (
                   <Box>
                     <InputLabel>Mesa</InputLabel>
-                    <Typography variant="h3" fontWeight="bold">
-                      N° {table?.name || "Sin mesa"}
+                    <Typography variant='h3' fontWeight='bold'>
+                      N° {table?.name || 'Sin mesa'}
                     </Typography>
                   </Box>
                 )}
@@ -92,8 +92,8 @@ export const NewOrderSummary: FC<Props> = () => {
                 {orderType === TypeOrder.TAKE_AWAY && (
                   <Box>
                     <InputLabel>Tipo de orden</InputLabel>
-                    <Typography variant="h3" fontWeight="bold">
-                      {"Para llevar"}
+                    <Typography variant='h3' fontWeight='bold'>
+                      {'Para llevar'}
                     </Typography>
                   </Box>
                 )}
@@ -101,9 +101,9 @@ export const NewOrderSummary: FC<Props> = () => {
                 <PeopleCounter />
 
                 <TextField
-                  id="descripcion-pedido"
-                  label="Notas"
-                  margin="dense"
+                  id='descripcion-pedido'
+                  label='Notas'
+                  margin='dense'
                   multiline
                   rows={4}
                   // defaultValue={detail?.description}
@@ -116,15 +116,15 @@ export const NewOrderSummary: FC<Props> = () => {
           </Box>
 
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
             p={2}
           >
-            <Typography variant="h4" fontWeight="bold">
-              Total{" "}
+            <Typography variant='h4' fontWeight='bold'>
+              Total{' '}
             </Typography>
-            <Typography variant="h4" fontWeight="bold">
+            <Typography variant='h4' fontWeight='bold'>
               {formatMoney(
                 details.reduce(
                   (acc, detail) => acc + detail.product.price * detail.quantity,
@@ -138,7 +138,7 @@ export const NewOrderSummary: FC<Props> = () => {
 
       {
         <LoadingButton
-          variant="contained"
+          variant='contained'
           disabled={
             !isOnline ||
             details.length <= 0 ||

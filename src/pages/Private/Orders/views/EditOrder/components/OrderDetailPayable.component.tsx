@@ -1,12 +1,10 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect } from 'react';
 
-import { TableRow, TableCell } from "@mui/material";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { CounterInput } from "../../../components";
-import {
-  useInvoiceStore,
-} from "../../../store/invoiceStore";
-import { Label } from "../../../../../../components/ui";
+import { TableRow, TableCell } from '@mui/material';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { CounterInput } from '../../../components';
+import { useInvoiceStore } from '../../../store/invoiceStore';
+import { Label } from '../../../../../../components/ui';
 
 interface Props {
   detail: any;
@@ -32,32 +30,23 @@ export const OrderDetailPayable: FC<Props> = ({ detail, qtyToPay }) => {
     <>
       <TableRow>
         <TableCell>
-
-          {
-            detail.quantity - detail.qtyPaid- detail.qtyInAccounts > 0 ?  (
-              <CounterInput
-                value={counter}
-                onChange={(value: number) => {
-                  handleUpdateDetail(value);
-                }}
-                max={detail.quantity - detail.qtyPaid- detail.qtyInAccounts}
-                min={0}
-              />
-
-            ): (
-              <Label color="success">Añadido</Label>
-            )
-
-          }
-
-
+          {detail.quantity - detail.qtyPaid - detail.qtyInAccounts > 0 ? (
+            <CounterInput
+              value={counter}
+              onChange={(value: number) => {
+                handleUpdateDetail(value);
+              }}
+              max={detail.quantity - detail.qtyPaid - detail.qtyInAccounts}
+              min={0}
+            />
+          ) : (
+            <Label color='success'>Añadido</Label>
+          )}
         </TableCell>
 
         <TableCell>
-          <Label color="info">{detail.qtyInAccounts}</Label>{" "}
-          <Label color="warning">
-            {detail.quantity - detail.qtyPaid}
-          </Label>{" "}
+          <Label color='info'>{detail.qtyInAccounts}</Label>{' '}
+          <Label color='warning'>{detail.quantity - detail.qtyPaid}</Label>{' '}
           <b>{detail.product.name}</b> de <b>{detail.quantity}</b>
         </TableCell>
         <TableCell>{formatMoney(detail.price)}</TableCell>

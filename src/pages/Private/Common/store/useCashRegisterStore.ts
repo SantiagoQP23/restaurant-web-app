@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { CashRegister } from "../../Balance/models/cash-register.model";
+import { create } from 'zustand';
+import { CashRegister } from '../../Balance/models/cash-register.model';
 
 interface CashRegisterState {
   activeCashRegister: CashRegister | null;
@@ -16,7 +16,7 @@ interface CashRegisterState {
 }
 
 export const useCashRegisterStore = create<CashRegisterState>((set) => ({
-  title: "Cash Register",
+  title: 'Cash Register',
   cashRegisters: [],
   activeCashRegister: null,
 
@@ -27,18 +27,18 @@ export const useCashRegisterStore = create<CashRegisterState>((set) => ({
 
   addCashRegister: (cashRegister: CashRegister) =>
     set((state) => ({
-      cashRegisters: [...state.cashRegisters, cashRegister],
+      cashRegisters: [...state.cashRegisters, cashRegister]
     })),
   removeCashRegister: (cashRegisterId: number) =>
     set((state) => ({
-      cashRegisters: state.cashRegisters.filter((c) => c.id !== cashRegisterId),
+      cashRegisters: state.cashRegisters.filter((c) => c.id !== cashRegisterId)
     })),
 
   updateCashRegister: (cashRegister: CashRegister) =>
     set((state) => ({
       cashRegisters: state.cashRegisters.map((c) =>
         c.id === cashRegister.id ? cashRegister : c
-      ),
+      )
     })),
   loadCashRegisters: (cashRegisters: CashRegister[]) => set({ cashRegisters }),
 
@@ -46,5 +46,5 @@ export const useCashRegisterStore = create<CashRegisterState>((set) => ({
 
   closeCreate: () => set({ isOpenCreate: false }),
 
-  openCreate: () => set({ isOpenCreate: true }),
+  openCreate: () => set({ isOpenCreate: true })
 }));

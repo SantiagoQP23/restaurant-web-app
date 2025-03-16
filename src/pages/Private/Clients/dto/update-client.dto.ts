@@ -1,5 +1,5 @@
 import { TypeIdentification } from '../../../../models/common.model';
-export interface UpdateClientDto{
+export interface UpdateClientDto {
   id: string;
   firstName?: string;
   lastName?: string;
@@ -9,6 +9,4 @@ export interface UpdateClientDto{
   numberIdentification?: string;
   address?: string;
   isActive?: boolean;
-
 }
-

@@ -1,15 +1,19 @@
-import React, { FC } from "react";
-import { BillDetail } from "../../../../models/bill-detail.model";
+import React, { FC } from 'react';
+import { BillDetail } from '../../../../models/bill-detail.model';
 import {
   Table,
   TableHead,
   TableCell,
   TableBody,
   TableRow,
-  Typography,
-} from "@mui/material";
-import { formatMoney } from "../../Common/helpers/format-money.helper";
-import { getIvaValue, getPriceWithoutIva, formatPercentage } from "@/helpers/product.helper";
+  Typography
+} from '@mui/material';
+import { formatMoney } from '../../Common/helpers/format-money.helper';
+import {
+  getIvaValue,
+  getPriceWithoutIva,
+  formatPercentage
+} from '@/helpers/product.helper';
 
 interface Props {
   details: BillDetail[];
@@ -36,18 +40,28 @@ export const BillDetailsTable: FC<Props> = ({ details }) => {
         <TableBody>
           {details.map((detail) => (
             <TableRow key={detail.id}>
-              <TableCell align="center">{detail.quantity}</TableCell>
+              <TableCell align='center'>{detail.quantity}</TableCell>
               <TableCell>{detail.orderDetail.product.name}</TableCell>
-              <TableCell align="right">
-                {formatMoney(getPriceWithoutIva(detail.orderDetail.price, detail.orderDetail.product.iva))}
+              <TableCell align='right'>
+                {formatMoney(
+                  getPriceWithoutIva(
+                    detail.orderDetail.price,
+                    detail.orderDetail.product.iva
+                  )
+                )}
               </TableCell>
-              <TableCell align="right">
-                {formatMoney(getIvaValue(detail.orderDetail.price, detail.orderDetail.product.iva))}
-                <Typography variant="caption" color="textSecondary">
+              <TableCell align='right'>
+                {formatMoney(
+                  getIvaValue(
+                    detail.orderDetail.price,
+                    detail.orderDetail.product.iva
+                  )
+                )}
+                <Typography variant='caption' color='textSecondary'>
                   {` (${formatPercentage(Number(detail.orderDetail.product.iva))})`}
                 </Typography>
               </TableCell>
-              <TableCell align="right">{formatMoney(detail.total)}</TableCell>
+              <TableCell align='right'>{formatMoney(detail.total)}</TableCell>
             </TableRow>
           ))}
 

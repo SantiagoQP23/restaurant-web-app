@@ -140,9 +140,6 @@
 
 // export default Status500;
 
-
 export const index = () => {
-  return (
-    <div>index</div>
-  )
-}
+  return <div>index</div>;
+};

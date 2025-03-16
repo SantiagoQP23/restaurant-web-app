@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 
 import {
   Card,
@@ -9,8 +9,8 @@ import {
   CardActions,
   Chip,
   Divider,
-  Stack,
-} from "@mui/material";
+  Stack
+} from '@mui/material';
 
 import {
   Check,
@@ -22,31 +22,30 @@ import {
   People,
   TakeoutDining,
   TimerOutlined,
-  Notes,
-} from "@mui/icons-material";
+  Notes
+} from '@mui/icons-material';
 
-import { formatDistance } from "date-fns";
-import { es } from "date-fns/locale";
+import { formatDistance } from 'date-fns';
+import { es } from 'date-fns/locale';
 
+import { UpdateOrderDto } from '../../../dto/update-order.dto';
+import { OrderStatus, TypeOrder } from '../../../../../../models/orders.model';
 
-import { UpdateOrderDto } from "../../../dto/update-order.dto";
-import { OrderStatus, TypeOrder } from "../../../../../../models/orders.model";
-
-import { Order } from "../../../../../../models";
-import { statusModalStartOrder } from "../../../services/orders.service";
-import { BtnAddProduct } from "./BtnAddProduct.component";
-import { useQueryClient } from "@tanstack/react-query";
-import { useUpdateOrder } from "../../../hooks";
-import { LabelStatusOrder } from "../../../components/LabelStatusOrder.component";
-import { useOrderHelper } from "../../../hooks/useOrders";
-import { ProductionArea } from "../../../../Common/models/production-area.model";
-import { useProductionAreasStore } from "../../../../Common/store/production-areas-store";
-import { ProductionAreaOrder } from "./ProductionAreaOrder.component";
+import { Order } from '../../../../../../models';
+import { statusModalStartOrder } from '../../../services/orders.service';
+import { BtnAddProduct } from './BtnAddProduct.component';
+import { useQueryClient } from '@tanstack/react-query';
+import { useUpdateOrder } from '../../../hooks';
+import { LabelStatusOrder } from '../../../components/LabelStatusOrder.component';
+import { useOrderHelper } from '../../../hooks/useOrders';
+import { ProductionArea } from '../../../../Common/models/production-area.model';
+import { useProductionAreasStore } from '../../../../Common/store/production-areas-store';
+import { ProductionAreaOrder } from './ProductionAreaOrder.component';
 
 interface Props {
   order: Order;
   setStatusFilter?: (status: OrderStatus) => void;
-  color: "success" | "error" | "warning" | "info" | "primary" | "secondary";
+  color: 'success' | 'error' | 'warning' | 'info' | 'primary' | 'secondary';
   index: number;
   productionArea?: ProductionArea;
 }
@@ -62,7 +61,7 @@ export const ActiveOrder: FC<Props> = ({
   setStatusFilter,
   color,
   index,
-  productionArea,
+  productionArea
 }) => {
   // const color= "primary";
 
@@ -78,7 +77,7 @@ export const ActiveOrder: FC<Props> = ({
 
   const queryClient = useQueryClient();
 
-  queryClient.prefetchQuery(["order", order.id], () => order);
+  queryClient.prefetchQuery(['order', order.id], () => order);
 
   const { mutate: updateOrder } = useUpdateOrder();
 
@@ -95,7 +94,7 @@ export const ActiveOrder: FC<Props> = ({
   const changeStatusOrder = (status: OrderStatus) => {
     const data: UpdateOrderDto = {
       id: order.id,
-      status,
+      status
     };
 
     updateOrder(data);
@@ -107,47 +106,47 @@ export const ActiveOrder: FC<Props> = ({
     <>
       <Card
         sx={{
-          borderTop: (theme) => `5px solid ${theme.palette[color].main}`,
+          borderTop: (theme) => `5px solid ${theme.palette[color].main}`
         }}
-        variant="elevation"
+        variant='elevation'
       >
         <CardHeader
           title={
             <Stack
               spacing={0.5}
-              direction="column"
+              direction='column'
               my={1}
-              alignItems="center"
-              justifyContent="center"
+              alignItems='center'
+              justifyContent='center'
             >
               <Chip
                 label={index + 1}
                 color={color}
-                size="small"
-                variant="outlined"
+                size='small'
+                variant='outlined'
               />
 
-              <Typography variant="h3">{`N° ${order.num}`}</Typography>
+              <Typography variant='h3'>{`N° ${order.num}`}</Typography>
               <LabelStatusOrder status={order.status} />
             </Stack>
           }
         />
 
-        <Grid container spacing={1} alignItems="center" px={1}>
+        <Grid container spacing={1} alignItems='center' px={1}>
           <Grid item xs={12}>
             <CardHeader
               sx={{
                 px: 1,
-                py: 0.5,
+                py: 0.5
               }}
               avatar={<TimerOutlined />}
               // title='Hora de entrega'
               titleTypographyProps={{
-                variant: "subtitle2",
+                variant: 'subtitle2'
               }}
               subheaderTypographyProps={{
-                variant: "h5",
-                color: "inherith",
+                variant: 'h5',
+                color: 'inherith'
               }}
               subheader={`${formatDistance(
                 new Date(order.deliveryTime),
@@ -155,7 +154,7 @@ export const ActiveOrder: FC<Props> = ({
                 {
                   addSuffix: true,
                   includeSeconds: true,
-                  locale: es,
+                  locale: es
                 }
               )}`}
             />
@@ -165,7 +164,7 @@ export const ActiveOrder: FC<Props> = ({
             <CardHeader
               sx={{
                 px: 1,
-                py: 0.5,
+                py: 0.5
               }}
               avatar={
                 order.type === TypeOrder.IN_PLACE ? (
@@ -176,16 +175,16 @@ export const ActiveOrder: FC<Props> = ({
               }
               // title='Orden'
               titleTypographyProps={{
-                variant: "subtitle2",
+                variant: 'subtitle2'
               }}
               subheaderTypographyProps={{
-                variant: "h5",
-                color: "inherith",
+                variant: 'h5',
+                color: 'inherith'
               }}
               subheader={
                 order.type === TypeOrder.IN_PLACE
-                  ? "Para servir"
-                  : "Para llevar"
+                  ? 'Para servir'
+                  : 'Para llevar'
               }
             />
           </Grid>
@@ -194,16 +193,16 @@ export const ActiveOrder: FC<Props> = ({
             <CardHeader
               sx={{
                 px: 1,
-                py: 0.5,
+                py: 0.5
               }}
               avatar={<People />}
               // title='Personas'
               titleTypographyProps={{
-                variant: "subtitle2",
+                variant: 'subtitle2'
               }}
               subheaderTypographyProps={{
-                variant: "h5",
-                color: "inherith",
+                variant: 'h5',
+                color: 'inherith'
               }}
               subheader={`${order.people}`}
             />
@@ -216,18 +215,18 @@ export const ActiveOrder: FC<Props> = ({
                 <CardHeader
                   sx={{
                     px: 1,
-                    py: 0.5,
+                    py: 0.5
                   }}
                   avatar={<TableRestaurant />}
                   // title='Mesa'
                   titleTypographyProps={{
-                    variant: "subtitle2",
+                    variant: 'subtitle2'
                   }}
                   subheaderTypographyProps={{
-                    variant: "h5",
-                    color: "inherith",
+                    variant: 'h5',
+                    color: 'inherith'
                   }}
-                  subheader={`Mesa ${order.table?.name}` || "No seleccionada"}
+                  subheader={`Mesa ${order.table?.name}` || 'No seleccionada'}
                 />
 
                 <Card></Card>
@@ -239,16 +238,16 @@ export const ActiveOrder: FC<Props> = ({
             <CardHeader
               sx={{
                 px: 1,
-                py: 0.5,
+                py: 0.5
               }}
               avatar={<Person />}
               // title='Mesero'
               titleTypographyProps={{
-                variant: "subtitle2",
+                variant: 'subtitle2'
               }}
               subheaderTypographyProps={{
-                variant: "h5",
-                color: "inherith",
+                variant: 'h5',
+                color: 'inherith'
               }}
               subheader={`${order.user.person.firstName} ${order.user.person.lastName}`}
             />
@@ -260,16 +259,16 @@ export const ActiveOrder: FC<Props> = ({
                 <CardHeader
                   sx={{
                     px: 1,
-                    py: 0.5,
+                    py: 0.5
                   }}
                   avatar={<Notes />}
-                  title="Notas"
+                  title='Notas'
                   titleTypographyProps={{
-                    variant: "subtitle2",
+                    variant: 'subtitle2'
                   }}
                   subheaderTypographyProps={{
-                    variant: "h5",
-                    color: "inherith",
+                    variant: 'h5',
+                    color: 'inherith'
                   }}
                   subheader={order.notes}
                 />
@@ -278,7 +277,6 @@ export const ActiveOrder: FC<Props> = ({
           )}
         </Grid>
 
-        
         {/* <Divider sx={{ mb: 0.5, mt: 1, mx: 1 }} /> */}
 
         <Stack spacing={1.5} sx={{ px: 1, mt: 1 }}>
@@ -358,7 +356,7 @@ export const ActiveOrder: FC<Props> = ({
               />
             </Tabs>
           )} */}
-          <Stack spacing={1} direction="column">
+          <Stack spacing={1} direction='column'>
             {productionAreas.map((area) => (
               <ProductionAreaOrder
                 key={area.id}
@@ -411,14 +409,14 @@ export const ActiveOrder: FC<Props> = ({
         <Divider
           sx={{
             mt: 1,
-            display: order.status === OrderStatus.DELIVERED ? "none" : "block",
+            display: order.status === OrderStatus.DELIVERED ? 'none' : 'block'
           }}
         />
 
         <CardActions
           sx={{
             justifyContent:
-              order.status === OrderStatus.PENDING ? "center" : "space-between",
+              order.status === OrderStatus.PENDING ? 'center' : 'space-between'
           }}
         >
           {order.status === OrderStatus.PENDING ? (
@@ -427,8 +425,8 @@ export const ActiveOrder: FC<Props> = ({
               onClick={() => {
                 handleStartOrder(order);
               }}
-              variant="outlined"
-              color="warning"
+              variant='outlined'
+              color='warning'
             >
               Iniciar
             </Button>
@@ -440,14 +438,14 @@ export const ActiveOrder: FC<Props> = ({
                     changeStatusOrder(OrderStatus.PENDING);
                     setStatusFilter && setStatusFilter(OrderStatus.PENDING);
                   }}
-                  color="warning"
+                  color='warning'
                   startIcon={<Undo />}
                 >
                   Pendiente
                 </Button>
 
                 <Button
-                  color="success"
+                  color='success'
                   startIcon={<Check />}
                   onClick={() => changeStatusOrder(OrderStatus.DELIVERED)}
                 >

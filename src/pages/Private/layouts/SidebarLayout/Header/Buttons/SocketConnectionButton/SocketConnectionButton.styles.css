@@ -1,15 +1,15 @@
 @keyframes blink {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  0% {
+    opacity: 1;
   }
-  
-  .parpadeo {
-    animation: blink 1s infinite; /* La animación "blink" dura 1 segundo y se repite infinitamente */
+  50% {
+    opacity: 0;
   }
+  100% {
+    opacity: 1;
+  }
+}
+
+.parpadeo {
+  animation: blink 1s infinite; /* La animación "blink" dura 1 segundo y se repite infinitamente */
+}

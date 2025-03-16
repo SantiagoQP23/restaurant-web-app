@@ -1,5 +1,5 @@
-import { Close, Save } from "@mui/icons-material";
-import { FC, useEffect, useState } from "react";
+import { Close, Save } from '@mui/icons-material';
+import { FC, useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -11,17 +11,17 @@ import {
   TextField,
   Typography,
   InputBase,
-  Box,
-} from "@mui/material";
-import { Order, TypeOrder } from "../../../../../../models";
-import { OrderTable } from "./OrderTable.component";
-import { OrderTypeSelector } from "./OrderTypeSelector.component";
-import { MobileDateTimePicker } from "@mui/x-date-pickers";
-import { useUpdateOrder } from "../../../hooks";
-import { UpdateOrderDto } from "../../../dto";
+  Box
+} from '@mui/material';
+import { Order, TypeOrder } from '../../../../../../models';
+import { OrderTable } from './OrderTable.component';
+import { OrderTypeSelector } from './OrderTypeSelector.component';
+import { MobileDateTimePicker } from '@mui/x-date-pickers';
+import { useUpdateOrder } from '../../../hooks';
+import { UpdateOrderDto } from '../../../dto';
 
-import { LoadingButton, Pagination } from "@mui/lab";
-import { useModal } from "../../../../../../hooks";
+import { LoadingButton, Pagination } from '@mui/lab';
+import { useModal } from '../../../../../../hooks';
 
 interface Props {
   open: boolean;
@@ -38,12 +38,12 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
   const [type, setType] = useState<TypeOrder>(order.type);
 
   const [tableId, setTableId] = useState<string>(
-    order.table ? order.table.id : ""
+    order.table ? order.table.id : ''
   );
 
   const [people, setPeople] = useState<number>(order.people || 0);
 
-  const [notes, setNotes] = useState<string>(order.notes || "");
+  const [notes, setNotes] = useState<string>(order.notes || '');
 
   const { isOpen, handleOpen } = useModal();
 
@@ -75,9 +75,9 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
 
   useEffect(() => {
     setType(order.type);
-    setTableId(order.table ? order.table.id : "");
+    setTableId(order.table ? order.table.id : '');
     setPeople(order.people || 0);
-    setNotes(order.notes || "");
+    setNotes(order.notes || '');
     setDeliveryTime(order.deliveryTime || null);
   }, [order]);
 
@@ -87,7 +87,7 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
       notes,
       people,
       tableId,
-      typeOrder: type,
+      typeOrder: type
     };
 
     if (deliveryTime) {
@@ -103,12 +103,12 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
         }}
       >
-        <Typography variant="h4">Editar pedido</Typography>
+        <Typography variant='h4'>Editar pedido</Typography>
 
         <IconButton onClick={closeModal}>
           <Close />
@@ -117,7 +117,7 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
 
       <DialogContent
         sx={{
-          maxWidth: "400px",
+          maxWidth: '400px'
         }}
       >
         <Grid container spacing={3}>
@@ -125,12 +125,12 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
             {/* <InputLabel >Tipo de pedido</InputLabel> */}
             <OrderTypeSelector type={type} setType={handleChangeType} />
           </Grid>
-          {type === ("IN_PLACE" as TypeOrder) && (
+          {type === ('IN_PLACE' as TypeOrder) && (
             <>
               <Grid item xs={12} sm={6}>
                 <OrderTable tableId={tableId} setTable={handleChangeTable} />
                 {type === TypeOrder.IN_PLACE && !tableId && (
-                  <Typography color="error">Seleccione una mesa</Typography>
+                  <Typography color='error'>Seleccione una mesa</Typography>
                 )}
               </Grid>
             </>
@@ -138,7 +138,7 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
 
           <Grid item xs={12} sm={6}>
             <MobileDateTimePicker
-              label="Hora de entrega"
+              label='Hora de entrega'
               value={deliveryTime}
               onChange={handleChangeDeliveryTime}
               renderInput={(params) => <TextField {...params} />}
@@ -156,9 +156,9 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
             <Typography>Personas</Typography>
 
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
               mt={1}
             >
               <Pagination
@@ -166,38 +166,38 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
                 hidePrevButton
                 hideNextButton
                 // variant='outlined'
-                color="primary"
+                color='primary'
                 page={people || 0}
                 onChange={(e, value) => handleChangePeople(value)}
               />
 
               {!isOpen && (
-                <Button variant="outlined" size="small" onClick={handleOpen}>
+                <Button variant='outlined' size='small' onClick={handleOpen}>
                   Otro
                 </Button>
               )}
 
               {isOpen && (
                 <InputBase
-                  value={people || ""}
+                  value={people || ''}
                   onChange={(e) => {
                     const newValue = Number(e.target.value);
                     if (newValue >= 0) {
                       handleChangePeople(newValue);
                     }
                   }}
-                  type="number"
+                  type='number'
                   inputProps={{
-                    min: 0,
+                    min: 0
                   }}
                   sx={{
                     border: (theme) =>
                       `1px solid ${theme.colors.primary.main} `,
-                    borderRadius: "8px",
-                    padding: "0 8px",
-                    width: "80px",
+                    borderRadius: '8px',
+                    padding: '0 8px',
+                    width: '80px'
                   }}
-                  size="small"
+                  size='small'
                 />
               )}
             </Box>
@@ -205,9 +205,9 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
 
           <Grid item xs={12}>
             <TextField
-              id="descripcion-pedido"
-              label="Notas"
-              margin="dense"
+              id='descripcion-pedido'
+              label='Notas'
+              margin='dense'
               multiline
               rows={4}
               // defaultValue={detail?.description}
@@ -220,11 +220,11 @@ export const ModalEditOrder: FC<Props> = ({ open, closeModal, order }) => {
       </DialogContent>
 
       <DialogActions>
-        <Button variant="outlined" onClick={closeModal}>
+        <Button variant='outlined' onClick={closeModal}>
           Cancelar
         </Button>
         <LoadingButton
-          variant="contained"
+          variant='contained'
           onClick={submitUpdateOrder}
           startIcon={<Save />}
           loading={isLoading}

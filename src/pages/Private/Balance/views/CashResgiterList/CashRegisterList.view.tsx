@@ -15,17 +15,17 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TablePagination,
-} from "@mui/material";
-import { TitlePage } from "../../../components/TitlePage.component";
-import { useAllCashRegister } from "../../hooks/useCashRegister";
-import { format } from "date-fns";
-import { Label } from "../../../../../components/ui";
-import { Visibility } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import { formatMoney } from "../../../Common/helpers/format-money.helper";
-import { DesktopDatePicker, DesktopDateTimePicker } from "@mui/x-date-pickers";
-import { Period } from "../../../Common/dto/period.model";
+  TablePagination
+} from '@mui/material';
+import { TitlePage } from '../../../components/TitlePage.component';
+import { useAllCashRegister } from '../../hooks/useCashRegister';
+import { format } from 'date-fns';
+import { Label } from '../../../../../components/ui';
+import { Visibility } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { formatMoney } from '../../../Common/helpers/format-money.helper';
+import { DesktopDatePicker, DesktopDateTimePicker } from '@mui/x-date-pickers';
+import { Period } from '../../../Common/dto/period.model';
 
 export const CashRegisterList = () => {
   const {
@@ -44,7 +44,7 @@ export const CashRegisterList = () => {
   return (
     <>
       <TitlePage
-        title="Historial de  cajas"
+        title='Historial de  cajas'
         // action={
         //   <Button
         //     variant="contained"
@@ -57,19 +57,19 @@ export const CashRegisterList = () => {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Card>
-            <CardHeader title="Lista" />
+            <CardHeader title='Lista' />
 
             <Grid container spacing={2} p={2}>
               <Grid item xs={12} md={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="select-period-label">Periodo</InputLabel>
+                  <InputLabel id='select-period-label'>Periodo</InputLabel>
                   <Select
-                    labelId="select-period-label"
+                    labelId='select-period-label'
                     value={period}
                     onChange={handleChangePeriod}
                     fullWidth
-                    label="Periodo"
-                    size="medium"
+                    label='Periodo'
+                    size='medium'
                   >
                     <MenuItem value={Period.DAILY}>Diario</MenuItem>
                     <MenuItem value={Period.MONTHLY}>Mensual</MenuItem>
@@ -82,13 +82,13 @@ export const CashRegisterList = () => {
 
               <Grid item xs={12} md={4}>
                 <DesktopDatePicker
-                  label="Fecha de inicio"
+                  label='Fecha de inicio'
                   inputFormat={
                     period === Period.MONTHLY
-                      ? "yyyy MMMM"
+                      ? 'yyyy MMMM'
                       : period === Period.YEARLY
-                      ? "yyyy"
-                      : "yyyy-MM-dd"
+                        ? 'yyyy'
+                        : 'yyyy-MM-dd'
                   }
                   value={startDate}
                   onChange={handleChangeStartDate}
@@ -97,10 +97,10 @@ export const CashRegisterList = () => {
                   maxDate={endDate ? endDate : undefined}
                   views={
                     period === Period.MONTHLY
-                      ? ["month", "year"]
+                      ? ['month', 'year']
                       : period === Period.YEARLY
-                      ? ["year"]
-                      : ["day"]
+                        ? ['year']
+                        : ['day']
                   }
                 />
               </Grid>
@@ -108,8 +108,8 @@ export const CashRegisterList = () => {
               {startDate && period === Period.CUSTOM && (
                 <Grid item xs={12} md={4}>
                   <DesktopDateTimePicker
-                    label="Fecha de fin"
-                    inputFormat="yyyy-MM-dd"
+                    label='Fecha de fin'
+                    inputFormat='yyyy-MM-dd'
                     value={endDate}
                     onChange={handleChangeEndDate}
                     renderInput={(params) => <TextField {...params} />}
@@ -136,26 +136,26 @@ export const CashRegisterList = () => {
                   {cashRegisterQuery.data?.cashRegisters.map((cashRegister) => (
                     <TableRow key={cashRegister.id}>
                       <TableCell>
-                        <Typography variant="h5">
-                          {cashRegister.createdBy.person.firstName}{" "}
+                        <Typography variant='h5'>
+                          {cashRegister.createdBy.person.firstName}{' '}
                           {cashRegister.createdBy.person.lastName}
                         </Typography>
                         {format(
                           new Date(cashRegister.createdAt),
-                          "dd/MM/yyyy HH:mm"
+                          'dd/MM/yyyy HH:mm'
                         )}
                       </TableCell>
                       <TableCell>
                         {cashRegister.isClosed ? (
                           <>
-                            <Typography variant="h5">
-                              {cashRegister.createdBy.person.firstName}{" "}
+                            <Typography variant='h5'>
+                              {cashRegister.createdBy.person.firstName}{' '}
                               {cashRegister.createdBy.person.lastName}
                             </Typography>
                             <Typography>
                               {format(
                                 new Date(cashRegister.closedAt!),
-                                "dd/MM/yyyy HH:mm"
+                                'dd/MM/yyyy HH:mm'
                               )}
                             </Typography>
                           </>
@@ -165,9 +165,9 @@ export const CashRegisterList = () => {
                       </TableCell>
                       <TableCell>
                         {cashRegister.isClosed ? (
-                          <Label color="error">Cerrado</Label>
+                          <Label color='error'>Cerrado</Label>
                         ) : (
-                          <Label color="success">Abierto</Label>
+                          <Label color='success'>Abierto</Label>
                         )}
                       </TableCell>
                       <TableCell>{formatMoney(cashRegister.balance)}</TableCell>
@@ -187,7 +187,7 @@ export const CashRegisterList = () => {
 
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
-              component="div"
+              component='div'
               count={cashRegisterQuery.data?.count || 0}
               rowsPerPage={filter.rowsPerPage}
               page={filter.page}

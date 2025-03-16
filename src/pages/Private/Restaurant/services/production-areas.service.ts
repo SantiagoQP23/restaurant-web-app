@@ -1,7 +1,7 @@
-import { restauranteApi } from "../../../../api";
-import { ProductionArea } from "../../Common/models/production-area.model";
-import { CreateProductionAreaDto } from "../dto/create-production-area.dto";
-import { UpdateProductionAreaDto } from "../dto/update-production-area.dto";
+import { restauranteApi } from '../../../../api';
+import { ProductionArea } from '../../Common/models/production-area.model';
+import { CreateProductionAreaDto } from '../dto/create-production-area.dto';
+import { UpdateProductionAreaDto } from '../dto/update-production-area.dto';
 
 export const getProductionAreas = async (): Promise<ProductionArea[]> => {
   const resp = await restauranteApi.get<ProductionArea[]>(`production-areas/`);

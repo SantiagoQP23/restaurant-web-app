@@ -1,5 +1,5 @@
-import { useState, useEffect, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect, FC } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Material UI
 import {
@@ -11,15 +11,15 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  ListSubheader,
-} from "@mui/material/";
+  ListSubheader
+} from '@mui/material/';
 
-import { IProduct } from "../../../../../../models";
-import { Product } from "./Product.component";
+import { IProduct } from '../../../../../../models';
+import { Product } from './Product.component';
 
-import { selectMenu, setActiveCategory } from "../../../../../../redux";
+import { selectMenu, setActiveCategory } from '../../../../../../redux';
 
-interface Props { }
+interface Props {}
 
 export const ProductsList: FC<Props> = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export const ProductsList: FC<Props> = () => {
   const changeCategory = (e: SelectChangeEvent) => {
     const categoryId = e.target.value;
 
-    if (categoryId === "") {
+    if (categoryId === '') {
       setFilteredProducts(products);
       dispatch(setActiveCategory(null));
       return;
@@ -68,7 +68,7 @@ export const ProductsList: FC<Props> = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         {/* {activeCategory && (
           <Button variant="text" sx={{ mr: 1 }}>
             Reordenar
@@ -76,25 +76,25 @@ export const ProductsList: FC<Props> = () => {
         )} */}
 
         <FormControl sx={{ width: 200 }}>
-          <InputLabel id="select-categoria">Categoria</InputLabel>
+          <InputLabel id='select-categoria'>Categoria</InputLabel>
           <Select
-            id="grouped-select"
-            label="Categoría"
-            labelId="select-categoria"
-            margin="dense"
+            id='grouped-select'
+            label='Categoría'
+            labelId='select-categoria'
+            margin='dense'
             fullWidth
-            value={activeCategory?.id || ""}
+            value={activeCategory?.id || ''}
             onChange={changeCategory}
-            size="small"
+            size='small'
           >
-            <MenuItem value="">
+            <MenuItem value=''>
               <em>Todos</em>
             </MenuItem>
             {sections.map((section) => [
               <ListSubheader
                 key={section.id}
                 sx={{
-                  fontWeight: "bold",
+                  fontWeight: 'bold'
                 }}
               >
                 {section.name}
@@ -104,7 +104,7 @@ export const ProductsList: FC<Props> = () => {
                 <MenuItem key={category.id} value={category.id} sx={{ pl: 3 }}>
                   {category.name}
                 </MenuItem>
-              )),
+              ))
             ])}
           </Select>
         </FormControl>
@@ -113,7 +113,7 @@ export const ProductsList: FC<Props> = () => {
       <Box mt={1}>
         <Grid container rowSpacing={1} spacing={1}>
           {filteredProducts.length === 0 && (
-            <Typography align="center" variant="subtitle1">
+            <Typography align='center' variant='subtitle1'>
               No se han registrado productos
             </Typography>
           )}

@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { FC } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import {
   TextField,
@@ -11,38 +11,38 @@ import {
   InputLabel,
   Grid,
   CardHeader,
-  CardContent,
-} from "@mui/material/";
+  CardContent
+} from '@mui/material/';
 // MOdal
 
-import { Controller, useForm } from "react-hook-form";
-import { ICreateCategory } from "../../../../../../models/menu.model";
+import { Controller, useForm } from 'react-hook-form';
+import { ICreateCategory } from '../../../../../../models/menu.model';
 
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 
-import { useAppDispatch } from "../../../../../../hooks";
+import { useAppDispatch } from '../../../../../../hooks';
 
-import { ArrowBack } from "@mui/icons-material";
+import { ArrowBack } from '@mui/icons-material';
 import {
   addCategory,
-  updateCategory,
-} from "../../../../../../redux/slices/menu/menu.thunks";
+  updateCategory
+} from '../../../../../../redux/slices/menu/menu.thunks';
 import {
   resetActiveCategory,
   selectMenu,
-  setActiveCategory,
-} from "../../../../../../redux";
-import { Container, FormControl, Card } from "@mui/material";
+  setActiveCategory
+} from '../../../../../../redux';
+import { Container, FormControl, Card } from '@mui/material';
 
 import {
   useCreateCategory,
-  useUpdateCategory,
-} from "../../../hooks/useCategories";
+  useUpdateCategory
+} from '../../../hooks/useCategories';
 
 const initialForm = (sectionId: string): ICreateCategory => {
   return {
-    name: "",
-    sectionId,
+    name: '',
+    sectionId
   };
 };
 
@@ -62,7 +62,7 @@ export const EditCategory: FC<Props> = () => {
 
     category = { ...restCategory, sectionId: activeSection!.id };
   } else {
-    category = { name: "", sectionId: activeSection!.id };
+    category = { name: '', sectionId: activeSection!.id };
   }
 
   const {
@@ -70,9 +70,9 @@ export const EditCategory: FC<Props> = () => {
     handleSubmit,
     formState: { errors },
     control,
-    reset,
+    reset
   } = useForm<ICreateCategory>({
-    defaultValues: category,
+    defaultValues: category
   });
 
   const updateCategoryMutation = useUpdateCategory();
@@ -97,52 +97,52 @@ export const EditCategory: FC<Props> = () => {
 
   return (
     <>
-      <Container maxWidth="xs">
-        <Grid container display="flex" justifyContent="space-between">
-          <Grid item display="flex" justifyContent="left" alignItems="center">
+      <Container maxWidth='xs'>
+        <Grid container display='flex' justifyContent='space-between'>
+          <Grid item display='flex' justifyContent='left' alignItems='center'>
             <Button onClick={() => navigate(-1)}>
               <ArrowBack />
             </Button>
-            <Typography variant="h6">
-              {" "}
-              {activeCategory ? activeCategory.name : "Añadir Categoria"}
+            <Typography variant='h6'>
+              {' '}
+              {activeCategory ? activeCategory.name : 'Añadir Categoria'}
             </Typography>
           </Grid>
         </Grid>
 
         <Card>
-          <CardHeader title="Datos de la Categoria" />
+          <CardHeader title='Datos de la Categoria' />
 
           <CardContent sx={{ my: 0, py: 0 }}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <TextField
                 autoFocus
-                margin="dense"
-                label="Nombre de la Categoria"
-                type="text"
+                margin='dense'
+                label='Nombre de la Categoria'
+                type='text'
                 fullWidth
-                {...register("name", {
-                  required: "Este campo es requerido",
-                  minLength: { value: 2, message: "Minimo 2 caracteres" },
+                {...register('name', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 2, message: 'Minimo 2 caracteres' }
                 })}
                 error={!!errors.name}
                 helperText={
-                  <Typography variant="body1" color="red">
+                  <Typography variant='body1' color='red'>
                     {errors.name?.message}
                   </Typography>
                 }
               />
               <Controller
-                name="sectionId"
+                name='sectionId'
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <>
                     <FormControl fullWidth>
-                      <InputLabel id="select-seccion">Seccion</InputLabel>
+                      <InputLabel id='select-seccion'>Seccion</InputLabel>
                       <Select
-                        labelId="select-seccion"
-                        label="Seccion"
-                        margin="dense"
+                        labelId='select-seccion'
+                        label='Seccion'
+                        margin='dense'
                         disabled
                         value={value}
                         onChange={onChange}
@@ -151,7 +151,7 @@ export const EditCategory: FC<Props> = () => {
                       >
                         {sections.map((seccion) => (
                           <MenuItem key={seccion!.id} value={seccion.id!}>
-                            {seccion.name}{" "}
+                            {seccion.name}{' '}
                           </MenuItem>
                         ))}
                       </Select>
@@ -161,14 +161,14 @@ export const EditCategory: FC<Props> = () => {
               />
 
               <LoadingButton
-                variant="outlined"
-                type="submit"
+                variant='outlined'
+                type='submit'
                 loading={
                   updateCategoryMutation.isLoading ||
                   createCategoryMutation.isLoading
                 }
               >
-                {activeCategory ? "Editar" : "Crear"}
+                {activeCategory ? 'Editar' : 'Crear'}
               </LoadingButton>
             </form>
           </CardContent>

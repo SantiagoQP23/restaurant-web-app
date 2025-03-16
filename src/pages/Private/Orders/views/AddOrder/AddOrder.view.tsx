@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import {
   Button,
@@ -8,25 +8,25 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   CardContent,
-  Card,
-} from "@mui/material";
+  Card
+} from '@mui/material';
 
-import { useContext, useState } from "react";
+import { useContext, useState } from 'react';
 import {
   ArrowBackIos,
   DeliveryDining,
   LocalDining,
-  ShoppingCart,
-} from "@mui/icons-material";
-import { OrderActionType, OrderContext } from "../../context/Order.context";
+  ShoppingCart
+} from '@mui/icons-material';
+import { OrderActionType, OrderContext } from '../../context/Order.context';
 
-import { TitlePage } from "../../../components/TitlePage.component";
+import { TitlePage } from '../../../components/TitlePage.component';
 
-import { OrderDetails, NewOrderSummary } from "./components";
-import { TypeOrder } from "../../../../../models";
-import { TableOrder } from "../../components";
-import { ModalOrderAdded } from "./components/ModalOrderAdded.component";
-import { useNewOrderStore } from "../../store/newOrderStore";
+import { OrderDetails, NewOrderSummary } from './components';
+import { TypeOrder } from '../../../../../models';
+import { TableOrder } from '../../components';
+import { ModalOrderAdded } from './components/ModalOrderAdded.component';
+import { useNewOrderStore } from '../../store/newOrderStore';
 
 export const AddOrder = () => {
   const navigate = useNavigate();
@@ -41,15 +41,15 @@ export const AddOrder = () => {
 
   const {
     dispatch,
-    state: { typeOrder },
+    state: { typeOrder }
   } = useContext(OrderContext);
 
   const BtnBack = () => (
     <Button
-      color="inherit"
+      color='inherit'
       onClick={handleBack}
-      startIcon={<ArrowBackIos fontSize="small" />}
-      size="small"
+      startIcon={<ArrowBackIos fontSize='small' />}
+      size='small'
     >
       Atras
     </Button>
@@ -57,8 +57,8 @@ export const AddOrder = () => {
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ pb: 5 }}>
-        <TitlePage title="Nuevo pedido" />
+      <Container maxWidth='xl' sx={{ pb: 5 }}>
+        <TitlePage title='Nuevo pedido' />
 
         <Grid container spacing={1}>
           <Grid item xs={12} md={8}>
@@ -67,25 +67,25 @@ export const AddOrder = () => {
                 <OrderDetails />
 
                 <Stack
-                  direction="row"
+                  direction='row'
                   spacing={1}
-                  justifyContent="space-between"
+                  justifyContent='space-between'
                   my={2}
                 >
                   <Button
                     startIcon={<ShoppingCart />}
                     fullWidth={false}
                     onClick={() => {
-                      navigate("/orders/add/menu");
+                      navigate('/orders/add/menu');
                     }}
-                    color="primary"
+                    color='primary'
                   >
                     Añadir productos
                   </Button>
                   <Button
-                    color="error"
-                    variant="outlined"
-                    size="small"
+                    color='error'
+                    variant='outlined'
+                    size='small'
                     onClick={reset}
                   >
                     Limpiar
@@ -98,14 +98,14 @@ export const AddOrder = () => {
               <>
                 <Card>
                   <CardContent>
-                    <Stack spacing={2} direction="column">
-                      <Stack direction="row" justifyContent="center">
+                    <Stack spacing={2} direction='column'>
+                      <Stack direction='row' justifyContent='center'>
                         <ToggleButtonGroup
                           value={typeOrder}
                           onChange={(e, value) =>
                             dispatch({
                               type: OrderActionType.SET_TYPE_ORDER,
-                              payload: value,
+                              payload: value
                             })
                           }
                           exclusive
@@ -130,9 +130,9 @@ export const AddOrder = () => {
                   </CardContent>
                 </Card>
                 <Stack
-                  direction="row"
+                  direction='row'
                   spacing={1}
-                  justifyContent="space-between"
+                  justifyContent='space-between'
                 >
                   <BtnBack />
                 </Stack>

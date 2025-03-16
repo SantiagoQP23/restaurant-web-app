@@ -1,6 +1,6 @@
-import { SelectChangeEvent } from "@mui/material";
-import { useState } from "react";
-import { Period } from "../pages/Private/Common/dto/period.model";
+import { SelectChangeEvent } from '@mui/material';
+import { useState } from 'react';
+import { Period } from '../pages/Private/Common/dto/period.model';
 
 export const useDateFilter = (periodo: Period) => {
   const [period, setPeriod] = useState<Period>(periodo);
@@ -46,6 +46,6 @@ export const useDateFilter = (periodo: Period) => {
     handleChangePeriod,
     handleChangeStartDate,
     handleChangeEndDate,
-    handleChangeEndDateChecked,
+    handleChangeEndDateChecked
   };
 };

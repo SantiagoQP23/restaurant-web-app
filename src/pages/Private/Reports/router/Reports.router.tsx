@@ -1,4 +1,3 @@
-
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 import { IncomesReports } from '../views/IncomesReports/IncomesReports.view';
@@ -12,14 +11,9 @@ import { SimulatorForms } from '../views/SimulatorForms/SimulatorForms.view';
 import { FootfallPrediction } from '../views/FootfallPrediction/FootfallPrediction.view';
 import { Finances } from '../views/Finances/Finances.view';
 
-
 const Reports = lazy(() => import('../Reports.page'));
 
-
-
 export const ReportsRouter: RouteObject = {
-
-
   path: '',
   element: <Reports />,
   children: [
@@ -30,12 +24,10 @@ export const ReportsRouter: RouteObject = {
     {
       path: 'prediction/simulation/',
       element: <FootFallSimulation />
-
     },
     {
       path: 'prediction/simulation/simulator',
       element: <SimulatorForms />
-
     },
     {
       path: 'prediction',
@@ -47,7 +39,7 @@ export const ReportsRouter: RouteObject = {
     },
     {
       path: 'orders',
-      element: <OrdersReports />,
+      element: <OrdersReports />
     },
     {
       path: 'orders/receipt',
@@ -66,4 +58,4 @@ export const ReportsRouter: RouteObject = {
       element: <Finances />
     }
   ]
-}
+};

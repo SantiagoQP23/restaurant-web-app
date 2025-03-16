@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import {
   changePassword,
@@ -8,18 +8,18 @@ import {
   getUser,
   getUsers,
   resetPasswordUser,
-  updateUser,
-} from "../services/users.service";
+  updateUser
+} from '../services/users.service';
 
-import { IUser } from "../../../../models";
+import { IUser } from '../../../../models';
 
-import { CreateUserDto, ResetPasswordUserDto, UpdateUserDto } from "../dto";
-import { useDispatch } from "react-redux";
-import { loadUsers } from "../../../../redux";
-import { usePaginationAsync } from "../../../../hooks/usePaginationAsync";
-import { ChangePasswordDto } from "../dto/change-password.dto";
-import { useSnackbar } from "notistack";
-import { useSearch } from "../../../../hooks/useSearch";
+import { CreateUserDto, ResetPasswordUserDto, UpdateUserDto } from '../dto';
+import { useDispatch } from 'react-redux';
+import { loadUsers } from '../../../../redux';
+import { usePaginationAsync } from '../../../../hooks/usePaginationAsync';
+import { ChangePasswordDto } from '../dto/change-password.dto';
+import { useSnackbar } from 'notistack';
+import { useSearch } from '../../../../hooks/useSearch';
 
 export const useUsers = () => {
   const dispatch = useDispatch();
@@ -30,17 +30,17 @@ export const useUsers = () => {
   const { search, setSearch, handleChangeSearch } = useSearch();
 
   const usersQuery = useQuery<{ users: IUser[]; count: number }>(
-    ["users"],
+    ['users'],
     () =>
       getUsers({
         offset: page,
         limit: rowsPerPage,
-        search,
+        search
       }),
     {
       onSuccess: (data) => {
         dispatch(loadUsers(data.users));
-      },
+      }
     }
   );
 
@@ -52,16 +52,16 @@ export const useUsers = () => {
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
-    handleChangeSearch,
+    handleChangeSearch
   };
 };
 
 export const useUser = (term: string, enabled = true) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useQuery(["user", term], () => getUser(term), {
+  return useQuery(['user', term], () => getUser(term), {
     enabled,
-    retry: false,
+    retry: false
   });
 };
 
@@ -70,11 +70,11 @@ export const useCreateUser = () => {
 
   return useMutation<IUser, unknown, CreateUserDto>(createUser, {
     onSuccess: (data) => {
-      enqueueSnackbar("Usuario creado correctamente", { variant: "success" });
+      enqueueSnackbar('Usuario creado correctamente', { variant: 'success' });
     },
     onError: (error) => {
-      enqueueSnackbar("No se pudo crear el usuario", { variant: "error" });
-    },
+      enqueueSnackbar('No se pudo crear el usuario', { variant: 'error' });
+    }
   });
 };
 
@@ -85,15 +85,15 @@ export const useUpdateUser = () => {
     (data) => updateUser(data.id, data),
     {
       onSuccess: (data) => {
-        enqueueSnackbar("Usuario actualizado correctamente", {
-          variant: "success",
+        enqueueSnackbar('Usuario actualizado correctamente', {
+          variant: 'success'
         });
       },
       onError: (error) => {
-        enqueueSnackbar("No se pudo actualizar el usuario", {
-          variant: "error",
+        enqueueSnackbar('No se pudo actualizar el usuario', {
+          variant: 'error'
         });
-      },
+      }
     }
   );
 };
@@ -104,15 +104,15 @@ export const useChangePasswordUser = () => {
     (data) => changePassword(data),
     {
       onSuccess: (data) => {
-        enqueueSnackbar("Contraseña actualizada correctamente", {
-          variant: "success",
+        enqueueSnackbar('Contraseña actualizada correctamente', {
+          variant: 'success'
         });
       },
       onError: (error) => {
-        enqueueSnackbar("No se pudo actualizar la contraseña", {
-          variant: "error",
+        enqueueSnackbar('No se pudo actualizar la contraseña', {
+          variant: 'error'
         });
-      },
+      }
     }
   );
 };
@@ -125,15 +125,15 @@ export const useResetPasswordUser = () => {
     {
       onSuccess: (data) => {
         enqueueSnackbar(
-          "La contraseña fue cambiada al número de identificación",
-          { variant: "success" }
+          'La contraseña fue cambiada al número de identificación',
+          { variant: 'success' }
         );
       },
       onError: (error) => {
-        enqueueSnackbar("No se pudo reiniciar la contraseña", {
-          variant: "error",
+        enqueueSnackbar('No se pudo reiniciar la contraseña', {
+          variant: 'error'
         });
-      },
+      }
     }
   );
 };

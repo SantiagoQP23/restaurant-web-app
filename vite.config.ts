@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 /**
@@ -8,13 +8,15 @@ import react from '@vitejs/plugin-react'
  * @version 1.0 17/03/2025 Hide console and debugger in production
  */
 export default defineConfig({
-  plugins: [react({
-    include: "**/*.tsx",
-  })],
+  plugins: [
+    react({
+      include: '**/*.tsx'
+    })
+  ],
   resolve: {
     alias: {
-      "@": "/src",
-    },
+      '@': '/src'
+    }
   },
   server: {
     port: 3030
@@ -22,9 +24,9 @@ export default defineConfig({
   preview: {
     port: 8080
   },
-  ...(process.env.NODE_ENV === "production" && {
-     esbuild: {
-      drop: ['console', 'debugger'],
-    },
-  }),
-})
+  ...(process.env.NODE_ENV === 'production' && {
+    esbuild: {
+      drop: ['console', 'debugger']
+    }
+  })
+});

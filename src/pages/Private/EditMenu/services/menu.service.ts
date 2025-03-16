@@ -1,16 +1,16 @@
-import { restauranteApi } from "../../../../api";
-import { loadAbort } from "../../../../helpers";
+import { restauranteApi } from '../../../../api';
+import { loadAbort } from '../../../../helpers';
 
-import { ISection, ICategory, IProduct } from "../../../../models";
-import { UpdateCategoryDto, CreateCategoryDto } from "../dto/category.dto";
-import { CreateSectionDto } from "../dto/create-section.dto";
-import { CreateProductDto, UpdateProductDto } from "../dto/";
-import { UpdateSectionDto } from "../dto/update-section.dto";
+import { ISection, ICategory, IProduct } from '../../../../models';
+import { UpdateCategoryDto, CreateCategoryDto } from '../dto/category.dto';
+import { CreateSectionDto } from '../dto/create-section.dto';
+import { CreateProductDto, UpdateProductDto } from '../dto/';
+import { UpdateSectionDto } from '../dto/update-section.dto';
 
 export const createSection = async (
   data: CreateSectionDto
 ): Promise<ISection> => {
-  const resp = await restauranteApi.post<ISection>("/sections", data);
+  const resp = await restauranteApi.post<ISection>('/sections', data);
 
   return resp.data;
 };
@@ -27,12 +27,10 @@ export const updateSection = async (
 export const updateManySections = async (
   data: UpdateSectionDto[]
 ): Promise<ISection[]> => {
-  const resp = await restauranteApi.patch<ISection[]>("/sections", data);
+  const resp = await restauranteApi.patch<ISection[]>('/sections', data);
 
   return resp.data;
-}
-
-
+};
 
 export const deleteSection = async (id: string): Promise<void> => {
   const resp = await restauranteApi.delete(`/sections/${id}`);
@@ -43,7 +41,7 @@ export const deleteSection = async (id: string): Promise<void> => {
 export const createCategory = async (
   data: CreateCategoryDto
 ): Promise<ICategory> => {
-  const resp = await restauranteApi.post<ICategory>("/categories", data);
+  const resp = await restauranteApi.post<ICategory>('/categories', data);
 
   return resp.data;
 };
@@ -103,7 +101,7 @@ export const deleteCategory = async (id: string): Promise<void> => {
 export const createProduct = async (
   data: CreateProductDto
 ): Promise<IProduct> => {
-  const resp = await restauranteApi.post<IProduct>("/products", data);
+  const resp = await restauranteApi.post<IProduct>('/products', data);
 
   return resp.data;
 };
@@ -159,7 +157,7 @@ export const updateProductImage = async (
   data: UpdateProductImageDto
 ): Promise<IProduct> => {
   const formData = new FormData();
-  formData.append("file", data.file);
+  formData.append('file', data.file);
 
   const resp = await restauranteApi.patch<IProduct>(
     `/files/product-image/${id}`,
@@ -192,8 +190,8 @@ export const deleteProduct = (id: string) => {
 
   return {
     call: restauranteApi.delete(`/products/${id}`, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };

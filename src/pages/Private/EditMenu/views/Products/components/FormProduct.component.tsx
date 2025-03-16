@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react";
-import { IProduct, ProductStatus } from "../../../../../../models";
-import { Add, AttachMoney, Save, Percent } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
+import { FC, useEffect, useState } from 'react';
+import { IProduct, ProductStatus } from '../../../../../../models';
+import { Add, AttachMoney, Save, Percent } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import {
   Card,
   CardHeader,
@@ -19,39 +19,39 @@ import {
   List,
   ListItem,
   ListItemText,
-  Button,
-} from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
-import { UpdateProductDto } from "../../../dto";
-import { useDispatch, useSelector } from "react-redux";
-import { selectMenu, updateProduct } from "../../../../../../redux";
+  Button
+} from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { UpdateProductDto } from '../../../dto';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMenu, updateProduct } from '../../../../../../redux';
 
-import { FormProductImage } from "./";
-import { useUpdateProduct } from "../../../hooks/useProducts";
-import { useEditMenuStore } from "../../../hooks/useEditMenuStore";
-import { useProductionAreasStore } from "../../../../Common/store/production-areas-store";
-import NiceModal from "@ebay/nice-modal-react";
-import { ModalCreateProductOption } from "./ModalCreateProductOption.component";
-import { ProductOptionItem } from "./ProductOptionItem.component";
-import { getPriceWithoutIva } from "@/helpers/product.helper";
+import { FormProductImage } from './';
+import { useUpdateProduct } from '../../../hooks/useProducts';
+import { useEditMenuStore } from '../../../hooks/useEditMenuStore';
+import { useProductionAreasStore } from '../../../../Common/store/production-areas-store';
+import NiceModal from '@ebay/nice-modal-react';
+import { ModalCreateProductOption } from './ModalCreateProductOption.component';
+import { ProductOptionItem } from './ProductOptionItem.component';
+import { getPriceWithoutIva } from '@/helpers/product.helper';
 
 interface Props {
   product: IProduct;
 }
 
 const initialForm: UpdateProductDto = {
-  id: "",
-  name: "",
-  description: "",
+  id: '',
+  name: '',
+  description: '',
   price: 0,
   isActive: false,
   isPublic: false,
   status: ProductStatus.AVAILABLE,
-  categoryId: "",
+  categoryId: '',
   productionAreaId: 0,
   quantity: 0,
   unitCost: 0,
-  iva: 0,
+  iva: 0
 };
 
 /**
@@ -81,7 +81,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
     const updateProductDto: UpdateProductDto = {
       ...restProduct,
       categoryId: category.id,
-      productionAreaId: productionArea.id,
+      productionAreaId: productionArea.id
     };
     console.log({ updateProductDto });
     return updateProductDto;
@@ -92,9 +92,9 @@ export const FormProduct: FC<Props> = ({ product }) => {
     handleSubmit,
     formState: { errors, isValid, isDirty },
     control,
-    reset,
+    reset
   } = useForm<UpdateProductDto>({
-    defaultValues: initialForm,
+    defaultValues: initialForm
   });
 
   const onSubmit = (data: UpdateProductDto) => {
@@ -132,7 +132,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
     <>
       <Box mb={1}>
         <Card>
-          <CardHeader title="Imagenes del producto" />
+          <CardHeader title='Imagenes del producto' />
           <CardContent>
             <FormProductImage product={product} />
           </CardContent>
@@ -143,38 +143,38 @@ export const FormProduct: FC<Props> = ({ product }) => {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Card>
-              <CardHeader title="Información del producto" />
+              <CardHeader title='Información del producto' />
               <CardContent>
                 <Grid item xs={12}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
                         autoFocus
-                        margin="dense"
-                        label="Nombre del producto"
-                        type="text"
+                        margin='dense'
+                        label='Nombre del producto'
+                        type='text'
                         fullWidth
-                        {...register("name", {
-                          required: "Este campo es requerido",
+                        {...register('name', {
+                          required: 'Este campo es requerido',
                           minLength: {
                             value: 2,
-                            message: "Minimo 2 caracteres",
-                          },
+                            message: 'Minimo 2 caracteres'
+                          }
                         })}
                         helperText={errors.name?.message}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        label="Descripcion del producto"
+                        label='Descripcion del producto'
                         multiline
                         rows={4}
                         fullWidth
-                        {...register("description", {
+                        {...register('description', {
                           minLength: {
                             value: 10,
-                            message: "Minimo 10 caracteres",
-                          },
+                            message: 'Minimo 10 caracteres'
+                          }
                         })}
                         helperText={errors.description?.message}
                       />
@@ -182,18 +182,18 @@ export const FormProduct: FC<Props> = ({ product }) => {
                     {sections && sections.length > 0 && (
                       <Grid item xs={12} sm={6}>
                         <Controller
-                          name="categoryId"
+                          name='categoryId'
                           control={control}
                           render={({ field: { onChange, onBlur, value } }) => (
                             <>
                               <FormControl fullWidth>
-                                <InputLabel htmlFor="grouped-select">
+                                <InputLabel htmlFor='grouped-select'>
                                   Categoría
                                 </InputLabel>
                                 <Select
-                                  id="grouped-select"
-                                  label="Categoría"
-                                  margin="dense"
+                                  id='grouped-select'
+                                  label='Categoría'
+                                  margin='dense'
                                   fullWidth
                                   value={value}
                                   onChange={onChange}
@@ -204,7 +204,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                                     <ListSubheader
                                       key={section.id}
                                       sx={{
-                                        fontWeight: "bold",
+                                        fontWeight: 'bold'
                                       }}
                                     >
                                       {section.name}
@@ -218,7 +218,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                                       >
                                         {category.name}
                                       </MenuItem>
-                                    )),
+                                    ))
                                   ])}
                                 </Select>
                               </FormControl>
@@ -230,19 +230,19 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
                     <Grid item xs={12} sm={6}>
                       <Controller
-                        name="productionAreaId"
+                        name='productionAreaId'
                         control={control}
-                        rules={{ required: "Este campo es requerido" }}
+                        rules={{ required: 'Este campo es requerido' }}
                         render={({ field: { onChange, onBlur, value } }) => (
                           <>
                             <FormControl fullWidth>
-                              <InputLabel id="select-area">
+                              <InputLabel id='select-area'>
                                 Área de producción
                               </InputLabel>
                               <Select
-                                labelId="select-area"
-                                label="Área de producción"
-                                margin="dense"
+                                labelId='select-area'
+                                label='Área de producción'
+                                margin='dense'
                                 // disabled
                                 value={value}
                                 onChange={onChange}
@@ -268,23 +268,23 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
           <Grid item xs={12} md={6}>
             <Card>
-              <CardHeader title="Inventario" />
+              <CardHeader title='Inventario' />
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={6}>
                     <Controller
-                      name="status"
+                      name='status'
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (
                         <>
                           <FormControl fullWidth>
-                            <InputLabel id="select-estado">Estado</InputLabel>
+                            <InputLabel id='select-estado'>Estado</InputLabel>
 
                             <Select
-                              labelId="select-estado"
-                              label="Estado"
+                              labelId='select-estado'
+                              label='Estado'
                               fullWidth
-                              margin="dense"
+                              margin='dense'
                               value={value}
                               onChange={onChange}
                               onBlur={onBlur}
@@ -307,19 +307,19 @@ export const FormProduct: FC<Props> = ({ product }) => {
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      label="Cantidad disponible"
+                      label='Cantidad disponible'
                       fullWidth
-                      type="number"
+                      type='number'
                       inputProps={{
                         min: 0,
-                        step: 1,
+                        step: 1
                       }}
-                      {...register("quantity", {
+                      {...register('quantity', {
                         min: {
                           value: 0,
-                          message: "El valor debe ser mayor a 0",
+                          message: 'El valor debe ser mayor a 0'
                         },
-                        valueAsNumber: true,
+                        valueAsNumber: true
                       })}
                       helperText={errors.quantity?.message}
                       error={!!errors.quantity}
@@ -332,31 +332,31 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
           <Grid item xs={12} md={6}>
             <Card>
-              <CardHeader title="Precios" />
+              <CardHeader title='Precios' />
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      label="Precio"
+                      label='Precio'
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment position="start">
+                          <InputAdornment position='start'>
                             <AttachMoney />
                           </InputAdornment>
-                        ),
+                        )
                       }}
                       fullWidth
-                      type="number"
+                      type='number'
                       inputProps={{
-                        step: 0.05,
+                        step: 0.05
                       }}
-                      {...register("price", {
-                        required: "Este campo es requerido",
+                      {...register('price', {
+                        required: 'Este campo es requerido',
                         min: {
                           value: 0.25,
-                          message: "El valor debe ser mayor a $0.25",
+                          message: 'El valor debe ser mayor a $0.25'
                         },
-                        valueAsNumber: true,
+                        valueAsNumber: true
                       })}
                       helperText={errors.price?.message}
                       error={!!errors.price}
@@ -365,25 +365,25 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      label="Costo unitario"
+                      label='Costo unitario'
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment position="start">
+                          <InputAdornment position='start'>
                             <AttachMoney />
                           </InputAdornment>
-                        ),
+                        )
                       }}
                       fullWidth
-                      type="number"
+                      type='number'
                       inputProps={{
-                        step: 0.05,
+                        step: 0.05
                       }}
-                      {...register("unitCost", {
+                      {...register('unitCost', {
                         min: {
                           value: 0,
-                          message: "El valor debe ser mayor a $0",
+                          message: 'El valor debe ser mayor a $0'
                         },
-                        valueAsNumber: true,
+                        valueAsNumber: true
                       })}
                       helperText={errors.unitCost?.message}
                       error={!!errors.unitCost}
@@ -391,29 +391,29 @@ export const FormProduct: FC<Props> = ({ product }) => {
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      label="IVA"
+                      label='IVA'
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment position="start">
+                          <InputAdornment position='start'>
                             <Percent />
                           </InputAdornment>
-                        ),
+                        )
                       }}
                       fullWidth
-                      type="number"
+                      type='number'
                       inputProps={{
-                        step: 0.1,
+                        step: 0.1
                       }}
-                      {...register("iva", {
+                      {...register('iva', {
                         min: {
                           value: 0,
-                          message: "El valor debe ser mayor a 0",
+                          message: 'El valor debe ser mayor a 0'
                         },
                         max: {
                           value: 100,
-                          message: "El valor debe ser menor a 100",
+                          message: 'El valor debe ser menor a 100'
                         },
-                        valueAsNumber: true,
+                        valueAsNumber: true
                       })}
                       helperText={errors.iva?.message}
                       error={!!errors.iva}
@@ -421,10 +421,10 @@ export const FormProduct: FC<Props> = ({ product }) => {
                   </Grid>
                   <Grid item xs={6} md={3}>
                     <TextField
-                      label="$ sin IVA"
+                      label='$ sin IVA'
                       fullWidth
                       disabled
-                      type="number"
+                      type='number'
                       value={getPriceWithoutIva(
                         selectedProduct.price,
                         selectedProduct.iva
@@ -433,12 +433,12 @@ export const FormProduct: FC<Props> = ({ product }) => {
                   </Grid>
                   <Grid item xs={6} md={3}>
                     <TextField
-                      label="$ unitario sin IVA"
+                      label='$ unitario sin IVA'
                       fullWidth
                       disabled
-                      type="number"
+                      type='number'
                       inputProps={{
-                        step: 0.05,
+                        step: 0.05
                       }}
                       value={getPriceWithoutIva(
                         selectedProduct.unitCost,
@@ -454,7 +454,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
           <Grid item xs={12} md={6}>
             <Card>
               <CardHeader
-                title="Opciones"
+                title='Opciones'
                 action={
                   <Button startIcon={<Add />} onClick={showModalCreateOption}>
                     Añadir
@@ -475,41 +475,41 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
           <Grid item xs={12} md={6}>
             <Card>
-              <CardHeader title="Estados" />
+              <CardHeader title='Estados' />
               <List>
                 <ListItem
                   secondaryAction={
                     <Controller
-                      name="isActive"
+                      name='isActive'
                       control={control}
                       render={({ field: { onChange, value } }) => (
                         <Switch
                           checked={value}
                           onChange={onChange}
-                          color="success"
+                          color='success'
                         />
                       )}
                     />
                   }
                 >
-                  <ListItemText primary="Activo" />
+                  <ListItemText primary='Activo' />
                 </ListItem>
                 <ListItem
                   secondaryAction={
                     <Controller
-                      name="isPublic"
+                      name='isPublic'
                       control={control}
                       render={({ field: { onChange, value } }) => (
                         <Switch
                           checked={value}
                           onChange={onChange}
-                          color="success"
+                          color='success'
                         />
                       )}
                     />
                   }
                 >
-                  <ListItemText primary="Público" />
+                  <ListItemText primary='Público' />
                 </ListItem>
               </List>
 
@@ -558,14 +558,14 @@ export const FormProduct: FC<Props> = ({ product }) => {
         </Grid>
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            mt: 2,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            mt: 2
           }}
         >
           <LoadingButton
-            variant="contained"
-            type="submit"
+            variant='contained'
+            type='submit'
             disabled={!isValid || !isDirty}
             loading={isLoading}
             startIcon={<Save />}

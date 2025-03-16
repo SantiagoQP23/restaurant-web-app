@@ -1,7 +1,7 @@
-import { useContext, useEffect } from "react";
-import { SocketContext } from "../context";
-import { SocketEvent } from "../models/socket-event.dto";
-import { EventsOnSocket } from "../pages/Private/Orders/interfaces/events-sockets.interface";
+import { useContext, useEffect } from 'react';
+import { SocketContext } from '../context';
+import { SocketEvent } from '../models/socket-event.dto';
+import { EventsOnSocket } from '../pages/Private/Orders/interfaces/events-sockets.interface';
 
 export const useOnWebSocketsEvent = <T>(
   event: EventsOnSocket,

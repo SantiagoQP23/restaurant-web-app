@@ -1,6 +1,6 @@
-import { IUser, PaymentMethod } from "../../../../models";
-import { TransactionType } from "../../Common/enums/transaction-type.enum";
-import { TransactionCategory } from "./transaction-category.model";
+import { IUser, PaymentMethod } from '../../../../models';
+import { TransactionType } from '../../Common/enums/transaction-type.enum';
+import { TransactionCategory } from './transaction-category.model';
 
 export interface Transaction {
   id: number;

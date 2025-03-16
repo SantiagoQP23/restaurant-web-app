@@ -1,18 +1,18 @@
-import { FC } from "react";
+import { FC } from 'react';
 import {
   List,
   ListSubheader,
   Typography,
   styled,
   Box,
-  alpha,
-} from "@mui/material";
-import { NavItemButton } from "./";
-import { ValidRoles } from "../../../../Common/models/valid-roles.model";
-import { useSelector } from "react-redux";
-import { selectAuth } from "../../../../../../redux";
-import { NavItemCollapsable } from "./NavItemCollapsable.component";
-import { MenuSection as IMenuSection } from "../../../interfaces";
+  alpha
+} from '@mui/material';
+import { NavItemButton } from './';
+import { ValidRoles } from '../../../../Common/models/valid-roles.model';
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../../../../../../redux';
+import { NavItemCollapsable } from './NavItemCollapsable.component';
+import { MenuSection as IMenuSection } from '../../../interfaces';
 
 interface Props {
   section: IMenuSection;
@@ -48,7 +48,7 @@ const SubMenuWrapper = styled(Box)(
 
           .MuiButton-startIcon,
           .MuiButton-endIcon {
-            transition: ${theme.transitions.create(["color"])};
+            transition: ${theme.transitions.create(['color'])};
 
             .MuiSvgIcon-root {
               font-size: inherit;
@@ -110,8 +110,8 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-                  "transform",
-                  "opacity",
+                  'transform',
+                  'opacity'
                 ])};
                 width: 6px;
                 height: 6px;
@@ -149,18 +149,18 @@ export const MenuSection: FC<Props> = ({ section }) => {
 
   return (
     <List
-      component="div"
+      component='div'
       subheader={
-        <ListSubheader component="div" disableSticky>
-          <Typography color="text.primary">{section.title}</Typography>
+        <ListSubheader component='div' disableSticky>
+          <Typography color='text.primary'>{section.title}</Typography>
         </ListSubheader>
       }
       sx={{
-        mt: 1,
+        mt: 1
       }}
     >
       <SubMenuWrapper>
-        <List component="div">
+        <List component='div'>
           {section.items.map((item, index) =>
             item.subItems ? (
               <NavItemCollapsable key={index} navItem={item} />

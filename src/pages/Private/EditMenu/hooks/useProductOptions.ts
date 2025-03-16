@@ -1,25 +1,25 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   createProductOption,
   getProductOption,
   getProductOptions,
-  updateProductOption,
-} from "../services/product-options.service";
-import { useSnackbar } from "notistack";
-import { ProductOption } from "../../../../models";
-import { CreateProductOptionDto, UpdateProductOptionDto } from "../dto";
-import { useEditMenuStore } from "./useEditMenuStore";
-import { useDispatch } from "react-redux";
-import { setActiveProduct, updateProduct } from "../../../../redux";
+  updateProductOption
+} from '../services/product-options.service';
+import { useSnackbar } from 'notistack';
+import { ProductOption } from '../../../../models';
+import { CreateProductOptionDto, UpdateProductOptionDto } from '../dto';
+import { useEditMenuStore } from './useEditMenuStore';
+import { useDispatch } from 'react-redux';
+import { setActiveProduct, updateProduct } from '../../../../redux';
 
 export const useProductOption = (productionAreaId: number) => {
-  return useQuery(["production-areas"], () =>
+  return useQuery(['production-areas'], () =>
     getProductOption(productionAreaId)
   );
 };
 
 export const useProductOptions = () => {
-  return useQuery(["production-areas"], () => getProductOptions(), {});
+  return useQuery(['production-areas'], () => getProductOptions(), {});
 };
 
 export const useCreateProductOption = (productId: string) => {
@@ -34,16 +34,16 @@ export const useCreateProductOption = (productId: string) => {
         const product = findProductById(productId)!;
         const updatedProduct = {
           ...product,
-          options: [...product.options, productOption],
+          options: [...product.options, productOption]
         };
 
         dispatch(updateProduct(updatedProduct));
         dispatch(setActiveProduct(updatedProduct));
-        enqueueSnackbar("Se creó correctamente", { variant: "success" });
+        enqueueSnackbar('Se creó correctamente', { variant: 'success' });
       },
       onError: () => {
-        enqueueSnackbar("No se pudo crear", { variant: "error" });
-      },
+        enqueueSnackbar('No se pudo crear', { variant: 'error' });
+      }
     }
   );
 };
@@ -73,10 +73,10 @@ export const useUpdateProductOption = (productId: string) => {
       dispatch(updateProduct(updatedProduct));
       dispatch(setActiveProduct(updatedProduct));
 
-      enqueueSnackbar("Se actualizó correctamente", { variant: "success" });
+      enqueueSnackbar('Se actualizó correctamente', { variant: 'success' });
     },
     onError: () => {
-      enqueueSnackbar("No se pudo actualizar", { variant: "error" });
-    },
+      enqueueSnackbar('No se pudo actualizar', { variant: 'error' });
+    }
   });
 };

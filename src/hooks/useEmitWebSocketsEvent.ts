@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
-import { SocketContext } from "../context";
+import { useContext, useState } from 'react';
+import { SocketContext } from '../context';
 import {
   SocketResponse,
-  SocketResponseData,
-} from "../models/socket-response.dto";
+  SocketResponseData
+} from '../models/socket-response.dto';
 
 interface WebSocketOptions<TData> {
   onSuccess?: (resp: TData) => void;
@@ -43,6 +43,6 @@ export function useEmitWebSocketsEvent<TData, TVariables>(
   return {
     mutate,
     isLoading: loading,
-    isOnline: online,
+    isOnline: online
   };
 }

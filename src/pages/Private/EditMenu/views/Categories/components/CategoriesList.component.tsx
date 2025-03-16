@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Material UI
 import {
@@ -9,15 +9,15 @@ import {
   Select,
   SelectChangeEvent,
   FormControl,
-  InputLabel,
-} from "@mui/material/";
+  InputLabel
+} from '@mui/material/';
 
 // Component
-import { Category } from "./Category.component";
+import { Category } from './Category.component';
 
-import { ICategory } from "../../../../../../models/menu.model";
+import { ICategory } from '../../../../../../models/menu.model';
 
-import { selectMenu, setActiveSection } from "../../../../../../redux";
+import { selectMenu, setActiveSection } from '../../../../../../redux';
 
 export function CategoriesList() {
   const { sections, activeSection, categories } = useSelector(selectMenu);
@@ -30,7 +30,7 @@ export function CategoriesList() {
   const handleChangeSection = (event: SelectChangeEvent) => {
     const value = event.target.value;
 
-    if (value === "") {
+    if (value === '') {
       setFilteredCategories(categories);
       dispatch(setActiveSection(null));
       return;
@@ -66,23 +66,23 @@ export function CategoriesList() {
 
   return (
     <>
-      <Grid container display="flex" justifyContent="space-between">
-        <Grid item display="flex" alignItems="center">
-          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small-label">Sección</InputLabel>
+      <Grid container display='flex' justifyContent='space-between'>
+        <Grid item display='flex' alignItems='center'>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+            <InputLabel id='demo-select-small-label'>Sección</InputLabel>
             <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              value={activeSection?.id || ""}
-              label="Estado"
+              labelId='demo-select-small-label'
+              id='demo-select-small'
+              value={activeSection?.id || ''}
+              label='Estado'
               onChange={handleChangeSection}
             >
-              <MenuItem value="">
+              <MenuItem value=''>
                 <em>Todos</em>
               </MenuItem>
               {sections.map((seccion) => (
                 <MenuItem key={seccion!.id} value={seccion.id!}>
-                  {seccion.name}{" "}
+                  {seccion.name}{' '}
                 </MenuItem>
               ))}
             </Select>

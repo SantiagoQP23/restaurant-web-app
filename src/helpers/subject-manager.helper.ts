@@ -1,36 +1,26 @@
-
 import { Subject } from 'rxjs';
 import { ICreateOrderDetail } from '../models/orders.model';
 
-
-
 export class SubjectManager {
-  subject$ = new Subject<{value: boolean, detalle: ICreateOrderDetail}>();
+  subject$ = new Subject<{ value: boolean; detalle: ICreateOrderDetail }>();
 
-  getSubject(){
-
+  getSubject() {
     return this.subject$.asObservable();
   }
 
-  setSubject(value: boolean, detalle: ICreateOrderDetail){
-    this.subject$.next({value, detalle});
+  setSubject(value: boolean, detalle: ICreateOrderDetail) {
+    this.subject$.next({ value, detalle });
   }
 }
-
 
 export class SubjectModal {
-  subject$ = new Subject<{value: boolean}>();
+  subject$ = new Subject<{ value: boolean }>();
 
-  getSubject(){
-
+  getSubject() {
     return this.subject$.asObservable();
   }
 
-  setSubject({value}:{value: boolean}){
-    this.subject$.next({value});
+  setSubject({ value }: { value: boolean }) {
+    this.subject$.next({ value });
   }
 }
-
-
-
-

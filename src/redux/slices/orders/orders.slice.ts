@@ -1,16 +1,13 @@
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-import { Order, IOrderDetail } from "../../../models";
-import { RootState } from "../../store";
-
+import { Order, IOrderDetail } from '../../../models';
+import { RootState } from '../../store';
 
 export interface PedidosState {
-  orders: Order[]
+  orders: Order[];
   activeOrder: Order | null;
   lastUpdatedOrders: string;
   detailActive: IOrderDetail | null;
-
 }
 
 const initialState: PedidosState = {
@@ -24,35 +21,28 @@ export const ordersSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {
-
     setActiveOrder: (state, action: PayloadAction<Order | null>) => {
       state.activeOrder = action.payload;
     },
 
     addOrder: (state, action: PayloadAction<Order>) => {
-      state.orders = [...state.orders, action.payload]
+      state.orders = [...state.orders, action.payload];
     },
 
     updateOrder: (state, { payload }: PayloadAction<Order>) => {
-      state.orders = state.orders.map(
-        p => (p.id === payload.id)
-          ? payload
-          : p
-      )
+      state.orders = state.orders.map((p) =>
+        p.id === payload.id ? payload : p
+      );
       if (state.activeOrder?.id === payload.id) {
         state.activeOrder = payload;
       }
-
     },
 
     deleteOrder: (state, action: PayloadAction<string>) => {
-      state.orders = state.orders.filter(
-        p => p.id !== action.payload
-      )
+      state.orders = state.orders.filter((p) => p.id !== action.payload);
     },
 
     loadOrders: (state, action: PayloadAction<Order[]>) => {
-
       // sort by date
       // action.payload.sort((a, b) => {
       //   if (a.createdAt < b.createdAt) {
@@ -64,32 +54,25 @@ export const ordersSlice = createSlice({
       //   return 0;
       // });
 
-
-      state.orders = action.payload
+      state.orders = action.payload;
     },
     setLastUpdatedOrders: (state, action: PayloadAction<string>) => {
       state.lastUpdatedOrders = action.payload;
     },
     resetOrders: () => ({ ...initialState }),
     resetActiveOrder: (state) => {
-      state.activeOrder = null
+      state.activeOrder = null;
     },
     sortOrdersByDeliveryTime: (state) => {
-
       const ordersSorted = state.orders.sort((a, b) => {
-
         const aDate = new Date(a.deliveryTime).getTime();
         const bDate = new Date(b.deliveryTime).getTime();
 
         return aDate - bDate;
-
-      }
-      )
+      });
 
       state.orders = ordersSorted;
-
     }
-
 
     /* 
         pedidoUpdateTotal: (state, action: PayloadAction<number>) => {
@@ -226,9 +209,7 @@ export const ordersSlice = createSlice({
     
     
      */
-
   }
-
 });
 export const {
   setActiveOrder,
@@ -250,11 +231,6 @@ export const {
  */
 } = ordersSlice.actions;
 
-
 export const selectOrders = (state: RootState) => state.orders;
-
-
-
-
 
 export default ordersSlice.reducer;

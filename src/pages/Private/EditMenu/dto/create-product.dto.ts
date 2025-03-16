@@ -1,4 +1,4 @@
-import { ProductStatus } from "../../../../models";
+import { ProductStatus } from '../../../../models';
 
 /**
  * Data transfer object (DTO) with expected fields for creating a new product.

@@ -1,5 +1,5 @@
-import { FC, useState, KeyboardEvent } from "react";
-import { ProductionArea } from "../../Common/models/production-area.model";
+import { FC, useState, KeyboardEvent } from 'react';
+import { ProductionArea } from '../../Common/models/production-area.model';
 import {
   ListItem,
   ListItemText,
@@ -8,23 +8,23 @@ import {
   TextField,
   ListItemIcon,
   MenuItem,
-  Popover,
-} from "@mui/material";
+  Popover
+} from '@mui/material';
 import {
   Close,
   DeleteOutlined,
   DonutSmall,
   EditOutlined,
   MoreVert,
-  Reply,
-} from "@mui/icons-material";
-import { useUpdateProductionArea } from "../hooks/useProductionArea";
-import { UpdateProductionAreaDto } from "../dto/update-production-area.dto";
+  Reply
+} from '@mui/icons-material';
+import { useUpdateProductionArea } from '../hooks/useProductionArea';
+import { UpdateProductionAreaDto } from '../dto/update-production-area.dto';
 import {
   bindPopover,
   bindTrigger,
-  usePopupState,
-} from "material-ui-popup-state/hooks";
+  usePopupState
+} from 'material-ui-popup-state/hooks';
 
 interface Props {
   area: ProductionArea;
@@ -37,8 +37,8 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const popupState = usePopupState({
-    variant: "popover",
-    popupId: "areaMenu",
+    variant: 'popover',
+    popupId: 'areaMenu'
   });
 
   const submitUpdateArea = async (productionArea: UpdateProductionAreaDto) => {
@@ -53,7 +53,7 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
   const handleChangeStatus = () => {
     popupState.close();
     submitUpdateArea({
-      isActive: !area.isActive,
+      isActive: !area.isActive
     });
   };
 
@@ -62,7 +62,7 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       // Enter key is pressed, execute your update logic
       updateNameArea();
     }
@@ -72,7 +72,7 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
     toggleEdit();
     if (name !== area.name) {
       await submitUpdateArea({
-        name,
+        name
       });
     }
   };
@@ -101,7 +101,7 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
         <TextField
           value={name}
           onChange={(e) => setName(e.target.value)}
-          size="small"
+          size='small'
           onKeyDown={handleKeyDown}
           onBlur={updateNameArea}
         />
@@ -110,37 +110,37 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
           primary={name}
           secondary={area.description}
           primaryTypographyProps={{
-            variant: "h5",
-            color: area.isActive ? "text.primary" : "text.disabled",
+            variant: 'h5',
+            color: area.isActive ? 'text.primary' : 'text.disabled'
           }}
         />
       )}
 
       <Popover
         {...bindPopover(popupState)}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{
           paper: {
             sx: {
-              width: 170,
-            },
-          },
+              width: 170
+            }
+          }
         }}
       >
         <MenuItem onClick={handleEdit}>
-          <EditOutlined fontSize="small" sx={{ mr: 2 }} />
+          <EditOutlined fontSize='small' sx={{ mr: 2 }} />
           Renombrar
         </MenuItem>
 
         {area.isActive ? (
-          <MenuItem sx={{ color: "error.main" }} onClick={handleChangeStatus}>
-            <DeleteOutlined fontSize="small" sx={{ mr: 2 }} />
+          <MenuItem sx={{ color: 'error.main' }} onClick={handleChangeStatus}>
+            <DeleteOutlined fontSize='small' sx={{ mr: 2 }} />
             Desactivar
           </MenuItem>
         ) : (
           <MenuItem onClick={handleChangeStatus}>
-            <Reply fontSize="small" sx={{ mr: 2 }} />
+            <Reply fontSize='small' sx={{ mr: 2 }} />
             Habilitar
           </MenuItem>
         )}

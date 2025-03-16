@@ -8,8 +8,8 @@ import {
   TakeoutDining,
   TableBar,
   EditOutlined,
-  Done,
-} from "@mui/icons-material";
+  Done
+} from '@mui/icons-material';
 import {
   Card,
   CardActionArea,
@@ -25,24 +25,24 @@ import {
   AccordionSummary,
   Popover,
   MenuItem,
-  Alert,
-} from "@mui/material";
-import { format, formatDistance, formatRelative } from "date-fns";
-import { Order, OrderStatus, TypeOrder } from "../../../../../../models";
-import { FC } from "react";
-import { LabelStatusOrder } from "../../../components/LabelStatusOrder.component";
-import { useNavigate } from "react-router-dom";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { getTypeOrder } from "../../../../Common/helpers/get-type-order.helper";
-import { LabelStatusPaid, ModalCloseOrder } from "../../../components";
-import { es } from "date-fns/locale";
-import { GridExpandMoreIcon } from "@mui/x-data-grid";
+  Alert
+} from '@mui/material';
+import { format, formatDistance, formatRelative } from 'date-fns';
+import { Order, OrderStatus, TypeOrder } from '../../../../../../models';
+import { FC } from 'react';
+import { LabelStatusOrder } from '../../../components/LabelStatusOrder.component';
+import { useNavigate } from 'react-router-dom';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { getTypeOrder } from '../../../../Common/helpers/get-type-order.helper';
+import { LabelStatusPaid, ModalCloseOrder } from '../../../components';
+import { es } from 'date-fns/locale';
+import { GridExpandMoreIcon } from '@mui/x-data-grid';
 import {
   bindTrigger,
   usePopupState,
-  bindPopover,
-} from "material-ui-popup-state/hooks";
-import NiceModal from "@ebay/nice-modal-react";
+  bindPopover
+} from 'material-ui-popup-state/hooks';
+import NiceModal from '@ebay/nice-modal-react';
 
 interface Props {
   order: Order;
@@ -51,13 +51,13 @@ interface Props {
 
 export const OrderCard: FC<Props> = ({ order, onClick }) => {
   const popupState = usePopupState({
-    variant: "popover",
-    popupId: "popoverOrder1",
+    variant: 'popover',
+    popupId: 'popoverOrder1'
   });
   const navigate = useNavigate();
 
   const date = formatDistance(new Date(order.createdAt), new Date(), {
-    locale: es,
+    locale: es
   });
 
   const handleEdit = () => {
@@ -75,7 +75,7 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
 
   const showModalCloseOrder = () => {
     NiceModal.show(ModalCloseOrder, {
-      order,
+      order
     });
   };
 
@@ -89,7 +89,7 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
     <>
       <Card
         sx={{
-          border: "1px solid #e0e0e0",
+          border: '1px solid #e0e0e0'
         }}
       >
         {/* <CardActionArea
@@ -100,15 +100,15 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
       > */}
         <CardHeader
           title={
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box display='flex' alignItems='center' gap={1}>
               {order.type === TypeOrder.TAKE_AWAY ? (
                 <>
-                  <TakeoutDining fontSize="small" />
+                  <TakeoutDining fontSize='small' />
                   {getTypeOrder(order.type)}
                 </>
               ) : (
                 <>
-                  {<TableBar fontSize="small" />}
+                  {<TableBar fontSize='small' />}
                   {`Mesa ${order.table?.name}`}
                 </>
               )}
@@ -117,7 +117,7 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
           subheader={`${order.user.person.firstName} ${order.user.person.lastName} `}
           action={
             <>
-              <Stack direction="row" spacing={1} alignItems="center">
+              <Stack direction='row' spacing={1} alignItems='center'>
                 <LabelStatusOrder status={order.status} simple />
                 <IconButton {...bindTrigger(popupState)}>
                   <MoreVert />
@@ -128,37 +128,37 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
           // avatar={<TableRestaurant />}
         />
         {order.notes && (
-          <Box display="flex" flexDirection="column" px={2}>
-            <Typography variant="h5">Notas</Typography>
+          <Box display='flex' flexDirection='column' px={2}>
+            <Typography variant='h5'>Notas</Typography>
 
-            <Typography variant="body1">{order.notes}</Typography>
+            <Typography variant='body1'>{order.notes}</Typography>
           </Box>
         )}
 
         <Accordion defaultExpanded>
           <AccordionSummary
             expandIcon={<GridExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
+            aria-controls='panel1-content'
+            id='panel1-header'
           >
-            <Typography variant="body1">
+            <Typography variant='body1'>
               {order.details.length} productos
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Stack spacing={1} sx={{}}>
               {order.details.map((detail) => (
-                <Box key={detail.id} display="flex">
-                  <Typography variant="h5" width="10%">
+                <Box key={detail.id} display='flex'>
+                  <Typography variant='h5' width='10%'>
                     {detail.quantity}
                     {/* {index < order.details.length - 1 ? "," : "."} */}
                   </Typography>
-                  <Box display="flex" flexDirection="column">
-                    <Typography variant="h5">
+                  <Box display='flex' flexDirection='column'>
+                    <Typography variant='h5'>
                       {detail.product.name}
                       {detail.productOption && `: ${detail.productOption.name}`}
                     </Typography>
-                    <Typography variant="subtitle1">
+                    <Typography variant='subtitle1'>
                       {detail.description}
                     </Typography>
                   </Box>
@@ -187,28 +187,28 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
               </Typography>
             ))}
           </Stack> */}
-            <Box display="flex" alignItems="center">
-              <TimerOutlined fontSize="small" sx={{ fontSize: 18, mr: 0.5 }} />
-              <Typography fontSize="0.8rem">{date}</Typography>
-              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
-              <People fontSize="small" sx={{ fontSize: 18, mr: 0.5 }} />
-              <Typography fontSize="0.8rem" fontWeight="bold">
+            <Box display='flex' alignItems='center'>
+              <TimerOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
+              <Typography fontSize='0.8rem'>{date}</Typography>
+              <Divider orientation='vertical' flexItem sx={{ mx: 1 }} />
+              <People fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
+              <Typography fontSize='0.8rem' fontWeight='bold'>
                 {order.people}
               </Typography>
             </Box>
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
             >
-              <Box display="flex" alignItems="center" gap={0.5}>
-                <Assignment fontSize="small" sx={{ fontSize: 18, mr: 0.5 }} />
+              <Box display='flex' alignItems='center' gap={0.5}>
+                <Assignment fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
                 <Typography>N° {order.num}</Typography>
               </Box>
-              <Box display="flex" alignItems="center" gap={0.5}>
+              <Box display='flex' alignItems='center' gap={0.5}>
                 <LabelStatusPaid isPaid={order.isPaid} />
-                <Divider orientation="vertical" flexItem />
-                <Typography align="right" variant="h4">
+                <Divider orientation='vertical' flexItem />
+                <Typography align='right' variant='h4'>
                   {formatMoney(order.total)}
                 </Typography>
               </Box>
@@ -219,23 +219,23 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
       </Card>
       <Popover
         {...bindPopover(popupState)}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{
           paper: {
             sx: {
               width: 140,
-              zIndex: 1000,
-            },
-          },
+              zIndex: 1000
+            }
+          }
         }}
       >
         <MenuItem onClick={handleEdit}>
-          <EditOutlined fontSize="small" sx={{ mr: 2 }} />
+          <EditOutlined fontSize='small' sx={{ mr: 2 }} />
           Editar
         </MenuItem>
         <MenuItem onClick={handleClose} disabled={!isCloseableOrder}>
-          <Done fontSize="small" sx={{ mr: 2 }} />
+          <Done fontSize='small' sx={{ mr: 2 }} />
           Cerrar
         </MenuItem>
       </Popover>

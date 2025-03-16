@@ -1,5 +1,5 @@
-import { IUser } from "../../../../models";
-import { CashTransaction } from "./cash-transaction.model";
+import { IUser } from '../../../../models';
+import { CashTransaction } from './cash-transaction.model';
 
 export interface CashRegister {
   id: number;

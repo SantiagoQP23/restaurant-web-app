@@ -1,6 +1,5 @@
-import { PaymentMethod } from "../../../../models";
-import { TransactionType } from "../../Common/enums/transaction-type.enum";
-
+import { PaymentMethod } from '../../../../models';
+import { TransactionType } from '../../Common/enums/transaction-type.enum';
 
 export interface CreateTransactionDto {
   title: string;

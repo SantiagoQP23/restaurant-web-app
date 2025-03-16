@@ -1,17 +1,13 @@
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs';
 
-
-
-export class SubjectGenerator<T>{
+export class SubjectGenerator<T> {
   subject$: Subject<T> = new Subject<T>();
 
-  getSubject(){
-
+  getSubject() {
     return this.subject$.asObservable();
   }
 
-  setSubject(value: T){
+  setSubject(value: T) {
     this.subject$.next(value);
   }
 }
-

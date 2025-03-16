@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   Button,
@@ -19,31 +19,31 @@ import {
   Popover,
   Card,
   Typography,
-  LinearProgress,
-} from "@mui/material";
+  LinearProgress
+} from '@mui/material';
 
 // Componentes
 
-import { resetActiveOrder, selectOrders } from "../../../../../redux";
-import { useNavigate } from "react-router-dom";
-import { DeleteOutlined, EditOutlined } from "@mui/icons-material";
+import { resetActiveOrder, selectOrders } from '../../../../../redux';
+import { useNavigate } from 'react-router-dom';
+import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
 
-import AddIcon from "@mui/icons-material/Add";
-import { statusModalDeleteOrder } from "../../services/orders.service";
-import { TitlePage } from "../../../components/TitlePage.component";
-import { OrderListToolbar } from "./components/OrderListToolbar.component";
-import { Checkbox } from "@mui/material/";
-import { TablePagination, IconButton } from "@mui/material";
-import { TabsOrderStatus } from "./components/TabsOrderStatus.component";
-import { LabelStatusOrder } from "../../components/LabelStatusOrder.component";
-import { useOrders } from "../../hooks";
+import AddIcon from '@mui/icons-material/Add';
+import { statusModalDeleteOrder } from '../../services/orders.service';
+import { TitlePage } from '../../../components/TitlePage.component';
+import { OrderListToolbar } from './components/OrderListToolbar.component';
+import { Checkbox } from '@mui/material/';
+import { TablePagination, IconButton } from '@mui/material';
+import { TabsOrderStatus } from './components/TabsOrderStatus.component';
+import { LabelStatusOrder } from '../../components/LabelStatusOrder.component';
+import { useOrders } from '../../hooks';
 
 export const ListOrders = () => {
   const { orders, activeOrder } = useSelector(selectOrders);
 
   const [open, setOpen] = useState(null);
 
-  const [statusOrderFilter] = useState<string>("all");
+  const [statusOrderFilter] = useState<string>('all');
 
   const {
     page,
@@ -60,7 +60,7 @@ export const ListOrders = () => {
     isPaid,
     handleChangeIsPaid,
     endDate,
-    handleChangeEndDate,
+    handleChangeEndDate
   } = useOrders();
 
   const navigate = useNavigate();
@@ -74,19 +74,19 @@ export const ListOrders = () => {
 
   const addOrder = () => {
     dispatch(resetActiveOrder());
-    navigate("/orders");
+    navigate('/orders');
   };
 
   return (
     <>
-      <Container maxWidth="xl">
+      <Container maxWidth='xl'>
         <TitlePage
-          title="Pedidos"
+          title='Pedidos'
           action={
             <Button
               startIcon={<AddIcon />}
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               onClick={() => addOrder()}
             >
               Añadir Pedido
@@ -97,9 +97,9 @@ export const ListOrders = () => {
         <Card>
           <Box
             sx={{
-              overflowX: "auto",
+              overflowX: 'auto',
 
-              py: 1,
+              py: 1
             }}
           >
             <TabsOrderStatus
@@ -140,7 +140,7 @@ export const ListOrders = () => {
                   <TableCell>Hora</TableCell>
                   <TableCell>Estado</TableCell>
                   <TableCell>Total</TableCell>
-                  <TableCell align="center">Acciones</TableCell>
+                  <TableCell align='center'>Acciones</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -148,7 +148,7 @@ export const ListOrders = () => {
                 {ordersQuery.data?.count === 0 && (
                   <TableRow>
                     <TableCell colSpan={8}>
-                      <Typography my={5} textAlign="center">
+                      <Typography my={5} textAlign='center'>
                         No hay pedidos
                       </Typography>
                     </TableCell>
@@ -160,11 +160,11 @@ export const ListOrders = () => {
                     hover
                     key={order.id}
                     sx={{
-                      cursor: "pointer",
-                      whiteSpace: "nowrap",
-                      "&:hover": {
-                        backgroundColor: theme.colors.alpha.black[5],
-                      },
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap',
+                      '&:hover': {
+                        backgroundColor: theme.colors.alpha.black[5]
+                      }
                     }}
                     // onClick={() => navigate(`orders/${order.id}`)}
                   >
@@ -178,25 +178,25 @@ export const ListOrders = () => {
                     <TableCell>{order.notes}</TableCell>
 
                     <TableCell>
-                      {format(new Date(order.createdAt), "dd/MM/yyyy HH:mm")}
+                      {format(new Date(order.createdAt), 'dd/MM/yyyy HH:mm')}
                     </TableCell>
                     <TableCell>
                       <LabelStatusOrder status={order.status} />
                     </TableCell>
                     <TableCell>$ {order.total}</TableCell>
-                    <TableCell align="center">
+                    <TableCell align='center'>
                       {/* <IconButton onClick={(e) => handleOpenMenu(e, order)}>
                             <MoreVert />
                           </IconButton> */}
                       <IconButton
                         onClick={() => navigate(`edit/${order.id}`)}
-                        color="primary"
+                        color='primary'
                       >
                         <EditOutlined />
                       </IconButton>
 
                       <IconButton
-                        color="error"
+                        color='error'
                         onClick={() => {
                           statusModalDeleteOrder.setSubject(true, order);
                         }}
@@ -217,7 +217,7 @@ export const ListOrders = () => {
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
-            component="div"
+            component='div'
             count={ordersQuery.data?.count || 0}
             rowsPerPage={rowsPerPage}
             page={page}
@@ -231,18 +231,18 @@ export const ListOrders = () => {
         open={Boolean(open)}
         anchorEl={open}
         onClose={handleCloseMenu}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
           sx: {
             p: 1,
             width: 140,
-            "& .MuiMenuItem-root": {
+            '& .MuiMenuItem-root': {
               px: 1,
-              typography: "body2",
-              borderRadius: 0.75,
-            },
-          },
+              typography: 'body2',
+              borderRadius: 0.75
+            }
+          }
         }}
       >
         <MenuItem
@@ -255,7 +255,7 @@ export const ListOrders = () => {
           Editar
         </MenuItem>
 
-        <MenuItem sx={{ color: "error.main" }}>
+        <MenuItem sx={{ color: 'error.main' }}>
           <DeleteOutlined />
           Eliminar
         </MenuItem>

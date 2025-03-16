@@ -1,6 +1,6 @@
-import { restauranteApi } from "../../../../api";
-import { ProductOption } from "../../../../models";
-import { CreateProductOptionDto, UpdateProductOptionDto } from "../dto";
+import { restauranteApi } from '../../../../api';
+import { ProductOption } from '../../../../models';
+import { CreateProductOptionDto, UpdateProductOptionDto } from '../dto';
 
 export const getProductOptions = async (): Promise<ProductOption[]> => {
   const resp = await restauranteApi.get<ProductOption[]>(`product-options/`);

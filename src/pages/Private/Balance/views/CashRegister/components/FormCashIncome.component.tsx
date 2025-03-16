@@ -1,10 +1,10 @@
-import { FC, useState } from "react";
+import { FC, useState } from 'react';
 
-import {  Button, Grid } from "@mui/material/";
-import { TextField } from "@mui/material";
-import { Add } from "@mui/icons-material";
+import { Button, Grid } from '@mui/material/';
+import { TextField } from '@mui/material';
+import { Add } from '@mui/icons-material';
 
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 // import { CreateCashIncomeDto } from '../../../dto/create-cash-transaction.dto';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   cashRegisterId: string;
 }
 
-export const FormCashIncome: FC<Props> = ({ handleClose, }) => {
+export const FormCashIncome: FC<Props> = ({ handleClose }) => {
   // const { mutateAsync, isLoading } = useCreateCashIncome();
 
   const [amount, setAmount] = useState<number>(0);
@@ -23,29 +23,27 @@ export const FormCashIncome: FC<Props> = ({ handleClose, }) => {
     setAmount(value);
   };
 
-  const handleSubmit = () => {
- 
-  };
+  const handleSubmit = () => {};
 
   return (
     <>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <TextField
-            label="Monto"
-            variant="outlined"
-            size="small"
-            type="number"
+            label='Monto'
+            variant='outlined'
+            size='small'
+            type='number'
             fullWidth
             value={amount}
             onChange={handleChangeAmount}
           />
         </Grid>
 
-        <Grid item xs={12} display="flex" justifyContent="right" gap={1}>
+        <Grid item xs={12} display='flex' justifyContent='right' gap={1}>
           <Button
-            color="inherit"
-            size="small"
+            color='inherit'
+            size='small'
             onClick={handleClose}
             // startIcon={<Close />}
           >
@@ -53,10 +51,10 @@ export const FormCashIncome: FC<Props> = ({ handleClose, }) => {
           </Button>
 
           <LoadingButton
-            color="success"
+            color='success'
             startIcon={<Add />}
-            size="small"
-            variant="contained"
+            size='small'
+            variant='contained'
             onClick={handleSubmit}
           >
             Añadir dinero

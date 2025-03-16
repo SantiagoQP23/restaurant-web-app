@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from 'react';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 //Material UI
 import {
@@ -10,14 +10,14 @@ import {
   Popover,
   MenuItem,
   Button,
-  Stack,
-} from "@mui/material/";
+  Stack
+} from '@mui/material/';
 
-import { ISection } from "../../../../../../models";
+import { ISection } from '../../../../../../models';
 
-import { Section } from "./Section.component";
-import { useDispatch, useSelector } from "react-redux";
-import NiceModal from "@ebay/nice-modal-react";
+import { Section } from './Section.component';
+import { useDispatch, useSelector } from 'react-redux';
+import NiceModal from '@ebay/nice-modal-react';
 
 import {
   Close,
@@ -25,22 +25,26 @@ import {
   EditOutlined,
   Reply,
   Save,
-  Visibility,
-} from "@mui/icons-material";
+  Visibility
+} from '@mui/icons-material';
 
-import { loadSections, selectMenu, setActiveSection } from "../../../../../../redux";
+import {
+  loadSections,
+  selectMenu,
+  setActiveSection
+} from '../../../../../../redux';
 
 import {
   ModalDeleteSection,
-  Props as PropsModalDelete,
-} from "./ModalDeleteSection.component";
+  Props as PropsModalDelete
+} from './ModalDeleteSection.component';
 import {
   useUpdateManySections,
-  useUpdateSection,
-} from "../../../hooks/useSections";
-import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
-import { SortableContext, arrayMove } from "@dnd-kit/sortable";
-import { LoadingButton } from "@mui/lab";
+  useUpdateSection
+} from '../../../hooks/useSections';
+import { DndContext, DragEndEvent, closestCenter } from '@dnd-kit/core';
+import { SortableContext, arrayMove } from '@dnd-kit/sortable';
+import { LoadingButton } from '@mui/lab';
 
 export const SectionsList = () => {
   const navigate = useNavigate();
@@ -86,7 +90,7 @@ export const SectionsList = () => {
       const sectionsUpdated = newSections.map((section, index) => {
         return {
           ...section,
-          order: index + 1,
+          order: index + 1
         };
       });
 
@@ -118,13 +122,14 @@ export const SectionsList = () => {
       showModalDelete(section);
     } else {
       // TODO - Activar sección
-      await updateSectionMutation.mutateAsync({
-        id: section.id,
-        isActive: true,
-      }).then(() => {
-        dispatch(loadSections(orderedSections));
-      })
-      ;
+      await updateSectionMutation
+        .mutateAsync({
+          id: section.id,
+          isActive: true
+        })
+        .then(() => {
+          dispatch(loadSections(orderedSections));
+        });
     }
   };
 
@@ -154,30 +159,30 @@ export const SectionsList = () => {
 
   return (
     <>
-      <Typography variant="subtitle1">Secciones: {sections.length}</Typography>
+      <Typography variant='subtitle1'>Secciones: {sections.length}</Typography>
       <Box
         mb={2}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
+        display='flex'
+        justifyContent='space-between'
+        alignItems='center'
       >
-        <Typography variant="h4">
+        <Typography variant='h4'>
           Secciones activas: {activeSections.length}
         </Typography>
-        <Stack spacing={2} direction="row">
+        <Stack spacing={2} direction='row'>
           {reorder ? (
             <>
               <Button
-                size="small"
-                variant="outlined"
+                size='small'
+                variant='outlined'
                 startIcon={<Close />}
                 onClick={toggleReorder}
               >
                 Cancelar
               </Button>
               <LoadingButton
-                size="small"
-                variant="contained"
+                size='small'
+                variant='contained'
                 startIcon={<Save />}
                 onClick={saveOrderedSections}
                 loading={updateManySectionsMutation.isLoading}
@@ -210,7 +215,7 @@ export const SectionsList = () => {
       </DndContext>
 
       {inactiveSections && (
-        <Typography variant="h4" my={2}>
+        <Typography variant='h4' my={2}>
           Secciones inactivas: {inactiveSections.length}
         </Typography>
       )}
@@ -229,44 +234,44 @@ export const SectionsList = () => {
             open={Boolean(open)}
             anchorEl={open}
             onClose={handleCloseMenu}
-            anchorOrigin={{ vertical: "top", horizontal: "left" }}
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
+            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             PaperProps={{
               sx: {
                 p: 1,
                 width: 140,
-                "& .MuiMenuItem-root": {
+                '& .MuiMenuItem-root': {
                   px: 1,
-                  typography: "body2",
-                  borderRadius: 0.75,
-                },
-              },
+                  typography: 'body2',
+                  borderRadius: 0.75
+                }
+              }
             }}
           >
             <MenuItem onClick={() => showCategories(activeSection)}>
               <Visibility />
-              <Typography variant="h5" ml={2}>
+              <Typography variant='h5' ml={2}>
                 Categorías
               </Typography>
             </MenuItem>
 
             <MenuItem
               sx={{
-                color: activeSection.isActive ? "error.main" : "success.main",
+                color: activeSection.isActive ? 'error.main' : 'success.main'
               }}
               onClick={() => toggleActiveSection(activeSection)}
             >
               {!activeSection.isActive ? (
                 <>
                   <Reply />
-                  <Typography variant="h5" ml={2}>
+                  <Typography variant='h5' ml={2}>
                     Activar
                   </Typography>
                 </>
               ) : (
                 <>
                   <DeleteOutlined />
-                  <Typography variant="h5" ml={2}>
+                  <Typography variant='h5' ml={2}>
                     Eliminar
                   </Typography>
                 </>

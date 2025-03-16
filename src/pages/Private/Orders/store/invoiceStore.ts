@@ -1,8 +1,8 @@
-import { IClient, Order, IOrderDetail } from "../../../../models";
-import { CreateInvoiceDto } from "../dto";
-import { PaymentMethod } from "../models/Invoice.model";
+import { IClient, Order, IOrderDetail } from '../../../../models';
+import { CreateInvoiceDto } from '../dto';
+import { PaymentMethod } from '../models/Invoice.model';
 
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface InvoiceState {
   client: IClient | null;
@@ -50,7 +50,7 @@ export interface CreateInvoiceDetail {
 }
 
 export const useInvoiceStore = create<InvoiceState>((set, get) => ({
-  title: "Invoices",
+  title: 'Invoices',
   client: null,
   order: null,
   paymentMethod: PaymentMethod.CASH,
@@ -64,7 +64,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   setPaymentMethod: (paymentMethod: PaymentMethod) => set({ paymentMethod }),
   setDiscount: (discount: number) =>
     set({
-      discount,
+      discount
     }),
   setAmountPaid: (amountPaid: number) => set({ amountPaid }),
   setClient: (client: IClient | null) => set({ client }),
@@ -77,7 +77,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
       discount: 0,
       amountPaid: 0,
       details: [],
-      step: 0,
+      step: 0
     }),
 
   addDetail: (detail: CreateInvoiceDetail) => {
@@ -97,7 +97,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
 
     set({
       amount: get().amount + detail.orderDetail.price * detail.quantity,
-      total: get().amount - get().discount,
+      total: get().amount - get().discount
     });
   },
 
@@ -111,7 +111,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
     // console.log(newDetails)
 
     set({
-      details: newDetails,
+      details: newDetails
     });
 
     set({
@@ -119,7 +119,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
         (acc, d) => acc + d.orderDetail.price * d.quantity,
         0
       ),
-      total: get().amount - get().discount,
+      total: get().amount - get().discount
     });
   },
 
@@ -131,7 +131,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
     set({
       details: details.filter((d) => d.orderDetail.id !== orderDetailId),
       amount: get().amount - detail.orderDetail.price * detail.quantity,
-      total: get().amount - get().discount,
+      total: get().amount - get().discount
     });
   },
 
@@ -155,9 +155,9 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
         .details.filter((detail) => detail.quantity > 0)
         .map((detail) => ({
           orderDetailId: detail.orderDetail.id,
-          quantity: detail.quantity,
+          quantity: detail.quantity
         })),
-      cashRegisterId: "",
+      cashRegisterId: ''
     };
-  },
+  }
 }));

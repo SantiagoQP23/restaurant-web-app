@@ -5,10 +5,9 @@ import { useEffect, useState } from 'react';
 export const useFetchAndLoad = () => {
   const [loading, setLoading] = useState(false);
   // const [controller, setController] = useState<AbortController | null >(null);
-   let controller: AbortController;
+  let controller: AbortController;
 
   const callEndpoint = async (axiosCall: AxiosCall<any>) => {
-
     // if (axiosCall.controller) setController(axiosCall.controller);
     if (axiosCall.controller) controller = axiosCall.controller;
 
@@ -25,9 +24,7 @@ export const useFetchAndLoad = () => {
   };
 
   const cancelEndpoint = () => {
-
-    if(controller){
-
+    if (controller) {
       controller.abort();
       setLoading(false);
     }
@@ -41,4 +38,3 @@ export const useFetchAndLoad = () => {
 
   return { loading, callEndpoint, cancelEndpoint };
 };
-

@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { selectMenu, updateCategory, updateSection } from "../../../../redux";
-import { ICategory, IProduct } from "../../../../models";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMenu, updateCategory, updateSection } from '../../../../redux';
+import { ICategory, IProduct } from '../../../../models';
 
 export const useEditMenuStore = () => {
   const { sections, products, categories } = useSelector(selectMenu);
@@ -20,12 +20,14 @@ export const useEditMenuStore = () => {
 
   const addProductToCategory = (product: IProduct, category: ICategory) => {
     dispatch(
-      updateCategory({ ...category, products: [...category.products, product] })
+      updateCategory({
+        ...category,
+        products: [...category.products, product]
+      })
     );
   };
 
   const addCategoryToSection = (category: ICategory, sectionId: string) => {
-
     const section = findSectionById(sectionId);
 
     if (!section) return;
@@ -33,12 +35,15 @@ export const useEditMenuStore = () => {
     dispatch(
       updateSection({
         ...section,
-        categories: [...section.categories, category],
+        categories: [...section.categories, category]
       })
     );
-  }
+  };
 
-  const removeCategoryFromSection = (category: ICategory, sectionId: string) => {
+  const removeCategoryFromSection = (
+    category: ICategory,
+    sectionId: string
+  ) => {
     const section = findSectionById(sectionId);
 
     if (!section) return;
@@ -46,7 +51,7 @@ export const useEditMenuStore = () => {
     dispatch(
       updateSection({
         ...section,
-        categories: section.categories.filter((c) => c.id !== category.id),
+        categories: section.categories.filter((c) => c.id !== category.id)
       })
     );
   };
@@ -61,8 +66,7 @@ export const useEditMenuStore = () => {
     );
 
     dispatch(updateSection({ ...section, categories: updatedCategories }));
-
-  }
+  };
 
   const removeProductFromCategory = (
     product: IProduct,
@@ -71,7 +75,7 @@ export const useEditMenuStore = () => {
     dispatch(
       updateCategory({
         ...category,
-        products: category.products.filter((p) => p.id !== product.id),
+        products: category.products.filter((p) => p.id !== product.id)
       })
     );
   };
@@ -95,7 +99,6 @@ export const useEditMenuStore = () => {
 
     if (oldSection) removeCategoryFromSection(category, oldSection.id);
   };
-
 
   return {
     addCategoryToSection,

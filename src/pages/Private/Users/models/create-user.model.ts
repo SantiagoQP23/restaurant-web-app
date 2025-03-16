@@ -1,8 +1,6 @@
 import { CreatePerson } from '../../../../models/common.model';
 
-
-export interface CreateUser extends CreatePerson{
+export interface CreateUser extends CreatePerson {
   username: string;
-  role: {name: string};
-
+  role: { name: string };
 }

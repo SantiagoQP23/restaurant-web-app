@@ -1,4 +1,4 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm } from 'react-hook-form';
 import {
   Button,
   FormControl,
@@ -18,25 +18,25 @@ import {
   DialogContent,
   useTheme,
   useMediaQuery,
-  DialogTitle,
-} from "@mui/material";
-import { PaymentMethod } from "../../../../Orders/models/Invoice.model";
-import { useModal } from "../../../../../../hooks";
-import { useState } from "react";
-import { Add, Close, CloseOutlined } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { ModalSelectUser } from "../../../../Users/components/ModalSelectUser.component";
-import { IUser } from "../../../../../../models";
+  DialogTitle
+} from '@mui/material';
+import { PaymentMethod } from '../../../../Orders/models/Invoice.model';
+import { useModal } from '../../../../../../hooks';
+import { useState } from 'react';
+import { Add, Close, CloseOutlined } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { ModalSelectUser } from '../../../../Users/components/ModalSelectUser.component';
+import { IUser } from '../../../../../../models';
 import NiceModal, {
   muiDialogV5,
-  useModal as useNiceModal,
-} from "@ebay/nice-modal-react";
-import { TransactionType } from "../../../../Common/enums/transaction-type.enum";
-import { useUpdateTransaction } from "../../../hooks/useTransactions";
-import { useTransactionCategories } from "../../../hooks/useTransactionCategories";
-import { Transaction } from "../../../models/transaction.model";
-import { UpdateTransactionDto } from "../../../dto/update-transaction.dto";
+  useModal as useNiceModal
+} from '@ebay/nice-modal-react';
+import { TransactionType } from '../../../../Common/enums/transaction-type.enum';
+import { useUpdateTransaction } from '../../../hooks/useTransactions';
+import { useTransactionCategories } from '../../../hooks/useTransactionCategories';
+import { Transaction } from '../../../models/transaction.model';
+import { UpdateTransactionDto } from '../../../dto/update-transaction.dto';
 
 interface Props {
   transaction: Transaction;
@@ -54,7 +54,7 @@ export const EditTransactionModal = NiceModal.create<Props>(
     const [responsibleUser, setResponsibleUser] = useState<IUser | null>(null);
 
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const {
       register,
@@ -62,12 +62,12 @@ export const EditTransactionModal = NiceModal.create<Props>(
       formState: { errors, isDirty, isValid },
       control,
       reset,
-      watch,
+      watch
     } = useForm<UpdateTransactionDto>({
       defaultValues: {
         ...transaction,
-        categoryId: transaction.category.id,
-      },
+        categoryId: transaction.category.id
+      }
     });
 
     const { isLoading, mutateAsync } = useUpdateTransaction(transaction.id);
@@ -93,9 +93,8 @@ export const EditTransactionModal = NiceModal.create<Props>(
       const data: UpdateTransactionDto = {
         ...form,
         performedById: responsibleUser.id,
-        cashRegisterId: activeCashRegister?.id,
+        cashRegisterId: activeCashRegister?.id
       };
-
 
       mutateAsync(data).then(() => {
         reset();
@@ -106,7 +105,7 @@ export const EditTransactionModal = NiceModal.create<Props>(
 
     const isFormValid =
       responsibleUser &&
-      PaymentMethod.CASH === watch("paymentMethod") &&
+      PaymentMethod.CASH === watch('paymentMethod') &&
       activeCashRegister &&
       isValid;
 
@@ -119,24 +118,24 @@ export const EditTransactionModal = NiceModal.create<Props>(
           value={responsibleUser}
         />
 
-        <Dialog {...muiDialogV5(modal)} fullScreen={fullScreen} maxWidth="xs">
+        <Dialog {...muiDialogV5(modal)} fullScreen={fullScreen} maxWidth='xs'>
           <DialogTitle>
             <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
+              direction='row'
+              justifyContent='space-between'
+              alignItems='center'
             >
               <Box>
-                <Typography variant="h4">
-                  Editar{" "}
+                <Typography variant='h4'>
+                  Editar{' '}
                   {transaction.type === TransactionType.INCOME
-                    ? "ingreso"
-                    : "gasto"}
+                    ? 'ingreso'
+                    : 'gasto'}
                 </Typography>
               </Box>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <IconButton onClick={closeDrawer} size="small">
-                  <CloseOutlined fontSize="small" />
+              <Stack direction='row' spacing={2} alignItems='center'>
+                <IconButton onClick={closeDrawer} size='small'>
+                  <CloseOutlined fontSize='small' />
                 </IconButton>
               </Stack>
             </Stack>
@@ -146,19 +145,19 @@ export const EditTransactionModal = NiceModal.create<Props>(
             {/* <Divider sx={{ mb: 2 }} /> */}
             <FormControl
               fullWidth
-              component="form"
+              component='form'
               onSubmit={handleSubmit(onSubmit)}
-              margin="dense"
+              margin='dense'
             >
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
-                    label="Título"
-                    type="text"
+                    label='Título'
+                    type='text'
                     fullWidth
-                    {...register("title", {
-                      required: "Este campo es requerido",
-                      minLength: { value: 2, message: "Minimo 2 caracteres" },
+                    {...register('title', {
+                      required: 'Este campo es requerido',
+                      minLength: { value: 2, message: 'Minimo 2 caracteres' }
                     })}
                     rows={2}
                     error={!!errors.description}
@@ -168,17 +167,17 @@ export const EditTransactionModal = NiceModal.create<Props>(
 
                 <Grid item xs={12}>
                   <TextField
-                    label="Monto"
-                    type="number"
+                    label='Monto'
+                    type='number'
                     fullWidth
                     inputProps={{ step: 0.05, min: 0.05 }}
-                    {...register("amount", {
-                      required: "Este campo es requerido",
+                    {...register('amount', {
+                      required: 'Este campo es requerido',
                       min: {
                         value: 0.05,
-                        message: "Debe ser mayor a 5 centavos",
+                        message: 'Debe ser mayor a 5 centavos'
                       },
-                      valueAsNumber: true,
+                      valueAsNumber: true
                     })}
                     error={!!errors.amount}
                     helperText={errors.amount?.message}
@@ -187,19 +186,19 @@ export const EditTransactionModal = NiceModal.create<Props>(
 
                 <Grid item xs={12}>
                   <Stack
-                    direction="row"
+                    direction='row'
                     spacing={2}
-                    justifyContent="space-between"
-                    alignItems="center"
+                    justifyContent='space-between'
+                    alignItems='center'
                   >
-                    <Typography variant="subtitle2">Responsable</Typography>
+                    <Typography variant='subtitle2'>Responsable</Typography>
                     <Box>
                       <Button onClick={handleOpen}>
-                        {responsibleUser ? "Cambiar" : "Seleccionar"}
+                        {responsibleUser ? 'Cambiar' : 'Seleccionar'}
                       </Button>
                       {responsibleUser && (
                         <IconButton
-                          color="error"
+                          color='error'
                           onClick={() => handleChangeResponsible(null)}
                         >
                           <Close />
@@ -207,33 +206,33 @@ export const EditTransactionModal = NiceModal.create<Props>(
                       )}
                     </Box>
                   </Stack>
-                  <Typography variant="h6">
+                  <Typography variant='h6'>
                     {responsibleUser
                       ? `${responsibleUser.person.firstName} ${responsibleUser.person.lastName} `
-                      : "No seleccionado"}
+                      : 'No seleccionado'}
                   </Typography>
                 </Grid>
 
                 <Grid item xs={12} md={8}>
                   <Controller
-                    name="paymentMethod"
+                    name='paymentMethod'
                     control={control}
                     render={({ field: { onChange, value } }) => (
                       <FormControl fullWidth>
                         <RadioGroup
-                          name="use-radio-group"
+                          name='use-radio-group'
                           value={value}
                           onChange={onChange}
                         >
-                          <Stack direction="row" spacing={2}>
+                          <Stack direction='row' spacing={2}>
                             <FormControlLabel
                               value={PaymentMethod.CASH}
-                              label={"Efectivo"}
+                              label={'Efectivo'}
                               control={<Radio />}
                             />
                             <FormControlLabel
                               value={PaymentMethod.TRANSFER}
-                              label={"Transferencia"}
+                              label={'Transferencia'}
                               control={<Radio />}
                               disabled
                             />
@@ -246,12 +245,12 @@ export const EditTransactionModal = NiceModal.create<Props>(
 
                 <Grid item xs={12} md={8}>
                   <Controller
-                    name="categoryId"
+                    name='categoryId'
                     control={control}
                     render={({ field: { onChange } }) => (
                       <FormControl fullWidth sx={{ zIndex: 10000 }}>
                         <InputLabel>Categoría</InputLabel>
-                        <Select onChange={onChange} label="Categoría">
+                        <Select onChange={onChange} label='Categoría'>
                           {availableCategories?.map((category) => (
                             <MenuItem key={category.id} value={category.id}>
                               {category.name}
@@ -265,18 +264,18 @@ export const EditTransactionModal = NiceModal.create<Props>(
 
                 <Grid item xs={12}>
                   <LoadingButton
-                    variant="contained"
-                    color="primary"
-                    type="submit"
+                    variant='contained'
+                    color='primary'
+                    type='submit'
                     loading={isLoading}
                     fullWidth
                     startIcon={<Add />}
                     disabled={!isDirty || !isFormValid}
                   >
-                    Actualizar{" "}
+                    Actualizar{' '}
                     {transaction.type === TransactionType.INCOME
-                      ? "ingreso"
-                      : "gasto"}
+                      ? 'ingreso'
+                      : 'gasto'}
                   </LoadingButton>
                 </Grid>
               </Grid>

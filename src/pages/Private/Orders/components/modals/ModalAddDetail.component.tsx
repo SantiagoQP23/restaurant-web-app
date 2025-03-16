@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 import {
   TextField,
@@ -13,24 +13,28 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Checkbox,
-} from "@mui/material/";
+  Checkbox
+} from '@mui/material/';
 
-import { ICreateOrderDetail, Order, TypeOrder } from "../../../../../models/orders.model";
-import { useSnackbar } from "notistack";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../redux/slices/orders/orders.slice";
+import {
+  ICreateOrderDetail,
+  Order,
+  TypeOrder
+} from '../../../../../models/orders.model';
+import { useSnackbar } from 'notistack';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../redux/slices/orders/orders.slice';
 
-import { CreateOrderDetailDto } from "../../dto/create-order-detail.dto";
-import { LoadingButton } from "@mui/lab";
+import { CreateOrderDetailDto } from '../../dto/create-order-detail.dto';
+import { LoadingButton } from '@mui/lab';
 
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { CounterInput } from "../CounterInput.component";
-import { ProductOption, ProductStatus } from "../../../../../models";
-import { Label } from "../../../../../components/ui";
-import { useNewOrderStore } from "../../store/newOrderStore";
-import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
-import { useCreateOrderDetail } from "../../hooks";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { CounterInput } from '../CounterInput.component';
+import { ProductOption, ProductStatus } from '../../../../../models';
+import { Label } from '../../../../../components/ui';
+import { useNewOrderStore } from '../../store/newOrderStore';
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
+import { useCreateOrderDetail } from '../../hooks';
 
 interface Props {
   detail: ICreateOrderDetail;
@@ -49,18 +53,18 @@ interface Props {
  */
 export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const modal = useModal();
-  console.log("detail", detail);
+  console.log('detail', detail);
   // const product = detail?.product;
   // const availableOptions = product?.options
   //   ? product?.options.filter((option) => option.isAvailable)
   //   : [];
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
   const [detailDelivered, setDetailDelivered] = useState(false);
   const [quantity, setQuantity] = useState(detail?.quantity || 1);
-  const [selectedOption] = useState<
-    ProductOption | undefined
-  >(detail.productOption ? detail.productOption : undefined);
+  const [selectedOption] = useState<ProductOption | undefined>(
+    detail.productOption ? detail.productOption : undefined
+  );
   const [typeOrder, setTypeOrder] = useState<TypeOrder>(TypeOrder.IN_PLACE);
 
   const { addDetail, details, updateDetail } = useNewOrderStore(
@@ -73,7 +77,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const {
     mutate: createOrderDetail,
     isLoading,
-    isOnline,
+    isOnline
   } = useCreateOrderDetail();
 
   const handleQuantityChange = (value: number) => {
@@ -82,11 +86,11 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
 
   const handleProductDelivered = () => {
     setDetailDelivered(!detailDelivered);
-  }
+  };
 
   const closeModal = () => {
     modal.hide();
-    setDescription("");
+    setDescription('');
   };
 
   /**
@@ -99,7 +103,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
       price: detail!.product.price,
       quantity,
       qtyDelivered: detailDelivered ? quantity : 0,
-      typeOrderDetail: typeOrder,
+      typeOrderDetail: typeOrder
     };
 
     if (description) {
@@ -126,45 +130,45 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
           ...detail!,
           quantity,
           description,
-          productOption: selectedOption,
+          productOption: selectedOption
         });
       } else {
         addDetail({
           ...detail!,
           quantity,
           description,
-          productOption: selectedOption,
+          productOption: selectedOption
         });
         enqueueSnackbar(`${detail?.product.name} agregado`, {
-          variant: "success",
+          variant: 'success'
         });
       }
     }
 
-    setDescription("");
+    setDescription('');
     closeModal();
   };
 
   const handleTypeChange = (type: TypeOrder) => {
     setTypeOrder(type);
-  }
+  };
 
   return (
     <>
       <Dialog {...muiDialogV5(modal)}>
         <DialogContent
           sx={{
-            width: 300,
+            width: 300
           }}
         >
           <Stack spacing={2}>
             <Box>
-              <Typography variant="subtitle1">
+              <Typography variant='subtitle1'>
                 {detail?.product.category.name}
               </Typography>
-              <Typography variant="h4">{detail?.product.name}</Typography>
+              <Typography variant='h4'>{detail?.product.name}</Typography>
             </Box>
-            <Typography variant="h4">${detail?.product.price}</Typography>
+            <Typography variant='h4'>${detail?.product.price}</Typography>
 
             {/* <List sx={{ p: 0 }} dense>
               {detail?.product.options.map((option) => (
@@ -176,14 +180,14 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
             </List> */}
             <FormControl>
               <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
+                aria-labelledby='demo-radio-buttons-group-label'
                 defaultValue={TypeOrder.IN_PLACE}
-                name="radio-buttons-group"
+                name='radio-buttons-group'
                 onChange={(e) => {
                   handleTypeChange(e.target.value as TypeOrder);
                 }}
               >
-                <Stack direction="row" spacing={2}>
+                <Stack direction='row' spacing={2}>
                   <FormControlLabel
                     value={TypeOrder.IN_PLACE}
                     control={<Radio />}
@@ -228,7 +232,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
 
             {detail?.product.description && (
               <Box>
-                <Typography variant="body1" style={{ whiteSpace: "pre-wrap" }}>
+                <Typography variant='body1' style={{ whiteSpace: 'pre-wrap' }}>
                   {detail?.product.description}
                 </Typography>
               </Box>
@@ -236,14 +240,14 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
 
             {detail?.product.status !== ProductStatus.AVAILABLE ? (
               <>
-                <Label color="warning">Producto no disponible</Label>
+                <Label color='warning'>Producto no disponible</Label>
               </>
             ) : (
               <>
                 <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="flex-end"
+                  direction='row'
+                  alignItems='center'
+                  justifyContent='flex-end'
                   my={2}
                 >
                   <CounterInput
@@ -254,9 +258,9 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
 
                 <FormControl fullWidth>
                   <TextField
-                    id="descripcion-pedido"
-                    label="Notas"
-                    margin="dense"
+                    id='descripcion-pedido'
+                    label='Notas'
+                    margin='dense'
                     multiline
                     rows={3}
                     defaultValue={description}
@@ -271,18 +275,18 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
 
             <FormControlLabel
               control={<Checkbox onChange={handleProductDelivered} />}
-              label="Producto ya fue entregado"
+              label='Producto ya fue entregado'
             />
           </Stack>
         </DialogContent>
 
-        <DialogActions sx={{ justifyContent: "center" }}>
+        <DialogActions sx={{ justifyContent: 'center' }}>
           <Button onClick={closeModal}>Cancelar</Button>
 
           {detail?.product.status === ProductStatus.AVAILABLE && (
             <LoadingButton
               onClick={handleCreateDetail}
-              variant="contained"
+              variant='contained'
               loading={isLoading}
               startIcon={<ShoppingCartIcon />}
               disabled={

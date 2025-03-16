@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Grid } from "@mui/material";
-import { IProduct } from "../../../../../../models/menu.model";
-import { Product } from "./Product.component";
+import { Grid } from '@mui/material';
+import { IProduct } from '../../../../../../models/menu.model';
+import { Product } from './Product.component';
 
 interface ProductsListProps {
   products: IProduct[];
@@ -16,7 +16,7 @@ export const ListProducts: FC<ProductsListProps> = ({ products }) => {
           if (product.isActive)
             return (
               <Grid key={product.id} item xs={6} sm={4} md={3} lg={2}>
-                <Product product={product} onClick={() => { }} />
+                <Product product={product} onClick={() => {}} />
               </Grid>
             );
         })}

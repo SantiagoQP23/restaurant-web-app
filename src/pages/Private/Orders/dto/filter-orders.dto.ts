@@ -1,11 +1,7 @@
-import { OrderStatus } from "../../../../models";
-import { DateFiltePaginationDto } from "../../Common/dto";
-
-
+import { OrderStatus } from '../../../../models';
+import { DateFiltePaginationDto } from '../../Common/dto';
 
 export interface FilterOrdersDto extends DateFiltePaginationDto {
-
-
   userId?: string;
 
   status?: OrderStatus;
@@ -13,6 +9,4 @@ export interface FilterOrdersDto extends DateFiltePaginationDto {
   isPaid?: boolean;
 
   tableId?: string;
-
-
 }

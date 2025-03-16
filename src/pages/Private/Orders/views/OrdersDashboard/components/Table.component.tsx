@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Assignment, Circle, People, TableBar } from "@mui/icons-material";
+import { Assignment, Circle, People, TableBar } from '@mui/icons-material';
 import {
   Card,
   CardActionArea,
@@ -8,21 +8,21 @@ import {
   Typography,
   Badge,
   Stack,
-  CardHeader,
-} from "@mui/material";
-import { ITable, OrderStatus } from "../../../../../../models";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../../redux";
-import { Label } from "../../../../../../components/ui";
+  CardHeader
+} from '@mui/material';
+import { ITable, OrderStatus } from '../../../../../../models';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../../redux';
+import { Label } from '../../../../../../components/ui';
 import {
   DrawerOrder,
   LabelStatusOrder,
   orderStatusIconMap,
-  colorStatusMap,
-} from "../../../components";
-import NiceModal from "@ebay/nice-modal-react";
-import { format, formatDistance } from "date-fns";
-import { es } from "date-fns/locale";
+  colorStatusMap
+} from '../../../components';
+import NiceModal from '@ebay/nice-modal-react';
+import { format, formatDistance } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 interface Props {
   table: ITable;
@@ -48,36 +48,36 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
         border: (theme) =>
           isAvailable
             ? `2px solid ${theme.palette.success.light}`
-            // : `2px solid ${theme.palette.warning.light}`,
-            : ``,
-            boxShadow: (theme) =>
-              isAvailable
+            : // : `2px solid ${theme.palette.warning.light}`,
+              ``,
+        boxShadow: (theme) =>
+          isAvailable
             ? `0px 0px 4px ${theme.palette.success.light}`
-            // : `0px 0px 4px ${theme.palette.warning.light}`,
-            : ``,
+            : // : `0px 0px 4px ${theme.palette.warning.light}`,
+              ``
       }}
     >
       <CardActionArea onClick={showOrdersTableDrawer}>
         <CardHeader
           title={
-            <Box display="flex" justifyContent="center" gap={1}>
+            <Box display='flex' justifyContent='center' gap={1}>
               <TableBar
-                fontSize="small"
+                fontSize='small'
                 // color={isAvailable ? "secondary" : "inherit"}
               />
-              <Typography variant="h5" textAlign="center">
+              <Typography variant='h5' textAlign='center'>
                 {table.name}
               </Typography>
             </Box>
           }
           titleTypographyProps={{
-            variant: "h5",
-            textAlign: "center",
+            variant: 'h5',
+            textAlign: 'center'
           }}
         />
         <Box
           sx={{
-            p: 1,
+            p: 1
             //   display: "flex",
             //   flexDirection: "column",
             //   gap: 1,
@@ -86,47 +86,47 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
           }}
         >
           {ordersTable.length > 0 ? (
-            <Box display="flex" gap={1} flexDirection="column">
+            <Box display='flex' gap={1} flexDirection='column'>
               {ordersTable.map((order) => (
                 <Box
                   key={order.id}
-                  width="100%"
-                  display="flex"
+                  width='100%'
+                  display='flex'
                   gap={1}
                   border={`2px solid #eee`}
-                  borderRadius="5px"
+                  borderRadius='5px'
                   p={0.5}
-                  justifyContent="space-between"
+                  justifyContent='space-between'
                 >
                   <Badge
                     sx={{
-                      border: "1px solid",
-                      borderRadius: "5px",
-                      borderColor: `${colorStatusMap.get(order.status)}.main`,
+                      border: '1px solid',
+                      borderRadius: '5px',
+                      borderColor: `${colorStatusMap.get(order.status)}.main`
                     }}
                   >
                     {orderStatusIconMap.get(order.status)}
                   </Badge>
                   <Typography>
-                    {format(new Date(order.createdAt), "HH:mm")}
+                    {format(new Date(order.createdAt), 'HH:mm')}
                   </Typography>
-                  <Box display="flex" gap={1} alignItems="center">
-                    <People fontSize="small" />
-                    <Typography fontSize="0.8rem">{order.people}</Typography>
+                  <Box display='flex' gap={1} alignItems='center'>
+                    <People fontSize='small' />
+                    <Typography fontSize='0.8rem'>{order.people}</Typography>
                   </Box>
                 </Box>
               ))}
             </Box>
           ) : (
             <Box
-              alignItems="center"
-              display="flex"
-              justifyContent="center"
+              alignItems='center'
+              display='flex'
+              justifyContent='center'
               gap={1}
             >
-              <Circle fontSize="small" sx={{ fontSize: 10 }} />
-              <Typography fontSize="0.8rem" textAlign="center">
-                {isAvailable ? "Disponible" : ""}
+              <Circle fontSize='small' sx={{ fontSize: 10 }} />
+              <Typography fontSize='0.8rem' textAlign='center'>
+                {isAvailable ? 'Disponible' : ''}
               </Typography>
             </Box>
           )}

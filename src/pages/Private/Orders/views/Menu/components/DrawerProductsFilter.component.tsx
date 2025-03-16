@@ -1,5 +1,5 @@
-import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { CloseOutlined } from "@mui/icons-material";
+import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { CloseOutlined } from '@mui/icons-material';
 import {
   Drawer,
   Box,
@@ -10,16 +10,16 @@ import {
   Divider,
   FormControlLabel,
   Radio,
-  FormGroup,
-} from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+  FormGroup
+} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectAuth,
   selectMenu,
-  setActiveCategory,
-} from "../../../../../../redux";
-import { ICategory } from "../../../../../../models";
-import { useMemo } from "react";
+  setActiveCategory
+} from '../../../../../../redux';
+import { ICategory } from '../../../../../../models';
+import { useMemo } from 'react';
 
 export const DrawerProductsFilter = NiceModal.create(() => {
   const drawer = useModal();
@@ -28,7 +28,7 @@ export const DrawerProductsFilter = NiceModal.create(() => {
 
   const { sections, activeCategory, categories } = useSelector(selectMenu);
 
-  const {user} = useSelector(selectAuth);
+  const { user } = useSelector(selectAuth);
 
   const dispatch = useDispatch();
 
@@ -64,31 +64,31 @@ export const DrawerProductsFilter = NiceModal.create(() => {
 
   return (
     <Drawer
-      anchor="right"
+      anchor='right'
       open={drawer.visible}
       onClose={closeDrawer}
       sx={{
-        width: "auto",
-        zIndex: 10000,
+        width: 'auto',
+        zIndex: 10000
       }}
     >
       <Box
         sx={{
-          display: "flex",
+          display: 'flex',
           p: 1,
-          [theme.breakpoints.down("sm")]: { width: "80vw" },
-          [theme.breakpoints.up("sm")]: { width: 300, flexShrink: 0 },
+          [theme.breakpoints.down('sm')]: { width: '80vw' },
+          [theme.breakpoints.up('sm')]: { width: 300, flexShrink: 0 }
         }}
       >
-        <Stack direction="column" spacing={2} width="100%">
+        <Stack direction='column' spacing={2} width='100%'>
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
             }}
           >
-            <Typography variant="h4">Filtros</Typography>
+            <Typography variant='h4'>Filtros</Typography>
 
             <IconButton onClick={closeDrawer}>
               <CloseOutlined />
@@ -97,10 +97,10 @@ export const DrawerProductsFilter = NiceModal.create(() => {
 
           <Divider />
 
-          <Stack direction="column" spacing={2} width="100%">
+          <Stack direction='column' spacing={2} width='100%'>
             {availableSections.map((section) => (
               <Box key={section.id}>
-                <Typography variant="h5">{section.name}</Typography>
+                <Typography variant='h5'>{section.name}</Typography>
                 <FormGroup>
                   {section.categories.map(
                     (category) =>

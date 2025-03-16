@@ -9,24 +9,22 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  TableHead,
-} from "@mui/material";
-import { NavLink as RouterLink } from "react-router-dom";
+  TableHead
+} from '@mui/material';
+import { NavLink as RouterLink } from 'react-router-dom';
 import {
   ResultBestSellingProducts,
-  getBestSellingProducts,
-} from "../../../services/dashboard.service";
-import { useQuery } from "@tanstack/react-query";
-import {
-  CustomGroupBy,
-} from "../../../hooks/useFilterSoldProducts";
-import { ArrowRight } from "@mui/icons-material";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { GroupBy, Period } from "../../../../Common/dto/period.model";
+  getBestSellingProducts
+} from '../../../services/dashboard.service';
+import { useQuery } from '@tanstack/react-query';
+import { CustomGroupBy } from '../../../hooks/useFilterSoldProducts';
+import { ArrowRight } from '@mui/icons-material';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { GroupBy, Period } from '../../../../Common/dto/period.model';
 
 export const BestSellingProductsSummary = () => {
   const { data } = useQuery<ResultBestSellingProducts>(
-    ["best-selling-products", { period: Period.DAILY, offset: 0, limit: 5 }],
+    ['best-selling-products', { period: Period.DAILY, offset: 0, limit: 5 }],
     () => {
       return getBestSellingProducts({
         period: Period.MONTHLY,
@@ -35,7 +33,7 @@ export const BestSellingProductsSummary = () => {
         groupBy: GroupBy.DAY,
         customGroupBy: CustomGroupBy.PRODUCT,
         startDate: new Date(),
-        endDate: new Date(),
+        endDate: new Date()
       });
     }
   );
@@ -43,14 +41,14 @@ export const BestSellingProductsSummary = () => {
   return (
     <Card>
       <CardHeader
-        title="Productos"
-        subheader="Productos más vendidos del mes"
+        title='Productos'
+        subheader='Productos más vendidos del mes'
         action={
           <Button
             component={RouterLink}
-            to="products"
-            size="small"
-            color="inherit"
+            to='products'
+            size='small'
+            color='inherit'
             endIcon={<ArrowRight />}
           >
             Ver todo
@@ -64,8 +62,8 @@ export const BestSellingProductsSummary = () => {
             <TableRow>
               <TableCell>Producto</TableCell>
               <TableCell>Categoría</TableCell>
-              <TableCell align="center">Cantidad</TableCell>
-              <TableCell align="right">Total</TableCell>
+              <TableCell align='center'>Cantidad</TableCell>
+              <TableCell align='right'>Total</TableCell>
             </TableRow>
           </TableHead>
 
@@ -74,18 +72,18 @@ export const BestSellingProductsSummary = () => {
               data.products?.map((product) => (
                 <TableRow key={product.id}>
                   <TableCell>
-                    <Typography variant="h6" whiteSpace="nowrap">
+                    <Typography variant='h6' whiteSpace='nowrap'>
                       {product.productName}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Chip label={product.categoryName} size="small" />
+                    <Chip label={product.categoryName} size='small' />
                   </TableCell>
-                  <TableCell align="center">
-                    <Typography variant="h6">{product.totalSold}</Typography>
+                  <TableCell align='center'>
+                    <Typography variant='h6'>{product.totalSold}</Typography>
                   </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="h6" color="success">
+                  <TableCell align='right'>
+                    <Typography variant='h6' color='success'>
                       {formatMoney(product.totalSold * product.productPrice)}
                     </Typography>
                   </TableCell>
@@ -94,8 +92,8 @@ export const BestSellingProductsSummary = () => {
             ) : (
               <>
                 <TableRow>
-                  <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">
+                  <TableCell colSpan={4} align='center'>
+                    <Typography variant='h6'>
                       No hay datos para mostrar
                     </Typography>
                   </TableCell>

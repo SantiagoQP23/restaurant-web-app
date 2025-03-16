@@ -1,10 +1,7 @@
-import { create } from "zustand";
-import { Supplier } from "../models/supplier.model";
-
-
+import { create } from 'zustand';
+import { Supplier } from '../models/supplier.model';
 
 interface DrawerSupplierState {
-
   activeSupplier: Supplier | null;
 
   open: boolean;
@@ -20,27 +17,23 @@ interface DrawerSupplierState {
   handleCloseDrawer: () => void;
 }
 
+export const useDrawerSupplierStore = create<DrawerSupplierState>(
+  (set, get) => ({
+    title: 'Drawer Supplier',
 
+    activeSupplier: null,
 
-export const useDrawerSupplierStore = create<DrawerSupplierState>((set, get) => ({
+    open: false,
 
-  title: 'Drawer Supplier',
+    setOpen: (open: boolean) => set({ open }),
 
-  activeSupplier: null,
+    setActiveSupplier: (activeSupplier: Supplier | null) =>
+      set({ activeSupplier }),
 
-  open: false,
+    reset: () => set({ activeSupplier: null }),
 
-  setOpen: (open: boolean) => set({ open }),
+    handleOpenDrawer: () => set({ open: true }),
 
-  setActiveSupplier: (activeSupplier: Supplier | null) => set({ activeSupplier }),
-
-  reset: () => set({ activeSupplier: null }),
-
-  handleOpenDrawer: () => set({ open: true }),
-
-  handleCloseDrawer: () => set({ open: false, activeSupplier: null }),
-
-
-
-
-}));
+    handleCloseDrawer: () => set({ open: false, activeSupplier: null })
+  })
+);

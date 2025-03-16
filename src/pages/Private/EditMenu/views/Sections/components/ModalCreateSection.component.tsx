@@ -5,17 +5,16 @@ import {
   DialogContent,
   DialogActions,
   Dialog,
-  DialogTitle,
-} from "@mui/material/";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { addSection } from "../../../../../../redux";
+  DialogTitle
+} from '@mui/material/';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { addSection } from '../../../../../../redux';
 
-
-import { LoadingButton } from "@mui/lab";
-import { useCreateSection } from "../../../hooks/useSections";
-import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
-import { CreateSectionDto } from "../../../dto";
+import { LoadingButton } from '@mui/lab';
+import { useCreateSection } from '../../../hooks/useSections';
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
+import { CreateSectionDto } from '../../../dto';
 
 export const ModalCreateSection = NiceModal.create(() => {
   const modal = useModal();
@@ -29,9 +28,9 @@ export const ModalCreateSection = NiceModal.create(() => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<CreateSectionDto>({
-    defaultValues: { name: "" },
+    defaultValues: { name: '' }
   });
 
   const createSectionMutation = useCreateSection();
@@ -50,28 +49,28 @@ export const ModalCreateSection = NiceModal.create(() => {
           <DialogContent>
             <TextField
               autoFocus
-              margin="dense"
-              label="Nombre de la sección"
-              type="text"
+              margin='dense'
+              label='Nombre de la sección'
+              type='text'
               fullWidth
-              {...register("name", {
-                required: "Este campo es requerido",
-                minLength: { value: 2, message: "Minimo 2 caracteres" },
+              {...register('name', {
+                required: 'Este campo es requerido',
+                minLength: { value: 2, message: 'Minimo 2 caracteres' }
               })}
               error={!!errors.name}
               helperText={
-                <Typography color="red">{errors.name?.message}</Typography>
+                <Typography color='red'>{errors.name?.message}</Typography>
               }
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={closeModal} color="inherit">
+            <Button onClick={closeModal} color='inherit'>
               Cancelar
             </Button>
             <LoadingButton
               loading={createSectionMutation.isLoading}
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               onClick={() => {
                 handleSubmit(onSubmit);
               }}

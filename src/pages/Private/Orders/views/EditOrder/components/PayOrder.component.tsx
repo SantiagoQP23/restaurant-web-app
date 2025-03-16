@@ -1,5 +1,5 @@
-import { FC, useContext } from "react";
-import { Order } from "../../../../../../models";
+import { FC, useContext } from 'react';
+import { Order } from '../../../../../../models';
 import {
   Stack,
   Typography,
@@ -15,25 +15,25 @@ import {
   CardContent,
   Grid,
   CardHeader,
-  InputLabel,
-} from "@mui/material";
+  InputLabel
+} from '@mui/material';
 import {
   AddOutlined,
   AttachMoney,
   Close,
   CreditCard,
-  MonetizationOnOutlined,
-} from "@mui/icons-material";
-import { ComboBoxClient } from "../../../components";
-import { OrderContext } from "../../../context/Order.context";
-import { useInvoiceStore } from "../../../store/invoiceStore";
-import { BtnFinalConsumer } from "./BtnFinalConsumer.component";
-import { statusModalClientOrder } from "../../../services/sharing-information.service";
-import { PaymentMethod } from "../../../models/Invoice.model";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { useCreateInvoiceOrder } from "../../../hooks/useInvocesOrder";
-import { LoadingButton } from "@mui/lab";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
+  MonetizationOnOutlined
+} from '@mui/icons-material';
+import { ComboBoxClient } from '../../../components';
+import { OrderContext } from '../../../context/Order.context';
+import { useInvoiceStore } from '../../../store/invoiceStore';
+import { BtnFinalConsumer } from './BtnFinalConsumer.component';
+import { statusModalClientOrder } from '../../../services/sharing-information.service';
+import { PaymentMethod } from '../../../models/Invoice.model';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { useCreateInvoiceOrder } from '../../../hooks/useInvocesOrder';
+import { LoadingButton } from '@mui/lab';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 
 interface Props {
   order: Order;
@@ -55,7 +55,7 @@ export const PayOrder: FC<Props> = ({ order }) => {
     getInvoice,
     amount,
     setOrder,
-    reset,
+    reset
   } = useInvoiceStore((state) => state);
 
   // const createInvoiceMutation = useCreateInvoice();
@@ -87,7 +87,7 @@ export const PayOrder: FC<Props> = ({ order }) => {
     setOrder(order!);
 
     if (difference < 0) {
-      alert("La cantidad pagada es menor al total de la orden");
+      alert('La cantidad pagada es menor al total de la orden');
       return;
     }
     const invoice = getInvoice();
@@ -104,29 +104,29 @@ export const PayOrder: FC<Props> = ({ order }) => {
 
   return (
     <>
-      <Stack spacing={1} direction="column" mb={3}>
+      <Stack spacing={1} direction='column' mb={3}>
         <Card
           sx={{
-            bgcolor: 'transparent',
+            bgcolor: 'transparent'
           }}
         >
           <CardHeader
-            title="Cliente"
+            title='Cliente'
             action={
-              <Box display="flex" flexDirection="row-reverse" mt={1}>
+              <Box display='flex' flexDirection='row-reverse' mt={1}>
                 {client && (
                   <Button
                     onClick={() => setClient(null)}
                     startIcon={<Close />}
-                    size="small"
-                    color="error"
+                    size='small'
+                    color='error'
                   >
                     Cambiar
                   </Button>
                 )}
 
                 <Button
-                  size="small"
+                  size='small'
                   onClick={createClient}
                   startIcon={<AddOutlined />}
                 >
@@ -143,7 +143,7 @@ export const PayOrder: FC<Props> = ({ order }) => {
                   <Grid item xs={12} md={6}>
                     <Card
                       sx={{
-                        p: 1,
+                        p: 1
                       }}
                     >
                       {/* <BtnFinalConsumer /> */}
@@ -153,7 +153,7 @@ export const PayOrder: FC<Props> = ({ order }) => {
                   <Grid item xs={12} md={6}>
                     <Card
                       sx={{
-                        p: 1,
+                        p: 1
                       }}
                     >
                       <ComboBoxClient
@@ -170,22 +170,22 @@ export const PayOrder: FC<Props> = ({ order }) => {
                   <>
                     <Card
                       sx={{
-                        border: "1px solid",
-                        borderColor: "primary.main",
+                        border: '1px solid',
+                        borderColor: 'primary.main',
                         borderRadius: 1,
                         p: 1,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 0.6,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 0.6
                       }}
                     >
-                      <Typography variant="h5">
+                      <Typography variant='h5'>
                         {client.person.lastName} {client.person.firstName}
                       </Typography>
-                      <Typography variant="subtitle1">
+                      <Typography variant='subtitle1'>
                         {client.person.email}
                       </Typography>
-                      <Typography variant="subtitle2">
+                      <Typography variant='subtitle2'>
                         {client.person.numPhone}
                       </Typography>
                     </Card>
@@ -211,17 +211,17 @@ export const PayOrder: FC<Props> = ({ order }) => {
 
         {client && (
           <>
-            <CardHeader title="2. Finalizar pago" />
+            <CardHeader title='2. Finalizar pago' />
             {/* <Card> */}
 
             <CardContent>
-              <Stack spacing={2} direction="column">
-                <InputLabel id="demo-simple-select-label">
+              <Stack spacing={2} direction='column'>
+                <InputLabel id='demo-simple-select-label'>
                   Forma de pago
                 </InputLabel>
 
                 <RadioGroup
-                  name="use-radio-group"
+                  name='use-radio-group'
                   value={paymentMethod}
                   onChange={handleChangePaymentMethod}
                 >
@@ -229,85 +229,85 @@ export const PayOrder: FC<Props> = ({ order }) => {
                     <Grid item xs={12} md={6}>
                       <Card
                         sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          p: 1,
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          p: 1
                         }}
                       >
                         <FormControlLabel
                           value={PaymentMethod.CASH}
-                          label={"Efectivo"}
+                          label={'Efectivo'}
                           control={<Radio />}
                         />
-                        <MonetizationOnOutlined color="success" />
+                        <MonetizationOnOutlined color='success' />
                       </Card>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Card
                         sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          p: 1,
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          p: 1
                         }}
                       >
                         <FormControlLabel
                           value={PaymentMethod.TRANSFER}
-                          label={"Transferencia"}
+                          label={'Transferencia'}
                           control={<Radio />}
                         />
-                        <CreditCard color="warning" />
+                        <CreditCard color='warning' />
                       </Card>
                     </Grid>
                   </Grid>
                 </RadioGroup>
 
                 <Box
-                  display="flex"
-                  flexDirection="column"
-                  alignContent="center"
-                  alignItems="center"
+                  display='flex'
+                  flexDirection='column'
+                  alignContent='center'
+                  alignItems='center'
                   gap={1}
                 >
-                  <Typography variant="subtitle2"> Total a pagar</Typography>
-                  <Typography variant="h2">
+                  <Typography variant='subtitle2'> Total a pagar</Typography>
+                  <Typography variant='h2'>
                     {`${formatMoney(amount - discount)}`}
                   </Typography>
                 </Box>
 
                 <Divider />
 
-                <Stack direction="row" justifyContent="center">
+                <Stack direction='row' justifyContent='center'>
                   <TextField
-                    label="Cantidad recibida"
-                    variant="outlined"
-                    type="number"
-                    value={amountPaid || ""}
+                    label='Cantidad recibida'
+                    variant='outlined'
+                    type='number'
+                    value={amountPaid || ''}
                     onChange={handleChangeAmountPaid}
                     InputProps={{
                       startAdornment: (
-                        <InputAdornment position="start">
+                        <InputAdornment position='start'>
                           <AttachMoney />
                         </InputAdornment>
-                      ),
+                      )
                     }}
                     sx={{
-                      width: 200,
+                      width: 200
                     }}
                   />
                 </Stack>
 
                 {difference >= 0 && (
-                  <Typography variant="h4" textAlign="center">
+                  <Typography variant='h4' textAlign='center'>
                     {`Cambio: ${formatMoney(difference)}`}
                   </Typography>
                 )}
-                <Stack direction="row" justifyContent="center">
+                <Stack direction='row' justifyContent='center'>
                   <LoadingButton
-                  disabled={loading}
+                    disabled={loading}
                     loading={loading}
-                    variant="contained"
+                    variant='contained'
                     onClick={submitPayment}
                     startIcon={
                       paymentMethod === PaymentMethod.CASH ? (

@@ -1,4 +1,4 @@
-import { TypeOrder } from "../../../../models/orders.model";
+import { TypeOrder } from '../../../../models/orders.model';
 
 export interface UpdateOrderDto {
   id: string;

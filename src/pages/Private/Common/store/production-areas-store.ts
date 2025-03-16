@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { ProductionArea } from "../models/production-area.model";
+import { create } from 'zustand';
+import { ProductionArea } from '../models/production-area.model';
 
 interface ProductionAreasState {
   productionAreas: ProductionArea[];
@@ -38,6 +38,6 @@ export const useProductionAreasStore = create<ProductionAreasState>(
         (p) => p.id !== productionAreaId
       );
       set({ productionAreas });
-    },
+    }
   })
 );

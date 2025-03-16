@@ -1,7 +1,6 @@
-import { TypeIdentification } from "../../../../../models/common.model";
+import { TypeIdentification } from '../../../../../models/common.model';
 
-
-export interface UpdateSupplierDto{
+export interface UpdateSupplierDto {
   id: string;
   firstName?: string;
   lastName?: string;
@@ -11,5 +10,4 @@ export interface UpdateSupplierDto{
   numberIdentification?: string;
   address?: string;
   isActive?: boolean;
-
 }

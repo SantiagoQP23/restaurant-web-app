@@ -89,5 +89,3 @@ Text.propTypes = {
     'black'
   ])
 };
-
-

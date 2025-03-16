@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm } from 'react-hook-form';
 import {
   Button,
   CardHeader,
@@ -16,19 +16,18 @@ import {
   Card,
   CardContent,
   Box,
-  IconButton,
-} from "@mui/material";
-import { PaymentMethod } from "../../../../Orders/models/Invoice.model";
-import { CreateIncomeDto } from "../../../dto/create-income.dto";
-import { Close, Paid } from "@mui/icons-material";
-import { useModal } from "../../../../../../hooks";
-import { IClient, IUser } from "../../../../../../models";
-import { ModalSelectClient } from "../../../../Clients/components/ModalSelectClient.component";
-import { useCreateIncome } from "../../../hooks/useIncomes";
-import { LoadingButton } from "@mui/lab";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { ModalSelectUser } from "../../../../Users/components/ModalSelectUser.component";
-
+  IconButton
+} from '@mui/material';
+import { PaymentMethod } from '../../../../Orders/models/Invoice.model';
+import { CreateIncomeDto } from '../../../dto/create-income.dto';
+import { Close, Paid } from '@mui/icons-material';
+import { useModal } from '../../../../../../hooks';
+import { IClient, IUser } from '../../../../../../models';
+import { ModalSelectClient } from '../../../../Clients/components/ModalSelectClient.component';
+import { useCreateIncome } from '../../../hooks/useIncomes';
+import { LoadingButton } from '@mui/lab';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { ModalSelectUser } from '../../../../Users/components/ModalSelectUser.component';
 
 export const AddIncome = () => {
   const { handleClose, handleOpen, isOpen } = useModal();
@@ -44,7 +43,7 @@ export const AddIncome = () => {
     handleSubmit,
     formState: { errors },
     control,
-    reset,
+    reset
   } = useForm<CreateIncomeDto>();
 
   const { mutateAsync, isLoading } = useCreateIncome();
@@ -63,8 +62,6 @@ export const AddIncome = () => {
     // }
 
     if (activeCashRegister) {
-    
-
       mutateAsync(form).then(() => {
         reset();
       });

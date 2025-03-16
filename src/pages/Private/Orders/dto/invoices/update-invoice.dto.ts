@@ -1,6 +1,3 @@
-
-
-
 export interface UpdateInvoiceDto {
   id: string;
 
@@ -9,6 +6,4 @@ export interface UpdateInvoiceDto {
   comments?: string;
 
   notaDeVenta?: string;
-
-
 }

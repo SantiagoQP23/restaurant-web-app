@@ -1,5 +1,5 @@
-import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   Table,
@@ -15,16 +15,16 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  FormControl,
-} from "@mui/material";
+  FormControl
+} from '@mui/material';
 
-import { Visibility } from "@mui/icons-material";
+import { Visibility } from '@mui/icons-material';
 
-import { Label } from "../../../../../../components/ui";
+import { Label } from '../../../../../../components/ui';
 
-import { ComboBoxClient } from "../../../../Orders/components";
-import { PaymentMethod } from "../../../../Orders/models/Invoice.model";
-import { useInvoices } from "../../../../Orders/hooks/useInvoices";
+import { ComboBoxClient } from '../../../../Orders/components';
+import { PaymentMethod } from '../../../../Orders/models/Invoice.model';
+import { useInvoices } from '../../../../Orders/hooks/useInvoices';
 
 export const TableInvoices = () => {
   const { invoicesQuery, ...filters } = useInvoices();
@@ -45,14 +45,14 @@ export const TableInvoices = () => {
 
             <Grid item xs={12} sm={2}>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
+                <InputLabel id='demo-simple-select-label'>
                   Forma de pago
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Forma de pago"
-                  value={filters.paymentMethod || ""}
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  label='Forma de pago'
+                  value={filters.paymentMethod || ''}
                   onChange={(e) =>
                     filters.handleChangePaymentMethod(
                       e.target.value as PaymentMethod
@@ -60,7 +60,7 @@ export const TableInvoices = () => {
                   }
                   fullWidth
                 >
-                  <MenuItem value={""}>Todos</MenuItem>
+                  <MenuItem value={''}>Todos</MenuItem>
                   <MenuItem value={PaymentMethod.CASH}>Efectivo</MenuItem>
                   <MenuItem value={PaymentMethod.TRANSFER}>
                     Transferencia
@@ -94,7 +94,7 @@ export const TableInvoices = () => {
                       N° {invoice.transactionNumber}
                     </TableCell>
                     <TableCell>
-                      {format(new Date(invoice.createdAt), "dd/MM/yyyy HH:mm")}
+                      {format(new Date(invoice.createdAt), 'dd/MM/yyyy HH:mm')}
                     </TableCell>
                     <TableCell>
                       {invoice.client &&
@@ -103,17 +103,17 @@ export const TableInvoices = () => {
                     <TableCell>$ {invoice.total}</TableCell>
                     <TableCell>
                       {invoice.paymentMethod === PaymentMethod.CASH
-                        ? "Efectivo"
-                        : "Transferencia"}
+                        ? 'Efectivo'
+                        : 'Transferencia'}
                     </TableCell>
                     <TableCell>
                       {invoice.isActive ? (
                         <>
-                          <Label color="success">Válido</Label>
+                          <Label color='success'>Válido</Label>
                         </>
                       ) : (
                         <>
-                          <Label color="error">Anulado</Label>
+                          <Label color='error'>Anulado</Label>
                         </>
                       )}
                     </TableCell>
@@ -131,7 +131,7 @@ export const TableInvoices = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           rowsPerPage={filters.rowsPerPage}
-          component="div"
+          component='div'
           count={invoicesQuery.data?.count || 0}
           page={filters.page}
           onPageChange={filters.handleChangePage}

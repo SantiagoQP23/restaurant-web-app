@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Typography, Stack, Button, InputBase } from "@mui/material";
+import { Typography, Stack, Button, InputBase } from '@mui/material';
 
-import { Pagination } from "@mui/material";
-import { useModal } from "../../../../../../hooks";
-import { useNewOrderStore } from "../../../store/newOrderStore";
+import { Pagination } from '@mui/material';
+import { useModal } from '../../../../../../hooks';
+import { useNewOrderStore } from '../../../store/newOrderStore';
 
 export const PeopleCounter: FC = () => {
   const { setPeople, people } = useNewOrderStore();
@@ -17,44 +17,44 @@ export const PeopleCounter: FC = () => {
 
   return (
     <>
-      <Typography variant="subtitle1">Personas</Typography>
-      <Stack direction="row" spacing={2} justifyContent="space-between">
+      <Typography variant='subtitle1'>Personas</Typography>
+      <Stack direction='row' spacing={2} justifyContent='space-between'>
         <Pagination
           count={5}
           hidePrevButton
           hideNextButton
           // variant='outlined'
-          color="primary"
+          color='primary'
           page={people || 0}
           onChange={(e, value) => handleChangePeople(value)}
         />
 
-        {!isOpen && people <= 5  && (
-          <Button variant="outlined" size="small" onClick={handleOpen}>
+        {!isOpen && people <= 5 && (
+          <Button variant='outlined' size='small' onClick={handleOpen}>
             Otro
           </Button>
         )}
 
-        {isOpen  && (
+        {isOpen && (
           <InputBase
-            value={people || ""}
+            value={people || ''}
             onChange={(e) => {
               const newValue = Number(e.target.value);
               if (newValue >= 0) {
                 handleChangePeople(newValue);
               }
             }}
-            type="number"
+            type='number'
             inputProps={{
-              min: 0,
+              min: 0
             }}
             sx={{
               border: (theme) => `1px solid ${theme.colors.primary.main} `,
-              borderRadius: "8px",
-              padding: "0 8px",
-              width: "80px",
+              borderRadius: '8px',
+              padding: '0 8px',
+              width: '80px'
             }}
-            size="small"
+            size='small'
           />
         )}
 

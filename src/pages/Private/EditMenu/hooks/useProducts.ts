@@ -1,16 +1,16 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useSnackbar } from "notistack";
-import { IProduct } from "../../../../models";
-import { CreateProductDto, UpdateProductDto } from "../dto/";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useSnackbar } from 'notistack';
+import { IProduct } from '../../../../models';
+import { CreateProductDto, UpdateProductDto } from '../dto/';
 import {
   UpdateProductImageDto,
   createProduct,
   getProduct,
   updateProduct,
-  updateProductImage,
-} from "../services/menu.service";
-import { useDispatch } from "react-redux";
-import { setActiveProduct } from "../../../../redux";
+  updateProductImage
+} from '../services/menu.service';
+import { useDispatch } from 'react-redux';
+import { setActiveProduct } from '../../../../redux';
 
 export const useProducts = () => {};
 
@@ -21,10 +21,10 @@ export const useProducts = () => {};
  */
 export const useProduct = (id: string) => {
   const dispatch = useDispatch();
-  return useQuery<IProduct, unknown>(["product", id], () => getProduct(id), {
+  return useQuery<IProduct, unknown>(['product', id], () => getProduct(id), {
     onSuccess: (product) => {
       dispatch(setActiveProduct(product));
-    },
+    }
   });
 };
 
@@ -35,11 +35,11 @@ export const useCreateProduct = () => {
     (data) => createProduct(data),
     {
       onSuccess: () => {
-        enqueueSnackbar("Se creó correctamente", { variant: "success" });
+        enqueueSnackbar('Se creó correctamente', { variant: 'success' });
       },
       onError: () => {
-        enqueueSnackbar("No se pudo crear", { variant: "error" });
-      },
+        enqueueSnackbar('No se pudo crear', { variant: 'error' });
+      }
     }
   );
 };
@@ -51,11 +51,11 @@ export const useUpdateProduct = () => {
     (data) => updateProduct(data.id, data),
     {
       onSuccess: () => {
-        enqueueSnackbar("Se actualizó correctamente", { variant: "success" });
+        enqueueSnackbar('Se actualizó correctamente', { variant: 'success' });
       },
       onError: () => {
-        enqueueSnackbar("No se pudo actualizar", { variant: "error" });
-      },
+        enqueueSnackbar('No se pudo actualizar', { variant: 'error' });
+      }
     }
   );
 };
@@ -67,13 +67,13 @@ export const useUpdateImageProduct = () => {
     (data) => updateProductImage(data.id, data),
     {
       onSuccess: () => {
-        enqueueSnackbar("Se actualizó correctamente", { variant: "success" });
+        enqueueSnackbar('Se actualizó correctamente', { variant: 'success' });
       },
       onError: () => {
-        enqueueSnackbar("No se pudo actualizar la imagen", {
-          variant: "error",
+        enqueueSnackbar('No se pudo actualizar la imagen', {
+          variant: 'error'
         });
-      },
+      }
     }
   );
 };

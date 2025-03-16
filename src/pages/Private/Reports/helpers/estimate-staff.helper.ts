@@ -35,11 +35,10 @@ export function estimateStaff(expectedInflux: number): Staff {
     cooks = 10;
   }
 
-
   return {
     cooks,
     waiters,
-    chefs, 
+    chefs,
     total: cooks + waiters + chefs
   };
 }

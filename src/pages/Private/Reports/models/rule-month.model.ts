@@ -1,5 +1,3 @@
-
-
 export interface RuleMonth {
   id: number;
   month: string;

@@ -1,27 +1,27 @@
-import { useState } from "react";
-import { useFetchAndLoad } from "../../../../../hooks/useFetchAndLoad";
-import { Order } from "../../../../../models/orders.model";
+import { useState } from 'react';
+import { useFetchAndLoad } from '../../../../../hooks/useFetchAndLoad';
+import { Order } from '../../../../../models/orders.model';
 import {
   getOrdersToday,
-  getOrdersByDate,
-} from "../../../Orders/services/orders.service";
-import { useAsync } from "../../../../../hooks/useAsync";
+  getOrdersByDate
+} from '../../../Orders/services/orders.service';
+import { useAsync } from '../../../../../hooks/useAsync';
 import {
   Card,
   Box,
   CardContent,
   TextField,
   Typography,
-  Grid,
-} from "@mui/material";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import { DesktopDatePicker } from "@mui/x-date-pickers";
-import { OrderSummaryCard } from "./OrderSummaryCard.component";
-import { useSnackbar } from "notistack";
+  Grid
+} from '@mui/material';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
+import { OrderSummaryCard } from './OrderSummaryCard.component';
+import { useSnackbar } from 'notistack';
 
 const formatDate = (newValue: Date | string) => {
-  const date = format(new Date(newValue), "yyyy-MM-dd", { locale: es });
+  const date = format(new Date(newValue), 'yyyy-MM-dd', { locale: es });
 
   return date;
 };
@@ -44,11 +44,11 @@ export const OrdersByDate = () => {
 
     await callEndpoint(getOrdersByDate({ startDate: dateStr }))
       .then((resp) => {
-        console.log("resp", resp.data);
+        console.log('resp', resp.data);
         setOrders(resp.data);
       })
       .catch((err) => {
-        enqueueSnackbar("Error al obtener los pedidos", { variant: "error" });
+        enqueueSnackbar('Error al obtener los pedidos', { variant: 'error' });
       });
 
     setDate(newValue);
@@ -66,14 +66,14 @@ export const OrdersByDate = () => {
     <>
       <Card>
         <CardContent>
-          <Typography variant="h4" align="center">
+          <Typography variant='h4' align='center'>
             Pedidos por día
           </Typography>
 
-          <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
+          <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
             <DesktopDatePicker
-              label="Fecha"
-              inputFormat="yyyy-MM-dd"
+              label='Fecha'
+              inputFormat='yyyy-MM-dd'
               value={date}
               onChange={handleChange}
               renderInput={(params) => <TextField {...params} />}
@@ -83,16 +83,16 @@ export const OrdersByDate = () => {
 
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              my: 2,
+              display: 'flex',
+              justifyContent: 'space-between',
+              my: 2
             }}
           >
-            <Typography variant="h5" align="center">
+            <Typography variant='h5' align='center'>
               Cantidad: {orders.length}
             </Typography>
-            <Typography variant="h5" align="center">
-              Ingreso: ${" "}
+            <Typography variant='h5' align='center'>
+              Ingreso: ${' '}
               {orders.reduce((acc, order) => acc + Number(order.total), 0)}
             </Typography>
           </Box>
@@ -100,7 +100,7 @@ export const OrdersByDate = () => {
           <Grid container spacing={1}>
             {orders.length === 0 ? (
               <Grid>
-                <Typography variant="h6" align="center">
+                <Typography variant='h6' align='center'>
                   No hay pedidos para esta fecha
                 </Typography>
               </Grid>

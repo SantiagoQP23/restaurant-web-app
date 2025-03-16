@@ -1,4 +1,4 @@
-import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 import {
   Button,
   CardContent,
@@ -11,14 +11,14 @@ import {
   ListItem,
   ListItemText,
   Switch,
-  TextField,
-} from "@mui/material";
-import { ProductOption } from "../../../../../../models";
-import { LoadingButton } from "@mui/lab";
-import { Controller, useForm } from "react-hook-form";
-import { UpdateProductOptionDto } from "../../../dto";
-import { useUpdateProductOption } from "../../../hooks/useProductOptions";
-import { AttachMoney } from "@mui/icons-material";
+  TextField
+} from '@mui/material';
+import { ProductOption } from '../../../../../../models';
+import { LoadingButton } from '@mui/lab';
+import { Controller, useForm } from 'react-hook-form';
+import { UpdateProductOptionDto } from '../../../dto';
+import { useUpdateProductOption } from '../../../hooks/useProductOptions';
+import { AttachMoney } from '@mui/icons-material';
 
 interface Props {
   productOption: ProductOption;
@@ -41,12 +41,12 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
       handleSubmit,
       formState: { errors, isDirty },
       register,
-      reset,
+      reset
     } = useForm<UpdateProductOptionDto>({
       defaultValues: {
         ...productOption,
-        productId: productId,
-      },
+        productId: productId
+      }
     });
 
     const onSubmit = (data: UpdateProductOptionDto) => {
@@ -64,25 +64,25 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
       <>
         <Dialog {...muiDialogV5(modal)}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogTitle variant="h5">Editar {productOption.name}</DialogTitle>
+            <DialogTitle variant='h5'>Editar {productOption.name}</DialogTitle>
             <CardContent
               sx={{
-                width: 300,
+                width: 300
               }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
                     autoFocus
-                    label="Nombre del producto"
-                    type="text"
+                    label='Nombre del producto'
+                    type='text'
                     fullWidth
-                    {...register("name", {
-                      required: "Este campo es requerido",
+                    {...register('name', {
+                      required: 'Este campo es requerido',
                       minLength: {
                         value: 2,
-                        message: "Minimo 2 caracteres",
-                      },
+                        message: 'Minimo 2 caracteres'
+                      }
                     })}
                     helperText={errors.name?.message}
                   />
@@ -90,26 +90,26 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
 
                 <Grid item xs={12}>
                   <TextField
-                    label="Precio"
+                    label='Precio'
                     InputProps={{
                       startAdornment: (
-                        <InputAdornment position="start">
+                        <InputAdornment position='start'>
                           <AttachMoney />
                         </InputAdornment>
-                      ),
+                      )
                     }}
                     fullWidth
-                    type="number"
+                    type='number'
                     inputProps={{
-                      step: 0.05,
+                      step: 0.05
                     }}
-                    {...register("price", {
-                      required: "Este campo es requerido",
+                    {...register('price', {
+                      required: 'Este campo es requerido',
                       min: {
                         value: 0.25,
-                        message: "El valor debe ser mayor a $0.25",
+                        message: 'El valor debe ser mayor a $0.25'
                       },
-                      valueAsNumber: true,
+                      valueAsNumber: true
                     })}
                     helperText={errors.price?.message}
                     error={!!errors.price}
@@ -121,19 +121,19 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
                     <ListItem
                       secondaryAction={
                         <Controller
-                          name="isAvailable"
+                          name='isAvailable'
                           control={control}
                           render={({ field: { onChange, value } }) => (
                             <Switch
                               checked={value}
                               onChange={onChange}
-                              color="success"
+                              color='success'
                             />
                           )}
                         />
                       }
                     >
-                      <ListItemText primary="Disponible" />
+                      <ListItemText primary='Disponible' />
                     </ListItem>
                   </List>
                 </Grid>
@@ -143,10 +143,10 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
             <DialogActions>
               <Button onClick={closeModal}>Cancelar</Button>
               <LoadingButton
-                variant="contained"
-                color="primary"
+                variant='contained'
+                color='primary'
                 loading={isLoading}
-                type="submit"
+                type='submit'
                 disabled={!isDirty}
               >
                 Aceptar

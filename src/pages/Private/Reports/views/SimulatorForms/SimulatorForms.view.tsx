@@ -1,21 +1,46 @@
 import { useState } from 'react';
 
-import { ArrowBack, Edit } from "@mui/icons-material"
-import { LoadingButton } from "@mui/lab"
-import { Grid, Box, Stack, Button, Typography, Card, CardHeader, IconButton, CardContent, TextField, CardActions, Tab, Tabs } from '@mui/material';
+import { ArrowBack, Edit } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import {
+  Grid,
+  Box,
+  Stack,
+  Button,
+  Typography,
+  Card,
+  CardHeader,
+  IconButton,
+  CardContent,
+  TextField,
+  CardActions,
+  Tab,
+  Tabs
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useFetchAndLoad } from '../../../../../hooks/useFetchAndLoad';
 import { useSnackbar } from 'notistack';
-import { DaysRules, Holidays, HolidaysRules, ModalDeleteHoliday, ModalHoliday, RestaurantInformation, WeatherRules, WeekRules } from './components';
+import {
+  DaysRules,
+  Holidays,
+  HolidaysRules,
+  ModalDeleteHoliday,
+  ModalHoliday,
+  RestaurantInformation,
+  WeatherRules,
+  WeekRules
+} from './components';
 
-import { SimulationProvider, SimulationContext } from '../../context/SimulationContext';
+import {
+  SimulationProvider,
+  SimulationContext
+} from '../../context/SimulationContext';
 import { useContext } from 'react';
-import { useSeed } from "../../hooks/useSeed";
-import { useSimulation } from "../../hooks/useSimulation";
-import { TitlePage } from "../../../components/TitlePage.component";
-import { Label } from "../../../../../components/ui";
+import { useSeed } from '../../hooks/useSeed';
+import { useSimulation } from '../../hooks/useSimulation';
+import { TitlePage } from '../../../components/TitlePage.component';
+import { Label } from '../../../../../components/ui';
 import { MonthRules } from './components/MonthRules.component';
-
 
 enum ViewRule {
   DAYS = 'DAYS',
@@ -28,13 +53,9 @@ enum ViewRule {
 //TODO Voy a asumir que la aplicación ya ejecutó el seed
 
 export const SimulatorForms = () => {
-
   const simulationQuery = useSimulation();
 
   const [tabView, setTabView] = useState<ViewRule>(ViewRule.DAYS);
-
-
-
 
   const navigate = useNavigate();
 
@@ -48,23 +69,20 @@ export const SimulatorForms = () => {
 
   const executeSeed = async () => {
     await seedQuery.refetch().then(() => {
-      navigate('/reports/simulator')
-    })
-  }
-
+      navigate('/reports/simulator');
+    });
+  };
 
   // const submitUpdateSimulation = async () => {
   //   await callEndpoint(updateSimulationAffluence())
   //     .then(async () => {
   //       enqueueSnackbar('Simulación actualizada', { variant: 'success' });
 
-
   //     })
   //     .catch(() => {
   //       enqueueSnackbar('Error al actualizar la simulación', { variant: 'error' });
 
   //     })
-
 
   // }
 
@@ -74,36 +92,27 @@ export const SimulatorForms = () => {
 
   // useAsync(getHolidaysCall, loadHolidaysState, () => { }, []);
 
-
-
-
   return (
     <>
-
-      <TitlePage title='Simulador de afluencia'
+      <TitlePage
+        title='Simulador de afluencia'
         action={
           <LoadingButton
             loading={loading}
-            variant="contained"
+            variant='contained'
             onClick={executeSeed}
           >
             Actualizar simulación
           </LoadingButton>
-
-
         }
       />
 
-
-
       <Grid container spacing={2}>
-
         <Grid item xs={12} md={6} lg={3}>
           <RestaurantInformation />
         </Grid>
 
         <Grid item xs={12} md={9} spacing={1}>
-
           <Tabs
             value={tabView}
             onChange={(e, value) => setTabView(value)}
@@ -111,67 +120,34 @@ export const SimulatorForms = () => {
               mb: 2
             }}
           >
+            <Tab label='Días' value={ViewRule.DAYS} />
+            <Tab label='Semana' value={ViewRule.WEEK} />
 
-            <Tab
-              label="Días"
-              value={ViewRule.DAYS}
-            />
-            <Tab
-              label="Semana"
-              value={ViewRule.WEEK}
-            />
+            <Tab label='Mes' value={ViewRule.MONTH} />
 
-            <Tab
-              label="Mes"
-              value={ViewRule.MONTH}
-            />
+            <Tab label='Clima' value={ViewRule.WEATHER} />
 
-            <Tab
-              label="Clima"
-              value={ViewRule.WEATHER}
-            />
-
-
-            <Tab
-              label="Feriados"
-              value={ViewRule.HOLIDAYS}
-            />
-
-
+            <Tab label='Feriados' value={ViewRule.HOLIDAYS} />
           </Tabs>
 
-          {
-            tabView === ViewRule.DAYS && <DaysRules />
-          }
+          {tabView === ViewRule.DAYS && <DaysRules />}
 
-          {
-            tabView === ViewRule.WEATHER && <WeatherRules />
-          }
+          {tabView === ViewRule.WEATHER && <WeatherRules />}
 
-          {
-            tabView === ViewRule.WEEK && <WeekRules />
-          }
+          {tabView === ViewRule.WEEK && <WeekRules />}
 
-          {
-            tabView === ViewRule.HOLIDAYS && (
-              <Grid item container xs={12} spacing={2} >
-                <Grid item xs={12} md={6}>
-                  <HolidaysRules />
-
-                </Grid>
-                <Grid item xs={12} md={6}  >
-
-                  <Holidays />
-                </Grid>
-
+          {tabView === ViewRule.HOLIDAYS && (
+            <Grid item container xs={12} spacing={2}>
+              <Grid item xs={12} md={6}>
+                <HolidaysRules />
               </Grid>
-            )
-          }
+              <Grid item xs={12} md={6}>
+                <Holidays />
+              </Grid>
+            </Grid>
+          )}
 
-          {
-            tabView === ViewRule.MONTH && <MonthRules />
-          }
-
+          {tabView === ViewRule.MONTH && <MonthRules />}
 
           {/* <Grid container spacing={1}>
 
@@ -238,26 +214,10 @@ export const SimulatorForms = () => {
             </Grid>
           </Grid> */}
         </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </Grid>
 
       <ModalHoliday />
       <ModalDeleteHoliday />
-
-
     </>
-  )
-}
+  );
+};

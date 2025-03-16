@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useBill, useUpdateBill } from "../../hooks/useBills";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useBill, useUpdateBill } from '../../hooks/useBills';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -17,27 +17,27 @@ import {
   RadioGroup,
   Stack,
   TextField,
-  Typography,
-} from "@mui/material";
-import { BillDetailsTable } from "../../components/BillDetailsTable.component";
+  Typography
+} from '@mui/material';
+import { BillDetailsTable } from '../../components/BillDetailsTable.component';
 import {
   MonetizationOnOutlined,
   CreditCard,
-  AttachMoney,
-} from "@mui/icons-material";
-import { IClient, PaymentMethod } from "../../../../../models";
-import { formatMoney } from "../../../Common/helpers/format-money.helper";
-import { TitlePage } from "../../../components";
-import { ComboBoxClient } from "../../../Orders/components";
-import { LoadingButton } from "@mui/lab";
-import { Label } from "../../../../../components/ui";
-import { format } from "date-fns";
-import { UpdateBillDto } from "../../dto";
+  AttachMoney
+} from '@mui/icons-material';
+import { IClient, PaymentMethod } from '../../../../../models';
+import { formatMoney } from '../../../Common/helpers/format-money.helper';
+import { TitlePage } from '../../../components';
+import { ComboBoxClient } from '../../../Orders/components';
+import { LoadingButton } from '@mui/lab';
+import { Label } from '../../../../../components/ui';
+import { format } from 'date-fns';
+import { UpdateBillDto } from '../../dto';
 // import { useCashRegisterStore } from "../../../Common/store/useCashRegisterStore";
 
 /**
- * Component for pay a bill 
- * 
+ * Component for pay a bill
+ *
  * @author Santiago Quirumbay
  * @version 1.1 28-02-2025 Remove payment method
  * @author Steven Rosales
@@ -46,7 +46,7 @@ import { UpdateBillDto } from "../../dto";
 export const PaymentBill = () => {
   const { id } = useParams();
 
-  if (!id) return <Navigate to="/bills" replace />;
+  if (!id) return <Navigate to='/bills' replace />;
 
   const { isLoading, data: bill } = useBill(+id);
 
@@ -55,7 +55,7 @@ export const PaymentBill = () => {
   const {
     mutate: updateBill,
     isLoading: isUpdating,
-    isOnline,
+    isOnline
   } = useUpdateBill();
 
   // const { activeCashRegister } = useCashRegisterStore((state) => state);
@@ -82,14 +82,12 @@ export const PaymentBill = () => {
     setDiscount(+event.target.value);
 
   const handleChangeWithClient = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setWithClient(event.target.value === "true");
+    setWithClient(event.target.value === 'true');
 
   const handleChangeClient = (client: IClient | null) => setClient(client);
   const [receivedAmount, setReceivedAmount] = useState<number>(0);
 
-  const [paymentMethod] = useState<PaymentMethod>(
-    PaymentMethod.CASH
-  );
+  const [paymentMethod] = useState<PaymentMethod>(PaymentMethod.CASH);
 
   // const handleChangePaymentMethod = (
   //   event: React.ChangeEvent<HTMLInputElement>
@@ -119,7 +117,7 @@ export const PaymentBill = () => {
       // (withClient && !client) ||
       // !activeCashRegister
     ) {
-      alert("Error al registrar el pago");
+      alert('Error al registrar el pago');
       return;
     }
 
@@ -128,12 +126,12 @@ export const PaymentBill = () => {
       discount,
       paymentMethod,
       receivedAmount,
-      isPaid: true,
+      isPaid: true
       // cashRegisterId: activeCashRegister!.id,
     };
 
     if (!withClient) {
-      data.clientId = "0999999999";
+      data.clientId = '0999999999';
     } else {
       data.clientId = client?.id;
     }
@@ -141,7 +139,7 @@ export const PaymentBill = () => {
     updateBill(data, {
       onSuccess: () => {
         navigateToBill();
-      },
+      }
     });
   };
 
@@ -155,31 +153,31 @@ export const PaymentBill = () => {
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth='lg'>
         <TitlePage title={`Pago de cuenta #${bill.num}`} />
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Stack direction="column" spacing={2}>
+            <Stack direction='column' spacing={2}>
               <Card>
                 <CardHeader
                   avatar={
                     <Chip
                       label={1}
-                      size="small"
-                      variant={step === 1 ? "filled" : "outlined"}
+                      size='small'
+                      variant={step === 1 ? 'filled' : 'outlined'}
                     />
                   }
-                  title="Cliente"
+                  title='Cliente'
                   subheaderTypographyProps={{
-                    variant: "h5",
-                    color: "text.primary",
+                    variant: 'h5',
+                    color: 'text.primary'
                   }}
                   action={
                     step !== 1 && (
                       <Button
-                        size="small"
-                        color="inherit"
-                        variant="outlined"
+                        size='small'
+                        color='inherit'
+                        variant='outlined'
                         onClick={handleChangeStep(1)}
                       >
                         Cambiar
@@ -190,26 +188,26 @@ export const PaymentBill = () => {
                     step !== 1
                       ? client
                         ? `${client.person.firstName} ${client.person.lastName}`
-                        : "Consumidor final"
-                      : ""
+                        : 'Consumidor final'
+                      : ''
                   }
                 />
                 {step === 1 && (
                   <CardContent>
                     <>
                       <RadioGroup
-                        name="use-radio-group"
+                        name='use-radio-group'
                         value={withClient}
                         onChange={handleChangeWithClient}
                       >
                         <FormControlLabel
                           value={false}
-                          label={"Consumidor final"}
+                          label={'Consumidor final'}
                           control={<Radio />}
                         />
                         <FormControlLabel
                           value={true}
-                          label={"Seleccionar cliente"}
+                          label={'Seleccionar cliente'}
                           control={<Radio />}
                         />
                       </RadioGroup>
@@ -224,14 +222,14 @@ export const PaymentBill = () => {
                     </>
                     <Box
                       sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        mt: 2,
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        mt: 2
                       }}
                     >
                       <Button
                         onClick={handleChangeStep(2)}
-                        variant="contained"
+                        variant='contained'
                         disabled={withClient && !client}
                       >
                         Siguiente
@@ -363,65 +361,65 @@ export const PaymentBill = () => {
 
               <Card>
                 <CardHeader
-                  title="Detalles de pago"
+                  title='Detalles de pago'
                   avatar={
                     <Chip
                       label={2}
-                      size="small"
-                      variant={step === 2 ? "filled" : "outlined"}
+                      size='small'
+                      variant={step === 2 ? 'filled' : 'outlined'}
                     />
                   }
                 />
                 {step === 2 && (
                   <CardContent>
                     <Typography
-                      variant="subtitle2"
-                      fontSize="0.8rem"
-                      textAlign="center"
+                      variant='subtitle2'
+                      fontSize='0.8rem'
+                      textAlign='center'
                     >
                       Total a pagar
                     </Typography>
                     <Typography
-                      variant={receivedAmount >= total ? "h4" : "h3"}
-                      textAlign="center"
+                      variant={receivedAmount >= total ? 'h4' : 'h3'}
+                      textAlign='center'
                     >
                       {`${formatMoney(total)}`}
                     </Typography>
 
                     <Stack
-                      direction="column"
-                      alignItems="center"
+                      direction='column'
+                      alignItems='center'
                       mt={3}
                       spacing={2}
                     >
                       <TextField
-                        label="Cantidad recibida"
-                        variant="outlined"
-                        type="number"
-                        value={receivedAmount || ""}
+                        label='Cantidad recibida'
+                        variant='outlined'
+                        type='number'
+                        value={receivedAmount || ''}
                         onChange={handleChangeAmountPaid}
                         InputProps={{
                           startAdornment: (
-                            <InputAdornment position="start">
+                            <InputAdornment position='start'>
                               <AttachMoney />
                             </InputAdornment>
-                          ),
+                          )
                         }}
                         sx={{
-                          width: 200,
+                          width: 200
                         }}
                       />
 
                       {receivedAmount >= total && (
                         <Box>
                           <Typography
-                            variant="subtitle2"
-                            fontSize="0.8rem"
-                            textAlign="center"
+                            variant='subtitle2'
+                            fontSize='0.8rem'
+                            textAlign='center'
                           >
                             Cambio
                           </Typography>
-                          <Typography variant="h2" textAlign="center">
+                          <Typography variant='h2' textAlign='center'>
                             {`${formatMoney(receivedAmount - total)}`}
                           </Typography>
                         </Box>
@@ -430,13 +428,13 @@ export const PaymentBill = () => {
 
                     <Box
                       sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        mt: 2,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        mt: 2
                       }}
                     >
                       <LoadingButton
-                        variant="contained"
+                        variant='contained'
                         onClick={submitPayment}
                         loading={isUpdating}
                         startIcon={
@@ -462,45 +460,45 @@ export const PaymentBill = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Card>
-              <CardHeader title="Resumen de la cuenta" />
+              <CardHeader title='Resumen de la cuenta' />
               <BillDetailsTable details={bill.details} />
 
               <Grid container spacing={2} p={2}>
                 <Grid item xs={8}>
-                  <Typography variant="h6" color="textSecondary">
+                  <Typography variant='h6' color='textSecondary'>
                     Descuento
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
                   <TextField
-                    id="precio-producto"
-                    type="number"
-                    value={discount || ""}
+                    id='precio-producto'
+                    type='number'
+                    value={discount || ''}
                     InputProps={{
                       startAdornment: (
-                        <InputAdornment position="start">
+                        <InputAdornment position='start'>
                           <AttachMoney />
                         </InputAdornment>
-                      ),
+                      )
                     }}
                     onChange={handleChangeDiscount}
-                    size="small"
+                    size='small'
                     inputProps={{
                       min: 0,
 
-                      step: 0.25,
+                      step: 0.25
                     }}
                   />
                 </Grid>
                 <Divider />
 
                 <Grid item xs={8}>
-                  <Typography variant="h3" color="textSecondary">
+                  <Typography variant='h3' color='textSecondary'>
                     Total
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                  <Typography variant="h3" textAlign="right">
+                  <Typography variant='h3' textAlign='right'>
                     {formatMoney(total)}
                   </Typography>
                 </Grid>
@@ -508,41 +506,41 @@ export const PaymentBill = () => {
             </Card>
             <Card sx={{ mt: 2 }}>
               <CardHeader
-                title="Información de la cuenta"
+                title='Información de la cuenta'
                 action={
-                  <Label color={bill.isPaid ? "success" : "warning"}>
-                    {bill.isPaid ? "Pagada" : "Pendiente"}
+                  <Label color={bill.isPaid ? 'success' : 'warning'}>
+                    {bill.isPaid ? 'Pagada' : 'Pendiente'}
                   </Label>
                 }
               />
               <CardContent>
-                <Stack direction="column" spacing={1}>
+                <Stack direction='column' spacing={1}>
                   <Box>
-                    <Typography variant="subtitle1" color="textSecondary">
+                    <Typography variant='subtitle1' color='textSecondary'>
                       Creado por
                     </Typography>
 
-                    <Typography variant="h6">
-                      {bill.createdBy.person.firstName}{" "}
+                    <Typography variant='h6'>
+                      {bill.createdBy.person.firstName}{' '}
                       {bill.createdBy.person.lastName}
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="subtitle1" color="textSecondary">
+                    <Typography variant='subtitle1' color='textSecondary'>
                       Mesero
                     </Typography>
 
-                    <Typography variant="h6">
+                    <Typography variant='h6'>
                       {bill.owner.person.firstName} {bill.owner.person.lastName}
                     </Typography>
                   </Box>
 
                   <Box>
-                    <Typography variant="subtitle1" color="textSecondary">
+                    <Typography variant='subtitle1' color='textSecondary'>
                       Fecha de creación
                     </Typography>
-                    <Typography variant="h6">
-                      {format(new Date(bill.createdAt), "dd/MM/yyyy HH:mm")}
+                    <Typography variant='h6'>
+                      {format(new Date(bill.createdAt), 'dd/MM/yyyy HH:mm')}
                     </Typography>
                   </Box>
                 </Stack>

@@ -1,24 +1,26 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
-import { useDateFilter } from "../../../../hooks/useDateFilter";
-import { usePaginationAsync } from "../../../../hooks/usePaginationAsync";
-import { IClient, IUser } from "../../../../models";
-import { Period } from "../../Common/dto/period.model";
+import { useDateFilter } from '../../../../hooks/useDateFilter';
+import { usePaginationAsync } from '../../../../hooks/usePaginationAsync';
+import { IClient, IUser } from '../../../../models';
+import { Period } from '../../Common/dto/period.model';
 import { PaymentMethod } from '../models/Invoice.model';
 import { CashRegister } from '../../Balance/models/cash-register.model';
 
-
 export const useFilterInvoices = () => {
-
   const dateFilter = useDateFilter(Period.CUSTOM);
 
   const [user, setUser] = useState<null | IUser>(null);
 
   const [isActive, setIsActive] = useState<boolean | null>(null);
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null >(null);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
+    null
+  );
 
-  const [transactionNumber, setTransactionNumber] = useState<string | null>(null);
+  const [transactionNumber, setTransactionNumber] = useState<string | null>(
+    null
+  );
 
   const [notaDeVenta, setNotaDeVenta] = useState<string | null>(null);
 
@@ -26,39 +28,35 @@ export const useFilterInvoices = () => {
 
   const [cashRegister, setCashRegister] = useState<null | CashRegister>(null);
 
-
-
-
   const pagination = usePaginationAsync();
 
   const handleChangeCashRegister = (cashRegister: CashRegister | null) => {
     setCashRegister(cashRegister);
-  }
+  };
 
   const handleChangeUser = (user: IUser | null) => {
     setUser(user);
-  }
+  };
 
   const handleChangeIsActive = (isActive: boolean | null) => {
     setIsActive(isActive);
-  }
+  };
 
-  const handleChangePaymentMethod = (paymentMethod: PaymentMethod | null ) => {
+  const handleChangePaymentMethod = (paymentMethod: PaymentMethod | null) => {
     setPaymentMethod(paymentMethod);
-  }
+  };
 
   const handleChangeTransactionNumber = (transactionNumber: string | null) => {
     setTransactionNumber(transactionNumber);
-  }
+  };
 
   const handleChangeNotaDeVenta = (notaDeVenta: string | null) => {
     setNotaDeVenta(notaDeVenta);
-  }
+  };
 
   const handleChangeClient = (client: IClient | null) => {
     setClient(client);
-  }
-
+  };
 
   const reset = () => {
     setUser(null);
@@ -66,12 +64,9 @@ export const useFilterInvoices = () => {
     setPaymentMethod(null);
     setTransactionNumber(null);
     setNotaDeVenta(null);
-  }
-
-
+  };
 
   return {
-
     user,
     isActive,
     paymentMethod,
@@ -88,11 +83,7 @@ export const useFilterInvoices = () => {
     handleChangeClient,
     handleChangeCashRegister,
 
-
-
     ...dateFilter,
-    ...pagination,
-
-
-  }
-}
+    ...pagination
+  };
+};

@@ -1,9 +1,9 @@
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
-import { restauranteApi } from "../../../api";
-import { ICategory, IProduct, ISection } from "../../../models";
-import { AppThunk } from "../../store";
-import { setActiveCategory, updateSection } from "./menu.slice";
+import { restauranteApi } from '../../../api';
+import { ICategory, IProduct, ISection } from '../../../models';
+import { AppThunk } from '../../store';
+import { setActiveCategory, updateSection } from './menu.slice';
 
 export const addCategory =
   (category: ICategory): AppThunk =>
@@ -15,7 +15,7 @@ export const addCategory =
 
     let newSection = {
       ...section,
-      categories: [...activeSection?.categories!, category],
+      categories: [...activeSection?.categories!, category]
     }! as ISection;
 
     dispatch(updateSection(newSection));
@@ -39,7 +39,7 @@ export const updateCategory =
 
       let newSection = {
         ...activeSection,
-        categories: newCategories,
+        categories: newCategories
       }! as ISection;
 
       dispatch(updateSection(newSection));
@@ -75,7 +75,7 @@ export const addProduct =
 
     newCategory! = {
       ...newCategory,
-      products: [...newCategory?.products!, product],
+      products: [...newCategory?.products!, product]
     };
 
     dispatch(updateCategory(newCategory));

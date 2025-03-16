@@ -1,23 +1,23 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect } from 'react';
 
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 import {
   Avatar,
   IconButton,
   styled,
   Box,
   Card,
-  Typography,
-} from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../../../../../../hooks";
-import { IProduct } from "../../../../../../models";
-import { setActiveProduct } from "../../../../../../redux";
-import { useUpdateImageProduct } from "../../../hooks/useProducts";
+  Typography
+} from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../../../../../hooks';
+import { IProduct } from '../../../../../../models';
+import { setActiveProduct } from '../../../../../../redux';
+import { useUpdateImageProduct } from '../../../hooks/useProducts';
 
-import UploadTwoToneIcon from "@mui/icons-material/UploadTwoTone";
-import { PhotoSharp } from "@mui/icons-material";
+import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
+import { PhotoSharp } from '@mui/icons-material';
 
 const AvatarWrapper = styled(Card)(
   ({ theme }) => `
@@ -84,7 +84,7 @@ export const FormProductImage: FC<Props> = ({ product }) => {
 
   const onSubmit = async (data: { file: FileList }) => {
     if (data.file.length === 0) {
-      enqueueSnackbar("Debe seleccionar una imagen", { variant: "error" });
+      enqueueSnackbar('Debe seleccionar una imagen', { variant: 'error' });
       return;
     }
 
@@ -97,10 +97,10 @@ export const FormProductImage: FC<Props> = ({ product }) => {
   };
 
   useEffect(() => {
-    if (watch("file")?.length === 0) return;
+    if (watch('file')?.length === 0) return;
 
-    convert2base64(watch("file")[0]);
-  }, [watch("file")]);
+    convert2base64(watch('file')[0]);
+  }, [watch('file')]);
 
   return (
     <>
@@ -108,32 +108,32 @@ export const FormProductImage: FC<Props> = ({ product }) => {
         <AvatarWrapper>
           {image || product?.images ? (
             <Avatar
-              variant="rounded"
+              variant='rounded'
               alt={product.name}
               src={image || product?.images}
             />
           ) : (
-            <label htmlFor="icon-button-file">
+            <label htmlFor='icon-button-file'>
               <Box
                 sx={{
                   //drop file
-                  border: "1px dashed",
-                  borderColor: "divider",
+                  border: '1px dashed',
+                  borderColor: 'divider',
                   borderRadius: 1,
-                  color: "text.disabled",
-                  textAlign: "center",
+                  color: 'text.disabled',
+                  textAlign: 'center',
                   width: 200,
                   height: 100,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
 
-                  ":hover": {
-                    cursor: "pointer",
-                    borderColor: "primary.main",
-                    color: "primary.main",
-                  },
+                  ':hover': {
+                    cursor: 'pointer',
+                    borderColor: 'primary.main',
+                    color: 'primary.main'
+                  }
                 }}
               >
                 <PhotoSharp />
@@ -143,22 +143,22 @@ export const FormProductImage: FC<Props> = ({ product }) => {
           )}
           <ButtonUploadWrapper>
             <input
-              id="icon-button-file"
-              type="file"
-              accept="image/*"
-              {...register("file")}
+              id='icon-button-file'
+              type='file'
+              accept='image/*'
+              {...register('file')}
               hidden
             />
-            <label htmlFor="icon-button-file">
-              <IconButton component="span" color="primary">
+            <label htmlFor='icon-button-file'>
+              <IconButton component='span' color='primary'>
                 <UploadTwoToneIcon />
               </IconButton>
             </label>
           </ButtonUploadWrapper>
         </AvatarWrapper>
 
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <LoadingButton loading={isLoading} type="submit" variant="outlined">
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <LoadingButton loading={isLoading} type='submit' variant='outlined'>
             Actualizar
           </LoadingButton>
         </Box>

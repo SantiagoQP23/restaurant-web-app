@@ -1,8 +1,16 @@
-import { IconButton, InputBase, Paper, Grid, Button, CircularProgress, Typography } from '@mui/material';
-import { useState } from "react";
+import {
+  IconButton,
+  InputBase,
+  Paper,
+  Grid,
+  Button,
+  CircularProgress,
+  Typography
+} from '@mui/material';
+import { useState } from 'react';
 
 import SearchIcon from '@mui/icons-material/Search';
-import { ClientsTable } from "./ClientsTable.component";
+import { ClientsTable } from './ClientsTable.component';
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import { useNavigate } from 'react-router-dom';
@@ -18,53 +26,39 @@ import { useClient, useClients } from '../../hooks/useClients';
 import { InputSearch } from '../../../../../components/ui';
 import { TitlePage } from '../../../components/TitlePage.component';
 
-
-
-
 export const ClientsList = () => {
-
   const [identification, setIdentification] = useState<string>('');
 
   // const { clients } = useSelector(selectClients);
-
 
   const useClientQuery = useClient(identification, false);
 
   const { loading, callEndpoint } = useFetchAndLoad();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { enqueueSnackbar } = useSnackbar();
 
-
-
-
-
-
-
-
   const createClient = () => {
-    dispatch(resetActiveClient())
+    dispatch(resetActiveClient());
     navigate('add');
-  }
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIdentification(event.target.value);
     // setClient(undefined);
   };
 
-
   const searchClient = async () => {
-
     if (identification.length === 0) {
-      enqueueSnackbar('Ingrese un número de identificación', { variant: 'info' })
+      enqueueSnackbar('Ingrese un número de identificación', {
+        variant: 'info'
+      });
       return;
     }
 
     if (identification.length === 10 || identification.length === 13) {
-
-
       useClientQuery.refetch();
       // await callEndpoint(getClient(identification))
       //   .then((resp) => {
@@ -78,25 +72,22 @@ export const ClientsList = () => {
 
       //   })
     } else {
-      enqueueSnackbar('El número de identificación es incorrecto', { variant: 'info' })
+      enqueueSnackbar('El número de identificación es incorrecto', {
+        variant: 'info'
+      });
       return;
     }
-
-
-  }
-
-
+  };
 
   return (
     <>
-
       <TitlePage
         title='Clientes'
         action={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
-            variant="contained"
-            startIcon={<AddTwoToneIcon fontSize="small" />}
+            variant='contained'
+            startIcon={<AddTwoToneIcon fontSize='small' />}
             onClick={createClient}
           >
             Añadir cliente
@@ -104,15 +95,9 @@ export const ClientsList = () => {
         }
       />
 
-     
-
       <ClientsTable clientFound={useClientQuery.data} />
 
       <DeleteClient />
-
     </>
-
-  )
-}
-
-
+  );
+};

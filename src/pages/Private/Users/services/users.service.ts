@@ -1,11 +1,11 @@
-import { loadAbort } from "../../../../helpers/load-abort-axios.helper";
-import { IUser } from "../../../../models/auth.model";
-import restauranteApi from "../../../../api/restauranteApi";
-import { UpdateUserDto, ResetPasswordUserDto } from "../dto/update-user.dto";
-import { CreateUserDto } from "../dto/create-user.dto";
-import { SubjectDeleteUser } from "../helpers/subjects-users.helper";
-import { ChangePasswordDto } from "../dto/change-password.dto";
-import { FilterUsersDto } from "../dto/filterUsers.dto";
+import { loadAbort } from '../../../../helpers/load-abort-axios.helper';
+import { IUser } from '../../../../models/auth.model';
+import restauranteApi from '../../../../api/restauranteApi';
+import { UpdateUserDto, ResetPasswordUserDto } from '../dto/update-user.dto';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { SubjectDeleteUser } from '../helpers/subjects-users.helper';
+import { ChangePasswordDto } from '../dto/change-password.dto';
+import { FilterUsersDto } from '../dto/filterUsers.dto';
 
 export const statusModalDeleteUser = new SubjectDeleteUser();
 
@@ -26,8 +26,8 @@ export const getUsers = async (
       params: {
         offset: offset * limit,
         limit,
-        search,
-      },
+        search
+      }
     }
   );
 
@@ -72,8 +72,8 @@ export const deleteUser = (id: string) => {
   const controller = loadAbort();
   return {
     call: restauranteApi.delete<IUser>(`users/${id}`, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };

@@ -1,8 +1,3 @@
-
-
-
 export const CardCashRegisterList = () => {
-  return (
-    <div>CardCashRegisterList</div>
-  )
-}
+  return <div>CardCashRegisterList</div>;
+};

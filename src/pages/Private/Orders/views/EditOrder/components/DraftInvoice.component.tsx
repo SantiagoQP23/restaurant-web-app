@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from "react";
+import { FC, ChangeEvent } from 'react';
 
 import {
   Card,
@@ -12,19 +12,19 @@ import {
   CardActions,
   Table,
   IconButton,
-  Typography,
-} from "@mui/material";
+  Typography
+} from '@mui/material';
 
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { useInvoiceStore } from "../../../store/invoiceStore";
-import { Close, DeleteOutline, MoreVert } from "@mui/icons-material";
-import { CreateInvoiceDto } from "../../../dto";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../../redux";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { LoadingButton } from "@mui/lab";
-import { useCreateInvoiceOrder } from "../../../hooks/useInvocesOrder";
-import { Invoice } from "../../../models/Invoice.model";
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { useInvoiceStore } from '../../../store/invoiceStore';
+import { Close, DeleteOutline, MoreVert } from '@mui/icons-material';
+import { CreateInvoiceDto } from '../../../dto';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../../redux';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { LoadingButton } from '@mui/lab';
+import { useCreateInvoiceOrder } from '../../../hooks/useInvocesOrder';
+import { Invoice } from '../../../models/Invoice.model';
 
 interface Props {
   invoice: Invoice;
@@ -46,7 +46,7 @@ export const DraftInvoice: FC<Props> = ({ invoice }) => {
   const { createInvoiceOrder, loading } = useCreateInvoiceOrder();
 
   const removeInvoice = () => {
-    console.log("remove");
+    console.log('remove');
   };
 
   const handleSelectInvoice = (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +84,7 @@ export const DraftInvoice: FC<Props> = ({ invoice }) => {
       <CardHeader
         title={`Cuenta ${invoice.transactionNumber}`}
         action={
-          <IconButton color="error" onClick={() => removeInvoice()}>
+          <IconButton color='error' onClick={() => removeInvoice()}>
             <DeleteOutline />
           </IconButton>
         }
@@ -93,13 +93,13 @@ export const DraftInvoice: FC<Props> = ({ invoice }) => {
       <TableContainer>
         <Table
           sx={{
-            whiteSpace: "nowrap",
+            whiteSpace: 'nowrap'
           }}
         >
           <TableHead>
             <TableRow>
               {
-                <TableCell padding="checkbox" align="center">
+                <TableCell padding='checkbox' align='center'>
                   Cantidad
                 </TableCell>
               }
@@ -115,7 +115,7 @@ export const DraftInvoice: FC<Props> = ({ invoice }) => {
           <TableBody>
             {invoice.details.map((detail) => (
               <TableRow key={detail.id}>
-                {<TableCell align="center">{detail.quantity}</TableCell>}
+                {<TableCell align='center'>{detail.quantity}</TableCell>}
                 <TableCell>
                   <b>{detail.title}</b>
                 </TableCell>
@@ -123,7 +123,7 @@ export const DraftInvoice: FC<Props> = ({ invoice }) => {
                 <TableCell>
                   {formatMoney(detail.price * detail.quantity)}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align='center'>
                   {/* <IconButton onClick={() => removeDetail(key)} size="small">
                     <Close />
                   </IconButton> */}
@@ -133,8 +133,8 @@ export const DraftInvoice: FC<Props> = ({ invoice }) => {
 
             {invoice.details.length === 0 && (
               <TableRow>
-                <TableCell colSpan={5} align="center">
-                  <Typography variant="h6" color="text.secondary" my={3}>
+                <TableCell colSpan={5} align='center'>
+                  <Typography variant='h6' color='text.secondary' my={3}>
                     No hay productos
                   </Typography>
                 </TableCell>

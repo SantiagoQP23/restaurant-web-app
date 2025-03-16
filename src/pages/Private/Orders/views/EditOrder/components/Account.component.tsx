@@ -11,22 +11,22 @@ import {
   TableRow,
   Typography,
   Stack,
-  Button,
-} from "@mui/material";
-import { useInvoiceStore } from "../../../store/invoiceStore";
-import { FC, useState } from "react";
-import { Order, IOrderDetail } from "../../../../../../models";
-import { CounterInput } from "../../../components";
-import { CardHeader } from "@mui/material/";
-import { ArrowBackIos, Send } from "@mui/icons-material";
-import { Label } from "../../../../../../components/ui";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { useCreateBill } from "../../../../Bills/hooks/useBills";
-import { CreateBillDto } from "../../../../Bills/dto";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { LoadingButton } from "@mui/lab";
-import { useDispatch } from "react-redux";
-import { setActiveOrder } from "../../../../../../redux";
+  Button
+} from '@mui/material';
+import { useInvoiceStore } from '../../../store/invoiceStore';
+import { FC, useState } from 'react';
+import { Order, IOrderDetail } from '../../../../../../models';
+import { CounterInput } from '../../../components';
+import { CardHeader } from '@mui/material/';
+import { ArrowBackIos, Send } from '@mui/icons-material';
+import { Label } from '../../../../../../components/ui';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { useCreateBill } from '../../../../Bills/hooks/useBills';
+import { CreateBillDto } from '../../../../Bills/dto';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { LoadingButton } from '@mui/lab';
+import { useDispatch } from 'react-redux';
+import { setActiveOrder } from '../../../../../../redux';
 
 interface SelectedDetails {
   [id: string]: {
@@ -42,7 +42,7 @@ interface Props {
 
 /**
  * Componente for create bills
- * @author Santiaago Quirumbay 
+ * @author Santiaago Quirumbay
  * @version v1.1 22-12-2023 Adds create bills
  * @version v1.2 02-01-2024 Fix bug: total order to pay
  * @version v1.3 21-04-2024 Fix bug: details with quantity 0
@@ -97,7 +97,7 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
 
       newSelectedDetails[orderDetail.id] = {
         detail: orderDetail,
-        quantity,
+        quantity
       };
       setTotal(getTotalSelectedDetails(newSelectedDetails));
       return newSelectedDetails;
@@ -107,13 +107,13 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
   const onSubmit = () => {
     const data: CreateBillDto = {
       orderId: order.id,
-      details: [],
+      details: []
     };
 
     if (selectAll) {
       data.details = details.map((detail) => ({
         orderDetailId: detail.id,
-        quantity: detail.quantity - detail.qtyPaid,
+        quantity: detail.quantity - detail.qtyPaid
       }));
     } else {
       // Enviar solo los seleccionados
@@ -123,7 +123,7 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
           const selectedDetail = selectedDetails[id];
           return {
             orderDetailId: selectedDetail.detail.id,
-            quantity: selectedDetail.quantity,
+            quantity: selectedDetail.quantity
           };
         });
     }
@@ -134,16 +134,16 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
         dispatch(setActiveOrder(order!));
         onSuccess && onSuccess();
         // handleBackStep();
-      },
+      }
     });
   };
 
   const BtnBack = () => (
     <Button
-      color="inherit"
+      color='inherit'
       onClick={handleBackStep}
-      startIcon={<ArrowBackIos fontSize="small" />}
-      size="small"
+      startIcon={<ArrowBackIos fontSize='small' />}
+      size='small'
     >
       Atras
     </Button>
@@ -151,13 +151,13 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
 
   const getDescription = (orderDetail: IOrderDetail) => (
     <>
-      <Label color="warning">
+      <Label color='warning'>
         {orderDetail.quantity - orderDetail.qtyPaid}
-      </Label>{" "}
+      </Label>{' '}
       <b>
         {`${orderDetail.product.name} `}
-        {orderDetail.productOption ? `(${orderDetail.productOption.name})` : ""}
-      </b>{" "}
+        {orderDetail.productOption ? `(${orderDetail.productOption.name})` : ''}
+      </b>{' '}
       de <b>{orderDetail.quantity}</b>
     </>
   );
@@ -167,11 +167,11 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
       <Stack spacing={2}>
         <Card>
           <CardHeader
-            title="Detalle de la orden"
+            title='Detalle de la orden'
             action={
               <>
                 <FormControlLabel
-                  label="Todo"
+                  label='Todo'
                   control={
                     <Checkbox
                       checked={selectAll}
@@ -189,20 +189,20 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
           <TableContainer>
             <Table
               sx={{
-                whiteSpace: "nowrap",
+                whiteSpace: 'nowrap'
               }}
             >
               <TableHead>
                 <TableRow>
                   {!selectAll && (
-                    <TableCell padding="checkbox" align="center">
+                    <TableCell padding='checkbox' align='center'>
                       Cantidad
                     </TableCell>
                   )}
                   <TableCell>Producto</TableCell>
                   <TableCell>Precio</TableCell>
 
-                  <TableCell align="right">Subtotal</TableCell>
+                  <TableCell align='right'>Subtotal</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -223,7 +223,7 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
                     )}
                     <TableCell>{getDescription(detail)}</TableCell>
                     <TableCell>{formatMoney(detail.price)}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align='right'>
                       {selectAll
                         ? formatMoney(
                             detail.price * (detail.quantity - detail.qtyPaid)
@@ -240,26 +240,26 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
 
             {details.length === 0 ? (
               <Typography
-                variant="h6"
-                color="textSecondary"
-                textAlign="center"
+                variant='h6'
+                color='textSecondary'
+                textAlign='center'
                 p={2}
               >
                 No hay detalles
               </Typography>
             ) : (
-              <Grid container spacing={3} p={2} width="auto">
+              <Grid container spacing={3} p={2} width='auto'>
                 <Grid item xs={8}>
                   <Typography
-                    variant="h6"
-                    color="textSecondary"
-                    textAlign="right"
+                    variant='h6'
+                    color='textSecondary'
+                    textAlign='right'
                   >
                     Total
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                  <Typography variant="h4" textAlign="right">
+                  <Typography variant='h4' textAlign='right'>
                     {formatMoney(total)}
                   </Typography>
                 </Grid>
@@ -268,10 +268,10 @@ export const Account: FC<Props> = ({ order, onSuccess }) => {
           </TableContainer>
         </Card>
 
-        <Stack direction="row" spacing={1} justifyContent="right">
+        <Stack direction='row' spacing={1} justifyContent='right'>
           {/* <BtnBack /> */}
           <LoadingButton
-            variant="contained"
+            variant='contained'
             endIcon={<Send />}
             onClick={onSubmit}
             loading={isLoading}

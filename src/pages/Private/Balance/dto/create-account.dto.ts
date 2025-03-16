@@ -1,4 +1,4 @@
-import { AccountType } from "../../Common/enums/account-type.enum";
+import { AccountType } from '../../Common/enums/account-type.enum';
 
 export interface CreateAccountDto {
   name: string;

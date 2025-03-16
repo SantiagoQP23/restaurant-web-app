@@ -1,53 +1,53 @@
-import { People } from "@mui/icons-material";
+import { People } from '@mui/icons-material';
 import {
   Card,
   CardHeader,
   Button,
   CardContent,
   Box,
-  Typography,
-} from "@mui/material";
-import { NavLink as RouterLink } from "react-router-dom";
-import { GroupBy, Period } from "../../../../Common/dto/period.model";
-import { useQuery } from "@tanstack/react-query";
+  Typography
+} from '@mui/material';
+import { NavLink as RouterLink } from 'react-router-dom';
+import { GroupBy, Period } from '../../../../Common/dto/period.model';
+import { useQuery } from '@tanstack/react-query';
 import {
   getForecastByDate,
-  getRealFootfall,
-} from "../../../services/footfall.service";
+  getRealFootfall
+} from '../../../services/footfall.service';
 
 export const FootfallSummary = () => {
   const period = Period.DAILY;
 
   const groupBy = GroupBy.DAY;
 
-  const realFootfallQuery = useQuery(["realFootfall", period, groupBy], () =>
+  const realFootfallQuery = useQuery(['realFootfall', period, groupBy], () =>
     getRealFootfall({
       period,
       groupBy,
-      startDate: new Date(),
+      startDate: new Date()
     })
   );
 
   const forecastFootfallQuery = useQuery(
-    ["forecastFootfall", period, groupBy],
+    ['forecastFootfall', period, groupBy],
     () =>
       getForecastByDate({
         period,
         groupBy,
-        startDate: new Date(),
+        startDate: new Date()
       })
   );
 
   return (
     <Card>
       <CardHeader
-        title="Afluencia de clientes"
+        title='Afluencia de clientes'
         action={
           <Button
-            variant="outlined"
+            variant='outlined'
             component={RouterLink}
-            to="/clients"
-            size="small"
+            to='/clients'
+            size='small'
           >
             Ver todo
           </Button>
@@ -56,19 +56,19 @@ export const FootfallSummary = () => {
 
       <CardContent
         sx={{
-          display: "flex",
+          display: 'flex',
           gap: 1,
-          alignItems: "center",
+          alignItems: 'center'
         }}
       >
         <People />
-        <Box display="flex" alignItems="flex-end">
-          <Typography variant="h3">
+        <Box display='flex' alignItems='flex-end'>
+          <Typography variant='h3'>
             {!!realFootfallQuery.data?.footfall.length
               ? realFootfallQuery.data?.footfall[0].quantity
               : 0}
           </Typography>
-          <Typography variant="h6">
+          <Typography variant='h6'>
             /
             {!!forecastFootfallQuery.data?.footfall.length
               ? forecastFootfallQuery.data?.footfall[0].quantity

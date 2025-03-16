@@ -1,7 +1,4 @@
-
-
 export interface UpdateRestaurantDto {
-
   id: string;
 
   name?: string;
@@ -15,5 +12,4 @@ export interface UpdateRestaurantDto {
   simulationEndDate?: string;
   lastSimulationUpdate?: Date;
   lastPredictionUpdate?: Date;
-
 }

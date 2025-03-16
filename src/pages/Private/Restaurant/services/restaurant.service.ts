@@ -1,9 +1,8 @@
-import { restauranteApi } from "../../../../api";
-import { UpdateRestaurantDto } from "../../Reports/dto/update-restaurant.dto";
+import { restauranteApi } from '../../../../api';
+import { UpdateRestaurantDto } from '../../Reports/dto/update-restaurant.dto';
 // import { Restaurant } from "../../Reports/models/restaurant.model";
 
-import { Restaurant } from "../../Common/models/restaurant.model";
-
+import { Restaurant } from '../../Common/models/restaurant.model';
 
 export const getRestaurant = async (): Promise<Restaurant> => {
   const resp = await restauranteApi.get<Restaurant>(`restaurant/`);
@@ -22,7 +21,6 @@ export const updateRestaurant = async (
   return resp.data;
 };
 
-
 export interface UpdateRestaurantLogoDto {
   id: string;
   file: File;
@@ -33,7 +31,7 @@ export const updateRestaurantLogo = async (
   data: UpdateRestaurantLogoDto
 ): Promise<Restaurant> => {
   const formData = new FormData();
-  formData.append("file", data.file);
+  formData.append('file', data.file);
 
   const resp = await restauranteApi.patch<Restaurant>(
     `restaurant/logo/${id}`,

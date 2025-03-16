@@ -1,8 +1,8 @@
-import { restauranteApi } from "../../../../api";
-import { CreateCashRegisterDto } from "../dto/create-cash-register.dto";
-import { CashRegister } from "../models/cash-register.model";
-import { UpdateCashRegisterDto } from "../dto/update-cash-register.dto";
-import { DateFiltePaginationDto } from "../../Common/dto";
+import { restauranteApi } from '../../../../api';
+import { CreateCashRegisterDto } from '../dto/create-cash-register.dto';
+import { CashRegister } from '../models/cash-register.model';
+import { UpdateCashRegisterDto } from '../dto/update-cash-register.dto';
+import { DateFiltePaginationDto } from '../../Common/dto';
 
 export interface ActiveCashRegister extends CashRegister {
   totalIncomes: number;
@@ -35,8 +35,8 @@ export const getAllCashRegisters = async (
         endDate: filterDto.endDate,
         offset: offset * limit,
         limit,
-        period: filterDto.period,
-      },
+        period: filterDto.period
+      }
     }
   );
   return data;

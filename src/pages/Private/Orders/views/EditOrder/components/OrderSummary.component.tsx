@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState } from 'react';
 
 import {
   CircleRounded,
@@ -6,8 +6,8 @@ import {
   KeyboardArrowLeft,
   KeyboardArrowRight,
   Notes,
-  Visibility,
-} from "@mui/icons-material";
+  Visibility
+} from '@mui/icons-material';
 import {
   Card,
   CardContent,
@@ -28,28 +28,28 @@ import {
   StepIcon,
   CardActions,
   useTheme,
-  MobileStepper,
-} from "@mui/material";
-import { format } from "date-fns";
-import { IUser } from "../../../../../../models";
+  MobileStepper
+} from '@mui/material';
+import { format } from 'date-fns';
+import { IUser } from '../../../../../../models';
 
 import {
   Order,
   OrderStatus,
-  TypeOrder,
-} from "../../../../../../models/orders.model";
+  TypeOrder
+} from '../../../../../../models/orders.model';
 
-import { useUpdateOrder } from "../../../hooks";
+import { useUpdateOrder } from '../../../hooks';
 
-import { ComboBoxUser } from "../../../components/ComboBoxUser.component";
+import { ComboBoxUser } from '../../../components/ComboBoxUser.component';
 
-import { useInvoiceStore } from "../../../store/invoiceStore";
-import { BillsList } from "./BillsList.component";
-import { useModal } from "../../../../../../hooks";
-import { ModalEditOrder } from "./ModalEditOrder.component";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { OrderDetails } from "./OrderDetails.component";
-import { LabelStatusOrder } from "../../../components";
+import { useInvoiceStore } from '../../../store/invoiceStore';
+import { BillsList } from './BillsList.component';
+import { useModal } from '../../../../../../hooks';
+import { ModalEditOrder } from './ModalEditOrder.component';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { OrderDetails } from './OrderDetails.component';
+import { LabelStatusOrder } from '../../../components';
 import {
   Timeline,
   TimelineConnector,
@@ -57,32 +57,32 @@ import {
   TimelineDot,
   TimelineItem,
   TimelineSeparator,
-  timelineItemClasses,
-} from "@mui/lab";
-import { EditOrderStatus } from "./EditOrderStatus.component";
+  timelineItemClasses
+} from '@mui/lab';
+import { EditOrderStatus } from './EditOrderStatus.component';
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 10,
-    left: "calc(-50% + 16px)",
-    right: "calc(50% + 16px)",
+    left: 'calc(-50% + 16px)',
+    right: 'calc(50% + 16px)'
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: "#784af4",
-    },
+      borderColor: '#784af4'
+    }
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: "#784af4",
-    },
+      borderColor: '#784af4'
+    }
   },
   [`& .${stepConnectorClasses.line}`]: {
     borderColor:
-      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+      theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
     borderTopWidth: 3,
-    borderRadius: 1,
-  },
+    borderRadius: 1
+  }
 }));
 
 interface PropsOrder {
@@ -129,7 +129,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
 
     updateOrder({
       id: order.id,
-      userId: user?.id || "none",
+      userId: user?.id || 'none'
     });
   };
 
@@ -147,13 +147,13 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
             {/* <EditOrderStatus orderId={order.id} status={order.status} /> */}
             <Card>
               <CardHeader
-                titleTypographyProps={{ variant: "h3" }}
+                titleTypographyProps={{ variant: 'h3' }}
                 title={`Pedido #${order.num}`}
-                subheader={format(new Date(order.createdAt), "dd/MM/yyy HH:mm")}
+                subheader={format(new Date(order.createdAt), 'dd/MM/yyy HH:mm')}
                 action={
                   <Button
                     onClick={handleOpen}
-                    size="small"
+                    size='small'
                     startIcon={<Edit />}
                   >
                     Editar
@@ -162,49 +162,49 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
               />
 
               <CardContent>
-                <Grid container spacing={2} alignItems="center">
+                <Grid container spacing={2} alignItems='center'>
                   <Grid item xs={4}>
-                    <Typography variant="body1">Tipo de orden</Typography>
+                    <Typography variant='body1'>Tipo de orden</Typography>
                   </Grid>
 
                   <Grid item xs={8}>
-                    <Typography variant="h5" textAlign="right">
+                    <Typography variant='h5' textAlign='right'>
                       {order.type === TypeOrder.IN_PLACE
-                        ? "Para servir"
-                        : "Para llevar"}
+                        ? 'Para servir'
+                        : 'Para llevar'}
                     </Typography>
                   </Grid>
 
                   {order.type === TypeOrder.IN_PLACE && (
                     <>
                       <Grid item xs={4}>
-                        <Typography variant="body1">Mesa</Typography>
+                        <Typography variant='body1'>Mesa</Typography>
                       </Grid>
 
                       <Grid item xs={8}>
-                        <Typography variant="h5" textAlign="right">
-                          Mesa {order.table?.name || "No seleccionada"}
+                        <Typography variant='h5' textAlign='right'>
+                          Mesa {order.table?.name || 'No seleccionada'}
                         </Typography>
                       </Grid>
                     </>
                   )}
 
                   <Grid item xs={5}>
-                    <Typography variant="body1">Hora de entrega</Typography>
+                    <Typography variant='body1'>Hora de entrega</Typography>
                   </Grid>
 
                   <Grid item xs={7}>
-                    <Typography variant="h5" textAlign="right">
-                      {format(new Date(order.deliveryTime), "dd/MM/yyy HH:mm")}
+                    <Typography variant='h5' textAlign='right'>
+                      {format(new Date(order.deliveryTime), 'dd/MM/yyy HH:mm')}
                     </Typography>
                   </Grid>
 
                   <Grid item xs={4}>
-                    <Typography variant="body1">Personas</Typography>
+                    <Typography variant='body1'>Personas</Typography>
                   </Grid>
 
                   <Grid item xs={8}>
-                    <Typography variant="h5" textAlign="right">
+                    <Typography variant='h5' textAlign='right'>
                       {order.people}
                     </Typography>
                   </Grid>
@@ -212,8 +212,8 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                   {order.notes && (
                     <>
                       <Grid item xs={12}>
-                        <Typography variant="body1">Notas</Typography>
-                        <Typography variant="h5">{order.notes}</Typography>
+                        <Typography variant='body1'>Notas</Typography>
+                        <Typography variant='h5'>{order.notes}</Typography>
                       </Grid>
                     </>
                   )}
@@ -221,13 +221,13 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                   <Grid
                     item
                     xs={12}
-                    display="flex"
-                    flexDirection="row"
+                    display='flex'
+                    flexDirection='row'
                     gap={1}
-                    alignItems="center"
-                    justifyContent="flex-end"
+                    alignItems='center'
+                    justifyContent='flex-end'
                   >
-                    <Typography variant="h3">
+                    <Typography variant='h3'>
                       {formatMoney(order.total)}
                     </Typography>
                   </Grid>
@@ -240,9 +240,9 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                 {activeStep === 0 && (
                   <Box>
                     <CardHeader
-                      title="Mesero"
+                      title='Mesero'
                       action={
-                        <IconButton onClick={handleShowUser} size="small">
+                        <IconButton onClick={handleShowUser} size='small'>
                           {!showUser && order.user ? <Visibility /> : <Edit />}
                         </IconButton>
                       }
@@ -251,17 +251,17 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                     <CardContent>
                       {showUser && order.user ? (
                         <Stack spacing={0.5}>
-                          <Typography variant="h5" fontWeight="bold">
+                          <Typography variant='h5' fontWeight='bold'>
                             {order.user?.person.firstName +
-                              " " +
+                              ' ' +
                               order.user?.person.lastName}
                           </Typography>
-                          <Typography variant="body1">
-                            {order.user?.person.numPhone || "Sin teléfono"}
+                          <Typography variant='body1'>
+                            {order.user?.person.numPhone || 'Sin teléfono'}
                           </Typography>
 
-                          <Typography variant="body1">
-                            {order.user?.person.email || "Sin correo"}
+                          <Typography variant='body1'>
+                            {order.user?.person.email || 'Sin correo'}
                           </Typography>
                         </Stack>
                       ) : (

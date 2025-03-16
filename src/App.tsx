@@ -1,25 +1,23 @@
-import { Suspense } from "react";
+import { Suspense } from 'react';
 
-import NiceModal from "@ebay/nice-modal-react";
+import NiceModal from '@ebay/nice-modal-react';
 
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 
-import { CssBaseline, IconButton } from "@mui/material";
+import { CssBaseline, IconButton } from '@mui/material';
 
-import { SnackbarProvider, closeSnackbar } from "notistack";
-import { CloseTwoTone } from "@mui/icons-material";
+import { SnackbarProvider, closeSnackbar } from 'notistack';
+import { CloseTwoTone } from '@mui/icons-material';
 
-import { AppRouter } from "./routers";
+import { AppRouter } from './routers';
 
-import "./styles/global-styles.css";
+import './styles/global-styles.css';
 
-import ThemeProvider from "./theme/ThemeProvider";
+import ThemeProvider from './theme/ThemeProvider';
 
-import { SuspenseLoader } from "./components/ui/";
-import { useRestaurant } from "./pages/Private/Restaurant/hooks/useRestaurant";
+import { SuspenseLoader } from './components/ui/';
+import { useRestaurant } from './pages/Private/Restaurant/hooks/useRestaurant';
 function App() {
-
-
   useRestaurant();
 
   return (
@@ -28,11 +26,11 @@ function App() {
         <CssBaseline />
         <SnackbarProvider
           maxSnack={3}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           autoHideDuration={3000}
           action={(key) => (
             <IconButton
-              color="inherit"
+              color='inherit'
               onClick={() => {
                 closeSnackbar(key);
               }}
@@ -42,7 +40,7 @@ function App() {
           )}
           dense
           style={{
-            zIndex: 105500,
+            zIndex: 105500
           }}
         >
           <BrowserRouter>

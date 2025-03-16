@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 
 import {
   Drawer,
@@ -17,29 +17,29 @@ import {
   IconButton,
   TextField,
   Button,
-  FormControl,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { useDrawerInvoiceStore } from "../../../store/drawerInvoiceStore";
-import { format } from "date-fns";
-import { CardHeader, Divider } from "@mui/material/";
+  FormControl
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { useDrawerInvoiceStore } from '../../../store/drawerInvoiceStore';
+import { format } from 'date-fns';
+import { CardHeader, Divider } from '@mui/material/';
 import {
   CloseOutlined,
   Delete,
   DeleteOutline,
-  Print,
-} from "@mui/icons-material";
-import { Invoice, PaymentMethod } from "../../../models/Invoice.model";
-import { ModalDeleteInvoice } from "../../../components/modals/ModalDeleteInvoice.component";
-import { Label } from "../../../../../../components/ui";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../../redux";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { getPaymentMethod } from "../../../../Common/helpers/get-payment-method";
-import { useForm } from "react-hook-form";
-import { UpdateInvoiceDto } from "../../../dto";
-import { useUpdateInvoiceOrder } from "../../../hooks/useInvocesOrder";
-import { generateInvoicePdf } from "../../../../Invoices/helpers/generateInvoicePdf.helper";
+  Print
+} from '@mui/icons-material';
+import { Invoice, PaymentMethod } from '../../../models/Invoice.model';
+import { ModalDeleteInvoice } from '../../../components/modals/ModalDeleteInvoice.component';
+import { Label } from '../../../../../../components/ui';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../../redux';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { getPaymentMethod } from '../../../../Common/helpers/get-payment-method';
+import { useForm } from 'react-hook-form';
+import { UpdateInvoiceDto } from '../../../dto';
+import { useUpdateInvoiceOrder } from '../../../hooks/useInvocesOrder';
+import { generateInvoicePdf } from '../../../../Invoices/helpers/generateInvoicePdf.helper';
 
 interface PropsFormInvoice {
   invoice: Invoice;
@@ -51,14 +51,14 @@ const FormInvoice: FC<PropsFormInvoice> = ({ invoice, orderId }) => {
     register,
     handleSubmit,
     formState: { errors },
-    control,
+    control
   } = useForm<UpdateInvoiceDto>({
     defaultValues: {
       id: invoice.id,
       comments: invoice.comments,
       notaDeVenta: invoice.notaDeVenta,
-      orderId: orderId,
-    },
+      orderId: orderId
+    }
   });
 
   const { loading, updateInvoiceOrder } = useUpdateInvoiceOrder();
@@ -71,30 +71,30 @@ const FormInvoice: FC<PropsFormInvoice> = ({ invoice, orderId }) => {
 
   return (
     <>
-      <FormControl fullWidth component="form" onSubmit={handleSubmit(onSubmit)}>
+      <FormControl fullWidth component='form' onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Observaciones"
+              label='Observaciones'
               multiline
               rows={3}
-              {...register("comments")}
+              {...register('comments')}
             />
           </Grid>
           <Grid item xs={8}>
             <TextField
-              label="Nota de venta"
-              type="number"
-              {...register("notaDeVenta", {
-                valueAsNumber: true,
+              label='Nota de venta'
+              type='number'
+              {...register('notaDeVenta', {
+                valueAsNumber: true
               })}
               fullWidth
             />
           </Grid>
 
           <Grid item xs={4}>
-            <Button variant="contained" fullWidth type="submit">
+            <Button variant='contained' fullWidth type='submit'>
               Actualizar
             </Button>
           </Grid>
@@ -132,58 +132,58 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
     <>
       <div>
         <Drawer
-          anchor="right"
+          anchor='right'
           open={open}
           onClose={handleClose}
           sx={{
-            width: "auto",
-            zIndex: 2000,
+            width: 'auto',
+            zIndex: 2000
 
             // minWidth: {xs: '100vw', sm: '100%', md: '100%', lg: '100%', xl: '100%'},
           }}
         >
           <Box
             sx={{
-              display: "flex",
+              display: 'flex',
               p: 1,
-              [theme.breakpoints.down("sm")]: { width: "100vw" },
-              [theme.breakpoints.up("sm")]: { width: 500, flexShrink: 0 },
+              [theme.breakpoints.down('sm')]: { width: '100vw' },
+              [theme.breakpoints.up('sm')]: { width: 500, flexShrink: 0 }
 
               // width: { xs: '100%', sm: '100%', md: '100%', lg: '100%', xl: '100%' },
             }}
           >
             {!activeInvoice ? (
               <Box>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                   No hay factura seleccionada
                 </Typography>
               </Box>
             ) : (
               <>
-                <Stack direction="column" spacing={2} width="95%">
+                <Stack direction='column' spacing={2} width='95%'>
                   <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
+                    direction='row'
+                    justifyContent='space-between'
+                    alignItems='center'
                   >
                     <IconButton onClick={handleCloseDrawer}>
                       <CloseOutlined />
                     </IconButton>
 
-                    <Stack direction="row" spacing={1}>
+                    <Stack direction='row' spacing={1}>
                       {!activeInvoice.isActive ? (
                         <>
-                          <Label color="error">Anulada </Label>
+                          <Label color='error'>Anulada </Label>
                         </>
                       ) : (
                         !activeOrder?.isClosed && (
                           <>
-                            <IconButton color="inherit" onClick={handlePrint}>
+                            <IconButton color='inherit' onClick={handlePrint}>
                               <Print />
                             </IconButton>
 
                             <IconButton
-                              color="error"
+                              color='error'
                               onClick={handleOpenModalDelete}
                             >
                               <DeleteOutline />
@@ -196,16 +196,16 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
                   <Divider />
 
                   <Box px={2}>
-                    <Typography variant="h4" textAlign="center">
+                    <Typography variant='h4' textAlign='center'>
                       Restaurante Doña Yoli
                     </Typography>
 
-                    <Typography variant="h4" textAlign="center" mt={2}>
+                    <Typography variant='h4' textAlign='center' mt={2}>
                       Comprobante N° {activeInvoice.transactionNumber}
                     </Typography>
 
                     {activeInvoice.notaDeVenta && (
-                      <Typography variant="h5" textAlign="center" mt={1}>
+                      <Typography variant='h5' textAlign='center' mt={1}>
                         Nota de venta N° {activeInvoice.notaDeVenta}
                       </Typography>
                     )}
@@ -214,27 +214,27 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
                   <Grid container spacing={2}>
                     <Grid item xs={4}>
                       <Typography
-                        variant="subtitle2"
+                        variant='subtitle2'
                         fontSize={12}
-                        fontWeight="bold"
+                        fontWeight='bold'
                       >
                         Fecha
                       </Typography>
                     </Grid>
 
                     <Grid item xs={8}>
-                      <Typography variant="body1" textAlign="right">
+                      <Typography variant='body1' textAlign='right'>
                         {format(
                           new Date(activeInvoice.createdAt),
-                          "dd/MM/yyy HH:mm"
+                          'dd/MM/yyy HH:mm'
                         )}
                       </Typography>
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
-                        variant="subtitle2"
+                        variant='subtitle2'
                         fontSize={12}
-                        fontWeight="bold"
+                        fontWeight='bold'
                       >
                         Cliente
                       </Typography>
@@ -242,23 +242,23 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
 
                     {activeInvoice.client && (
                       <Grid item xs={8}>
-                        <Typography variant="h6" textAlign="right">
-                          {activeInvoice.client.person.lastName}{" "}
+                        <Typography variant='h6' textAlign='right'>
+                          {activeInvoice.client.person.lastName}{' '}
                           {activeInvoice.client.person.firstName}
                         </Typography>
                         <Typography
-                          variant="h6"
-                          textAlign="right"
-                          component="div"
+                          variant='h6'
+                          textAlign='right'
+                          component='div'
                           sx={{ flexGrow: 1 }}
                         >
                           {activeInvoice.client.address}
                         </Typography>
 
                         <Typography
-                          variant="h6"
-                          textAlign="right"
-                          component="div"
+                          variant='h6'
+                          textAlign='right'
+                          component='div'
                           sx={{ flexGrow: 1 }}
                         >
                           {activeInvoice.client.person.numPhone}
@@ -268,58 +268,58 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
 
                     <Grid item xs={4}>
                       <Typography
-                        variant="subtitle2"
+                        variant='subtitle2'
                         fontSize={12}
-                        fontWeight="bold"
+                        fontWeight='bold'
                       >
-                        Cobrado por{" "}
+                        Cobrado por{' '}
                       </Typography>
                     </Grid>
 
                     <Grid item xs={8}>
-                      <Typography textAlign="right">
-                        {activeInvoice.user.person.firstName}{" "}
+                      <Typography textAlign='right'>
+                        {activeInvoice.user.person.firstName}{' '}
                         {activeInvoice.user.person.lastName}
                       </Typography>
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
-                        variant="subtitle2"
+                        variant='subtitle2'
                         fontSize={12}
-                        fontWeight="bold"
+                        fontWeight='bold'
                       >
                         Método de pago
                       </Typography>
                     </Grid>
 
                     <Grid item xs={8}>
-                      <Typography textAlign="right">
+                      <Typography textAlign='right'>
                         {activeInvoice.paymentMethod &&
                           getPaymentMethod(activeInvoice.paymentMethod)}
 
-                        {": " + formatMoney(activeInvoice.amountPaid || 0)}
+                        {': ' + formatMoney(activeInvoice.amountPaid || 0)}
                       </Typography>
                     </Grid>
 
                     <Grid item xs={4}>
                       <Typography
-                        variant="subtitle2"
+                        variant='subtitle2'
                         fontSize={12}
-                        fontWeight="bold"
+                        fontWeight='bold'
                       >
                         Cambio
                       </Typography>
                     </Grid>
 
                     <Grid item xs={8}>
-                      <Typography textAlign="right">
+                      <Typography textAlign='right'>
                         {formatMoney(activeInvoice.difference || 0)}
                       </Typography>
                     </Grid>
 
                     <Grid item xs={12}>
                       <Card>
-                        <CardHeader title="Productos" />
+                        <CardHeader title='Productos' />
                         <TableContainer>
                           <Table>
                             <TableHead>
@@ -332,16 +332,16 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
                             <TableBody>
                               {activeInvoice.details.map((detail) => (
                                 <TableRow key={detail.id}>
-                                  <TableCell align="center">
+                                  <TableCell align='center'>
                                     {detail.quantity}
                                   </TableCell>
                                   <TableCell>
                                     {detail.orderDetail.product.name}
                                   </TableCell>
-                                  <TableCell align="right">
+                                  <TableCell align='right'>
                                     {formatMoney(detail.orderDetail.price)}
                                   </TableCell>
-                                  <TableCell align="right">
+                                  <TableCell align='right'>
                                     {formatMoney(detail.amount)}
                                   </TableCell>
                                 </TableRow>
@@ -350,25 +350,25 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
                               <TableRow>
                                 <TableCell
                                   colSpan={3}
-                                  align="right"
+                                  align='right'
                                   sx={{
-                                    border: "none",
+                                    border: 'none'
                                   }}
                                 >
                                   <Typography
-                                    variant="subtitle1"
-                                    color="textSecondary"
+                                    variant='subtitle1'
+                                    color='textSecondary'
                                   >
                                     Subtotal
                                   </Typography>
                                 </TableCell>
                                 <TableCell
-                                  align="right"
+                                  align='right'
                                   sx={{
-                                    border: "none",
+                                    border: 'none'
                                   }}
                                 >
-                                  <Typography variant="subtitle1">
+                                  <Typography variant='subtitle1'>
                                     {formatMoney(activeInvoice.amount)}
                                   </Typography>
                                 </TableCell>
@@ -377,43 +377,43 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
                               <TableRow>
                                 <TableCell
                                   colSpan={3}
-                                  align="right"
+                                  align='right'
                                   sx={{
-                                    border: "none",
+                                    border: 'none'
                                   }}
-                                  size="small"
+                                  size='small'
                                 >
                                   <Typography
-                                    variant="subtitle1"
-                                    color="textSecondary"
+                                    variant='subtitle1'
+                                    color='textSecondary'
                                   >
                                     Descuento
                                   </Typography>
                                 </TableCell>
                                 <TableCell
-                                  align="right"
+                                  align='right'
                                   sx={{
-                                    border: "none",
+                                    border: 'none'
                                   }}
-                                  size="small"
+                                  size='small'
                                 >
-                                  <Typography variant="h5" color="error">
-                                    {" "}
+                                  <Typography variant='h5' color='error'>
+                                    {' '}
                                     - {formatMoney(activeInvoice.discount || 0)}
                                   </Typography>
                                 </TableCell>
                               </TableRow>
                               <TableRow>
-                                <TableCell colSpan={3} align="right">
+                                <TableCell colSpan={3} align='right'>
                                   <Typography
-                                    variant="h6"
-                                    color="textSecondary"
+                                    variant='h6'
+                                    color='textSecondary'
                                   >
                                     Total
                                   </Typography>
                                 </TableCell>
-                                <TableCell align="right">
-                                  <Typography variant="h4">
+                                <TableCell align='right'>
+                                  <Typography variant='h4'>
                                     {formatMoney(activeInvoice.total || 0)}
                                   </Typography>
                                 </TableCell>

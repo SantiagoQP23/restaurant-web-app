@@ -5,25 +5,25 @@ import {
   Grid,
   IconButton,
   lighten,
-  styled,
-} from "@mui/material";
-import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import { EditOutlined } from "@mui/icons-material";
-import { ITable } from "../../../../models";
-import { FC } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setActiveTable } from "../../../../redux/slices/tables";
-import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
-import { Box } from "@mui/system";
-import { statusModalDeleteTable } from "../services/tables.service";
-import { useUpdateTable } from "../hooks/useTables";
-import { UpdateTableDto } from "../dto/table.dto";
+  styled
+} from '@mui/material';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import { EditOutlined } from '@mui/icons-material';
+import { ITable } from '../../../../models';
+import { FC } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setActiveTable } from '../../../../redux/slices/tables';
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import { Box } from '@mui/system';
+import { statusModalDeleteTable } from '../services/tables.service';
+import { useUpdateTable } from '../hooks/useTables';
+import { UpdateTableDto } from '../dto/table.dto';
 
-import { useSortable } from "@dnd-kit/sortable";
+import { useSortable } from '@dnd-kit/sortable';
 
-import { CSS } from "@dnd-kit/utilities";
-import Draggable from "react-draggable";
+import { CSS } from '@dnd-kit/utilities';
+import Draggable from 'react-draggable';
 
 const IconButtonError = styled(IconButton)(
   ({ theme }) => `
@@ -53,18 +53,18 @@ export const CardTable: FC<Props> = ({ table }) => {
 
   const editTable = () => {
     dispatch(setActiveTable(table));
-    navigate("edit");
+    navigate('edit');
   };
 
   const deleteTable = () => {
     statusModalDeleteTable.setSubject(true, table);
-    console.log("deleteTable");
+    console.log('deleteTable');
   };
 
   const enableTable = () => {
     const data: UpdateTableDto = {
       isActive: true,
-      id: table.id,
+      id: table.id
     };
 
     updateTableMutation.mutate(data);
@@ -72,37 +72,37 @@ export const CardTable: FC<Props> = ({ table }) => {
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition
   };
 
   return (
     <>
       <Grid item xs={12} sm={3} key={table.id}>
-        <div >
-          <Card >
+        <div>
+          <Card>
             <CardHeader
               title={`Mesa ${table.name}`}
               avatar={<TableRestaurantIcon />}
               subheader={`Asientos: ${table.chairs}`}
               titleTypographyProps={{
-                variant: "h5",
+                variant: 'h5'
               }}
               action={
-                <Box display="flex" alignItems="center">
+                <Box display='flex' alignItems='center'>
                   {table.isActive ? (
                     <>
-                      <IconButton onClick={editTable} color="primary">
-                        <EditOutlined fontSize="medium" />
+                      <IconButton onClick={editTable} color='primary'>
+                        <EditOutlined fontSize='medium' />
                       </IconButton>
 
                       <IconButtonError onClick={deleteTable}>
-                        <DeleteTwoToneIcon fontSize="medium" />
+                        <DeleteTwoToneIcon fontSize='medium' />
                       </IconButtonError>
                     </>
                   ) : (
                     <Button
-                      variant="outlined"
-                      size="small"
+                      variant='outlined'
+                      size='small'
                       onClick={enableTable}
                     >
                       Habilitar

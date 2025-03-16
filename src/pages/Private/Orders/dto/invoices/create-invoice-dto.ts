@@ -1,24 +1,18 @@
-
 import { PaymentMethod } from '../../models/Invoice.model';
 import { CreateInvoiceDetailDto } from './create-invoice-detail.dto';
 
-
 export interface CreateInvoiceDto {
+  orderId: string;
 
-    orderId: string;
+  clientId: string;
 
-    clientId: string;
+  details: CreateInvoiceDetailDto[];
 
-    details: CreateInvoiceDetailDto[];
+  paymentMethod: PaymentMethod;
 
-    paymentMethod: PaymentMethod;
+  discount: number;
 
-    discount: number;
+  amountPaid: number;
 
-    amountPaid: number;
-
-    cashRegisterId: string;
-
-
-
+  cashRegisterId: string;
 }

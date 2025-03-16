@@ -1,6 +1,4 @@
-
-
-import { Bar, Line } from "react-chartjs-2"
+import { Bar, Line } from 'react-chartjs-2';
 
 import {
   Chart as ChartJS,
@@ -11,105 +9,138 @@ import {
   Filler,
   Legend,
   Tooltip,
-  BarElement,
-} from "chart.js"
-import { Card, Grid, MenuItem, Select, CardHeader, CardContent, Button, Box, Stack, CircularProgress, CardActions, Tab, Tabs } from '@mui/material';
+  BarElement
+} from 'chart.js';
+import {
+  Card,
+  Grid,
+  MenuItem,
+  Select,
+  CardHeader,
+  CardContent,
+  Button,
+  Box,
+  Stack,
+  CircularProgress,
+  CardActions,
+  Tab,
+  Tabs
+} from '@mui/material';
 import { Typography, SelectChangeEvent } from '@mui/material/';
 import { useFetchAndLoad } from '../../../../../hooks/useFetchAndLoad';
 import { useDispatch, useSelector } from 'react-redux';
 import { executeSeed, getFootfall } from '../../services/footfall.service';
-import { useState } from "react";
+import { useState } from 'react';
 import { IDay } from '../../models/day.interface';
 import { useAsync } from '../../../../../hooks/useAsync';
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import { AffluenceMonth } from "./components/AffluenceMonth.component";
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { AffluenceMonth } from './components/AffluenceMonth.component';
 import { useEffect } from 'react';
-import { Day } from "../../components/Day.component";
+import { Day } from '../../components/Day.component';
 import { ArrowBack, DisplaySettings, Update } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { useSnackbar } from 'notistack';
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { PdfFootfallSimulation } from "./pdf/PdfFootfallSimulation.component";
-import { TitlePage } from "../../../components/TitlePage.component";
-import { useQuery } from "@tanstack/react-query";
-import { selectAuth } from "../../../../../redux";
-import { useSeed } from "../../hooks/useSeed";
-import { useSimulation } from "../../hooks/useSimulation";
-import { useFootfall } from "../../hooks/useFootfall";
-import { ChartSimulatedFootfall } from "./components";
-import { RestaurantInformation } from "../SimulatorForms/components";
-import { MonthlyFootfall } from "./components/MonthlyFootfall.component";
-import { DailyFootfall } from "./components/DailyFootfall.component";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PdfFootfallSimulation } from './pdf/PdfFootfallSimulation.component';
+import { TitlePage } from '../../../components/TitlePage.component';
+import { useQuery } from '@tanstack/react-query';
+import { selectAuth } from '../../../../../redux';
+import { useSeed } from '../../hooks/useSeed';
+import { useSimulation } from '../../hooks/useSimulation';
+import { useFootfall } from '../../hooks/useFootfall';
+import { ChartSimulatedFootfall } from './components';
+import { RestaurantInformation } from '../SimulatorForms/components';
+import { MonthlyFootfall } from './components/MonthlyFootfall.component';
+import { DailyFootfall } from './components/DailyFootfall.component';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Filler, Tooltip, Legend, BarElement)
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Filler,
+  Tooltip,
+  Legend,
+  BarElement
+);
 
+export const months = [
+  {
+    value: 0,
+    label: 'Enero'
+  },
+  {
+    value: 1,
+    label: 'Febrero'
+  },
+  {
+    value: 2,
+    label: 'Marzo'
+  },
+  {
+    value: 3,
+    label: 'Abril'
+  },
+  {
+    value: 4,
+    label: 'Mayo'
+  },
+  {
+    value: 5,
+    label: 'Junio'
+  },
+  {
+    value: 6,
+    label: 'Julio'
+  },
+  {
+    value: 7,
+    label: 'Agosto'
+  },
+  {
+    value: 8,
+    label: 'Septiembre'
+  },
+  {
+    value: 9,
+    label: 'Octubre'
+  },
+  {
+    value: 10,
+    label: 'Noviembre'
+  },
+  {
+    value: 11,
+    label: 'Diciembre'
+  }
+];
 
-export const months = [{
-  value: 0,
-  label: 'Enero'
-}, {
-  value: 1,
-  label: 'Febrero'
-}, {
-  value: 2,
-  label: 'Marzo'
-}, {
-  value: 3,
-  label: 'Abril'
-}, {
-  value: 4,
-  label: 'Mayo'
-}, {
-  value: 5,
-  label: 'Junio'
-}, {
-  value: 6,
-  label: 'Julio'
-}, {
-  value: 7,
-  label: 'Agosto'
-}, {
-  value: 8,
-  label: 'Septiembre'
-}, {
-  value: 9,
-  label: 'Octubre'
-}, {
-  value: 10,
-  label: 'Noviembre'
-}, {
-  value: 11,
-  label: 'Diciembre'
-}]
-
-export const years = [{
-
-  value: 2022,
-  label: '2022'
-}, {
-  value: 2023,
-  label: '2023'
-}]
-
+export const years = [
+  {
+    value: 2022,
+    label: '2022'
+  },
+  {
+    value: 2023,
+    label: '2023'
+  }
+];
 
 //TODO Voy a asumir que la aplicación ya ejecutó el seed
 
-
 enum TabPanel {
   RESUMEN_ANUAL = 0,
-  RESUMEN_MENSUAL = 1,
+  RESUMEN_MENSUAL = 1
 }
 
-
 export const FootFallSimulation = () => {
-
   const [tab, setTab] = useState(TabPanel.RESUMEN_ANUAL);
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: TabPanel) => {
     setTab(newValue);
-  }
+  };
 
   const simulationQuery = useSimulation();
 
@@ -120,35 +151,27 @@ export const FootFallSimulation = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const executeSimulation = () => {
-
     simulationQuery.refetch();
-  }
+  };
 
-  const executeSeed = () => {
-  }
-
-
-
+  const executeSeed = () => {};
 
   return (
     <>
-
-
       <TitlePage
         title='Simulación de afluencia'
         action={
           <>
             <Stack direction='row' spacing={1}>
-
               <Button
-                variant="outlined"
+                variant='outlined'
                 onClick={() => navigate('simulator')}
                 startIcon={<DisplaySettings />}
               >
                 Reglas de simulación
               </Button>
               <LoadingButton
-                variant="contained"
+                variant='contained'
                 startIcon={<Update />}
                 onClick={() => executeSimulation()}
                 loading={simulationQuery.isFetching}
@@ -160,21 +183,15 @@ export const FootFallSimulation = () => {
         }
       />
 
-      
-
-
       <Grid container spacing={2}>
-
         <Grid item xs={12} md={6} lg={3}>
           <RestaurantInformation />
         </Grid>
         <Grid item xs={12} md={9}>
-
           {
             // !(restaurant?.lastSimulationUpdate)
-            false
-              ?
-              (<>
+            false ? (
+              <>
                 <Card>
                   <CardContent
                     sx={{
@@ -184,63 +201,42 @@ export const FootFallSimulation = () => {
                       flexDirection: 'column'
                     }}
                   >
-
                     <Typography variant='h4' align='center' my={5}>
                       No se ha realizado ninguna simulación
                     </Typography>
 
-
-                    <Button
-                      variant="contained"
-                      onClick={() => executeSeed()}
-                    >
+                    <Button variant='contained' onClick={() => executeSeed()}>
                       Iniciar simulación
                     </Button>
                   </CardContent>
                 </Card>
-              </>)
-              : (
-                <>
-                  <Tabs
-                    value={tab}
-                    onChange={handleChangeTab}
-                    sx={{
-                      mb: 2
-                    }}
-                  >
-                    <Tab
-                      label='Resumen anual'
-                      value={TabPanel.RESUMEN_ANUAL}
-                    />
-                    <Tab
-                      label='Resumen mensual'
-                      value={TabPanel.RESUMEN_MENSUAL}
-                    />
-                  </Tabs>
+              </>
+            ) : (
+              <>
+                <Tabs
+                  value={tab}
+                  onChange={handleChangeTab}
+                  sx={{
+                    mb: 2
+                  }}
+                >
+                  <Tab label='Resumen anual' value={TabPanel.RESUMEN_ANUAL} />
+                  <Tab
+                    label='Resumen mensual'
+                    value={TabPanel.RESUMEN_MENSUAL}
+                  />
+                </Tabs>
 
-                  {
-                    tab === TabPanel.RESUMEN_ANUAL
-                      ? (
-                        <MonthlyFootfall />
-                      )
-                      : (
-                        <DailyFootfall />
-                      )
-                  }
-
-
-                </>
-              )
+                {tab === TabPanel.RESUMEN_ANUAL ? (
+                  <MonthlyFootfall />
+                ) : (
+                  <DailyFootfall />
+                )}
+              </>
+            )
           }
         </Grid>
-
-
-
-
       </Grid>
-
-
-
 
       {/* {
   footfalls?.length === 0 ?
@@ -259,32 +255,17 @@ export const FootFallSimulation = () => {
 
 } */}
 
-
-
-
-
       {
         // days.length > 0 &&
-
         // <PDFDownloadLink
         //   document={<PdfFootfallSimulation days={days} />}
         //   fileName="simulacion-afluencia-completa.pdf"
         // >
         //   <Button variant='outlined' >
-
         //     Exportar a PDF
         //   </Button>
-
         // </PDFDownloadLink>
       }
-
-
-
-
-
-
-
-
 
       {/* <Card>
 
@@ -338,13 +319,10 @@ export const FootFallSimulation = () => {
       </Card> */}
 
       <Grid container spacing={2} mt={2}>
-
-
         {/* <Grid item xs={12} md={4}>
   <Day />
 
 </Grid> */}
-
 
         {/* <Grid container item xs={12} md={12} spacing={1} sx={{ display: 'flex', alignContent: 'start' }}>
 
@@ -425,18 +403,8 @@ export const FootFallSimulation = () => {
             }
             )}
         </Grid> */}
-        <Grid item xs={12}>
-
-
-        </Grid>
+        <Grid item xs={12}></Grid>
       </Grid>
-
-
-
     </>
-  )
-
-
-
-
-}
+  );
+};

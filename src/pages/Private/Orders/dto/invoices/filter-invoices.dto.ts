@@ -1,10 +1,7 @@
-import { DateFiltePaginationDto } from "../../../Common/dto";
+import { DateFiltePaginationDto } from '../../../Common/dto';
 import { PaymentMethod } from '../../../../../models/orders.model';
 
-
-
 export interface FilterInvoicesDto extends DateFiltePaginationDto {
-
   userId?: string;
 
   clientId?: string;
@@ -18,6 +15,4 @@ export interface FilterInvoicesDto extends DateFiltePaginationDto {
   notaDeVenta?: string;
 
   cashRegisterId?: string;
-
-
 }

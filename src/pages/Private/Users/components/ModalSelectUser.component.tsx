@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Add, Close, Done } from "@mui/icons-material";
+import { FC } from 'react';
+import { Add, Close, Done } from '@mui/icons-material';
 import {
   Dialog,
   Stack,
@@ -14,12 +14,12 @@ import {
   ListItemText,
   List,
   ListItem,
-  ListItemSecondaryAction,
-} from "@mui/material";
-import { IUser } from "../../../../models";
-import { useUsers } from "../hooks/useUsers";
-import SearchIcon from "@mui/icons-material/Search";
-import { Scrollbar } from "../../components";
+  ListItemSecondaryAction
+} from '@mui/material';
+import { IUser } from '../../../../models';
+import { useUsers } from '../hooks/useUsers';
+import SearchIcon from '@mui/icons-material/Search';
+import { Scrollbar } from '../../components';
 
 interface Props {
   onChange: (user: IUser | null) => void;
@@ -32,7 +32,7 @@ export const ModalSelectUser: FC<Props> = ({
   open,
   onClose,
   onChange,
-  value,
+  value
 }) => {
   const { usersQuery, handleChangeSearch, search } = useUsers();
 
@@ -45,17 +45,17 @@ export const ModalSelectUser: FC<Props> = ({
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth="sm"
+      maxWidth='sm'
       sx={{
-        zIndex: 10500,
+        zIndex: 10500
       }}
     >
       <DialogTitle
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
+        display='flex'
+        justifyContent='space-between'
+        alignItems='center'
       >
-        <Typography variant="h4">Usuarios</Typography>
+        <Typography variant='h4'>Usuarios</Typography>
         <IconButton onClick={onClose}>
           <Close />
         </IconButton>
@@ -63,22 +63,22 @@ export const ModalSelectUser: FC<Props> = ({
 
       <DialogContent>
         <Paper
-          component="form"
-          sx={{ p: "2px 4px", display: "flex", alignItems: "center" }}
+          component='form'
+          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center' }}
           elevation={1}
         >
           <InputBase
-            type="text"
+            type='text'
             onChange={handleChangeSearch}
             sx={{ ml: 1, flex: 1 }}
-            placeholder="Buscar usuario"
-            inputProps={{ "aria-label": "Buscar cliente" }}
+            placeholder='Buscar usuario'
+            inputProps={{ 'aria-label': 'Buscar cliente' }}
             value={search}
           />
           <IconButton
-            type="button"
-            sx={{ p: "10px" }}
-            aria-label="search"
+            type='button'
+            sx={{ p: '10px' }}
+            aria-label='search'
             // onClick={updateList}
           >
             {usersQuery.isLoading ? (
@@ -89,22 +89,22 @@ export const ModalSelectUser: FC<Props> = ({
           </IconButton>
         </Paper>
       </DialogContent>
-      <Scrollbar height="300px">
+      <Scrollbar height='300px'>
         <List>
           {usersQuery.data?.users.map((user) => (
             <ListItem key={user.id}>
               <ListItemText
-                primary={user.person.firstName + " " + user.person.lastName}
-                primaryTypographyProps={{ variant: "h5" }}
+                primary={user.person.firstName + ' ' + user.person.lastName}
+                primaryTypographyProps={{ variant: 'h5' }}
                 secondary={user.person.email}
               />
               <ListItemSecondaryAction>
                 {value && value.id === user.id ? (
-                  <IconButton size="small" onClick={() => handleChange(user)}>
-                    <Done color="primary"/>
+                  <IconButton size='small' onClick={() => handleChange(user)}>
+                    <Done color='primary' />
                   </IconButton>
                 ) : (
-                  <IconButton size="small" onClick={() => handleChange(user)}>
+                  <IconButton size='small' onClick={() => handleChange(user)}>
                     <Add />
                   </IconButton>
                 )}

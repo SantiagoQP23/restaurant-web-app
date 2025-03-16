@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from 'react';
 
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 
 import {
   Dialog,
@@ -10,12 +10,12 @@ import {
   Button,
   Stack,
   Typography,
-  Box,
-} from "@mui/material";
-import { Order, TypeOrder } from "../../../../../models/orders.model";
-import { statusModalDeleteOrder } from "../../services/orders.service";
-import { useNavigate } from "react-router-dom";
-import { useDeleteOrder } from "../../hooks";
+  Box
+} from '@mui/material';
+import { Order, TypeOrder } from '../../../../../models/orders.model';
+import { statusModalDeleteOrder } from '../../services/orders.service';
+import { useNavigate } from 'react-router-dom';
+import { useDeleteOrder } from '../../hooks';
 
 /**
  * Component that shows a modal to delete an order
@@ -39,8 +39,8 @@ export const ModalDeleteOrder: FC = () => {
   const submitDeleteOrder = () => {
     mutate(order!.id, {
       onSuccess: () => {
-        navigate("/orders");
-      },
+        navigate('/orders');
+      }
     });
 
     closeModal();
@@ -56,34 +56,34 @@ export const ModalDeleteOrder: FC = () => {
   return (
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
-        <Typography variant="h4" my={1}>
+        <Typography variant='h4' my={1}>
           ¿Está seguro de eliminar la orden?
         </Typography>
       </DialogTitle>
 
       <DialogContent>
-        <Stack spacing={1} direction="column" justifyContent="center">
+        <Stack spacing={1} direction='column' justifyContent='center'>
           <Box>
-            <Typography variant="body1" color="text.primary">
-              {" "}
+            <Typography variant='body1' color='text.primary'>
+              {' '}
               {order?.type === TypeOrder.IN_PLACE
                 ? `Mesa ${order?.table?.name}`
-                : "Para llevar"}
+                : 'Para llevar'}
             </Typography>
           </Box>
         </Stack>
       </DialogContent>
       <DialogActions
         sx={{
-          justifyContent: "center",
+          justifyContent: 'center'
         }}
       >
-        <Button onClick={closeModal} color="inherit">
+        <Button onClick={closeModal} color='inherit'>
           Cancelar
         </Button>
         <LoadingButton
-          variant="contained"
-          color="error"
+          variant='contained'
+          color='error'
           onClick={submitDeleteOrder}
           loading={isLoading}
           disabled={!isOnline}

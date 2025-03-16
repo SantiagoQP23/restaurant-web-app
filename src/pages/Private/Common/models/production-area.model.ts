@@ -1,4 +1,4 @@
-export interface ProductionArea{
+export interface ProductionArea {
   id: number;
   name: string;
   description: string;

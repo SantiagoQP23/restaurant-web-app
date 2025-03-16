@@ -1,55 +1,47 @@
-import { loadAbort } from "../../../../helpers"
+import { loadAbort } from '../../../../helpers';
 import restauranteApi from '../../../../api/restauranteApi';
-import { IClient, ICreateClient } from "../../../../models";
+import { IClient, ICreateClient } from '../../../../models';
 import { TypeIdentification } from '../../../../models/common.model';
 import { CreateClientDto } from '../dto/create-client.dto';
 import { UpdateClientDto } from '../dto/update-client.dto';
 import { SubjectDeleteClient } from '../helpers/subjects-clients.helper';
-import { FilterClientsDto } from "../dto/filter-clients.dto";
-
+import { FilterClientsDto } from '../dto/filter-clients.dto';
 
 export const statusModalDeleteClient = new SubjectDeleteClient();
 
-
-
 export const getClient = async (term: string): Promise<IClient> => {
-
-  const { data } = await restauranteApi.get<IClient>(`clients/${term}`)
+  const { data } = await restauranteApi.get<IClient>(`clients/${term}`);
 
   return data;
+};
 
-}
-
-
-export const getClients = async (clientsDto: FilterClientsDto): Promise<{clients: IClient[], length: number}> => {
-
+export const getClients = async (
+  clientsDto: FilterClientsDto
+): Promise<{ clients: IClient[]; length: number }> => {
   const params = new URLSearchParams();
 
-  const {offset = 0, limit = 5, search} = clientsDto;
+  const { offset = 0, limit = 5, search } = clientsDto;
 
-
-  const { data } = await restauranteApi.get<{clients: IClient[], length: number}>(`clients/`,{
+  const { data } = await restauranteApi.get<{
+    clients: IClient[];
+    length: number;
+  }>(`clients/`, {
     params: {
-      offset: offset * limit ,
+      offset: offset * limit,
       limit,
       search
-  }
-  })
+    }
+  });
 
   return {
     clients: data.clients,
     length: data.length
   };
-
-}
-
-
-
+};
 
 // export const getClient = (term: string) => {
 
 //   const controller = loadAbort();
-
 
 //   return {
 //     call: restauranteApi.get<IClient>(`clients/${term}`,
@@ -57,13 +49,11 @@ export const getClients = async (clientsDto: FilterClientsDto): Promise<{clients
 //     controller
 //   }
 
-
 // }
 
 // export const getClients = () => {
 
 //   const controller = loadAbort();
-
 
 //   return {
 //     call: restauranteApi.get<IClient>(`clients/`,
@@ -71,22 +61,20 @@ export const getClients = async (clientsDto: FilterClientsDto): Promise<{clients
 //     controller
 //   }
 
-
 // }
 
+export const updateClient = async (
+  id: string,
+  data: UpdateClientDto
+): Promise<IClient> => {
+  const { data: client } = await restauranteApi.patch<IClient>(
+    `clients/${id}`,
 
-export const updateClient = async (id: string, data: UpdateClientDto): Promise<IClient> => {
-
-  const { data: client } = await restauranteApi.patch<IClient>(`clients/${id}`,
-
-    data)
+    data
+  );
 
   return client;
-
-}
-
-
-
+};
 
 // export const updateClient = (id: string, data: UpdateClientDto) => {
 
@@ -99,20 +87,16 @@ export const updateClient = async (id: string, data: UpdateClientDto): Promise<I
 //     controller
 //   }
 
-
 // }
 
 export const createClient = async (data: CreateClientDto): Promise<IClient> => {
-
-  const { data: client } = await restauranteApi.post<IClient>(`clients/`, data)
+  const { data: client } = await restauranteApi.post<IClient>(`clients/`, data);
 
   return client;
-
-}
-
+};
 
 // export const createClient = ( data: CreateClientDto) => {
- 
+
 //   console.log(data);
 
 //   const controller = loadAbort();
@@ -124,18 +108,15 @@ export const createClient = async (data: CreateClientDto): Promise<IClient> => {
 //     controller
 //   }
 
-
 // }
 
-
 export const deleteClient = (id: string) => {
-  
-    const controller = loadAbort();
-  
-    return {
-      call: restauranteApi.delete<IClient>(`clients/${id}`,
-        { signal: controller.signal }),
-      controller
-    }
+  const controller = loadAbort();
 
-}
+  return {
+    call: restauranteApi.delete<IClient>(`clients/${id}`, {
+      signal: controller.signal
+    }),
+    controller
+  };
+};

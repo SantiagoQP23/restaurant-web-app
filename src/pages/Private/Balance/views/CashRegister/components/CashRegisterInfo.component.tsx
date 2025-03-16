@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState } from "react";
+import { FC, ChangeEvent, useState } from 'react';
 import {
   Stack,
   Box,
@@ -12,26 +12,26 @@ import {
   TextField,
   Card,
   CardHeader,
-  CardContent,
-} from "@mui/material";
-import { format } from "date-fns";
-import { CashRegister } from "../../../models/cash-register.model";
+  CardContent
+} from '@mui/material';
+import { format } from 'date-fns';
+import { CashRegister } from '../../../models/cash-register.model';
 import {
   Add,
   Close,
   ExpandLess,
   PointOfSale,
   Remove,
-  RemoveCircle,
-} from "@mui/icons-material";
-import { FormCashIncome } from "./FormCashIncome.component";
-import { useModal } from "../../../../../../hooks";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { ActiveCashRegister } from "../../../services/cash-register.service";
-import { UpdateCashRegisterDto } from "../../../dto/update-cash-register.dto";
-import { useUpdateCashRegister } from "../../../hooks/useCashRegister";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { TransactionType } from "../../../../Common/enums/transaction-type.enum";
+  RemoveCircle
+} from '@mui/icons-material';
+import { FormCashIncome } from './FormCashIncome.component';
+import { useModal } from '../../../../../../hooks';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { ActiveCashRegister } from '../../../services/cash-register.service';
+import { UpdateCashRegisterDto } from '../../../dto/update-cash-register.dto';
+import { useUpdateCashRegister } from '../../../hooks/useCashRegister';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { TransactionType } from '../../../../Common/enums/transaction-type.enum';
 
 interface Props {
   cashRegister: CashRegister;
@@ -42,7 +42,7 @@ export const CashRegisterInfo: FC<Props> = ({ cashRegister }) => {
 
   const [finalAmount, setFinalAmount] = useState<number>(0);
 
-  const [closingNote, setClosingNote] = useState<string>("");
+  const [closingNote, setClosingNote] = useState<string>('');
 
   const { openCreate } = useCashRegisterStore((state) => state);
 
@@ -83,9 +83,9 @@ export const CashRegisterInfo: FC<Props> = ({ cashRegister }) => {
   return (
     <>
       <Card>
-        <CardHeader title="Resumen de caja" />
+        <CardHeader title='Resumen de caja' />
         <CardContent>
-          <Stack direction="column" spacing={2} justifyContent="flex-end">
+          <Stack direction='column' spacing={2} justifyContent='flex-end'>
             {/* <Box>
 
             <InputLabel id="date">Fecha</InputLabel>
@@ -93,65 +93,65 @@ export const CashRegisterInfo: FC<Props> = ({ cashRegister }) => {
           </Box> */}
 
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
             >
-              <InputLabel id="date">Creado por</InputLabel>
-              <Typography variant="h5">
-                {cashRegister.createdBy.person.firstName}{" "}
+              <InputLabel id='date'>Creado por</InputLabel>
+              <Typography variant='h5'>
+                {cashRegister.createdBy.person.firstName}{' '}
                 {cashRegister.createdBy.person.lastName}
               </Typography>
             </Box>
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
             >
-              <InputLabel id="date">Fecha</InputLabel>
-              <Typography variant="h5">
-                {format(new Date(cashRegister.createdAt), "yyyy-MM-dd HH:mm")}
+              <InputLabel id='date'>Fecha</InputLabel>
+              <Typography variant='h5'>
+                {format(new Date(cashRegister.createdAt), 'yyyy-MM-dd HH:mm')}
               </Typography>
             </Box>
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
             >
-              <InputLabel id="date">Monto inicial</InputLabel>
-              <Typography variant="h5">
+              <InputLabel id='date'>Monto inicial</InputLabel>
+              <Typography variant='h5'>
                 $ {cashRegister.initialAmount}
               </Typography>
             </Box>
 
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
             >
-              <InputLabel id="date">Ingresos</InputLabel>
-              <Typography variant="h4" color="success.main">
+              <InputLabel id='date'>Ingresos</InputLabel>
+              <Typography variant='h4' color='success.main'>
                 $ {getTotalIncomes(cashRegister)}
               </Typography>
             </Box>
 
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
             >
-              <InputLabel id="date">Gastos</InputLabel>
-              <Typography variant="h4" color="error.main">
+              <InputLabel id='date'>Gastos</InputLabel>
+              <Typography variant='h4' color='error.main'>
                 $ {getTotalExpenses(cashRegister)}
               </Typography>
             </Box>
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
             >
-              <InputLabel id="date">Monto final</InputLabel>
-              <Typography variant="h3">
+              <InputLabel id='date'>Monto final</InputLabel>
+              <Typography variant='h3'>
                 {formatMoney(getBalance(cashRegister))}
               </Typography>
             </Box>

@@ -1,6 +1,6 @@
-import { IUser } from "../../../../models";
-import { AccountType } from "../enums/account-type.enum";
-import { Bank } from "./bank.model";
+import { IUser } from '../../../../models';
+import { AccountType } from '../enums/account-type.enum';
+import { Bank } from './bank.model';
 
 export interface Account {
   id: number;

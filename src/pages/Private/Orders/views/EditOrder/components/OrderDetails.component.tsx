@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useState } from 'react';
 import {
   Box,
   Typography,
@@ -16,17 +16,17 @@ import {
   Stack,
   IconButton,
   CardContent,
-  Chip,
-} from "@mui/material";
-import { LinearProgressWrapper, OrderDetail } from "./OrderDetail.component";
-import { useNavigate } from "react-router-dom";
-import { OrderContext } from "../../../context/Order.context";
-import { Order, IOrderDetail } from "../../../../../../models";
-import { ModalUpdateDetail } from "../../../components/EditOrder/ModalUpdateDescriptionDetail.component";
-import { AddShoppingCartOutlined, MoreVert } from "@mui/icons-material";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { CounterInput } from "../../../components";
-import { OrderDetailCard } from "./OrderDetailCard.component";
+  Chip
+} from '@mui/material';
+import { LinearProgressWrapper, OrderDetail } from './OrderDetail.component';
+import { useNavigate } from 'react-router-dom';
+import { OrderContext } from '../../../context/Order.context';
+import { Order, IOrderDetail } from '../../../../../../models';
+import { ModalUpdateDetail } from '../../../components/EditOrder/ModalUpdateDescriptionDetail.component';
+import { AddShoppingCartOutlined, MoreVert } from '@mui/icons-material';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { CounterInput } from '../../../components';
+import { OrderDetailCard } from './OrderDetailCard.component';
 
 interface Props {
   order: Order;
@@ -49,8 +49,8 @@ export const OrderDetails: FC<Props> = ({ order }) => {
         title={`Productos`}
         action={
           <Button
-            color="primary"
-            onClick={() => navigate("products")}
+            color='primary'
+            onClick={() => navigate('products')}
             // variant='contained'
             startIcon={<AddShoppingCartOutlined />}
           >
@@ -142,9 +142,8 @@ export const OrderDetails: FC<Props> = ({ order }) => {
               )
           })
         } */}
-<TableContainer>
-
-        {/*
+        <TableContainer>
+          {/*
           <Table>
             <TableHead>
               <TableRow>
@@ -201,7 +200,7 @@ export const OrderDetails: FC<Props> = ({ order }) => {
                   </Typography>
                 </TableCell>
               </TableRow> */}
-              {/*
+          {/*
               <TableRow>
                 <TableCell colSpan={4} align='right'
                     sx={{
@@ -251,8 +250,8 @@ export const OrderDetails: FC<Props> = ({ order }) => {
                 </TableCell>
 
               </TableRow> */}
-            {/* </TableBody> */}
-            {/* <Stack>
+          {/* </TableBody> */}
+          {/* <Stack>
                 <Stack direction='row' justifyContent='flex-end' alignItems='center' spacing={2}>
                   <Typography variant='subtitle1' color='textSecondary'>Subtotal</Typography>
                   <Typography variant='h6' >${order.amount}</Typography>

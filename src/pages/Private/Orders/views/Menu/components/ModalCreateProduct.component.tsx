@@ -12,16 +12,16 @@ import {
   MenuItem,
   Select,
   Stack,
-  Button,
-} from "@mui/material";
+  Button
+} from '@mui/material';
 
-import NiceModal, { useModal, muiDialogV5 } from "@ebay/nice-modal-react";
-import { AttachMoney } from "@mui/icons-material";
-import { Controller, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { selectMenu } from "../../../../../../redux";
-import { CreateProductDto } from "../../../../EditMenu/dto";
-import { useCreateProduct } from "../../../../EditMenu/hooks/useProducts";
+import NiceModal, { useModal, muiDialogV5 } from '@ebay/nice-modal-react';
+import { AttachMoney } from '@mui/icons-material';
+import { Controller, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { selectMenu } from '../../../../../../redux';
+import { CreateProductDto } from '../../../../EditMenu/dto';
+import { useCreateProduct } from '../../../../EditMenu/hooks/useProducts';
 
 export const ModalCreateProduct = NiceModal.create(() => {
   const modal = useModal();
@@ -30,7 +30,7 @@ export const ModalCreateProduct = NiceModal.create(() => {
     register,
     handleSubmit,
     formState: { errors },
-    control,
+    control
   } = useForm<CreateProductDto>();
 
   const { sections } = useSelector(selectMenu);
@@ -53,20 +53,20 @@ export const ModalCreateProduct = NiceModal.create(() => {
 
   return (
     <Dialog {...muiDialogV5(modal)}>
-      <DialogTitle variant="h4">Crear producto</DialogTitle>
+      <DialogTitle variant='h4'>Crear producto</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 autoFocus
-                margin="dense"
-                label="Nombre del producto"
-                type="text"
+                margin='dense'
+                label='Nombre del producto'
+                type='text'
                 fullWidth
-                {...register("name", {
-                  required: "Este campo es requerido",
-                  minLength: { value: 2, message: "Minimo 2 caracteres" },
+                {...register('name', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 2, message: 'Minimo 2 caracteres' }
                 })}
                 helperText={errors.name?.message}
                 error={!!errors.name}
@@ -74,27 +74,27 @@ export const ModalCreateProduct = NiceModal.create(() => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label="Precio"
+                label='Precio'
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start">
+                    <InputAdornment position='start'>
                       <AttachMoney />
                     </InputAdornment>
-                  ),
+                  )
                 }}
-                margin="dense"
+                margin='dense'
                 fullWidth
-                type="number"
+                type='number'
                 inputProps={{
-                  step: 0.05,
+                  step: 0.05
                 }}
-                {...register("price", {
-                  required: "Este campo es requerido",
+                {...register('price', {
+                  required: 'Este campo es requerido',
                   min: {
                     value: 0,
-                    message: "El valor debe ser mayor a 0",
+                    message: 'El valor debe ser mayor a 0'
                   },
-                  valueAsNumber: true,
+                  valueAsNumber: true
                 })}
                 helperText={errors.price?.message}
                 error={!!errors.price}
@@ -102,19 +102,19 @@ export const ModalCreateProduct = NiceModal.create(() => {
             </Grid>
             <Grid item xs={12}>
               <Controller
-                name="categoryId"
+                name='categoryId'
                 control={control}
-                rules={{ required: "Este campo es requerido" }}
+                rules={{ required: 'Este campo es requerido' }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <>
                     <FormControl fullWidth error={!!errors.categoryId}>
-                      <InputLabel htmlFor="grouped-select">
+                      <InputLabel htmlFor='grouped-select'>
                         Categoría
                       </InputLabel>
                       <Select
-                        id="grouped-select"
-                        label="Categoría"
-                        margin="dense"
+                        id='grouped-select'
+                        label='Categoría'
+                        margin='dense'
                         fullWidth
                         value={value}
                         onChange={onChange}
@@ -125,7 +125,7 @@ export const ModalCreateProduct = NiceModal.create(() => {
                           <ListSubheader
                             key={section.id}
                             sx={{
-                              fontWeight: "bold",
+                              fontWeight: 'bold'
                             }}
                           >
                             {section.name}
@@ -138,10 +138,10 @@ export const ModalCreateProduct = NiceModal.create(() => {
                             >
                               {category.name}
                             </MenuItem>
-                          )),
+                          ))
                         ])}
                       </Select>
-                      <Typography color="error" p={1}>
+                      <Typography color='error' p={1}>
                         {errors.categoryId?.message}
                       </Typography>
                     </FormControl>
@@ -151,9 +151,9 @@ export const ModalCreateProduct = NiceModal.create(() => {
             </Grid>
           </Grid>
 
-          <Stack mt={2} direction="row" justifyContent="right" spacing={2}>
+          <Stack mt={2} direction='row' justifyContent='right' spacing={2}>
             <Button onClick={closeModal}>Cancelar</Button>
-            <Button type="submit" variant="contained">
+            <Button type='submit' variant='contained'>
               Crear
             </Button>
           </Stack>

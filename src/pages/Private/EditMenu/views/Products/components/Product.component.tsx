@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 
 import {
   Typography,
@@ -9,26 +9,22 @@ import {
   MenuItem,
   Popover,
   CardMedia,
-  Stack,
-} from "@mui/material/";
+  Stack
+} from '@mui/material/';
 
-import {
-  DeleteOutline,
-  EditOutlined,
-  MoreHoriz,
-} from "@mui/icons-material";
+import { DeleteOutline, EditOutlined, MoreHoriz } from '@mui/icons-material';
 
-import { IProduct } from "../../../../../../models";
-import { useNavigate } from "react-router-dom";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import NiceModal from "@ebay/nice-modal-react";
+import { IProduct } from '../../../../../../models';
+import { useNavigate } from 'react-router-dom';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import NiceModal from '@ebay/nice-modal-react';
 import {
   ModalDeleteProduct,
-  Props as MDeleteProps,
-} from "./ModalDeleteProduct.component";
-import { bindPopover } from "material-ui-popup-state";
-import { bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
-import { LabelProductStatus } from "../../../../../../components/ui/LabelProductStatus.component";
+  Props as MDeleteProps
+} from './ModalDeleteProduct.component';
+import { bindPopover } from 'material-ui-popup-state';
+import { bindTrigger, usePopupState } from 'material-ui-popup-state/hooks';
+import { LabelProductStatus } from '../../../../../../components/ui/LabelProductStatus.component';
 
 /**
  * @author Steven Rosales
@@ -42,8 +38,8 @@ export const Product: FC<Props> = ({ producto }) => {
   const navigate = useNavigate();
 
   const popupState = usePopupState({
-    variant: "popover",
-    popupId: "popoverMenuProduct",
+    variant: 'popover',
+    popupId: 'popoverMenuProduct'
   });
 
   const showModalDeleteProduct = () => {
@@ -65,28 +61,30 @@ export const Product: FC<Props> = ({ producto }) => {
 
   return (
     <>
-      <Card sx={{
-        width: "100%",
-        height: "100%", // Hace que todos los elementos tengan la misma altura
-        display: "flex",
-      }}>
+      <Card
+        sx={{
+          width: '100%',
+          height: '100%', // Hace que todos los elementos tengan la misma altura
+          display: 'flex'
+        }}
+      >
         <CardMedia
-          component="img"
+          component='img'
           sx={{ width: 160 }}
           image={
             producto.images
               ? producto.images
-              : "/static/images/products/no-image.png"
+              : '/static/images/products/no-image.png'
           }
-          alt="Product"
+          alt='Product'
         />
         <CardContent sx={{ width: 1 }}>
-          <Stack direction="column" spacing={1}>
+          <Stack direction='column' spacing={1}>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
               }}
             >
               <LabelProductStatus status={producto.status} />
@@ -96,8 +94,8 @@ export const Product: FC<Props> = ({ producto }) => {
               </IconButton>
             </Box>
 
-            <Typography variant="h4">{producto.name}</Typography>
-            <Typography variant="body1">
+            <Typography variant='h4'>{producto.name}</Typography>
+            <Typography variant='body1'>
               {formatMoney(producto.price)}
             </Typography>
 
@@ -116,26 +114,26 @@ export const Product: FC<Props> = ({ producto }) => {
 
       <Popover
         {...bindPopover(popupState)}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{
           paper: {
             sx: {
-              width: 140,
-            },
-          },
+              width: 140
+            }
+          }
         }}
       >
         <MenuItem onClick={navitateToEditProduct}>
-          <EditOutlined fontSize="small" sx={{ mr: 2 }} />
+          <EditOutlined fontSize='small' sx={{ mr: 2 }} />
           Editar
         </MenuItem>
         {/* <MenuItem onClick={navigateToViewProduct}>
           <Visibility fontSize="small" sx={{ mr: 2 }} />
           Ver
         </MenuItem> */}
-        <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
-          <DeleteOutline fontSize="small" sx={{ mr: 2 }} />
+        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+          <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
           Eliminar
         </MenuItem>
       </Popover>

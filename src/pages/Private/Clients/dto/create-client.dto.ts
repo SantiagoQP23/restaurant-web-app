@@ -1,7 +1,6 @@
 import { TypeIdentification } from '../../../../models/common.model';
 
-
-export interface CreateClientDto{
+export interface CreateClientDto {
   firstName: string;
   lastName: string;
   email?: string;

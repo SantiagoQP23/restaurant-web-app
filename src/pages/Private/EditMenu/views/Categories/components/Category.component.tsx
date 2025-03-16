@@ -1,6 +1,6 @@
-import { ChangeEvent, FC, useState, KeyboardEvent } from "react";
+import { ChangeEvent, FC, useState, KeyboardEvent } from 'react';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 // Material UI
 import {
@@ -13,8 +13,8 @@ import {
   Stack,
   CircularProgress,
   Popover,
-  TextField,
-} from "@mui/material/";
+  TextField
+} from '@mui/material/';
 
 import {
   DeleteOutlined,
@@ -22,28 +22,28 @@ import {
   MoreHoriz,
   Reply,
   Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
-import { ICategory } from "../../../../../../models";
-import { setActiveCategory, updateCategory } from "../../../../../../redux";
-import { Label } from "../../../../../../components/ui";
-import { useAppDispatch } from "../../../../../../hooks/useRedux";
+  VisibilityOff
+} from '@mui/icons-material';
+import { ICategory } from '../../../../../../models';
+import { setActiveCategory, updateCategory } from '../../../../../../redux';
+import { Label } from '../../../../../../components/ui';
+import { useAppDispatch } from '../../../../../../hooks/useRedux';
 import {
   usePopupState,
   bindTrigger,
-  bindPopover,
-} from "material-ui-popup-state/hooks";
-import NiceModal from "@ebay/nice-modal-react";
+  bindPopover
+} from 'material-ui-popup-state/hooks';
+import NiceModal from '@ebay/nice-modal-react';
 import {
   ModalDeleteCategory,
-  Props as MDeleteProps,
-} from "./ModalDeleteCategory.component";
-import { UpdateCategoryDto } from "../../../dto";
-import { useUpdateCategory } from "../../../hooks/useCategories";
+  Props as MDeleteProps
+} from './ModalDeleteCategory.component';
+import { UpdateCategoryDto } from '../../../dto';
+import { useUpdateCategory } from '../../../hooks/useCategories';
 import {
   ModalEditCategory,
-  Props as MEditProps,
-} from "./ModalEditCategory.component";
+  Props as MEditProps
+} from './ModalEditCategory.component';
 
 interface Props {
   categoria: ICategory;
@@ -65,8 +65,8 @@ export const Category: FC<Props> = ({ categoria }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const popupState = usePopupState({
-    variant: "popover",
-    popupId: "categoryMenu",
+    variant: 'popover',
+    popupId: 'categoryMenu'
   });
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,19 +79,19 @@ export const Category: FC<Props> = ({ categoria }) => {
 
   const showModalDeleteCategory = () => {
     NiceModal.show(ModalDeleteCategory, {
-      category: categoria,
+      category: categoria
     } as MDeleteProps);
   };
 
   const showModalEditCategory = () => {
     NiceModal.show(ModalEditCategory, {
-      category: categoria,
+      category: categoria
     } as MEditProps);
   };
 
   const showProducts = () => {
     dispatch(setActiveCategory(categoria));
-    navigate("/menu/products");
+    navigate('/menu/products');
   };
 
   const handleDelete = () => {
@@ -114,7 +114,7 @@ export const Category: FC<Props> = ({ categoria }) => {
     popupState.close();
     submitUpdateCategory({
       id: categoria.id,
-      isPublic: !categoria.isPublic,
+      isPublic: !categoria.isPublic
     });
   };
 
@@ -122,22 +122,22 @@ export const Category: FC<Props> = ({ categoria }) => {
     popupState.close();
     submitUpdateCategory({
       id: categoria.id,
-      isActive: true,
+      isActive: true
     });
   };
 
   const updateNameCategory = async () => {
     setIsEditing(false);
-    if (name === categoria.name || name === "") return;
+    if (name === categoria.name || name === '') return;
 
     submitUpdateCategory({
       name,
-      id: categoria.id,
+      id: categoria.id
     });
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       // Enter key is pressed, execute your update logic
       updateNameCategory();
     }
@@ -149,17 +149,17 @@ export const Category: FC<Props> = ({ categoria }) => {
         <CardContent>
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mb: 1,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              mb: 1
             }}
           >
-            <Label color={categoria.isActive ? "success" : "error"}>
-              {categoria.isActive ? "Activo" : "Eliminado"}
+            <Label color={categoria.isActive ? 'success' : 'error'}>
+              {categoria.isActive ? 'Activo' : 'Eliminado'}
             </Label>
 
-            <Stack direction="row" spacing={1} alignItems="center">
+            <Stack direction='row' spacing={1} alignItems='center'>
               {isLoading && <CircularProgress size={18} />}
 
               <IconButton onClick={changeVisibility}>
@@ -176,56 +176,56 @@ export const Category: FC<Props> = ({ categoria }) => {
             <>
               <TextField
                 autoFocus
-                margin="dense"
-                type="text"
+                margin='dense'
+                type='text'
                 fullWidth
                 value={name}
                 onChange={handleChangeName}
                 onBlur={updateNameCategory}
-                size="small"
+                size='small'
                 onKeyDown={handleKeyDown}
               />
             </>
           ) : (
-            <Typography variant="h4" onClick={editNameCategory}>
+            <Typography variant='h4' onClick={editNameCategory}>
               {categoria.name}
             </Typography>
           )}
 
-          <Typography variant="subtitle1" mt={1}>
+          <Typography variant='subtitle1' mt={1}>
             {`Productos: ${categoria.products.length}`}
           </Typography>
         </CardContent>
       </Card>
       <Popover
         {...bindPopover(popupState)}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{
           paper: {
             sx: {
-              width: 170,
-            },
-          },
+              width: 170
+            }
+          }
         }}
       >
         <MenuItem onClick={handleEdit}>
-          <EditOutlined fontSize="small" sx={{ mr: 2 }} />
+          <EditOutlined fontSize='small' sx={{ mr: 2 }} />
           Editar
         </MenuItem>
         <MenuItem onClick={showProducts}>
-          <Visibility fontSize="small" sx={{ mr: 2 }} />
+          <Visibility fontSize='small' sx={{ mr: 2 }} />
           Ver Productos
         </MenuItem>
 
         {categoria.isActive ? (
-          <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
-            <DeleteOutlined fontSize="small" sx={{ mr: 2 }} />
+          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+            <DeleteOutlined fontSize='small' sx={{ mr: 2 }} />
             Eliminar
           </MenuItem>
         ) : (
           <MenuItem onClick={enableCategory}>
-            <Reply fontSize="small" sx={{ mr: 2 }} />
+            <Reply fontSize='small' sx={{ mr: 2 }} />
             Habilitar
           </MenuItem>
         )}

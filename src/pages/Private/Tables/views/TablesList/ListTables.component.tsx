@@ -1,26 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
-import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, closestCenter } from '@dnd-kit/core';
 
-import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 
-import { Add, CloseOutlined, EditOutlined, Save } from "@mui/icons-material";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Add, CloseOutlined, EditOutlined, Save } from '@mui/icons-material';
+import { Button, Grid, Stack, Typography } from '@mui/material';
 
 import {
   selectTables,
-  setActiveTable,
-} from "../../../../../redux/slices/tables";
+  setActiveTable
+} from '../../../../../redux/slices/tables';
 
-import { TitlePage } from "../../../components/TitlePage.component";
-import { DraggableTable } from "../../components/DraggableTable.component";
-import { useUpdateManyTables } from "../../hooks/useTables";
-import { ITable } from "../../../../../models";
-import { LoadingButton } from "@mui/lab";
+import { TitlePage } from '../../../components/TitlePage.component';
+import { DraggableTable } from '../../components/DraggableTable.component';
+import { useUpdateManyTables } from '../../hooks/useTables';
+import { ITable } from '../../../../../models';
+import { LoadingButton } from '@mui/lab';
 
 export const ListTables = () => {
   const { tables } = useSelector(selectTables);
@@ -34,7 +34,7 @@ export const ListTables = () => {
 
   const createTable = () => {
     dispatch(setActiveTable(null));
-    navigate("edit");
+    navigate('edit');
   };
 
   const updateManyTablesMutation = useUpdateManyTables();
@@ -54,7 +54,7 @@ export const ListTables = () => {
       const tablesUpdated = newTables.map((table, index) => {
         return {
           ...table,
-          order: index + 1,
+          order: index + 1
         };
       });
 
@@ -78,13 +78,13 @@ export const ListTables = () => {
   return (
     <>
       <TitlePage
-        title="Mesas"
+        title='Mesas'
         action={
-          <Stack direction="row" spacing={1}>
+          <Stack direction='row' spacing={1}>
             {reorder ? (
               <>
                 <Button
-                  size="small"
+                  size='small'
                   onClick={() => {
                     setReorder(false);
                     setOrderedTables(tables);
@@ -94,8 +94,8 @@ export const ListTables = () => {
                   Cancelar
                 </Button>
                 <LoadingButton
-                  size="small"
-                  variant="contained"
+                  size='small'
+                  variant='contained'
                   startIcon={<Save />}
                   disabled={tablesListAreEqual}
                   onClick={saveOrderedTables}
@@ -107,7 +107,7 @@ export const ListTables = () => {
             ) : (
               <>
                 <Button
-                  size="small"
+                  size='small'
                   onClick={() => {
                     setReorder(true);
                   }}
@@ -117,8 +117,8 @@ export const ListTables = () => {
                 </Button>
 
                 <Button
-                  size="small"
-                  variant="contained"
+                  size='small'
+                  variant='contained'
                   startIcon={<Add />}
                   onClick={createTable}
                 >
@@ -132,13 +132,13 @@ export const ListTables = () => {
 
       <Grid
         container
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
+        display='flex'
+        justifyContent='space-between'
+        alignItems='center'
         my={1}
       >
         <Grid item>
-          <Typography variant="h6">
+          <Typography variant='h6'>
             Mesas registradas: {tables.length}
           </Typography>
         </Grid>

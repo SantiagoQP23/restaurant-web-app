@@ -1,9 +1,9 @@
-import { CreateOrderDetailDto } from "../dto/create-order.dto";
-import { EventsEmitSocket } from "../interfaces/events-sockets.interface";
-import { useSnackbar } from "notistack";
-import { useEmitWebSocketsEvent } from "../../../../hooks";
-import { Order } from "../../../../models";
-import { DeleteOrderDetailDto, UpdateOrderDetailDto } from "../dto";
+import { CreateOrderDetailDto } from '../dto/create-order.dto';
+import { EventsEmitSocket } from '../interfaces/events-sockets.interface';
+import { useSnackbar } from 'notistack';
+import { useEmitWebSocketsEvent } from '../../../../hooks';
+import { Order } from '../../../../models';
+import { DeleteOrderDetailDto, UpdateOrderDetailDto } from '../dto';
 
 /**
  * Custom hook to create a new order detail with websockets
@@ -16,11 +16,11 @@ export const useCreateOrderDetail = () => {
     EventsEmitSocket.addOrderDetail,
     {
       onSuccess: (resp) => {
-        enqueueSnackbar(resp.msg, { variant: "success" });
+        enqueueSnackbar(resp.msg, { variant: 'success' });
       },
       onError: (resp) => {
-        enqueueSnackbar(resp.msg, { variant: "error" });
-      },
+        enqueueSnackbar(resp.msg, { variant: 'error' });
+      }
     }
   );
 };
@@ -36,11 +36,11 @@ export const useUpdateOrderDetail = () => {
     EventsEmitSocket.updateOrderDetail,
     {
       onSuccess: (resp) => {
-        enqueueSnackbar(resp.msg, { variant: "success" });
+        enqueueSnackbar(resp.msg, { variant: 'success' });
       },
       onError: (resp) => {
-        enqueueSnackbar(resp.msg, { variant: "error" });
-      },
+        enqueueSnackbar(resp.msg, { variant: 'error' });
+      }
     }
   );
 };
@@ -56,11 +56,11 @@ export const useDeleteOrderDetail = () => {
     EventsEmitSocket.deleteOrderDetail,
     {
       onSuccess: (resp) => {
-        enqueueSnackbar(resp.msg, { variant: "success" });
+        enqueueSnackbar(resp.msg, { variant: 'success' });
       },
       onError: (resp) => {
-        enqueueSnackbar(resp.msg, { variant: "error" });
-      },
+        enqueueSnackbar(resp.msg, { variant: 'error' });
+      }
     }
   );
 };

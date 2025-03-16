@@ -1,13 +1,13 @@
-import { FC } from "react";
-import { CashTransaction } from "../../../models/cash-transaction.model";
+import { FC } from 'react';
+import { CashTransaction } from '../../../models/cash-transaction.model';
 import {
   TableHead,
   TableRow,
   TableCell,
   TableBody,
-  Table,
-} from "@mui/material";
-import { CashTransactionRow } from "./CashTransactionRow.component";
+  Table
+} from '@mui/material';
+import { CashTransactionRow } from './CashTransactionRow.component';
 
 interface Props {
   cashTransactions: CashTransaction[];
@@ -22,13 +22,13 @@ export const CashTransactionsTable: FC<Props> = ({ cashTransactions }) => {
             <TableCell>Descripción</TableCell>
             <TableCell>Creado por</TableCell>
             <TableCell>Cantidad</TableCell>
-            <TableCell align="center">Acciones</TableCell>
+            <TableCell align='center'>Acciones</TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody
           sx={{
-            whiteSpace: "pre",
+            whiteSpace: 'pre'
           }}
         >
           {cashTransactions.map((transaction) => (

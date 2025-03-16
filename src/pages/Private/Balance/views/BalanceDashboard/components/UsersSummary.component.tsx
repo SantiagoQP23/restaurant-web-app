@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 import {
   Card,
@@ -20,27 +20,27 @@ import {
   MenuItem,
   Select,
   TextField,
-  CardActions,
-} from "@mui/material";
-import { Person, Print } from "@mui/icons-material";
-import { Pie } from "react-chartjs-2";
+  CardActions
+} from '@mui/material';
+import { Person, Print } from '@mui/icons-material';
+import { Pie } from 'react-chartjs-2';
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { useDateFilter } from "../../../../../../hooks/useDateFilter";
-import { Period } from "../../../../Common/dto/period.model";
-import { groupBy } from "rxjs";
-import { DesktopDatePicker, DesktopDateTimePicker } from "@mui/x-date-pickers";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { useDateFilter } from '../../../../../../hooks/useDateFilter';
+import { Period } from '../../../../Common/dto/period.model';
+import { groupBy } from 'rxjs';
+import { DesktopDatePicker, DesktopDateTimePicker } from '@mui/x-date-pickers';
 import {
   ResponseIncomesByUser,
-  getIncomesByUser,
-} from "../../../../Reports/services/dashboard.service";
-import { useQuery } from "@tanstack/react-query";
-import { Roles } from "../../../../../../models";
-import { generateRandomColor } from "../../../../Common/helpers/randomColor.helpert";
-import { generateWaiterReportPdf } from "../../../../Reports/helpers/pdf-reports.helper";
-import html2canvas from "html2canvas";
-import { ValidRoles } from "../../../../Common/models/valid-roles.model";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
+  getIncomesByUser
+} from '../../../../Reports/services/dashboard.service';
+import { useQuery } from '@tanstack/react-query';
+import { Roles } from '../../../../../../models';
+import { generateRandomColor } from '../../../../Common/helpers/randomColor.helpert';
+import { generateWaiterReportPdf } from '../../../../Reports/helpers/pdf-reports.helper';
+import html2canvas from 'html2canvas';
+import { ValidRoles } from '../../../../Common/models/valid-roles.model';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -54,48 +54,48 @@ export const UsersSummary = () => {
     endDateChecked,
     handleChangeEndDate,
     handleChangePeriod,
-    handleChangeStartDate,
+    handleChangeStartDate
   } = useDateFilter(Period.DAILY);
 
   const { data, refetch } = useQuery<ResponseIncomesByUser[]>(
-    ["best-selling-products", { period, startDate, endDate }],
+    ['best-selling-products', { period, startDate, endDate }],
     () => {
       return getIncomesByUser({
         period,
         startDate,
-        endDate: endDateChecked ? endDate : null,
+        endDate: endDateChecked ? endDate : null
       });
     },
     {
       onSuccess: (data) => {
         console.log(data);
-      },
+      }
     }
   );
 
   const dataChart = {
-    labels: data?.map((user) => user.firstName + " " + user.lastName),
+    labels: data?.map((user) => user.firstName + ' ' + user.lastName),
     datasets: [
       {
-        type: "pie" as const,
+        type: 'pie' as const,
         data: data?.map((user) => Number(user.total)),
         backgroundColor: data?.map(() => generateRandomColor()),
-        borderColor: "rgba(255, 255, 255, 1)",
-        borderWidth: 1,
-      },
-    ],
+        borderColor: 'rgba(255, 255, 255, 1)',
+        borderWidth: 1
+      }
+    ]
   };
 
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: "right" as const,
-      },
+        position: 'right' as const
+      }
     },
     x: {
-      display: false,
-    },
+      display: false
+    }
   };
 
   const openPdf = async () => {
@@ -106,10 +106,10 @@ export const UsersSummary = () => {
     if (chartRef.current) {
       const canvas = await html2canvas(chartRef.current.canvas);
 
-      urlImage = canvas.toDataURL("image/png");
+      urlImage = canvas.toDataURL('image/png');
     }
 
-    console.log("image", urlImage);
+    console.log('image', urlImage);
 
     const pdf = await generateWaiterReportPdf(
       data,
@@ -134,13 +134,13 @@ export const UsersSummary = () => {
     <>
       <Card>
         <CardHeader
-          title="Meseros"
-          subheader="Desempeño de meseros"
+          title='Meseros'
+          subheader='Desempeño de meseros'
           action={
             <Button
-              size="small"
+              size='small'
               onClick={openPdf}
-              color="inherit"
+              color='inherit'
               startIcon={<Print />}
             >
               Imprimir
@@ -151,14 +151,14 @@ export const UsersSummary = () => {
         <Grid container spacing={2} p={1}>
           <Grid item xs={12} md={4}>
             <FormControl fullWidth>
-              <InputLabel id="select-period-label">Periodo</InputLabel>
+              <InputLabel id='select-period-label'>Periodo</InputLabel>
               <Select
-                labelId="select-period-label"
+                labelId='select-period-label'
                 value={period}
                 onChange={handleChangePeriod}
                 fullWidth
-                label="Periodo"
-                size="medium"
+                label='Periodo'
+                size='medium'
               >
                 <MenuItem value={Period.DAILY}>Diario</MenuItem>
                 <MenuItem value={Period.MONTHLY}>Mensual</MenuItem>
@@ -171,13 +171,13 @@ export const UsersSummary = () => {
 
           <Grid item xs={12} md={4}>
             <DesktopDatePicker
-              label="Fecha de inicio"
+              label='Fecha de inicio'
               inputFormat={
                 period === Period.MONTHLY
-                  ? "yyyy MMMM"
+                  ? 'yyyy MMMM'
                   : period === Period.YEARLY
-                  ? "yyyy"
-                  : "yyyy-MM-dd"
+                    ? 'yyyy'
+                    : 'yyyy-MM-dd'
               }
               value={startDate}
               onChange={handleChangeStartDate}
@@ -186,10 +186,10 @@ export const UsersSummary = () => {
               maxDate={endDate ? endDate : undefined}
               views={
                 period === Period.MONTHLY
-                  ? ["month", "year"]
+                  ? ['month', 'year']
                   : period === Period.YEARLY
-                  ? ["year"]
-                  : ["day"]
+                    ? ['year']
+                    : ['day']
               }
             />
           </Grid>
@@ -197,8 +197,8 @@ export const UsersSummary = () => {
           {startDate && period === Period.CUSTOM && (
             <Grid item xs={12} md={4}>
               <DesktopDateTimePicker
-                label="Fecha de fin"
-                inputFormat="yyyy-MM-dd"
+                label='Fecha de fin'
+                inputFormat='yyyy-MM-dd'
                 value={endDate}
                 onChange={handleChangeEndDate}
                 renderInput={(params) => <TextField {...params} />}
@@ -209,7 +209,7 @@ export const UsersSummary = () => {
           )}
         </Grid>
 
-        <Box height={200} width={"100%"} display="flex" justifyContent="center">
+        <Box height={200} width={'100%'} display='flex' justifyContent='center'>
           {data && (
             // <Chart ref={chartRef} type='pie' data={dataChart} options={options} />
             <Pie data={dataChart} options={options} ref={chartRef} />
@@ -225,21 +225,21 @@ export const UsersSummary = () => {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={user.firstName + " " + user.lastName}
-                primaryTypographyProps={{ variant: "h5" }}
+                primary={user.firstName + ' ' + user.lastName}
+                primaryTypographyProps={{ variant: 'h5' }}
                 secondary={
-                  <Stack spacing={1} direction="row">
+                  <Stack spacing={1} direction='row'>
                     <Chip
                       label={Roles[`${user.roleName as ValidRoles}`]}
-                      size="small"
+                      size='small'
                     />
-                    <Chip label={`${user.orderCount} pedidos`} size="small" />
+                    <Chip label={`${user.orderCount} pedidos`} size='small' />
                   </Stack>
                 }
               />
 
               <ListItemSecondaryAction>
-                <Typography variant="h4">$ {user.total}</Typography>
+                <Typography variant='h4'>$ {user.total}</Typography>
               </ListItemSecondaryAction>
             </ListItem>
           ))}
@@ -314,14 +314,14 @@ export const UsersSummary = () => {
         </List>
         <CardActions
           sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            p: 2,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            p: 2
           }}
         >
           <Typography>
-            Total:{" "}
-            <Typography variant="h4" component="span">
+            Total:{' '}
+            <Typography variant='h4' component='span'>
               {formatMoney(
                 data?.reduce((acc, user) => acc + Number(user.total), 0) || 0
               )}

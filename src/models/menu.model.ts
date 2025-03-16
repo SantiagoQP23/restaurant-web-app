@@ -1,4 +1,4 @@
-import { ProductionArea } from "../pages/Private/Common/models/production-area.model";
+import { ProductionArea } from '../pages/Private/Common/models/production-area.model';
 
 export interface Menu {
   sections: ISection[];
@@ -41,14 +41,14 @@ export interface ICreateCategory {
 }
 
 export enum ProductStatus {
-  AVAILABLE = "AVAILABLE",
-  OUT_OF_STOCK = "OUT_OF_STOCK",
-  OUT_OF_SEASON = "OUT_OF_SEASON",
+  AVAILABLE = 'AVAILABLE',
+  OUT_OF_STOCK = 'OUT_OF_STOCK',
+  OUT_OF_SEASON = 'OUT_OF_SEASON'
 }
 export enum ProductStatusSpanish {
-  AVAILABLE = "Disponible",
-  OUT_OF_STOCK = "Agotado",
-  OUT_OF_SEASON = "Fuera de temporada",
+  AVAILABLE = 'Disponible',
+  OUT_OF_STOCK = 'Agotado',
+  OUT_OF_SEASON = 'Fuera de temporada'
 }
 
 /**

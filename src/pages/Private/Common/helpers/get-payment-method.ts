@@ -1,5 +1,4 @@
-import { PaymentMethod } from "../../../../models";
-
+import { PaymentMethod } from '../../../../models';
 
 export const getPaymentMethod = (paymentMethod: PaymentMethod): string => {
   switch (paymentMethod) {
@@ -12,6 +11,4 @@ export const getPaymentMethod = (paymentMethod: PaymentMethod): string => {
     default:
       return '';
   }
-}
-
-
+};

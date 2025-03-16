@@ -1,5 +1,5 @@
-import { Order } from "../../../../models";
-import { SocketEvent } from "../../../../models/socket-event.dto";
+import { Order } from '../../../../models';
+import { SocketEvent } from '../../../../models/socket-event.dto';
 import {
   updateOrder,
   setActiveOrder,
@@ -7,12 +7,12 @@ import {
   sortOrdersByDeliveryTime,
   selectOrders,
   addOrder,
-  deleteOrder,
-} from "../../../../redux";
-import { EventsOnSocket } from "../interfaces/events-sockets.interface";
-import { useDispatch, useSelector } from "react-redux";
-import { useSnackbar } from "notistack";
-import { useOnWebSocketsEvent } from "../../../../hooks";
+  deleteOrder
+} from '../../../../redux';
+import { EventsOnSocket } from '../interfaces/events-sockets.interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
+import { useOnWebSocketsEvent } from '../../../../hooks';
 
 /**
  * Custom hook to listen to the event of updating an order with websockets
@@ -50,7 +50,7 @@ export const useOnOrderCreated = () => {
   useOnWebSocketsEvent(
     EventsOnSocket.newOrder,
     ({ data, msg }: SocketEvent<Order>) => {
-      enqueueSnackbar(msg, { variant: "info" });
+      enqueueSnackbar(msg, { variant: 'info' });
       dispatch(addOrder(data));
 
       dispatch(setLastUpdatedOrders(new Date().toISOString()));

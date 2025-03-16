@@ -1,17 +1,17 @@
-import { useSnackbar } from "notistack";
+import { useSnackbar } from 'notistack';
 import {
   TransactionResponse,
   createTransaction,
   getTransactions,
-  updateTransaction,
-} from "../services/transactions.service";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { Transaction } from "../models/transaction.model";
-import { CreateTransactionDto } from "../dto/create-transaction.dto";
-import { UpdateTransactionDto } from "../dto/update-transaction.dto";
-import { useDateFilter, usePaginationAsync } from "../../../../hooks";
-import { useEffect } from "react";
-import { Period } from "../../Common/dto/period.model";
+  updateTransaction
+} from '../services/transactions.service';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Transaction } from '../models/transaction.model';
+import { CreateTransactionDto } from '../dto/create-transaction.dto';
+import { UpdateTransactionDto } from '../dto/update-transaction.dto';
+import { useDateFilter, usePaginationAsync } from '../../../../hooks';
+import { useEffect } from 'react';
+import { Period } from '../../Common/dto/period.model';
 
 export const useCreateTransaction = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -20,11 +20,11 @@ export const useCreateTransaction = () => {
     createTransaction,
     {
       onSuccess: () => {
-        enqueueSnackbar("Transacción creada", { variant: "success" });
+        enqueueSnackbar('Transacción creada', { variant: 'success' });
       },
       onError: () => {
-        enqueueSnackbar("Error al crear la transacción", { variant: "error" });
-      },
+        enqueueSnackbar('Error al crear la transacción', { variant: 'error' });
+      }
     }
   );
 };
@@ -36,13 +36,13 @@ export const useUpdateTransaction = (id: number) => {
     (data) => updateTransaction(id, data),
     {
       onSuccess: () => {
-        enqueueSnackbar("Transacción actualizada", { variant: "success" });
+        enqueueSnackbar('Transacción actualizada', { variant: 'success' });
       },
       onError: () => {
-        enqueueSnackbar("Error al actualizar la transacción", {
-          variant: "error",
+        enqueueSnackbar('Error al actualizar la transacción', {
+          variant: 'error'
         });
-      },
+      }
     }
   );
 };
@@ -52,14 +52,14 @@ export const useTransactions = () => {
   const pagination = usePaginationAsync();
 
   const transactionsQuery = useQuery<TransactionResponse>(
-    ["transactions"],
+    ['transactions'],
     () =>
       getTransactions({
         limit: pagination.rowsPerPage,
         offset: pagination.page,
         endDate: dateFilter.endDate,
         startDate: dateFilter.startDate,
-        period: dateFilter.period,
+        period: dateFilter.period
       })
   );
   useEffect(() => {
@@ -69,7 +69,7 @@ export const useTransactions = () => {
     pagination.rowsPerPage,
     dateFilter.startDate,
     dateFilter.endDate,
-    dateFilter.period,
+    dateFilter.period
   ]);
 
   useEffect(() => {
@@ -79,6 +79,6 @@ export const useTransactions = () => {
   return {
     transactionsQuery,
     ...dateFilter,
-    ...pagination,
+    ...pagination
   };
 };

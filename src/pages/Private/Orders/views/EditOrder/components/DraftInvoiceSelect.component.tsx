@@ -1,9 +1,9 @@
-import {} from "react";
+import {} from 'react';
 
-import { FormControl, MenuItem, InputLabel } from "@mui/material";
-import { useInvoiceStore } from "../../../store/invoiceStore";
+import { FormControl, MenuItem, InputLabel } from '@mui/material';
+import { useInvoiceStore } from '../../../store/invoiceStore';
 
-import Select from "@mui/material/Select";
+import Select from '@mui/material/Select';
 
 export const DraftInvoiceSelect = () => {
   // const { invoices, setActiveInvoice, activeInvoice } = useInvoiceStore(
@@ -21,7 +21,7 @@ export const DraftInvoiceSelect = () => {
   // };
 
   return (
-    <FormControl size="small">
+    <FormControl size='small'>
       {/* <InputLabel id="active-invoice">Cuenta</InputLabel>
 
       <Select

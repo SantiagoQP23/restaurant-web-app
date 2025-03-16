@@ -1,4 +1,4 @@
-import { Delete, Print, Share } from "@mui/icons-material";
+import { Delete, Print, Share } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -14,15 +14,19 @@ import {
   TableHead,
   TableRow,
   Container,
-  IconButton,
-} from "@mui/material";
-import { useParams } from "react-router-dom";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+  IconButton
+} from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
-import { formatMoney } from "../../../Common/helpers/format-money.helper";
-import { useBill } from "../../hooks/useBills";
-import { formatPercentage, getIvaValue, getPriceWithoutIva } from "@/helpers/product.helper";
+import { formatMoney } from '../../../Common/helpers/format-money.helper';
+import { useBill } from '../../hooks/useBills';
+import {
+  formatPercentage,
+  getIvaValue,
+  getPriceWithoutIva
+} from '@/helpers/product.helper';
 // import { generateInvoicePdf } from "../../helpers/generateInvoicePdf.helper";
 
 /**
@@ -50,37 +54,37 @@ export const Bill = () => {
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth='lg'>
         <Stack
           spacing={3}
           my={2}
-          direction={{ xs: "column", sm: "row" }}
-          justifyContent={{ xs: "normal", sm: "space-between" }}
-          alignItems={{ sm: "center" }}
+          direction={{ xs: 'column', sm: 'row' }}
+          justifyContent={{ xs: 'normal', sm: 'space-between' }}
+          alignItems={{ sm: 'center' }}
         >
           <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-start"
+            direction='row'
+            alignItems='center'
+            justifyContent='flex-start'
           >
             <Box>
-              <Typography variant="h3">Comprobante N° {bill.num}</Typography>
+              <Typography variant='h3'>Comprobante N° {bill.num}</Typography>
             </Box>
           </Stack>
 
-          <Stack direction="row" justifyContent="flex-end" spacing={1}>
-            <IconButton color="error" size="small">
+          <Stack direction='row' justifyContent='flex-end' spacing={1}>
+            <IconButton color='error' size='small'>
               <Delete />
             </IconButton>
-            <IconButton size="small">
+            <IconButton size='small'>
               <Share />
             </IconButton>
 
             <Button
-              variant="contained"
+              variant='contained'
               startIcon={<Print />}
               onClick={handlePrint}
-              size="small"
+              size='small'
             >
               Imprimir
             </Button>
@@ -90,11 +94,11 @@ export const Bill = () => {
         <Card>
           <CardHeader
             title={
-              <Typography variant="h4"> Restaurante Doña Yoli </Typography>
+              <Typography variant='h4'> Restaurante Doña Yoli </Typography>
             }
             action={
               <Box>
-                <Typography variant="h4">Pedido N° {bill.num}</Typography>
+                <Typography variant='h4'>Pedido N° {bill.num}</Typography>
               </Box>
             }
           />
@@ -102,53 +106,53 @@ export const Bill = () => {
           <CardContent>
             <Stack
               spacing={2}
-              direction={{ xs: "column", sm: "row" }}
-            // Establecer el tamaño de los elementos
+              direction={{ xs: 'column', sm: 'row' }}
+              // Establecer el tamaño de los elementos
             >
-              <Box flexBasis="50%">
-                <Typography variant="h5" mb={1}>
+              <Box flexBasis='50%'>
+                <Typography variant='h5' mb={1}>
                   Cliente
                 </Typography>
-                <Typography variant="body1">{bill.client?.address}</Typography>
-                <Typography variant="body1">
+                <Typography variant='body1'>{bill.client?.address}</Typography>
+                <Typography variant='body1'>
                   {bill.client?.person.email}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant='body1'>
                   {bill.client?.person.numPhone}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant='body1'>
                   {bill.client?.person.firstName} {bill.client?.person.lastName}
                 </Typography>
               </Box>
-              <Box flexBasis="50%">
-                <Typography variant="h5" mb={1}>
+              <Box flexBasis='50%'>
+                <Typography variant='h5' mb={1}>
                   Mesero
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant='body1'>
                   {bill.owner.person.firstName} {bill.owner.person.lastName}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant='body1'>
                   {bill.owner.person.email}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant='body1'>
                   {bill.owner.person.numPhone}
                 </Typography>
               </Box>
             </Stack>
 
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
               my={2}
             >
               <Box>
-                <Typography variant="h5" mb={1}>
+                <Typography variant='h5' mb={1}>
                   Fecha
                 </Typography>
-                <Typography variant="body1">
-                  {format(new Date(bill?.createdAt), "dd MMMM yyyy HH:mm", {
-                    locale: es,
+                <Typography variant='body1'>
+                  {format(new Date(bill?.createdAt), 'dd MMMM yyyy HH:mm', {
+                    locale: es
                   })}
                 </Typography>
               </Box>
@@ -160,9 +164,9 @@ export const Bill = () => {
                   <TableRow>
                     <TableCell>Cantidad</TableCell>
                     <TableCell>Producto</TableCell>
-                    <TableCell align="right">Precio</TableCell>
-                    <TableCell align="right">IVA</TableCell>
-                    <TableCell align="right">Subtotal</TableCell>
+                    <TableCell align='right'>Precio</TableCell>
+                    <TableCell align='right'>IVA</TableCell>
+                    <TableCell align='right'>Subtotal</TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -172,29 +176,38 @@ export const Bill = () => {
                       <TableRow
                         key={detail.id}
                         sx={{
-                          whiteSpace: "nowrap",
+                          whiteSpace: 'nowrap'
                         }}
                       >
-                        <TableCell align="center">{detail.quantity}</TableCell>
+                        <TableCell align='center'>{detail.quantity}</TableCell>
                         <TableCell
                           sx={{
-                            fontWeight: "bold",
+                            fontWeight: 'bold'
                           }}
                         >
                           {detail.orderDetail.product.name}
                         </TableCell>
-                        <TableCell align="right">
-                          {formatMoney(getPriceWithoutIva(detail.price, detail.orderDetail.product.iva))}
+                        <TableCell align='right'>
+                          {formatMoney(
+                            getPriceWithoutIva(
+                              detail.price,
+                              detail.orderDetail.product.iva
+                            )
+                          )}
                         </TableCell>
-                        <TableCell align="right">
-                          {formatMoney(getIvaValue(detail.price, detail.orderDetail.product.iva))}
-                          <Typography variant="caption" color="textSecondary">
+                        <TableCell align='right'>
+                          {formatMoney(
+                            getIvaValue(
+                              detail.price,
+                              detail.orderDetail.product.iva
+                            )
+                          )}
+                          <Typography variant='caption' color='textSecondary'>
                             {` (${formatPercentage(Number(detail.orderDetail.product.iva))})`}
                           </Typography>
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align='right'>
                           {formatMoney(detail.total)}
-
                         </TableCell>
                       </TableRow>
                     );
@@ -202,18 +215,18 @@ export const Bill = () => {
 
                   <TableRow>
                     <TableCell
-                      align="right"
+                      align='right'
                       colSpan={3}
                       sx={{
-                        border: "none",
+                        border: 'none'
                       }}
                     >
-                      <Typography variant="h6">Descuento</Typography>
+                      <Typography variant='h6'>Descuento</Typography>
                     </TableCell>
                     <TableCell
-                      align="right"
+                      align='right'
                       sx={{
-                        border: "none",
+                        border: 'none'
                       }}
                     >
                       {formatMoney(bill.discount || 0)}
@@ -221,18 +234,18 @@ export const Bill = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell
-                      align="right"
+                      align='right'
                       colSpan={3}
                       sx={{
-                        border: "none",
+                        border: 'none'
                       }}
                     >
-                      <Typography variant="h4">Total</Typography>
+                      <Typography variant='h4'>Total</Typography>
                     </TableCell>
                     <TableCell
-                      align="right"
+                      align='right'
                       sx={{
-                        border: "none",
+                        border: 'none'
                       }}
                     >
                       {formatMoney(bill.total || 0)}

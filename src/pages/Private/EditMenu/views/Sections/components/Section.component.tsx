@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, useState, KeyboardEvent } from "react";
+import { ChangeEvent, FC, useState, KeyboardEvent } from 'react';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-import { CSS } from "@dnd-kit/utilities";
+import { CSS } from '@dnd-kit/utilities';
 
 import {
   Card,
@@ -12,29 +12,29 @@ import {
   IconButton,
   TextField,
   Stack,
-  CircularProgress,
-} from "@mui/material";
+  CircularProgress
+} from '@mui/material';
 
 import {
   DragIndicator,
   MoreHorizOutlined,
   Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
-import { ISection } from "../../../../../../models";
+  VisibilityOff
+} from '@mui/icons-material';
+import { ISection } from '../../../../../../models';
 
 import {
   setActiveCategories,
   setActiveCategory,
   setActiveProducts,
-  setActiveSection,
-} from "../../../../../../redux";
-import { useDispatch } from "react-redux";
-import { Label } from "../../../../../../components/ui";
-import { useSnackbar } from "notistack";
-import { useFetchAndLoad } from "../../../../../../hooks/useFetchAndLoad";
-import { useUpdateSection } from "../../../hooks/useSections";
-import { useSortable } from "@dnd-kit/sortable";
+  setActiveSection
+} from '../../../../../../redux';
+import { useDispatch } from 'react-redux';
+import { Label } from '../../../../../../components/ui';
+import { useSnackbar } from 'notistack';
+import { useFetchAndLoad } from '../../../../../../hooks/useFetchAndLoad';
+import { useUpdateSection } from '../../../hooks/useSections';
+import { useSortable } from '@dnd-kit/sortable';
 
 interface Props {
   seccion: ISection;
@@ -54,7 +54,7 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition
   };
 
   const [name, setName] = useState(seccion.name);
@@ -96,7 +96,7 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
 
   const updateNameSection = async () => {
     setIsEditing(false);
-    if (name === seccion.name || name === "") return;
+    if (name === seccion.name || name === '') return;
 
     await updateSectionMutation
       .mutateAsync({ name, id: seccion.id })
@@ -108,12 +108,12 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
   const toggleVisibility = async () => {
     await updateSectionMutation.mutateAsync({
       id: seccion.id,
-      isPublic: !seccion.isPublic,
+      isPublic: !seccion.isPublic
     });
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       // Enter key is pressed, execute your update logic
       updateNameSection();
     }
@@ -126,16 +126,16 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
           <CardContent>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mb: 1,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mb: 1
               }}
             >
-              <Label color={seccion.isActive ? "success" : "error"}>
-                {seccion.isActive ? "Activo" : "Eliminado"}
+              <Label color={seccion.isActive ? 'success' : 'error'}>
+                {seccion.isActive ? 'Activo' : 'Eliminado'}
               </Label>
-              <Stack direction="row" spacing={2} alignItems="center">
+              <Stack direction='row' spacing={2} alignItems='center'>
                 {updateSectionMutation.isLoading && (
                   <CircularProgress size={18} />
                 )}
@@ -166,23 +166,23 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
               <>
                 <TextField
                   autoFocus
-                  margin="dense"
-                  type="text"
+                  margin='dense'
+                  type='text'
                   fullWidth
                   value={name}
                   onChange={handleChangeName}
                   onBlur={updateNameSection}
-                  size="small"
+                  size='small'
                   onKeyDown={handleKeyDown}
                 />
               </>
             ) : (
-              <Typography variant="h4" onClick={editNameSection}>
+              <Typography variant='h4' onClick={editNameSection}>
                 {seccion.name}
               </Typography>
             )}
             <Typography
-              variant="subtitle2"
+              variant='subtitle2'
               mt={1}
               // sx={{ textDecorationLine: "underline" }}
             >

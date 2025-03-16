@@ -16,29 +16,29 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-} from "@mui/material";
-import { useEffect } from "react";
-import { DesktopDatePicker } from "@mui/x-date-pickers";
-import { useQuery } from "@tanstack/react-query";
+  TableRow
+} from '@mui/material';
+import { useEffect } from 'react';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
+import { useQuery } from '@tanstack/react-query';
 import {
   BestSellingCategoriesResponse,
   ResultBestSellingProducts,
   getBestSellingCategories,
-  getBestSellingProducts,
-} from "../../services/dashboard.service";
-import { Print } from "@mui/icons-material";
-import { usePaginationAsync } from "../../../../../hooks/usePaginationAsync";
-import { useSelector } from "react-redux";
-import { selectMenu } from "../../../../../redux";
-import { Chip } from "@mui/material";
-import { TitlePage } from "../../../components/TitlePage.component";
-import { useFilterSoldProducts } from "../../hooks/useFilterSoldProducts";
-import { CategoriesBestSelling } from "../IncomesReports/components/CategoriesBestSelling.component";
-import { NavLink as RouterLink } from "react-router-dom";
-import { formatMoney } from "../../../Common/helpers/format-money.helper";
-import { generateProductsReport } from "../../helpers/pdf-products-reports";
-import { Period, GroupBy } from "../../../Common/dto/period.model";
+  getBestSellingProducts
+} from '../../services/dashboard.service';
+import { Print } from '@mui/icons-material';
+import { usePaginationAsync } from '../../../../../hooks/usePaginationAsync';
+import { useSelector } from 'react-redux';
+import { selectMenu } from '../../../../../redux';
+import { Chip } from '@mui/material';
+import { TitlePage } from '../../../components/TitlePage.component';
+import { useFilterSoldProducts } from '../../hooks/useFilterSoldProducts';
+import { CategoriesBestSelling } from '../IncomesReports/components/CategoriesBestSelling.component';
+import { NavLink as RouterLink } from 'react-router-dom';
+import { formatMoney } from '../../../Common/helpers/format-money.helper';
+import { generateProductsReport } from '../../helpers/pdf-products-reports';
+import { Period, GroupBy } from '../../../Common/dto/period.model';
 
 export const ProductsReports = () => {
   // const {
@@ -66,7 +66,7 @@ export const ProductsReports = () => {
     handleChangePeriod,
     handleChangeStartDate,
     groupBy,
-    customGroupBy,
+    customGroupBy
   } = filters;
 
   const {
@@ -74,13 +74,13 @@ export const ProductsReports = () => {
     rowsPerPage,
 
     handleChangePage,
-    handleChangeRowsPerPage,
+    handleChangeRowsPerPage
   } = usePaginationAsync();
 
   const { data, refetch } = useQuery<ResultBestSellingProducts>(
     [
-      "best-selling-products",
-      { period, startDate, endDate, offset: page, limit: rowsPerPage },
+      'best-selling-products',
+      { period, startDate, endDate, offset: page, limit: rowsPerPage }
     ],
     () => {
       return getBestSellingProducts({
@@ -90,20 +90,20 @@ export const ProductsReports = () => {
         offset: page,
         limit: rowsPerPage,
         groupBy,
-        customGroupBy,
+        customGroupBy
       });
     },
     {
       onSuccess: (data) => {
         console.log(data);
-      },
+      }
     }
   );
 
   const categoriesQuery = useQuery<BestSellingCategoriesResponse>(
     [
-      "best-selling-categories",
-      { period, startDate, endDate, offset: page, limit: rowsPerPage },
+      'best-selling-categories',
+      { period, startDate, endDate, offset: page, limit: rowsPerPage }
     ],
     () => {
       return getBestSellingCategories({
@@ -113,13 +113,13 @@ export const ProductsReports = () => {
         offset: page,
         limit: rowsPerPage,
         groupBy,
-        customGroupBy,
+        customGroupBy
       });
     },
     {
       onSuccess: (data) => {
         console.log(data);
-      },
+      }
     }
   );
 
@@ -145,16 +145,16 @@ export const ProductsReports = () => {
     startDate,
     endDate,
     groupBy,
-    customGroupBy,
+    customGroupBy
   ]);
 
   return (
     <>
       <TitlePage
-        title="Productos"
+        title='Productos'
         action={
           <Button
-            variant="contained"
+            variant='contained'
             startIcon={<Print />}
             onClick={handlePrint}
           >
@@ -167,14 +167,14 @@ export const ProductsReports = () => {
         <Grid item xs={12} md={4}>
           <Card>
             <CardHeader
-              title="Secciones"
+              title='Secciones'
               // subheader='Secciones registradas'
               action={
                 <Button
-                  variant="outlined"
+                  variant='outlined'
                   component={RouterLink}
-                  to="/menu"
-                  size="small"
+                  to='/menu'
+                  size='small'
                 >
                   Administrar
                 </Button>
@@ -183,12 +183,12 @@ export const ProductsReports = () => {
 
             <CardContent
               sx={{
-                display: "flex",
+                display: 'flex',
                 gap: 1,
-                alignItems: "center",
+                alignItems: 'center'
               }}
             >
-              <Typography variant="h3">{sections.length}</Typography>
+              <Typography variant='h3'>{sections.length}</Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -196,14 +196,14 @@ export const ProductsReports = () => {
         <Grid item xs={12} md={4}>
           <Card>
             <CardHeader
-              title="Categorías"
+              title='Categorías'
               // subheader='Categorías registradas'
               action={
                 <Button
-                  variant="outlined"
+                  variant='outlined'
                   component={RouterLink}
-                  to="/menu"
-                  size="small"
+                  to='/menu'
+                  size='small'
                 >
                   Administrar
                 </Button>
@@ -212,26 +212,26 @@ export const ProductsReports = () => {
 
             <CardContent
               sx={{
-                display: "flex",
+                display: 'flex',
                 gap: 1,
-                alignItems: "center",
+                alignItems: 'center'
               }}
             >
-              <Typography variant="h3">{categories.length}</Typography>
+              <Typography variant='h3'>{categories.length}</Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
           <Card>
             <CardHeader
-              title="Productos"
+              title='Productos'
               // subheader='Productos registrados'
               action={
                 <Button
-                  variant="outlined"
+                  variant='outlined'
                   component={RouterLink}
-                  to="/menu"
-                  size="small"
+                  to='/menu'
+                  size='small'
                 >
                   Administrar
                 </Button>
@@ -240,12 +240,12 @@ export const ProductsReports = () => {
 
             <CardContent
               sx={{
-                display: "flex",
+                display: 'flex',
                 gap: 1,
-                alignItems: "center",
+                alignItems: 'center'
               }}
             >
-              <Typography variant="h3">{products.length}</Typography>
+              <Typography variant='h3'>{products.length}</Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -254,14 +254,14 @@ export const ProductsReports = () => {
       <Grid container spacing={2} mt={1}>
         <Grid item xs={12} md={2}>
           <FormControl fullWidth>
-            <InputLabel id="select-period-label">Periodo</InputLabel>
+            <InputLabel id='select-period-label'>Periodo</InputLabel>
             <Select
-              labelId="select-period-label"
+              labelId='select-period-label'
               value={period}
               onChange={handleChangePeriod}
               fullWidth
-              label="Periodo"
-              size="medium"
+              label='Periodo'
+              size='medium'
             >
               <MenuItem value={Period.DAILY}>Diario</MenuItem>
               <MenuItem value={Period.MONTHLY}>Mensual</MenuItem>
@@ -277,13 +277,13 @@ export const ProductsReports = () => {
 
         <Grid item xs={12} md={2}>
           <DesktopDatePicker
-            label="Fecha de inicio"
+            label='Fecha de inicio'
             inputFormat={
               period === Period.MONTHLY
-                ? "yyyy MMMM"
+                ? 'yyyy MMMM'
                 : period === Period.YEARLY
-                ? "yyyy"
-                : "yyyy-MM-dd"
+                  ? 'yyyy'
+                  : 'yyyy-MM-dd'
             }
             value={startDate}
             onChange={handleChangeStartDate}
@@ -292,10 +292,10 @@ export const ProductsReports = () => {
             maxDate={endDate ? endDate : undefined}
             views={
               period === Period.MONTHLY
-                ? ["year", "month"]
+                ? ['year', 'month']
                 : period === Period.YEARLY
-                ? ["year"]
-                : ["day"]
+                  ? ['year']
+                  : ['day']
             }
           />
         </Grid>
@@ -303,8 +303,8 @@ export const ProductsReports = () => {
         {startDate && period === Period.CUSTOM && (
           <Grid item xs={12} md={2}>
             <DesktopDatePicker
-              label="Fecha de fin"
-              inputFormat="yyyy-MM-dd"
+              label='Fecha de fin'
+              inputFormat='yyyy-MM-dd'
               value={endDate}
               onChange={handleChangeEndDate}
               renderInput={(params) => <TextField {...params} />}
@@ -319,7 +319,7 @@ export const ProductsReports = () => {
         <Grid item xs={12} md={6}>
           <Card>
             <CardHeader
-              title="Productos más vendidos"
+              title='Productos más vendidos'
               // action={
               //   <Button
               //     size='small'
@@ -336,8 +336,8 @@ export const ProductsReports = () => {
                   <TableRow>
                     <TableCell>Producto</TableCell>
                     <TableCell>Categoría</TableCell>
-                    <TableCell align="center">Cantidad</TableCell>
-                    <TableCell align="right">Total</TableCell>
+                    <TableCell align='center'>Cantidad</TableCell>
+                    <TableCell align='right'>Total</TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -346,20 +346,20 @@ export const ProductsReports = () => {
                     data.products?.map((product) => (
                       <TableRow key={product.id}>
                         <TableCell>
-                          <Typography variant="h6" whiteSpace="nowrap">
+                          <Typography variant='h6' whiteSpace='nowrap'>
                             {product.productName}
                           </Typography>
                         </TableCell>
                         <TableCell>
-                          <Chip label={product.categoryName} size="small" />
+                          <Chip label={product.categoryName} size='small' />
                         </TableCell>
-                        <TableCell align="center">
-                          <Typography variant="h6">
+                        <TableCell align='center'>
+                          <Typography variant='h6'>
                             {product.totalSold}
                           </Typography>
                         </TableCell>
-                        <TableCell align="right">
-                          <Typography variant="h6" color="success">
+                        <TableCell align='right'>
+                          <Typography variant='h6' color='success'>
                             {formatMoney(
                               product.totalSold * product.productPrice
                             )}
@@ -370,8 +370,8 @@ export const ProductsReports = () => {
                   ) : (
                     <>
                       <TableRow>
-                        <TableCell colSpan={4} align="center">
-                          <Typography variant="h6">
+                        <TableCell colSpan={4} align='center'>
+                          <Typography variant='h6'>
                             No hay datos para mostrar
                           </Typography>
                         </TableCell>

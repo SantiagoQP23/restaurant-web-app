@@ -1,9 +1,9 @@
-import React, { createContext, FC, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Socket } from "socket.io-client";
-import { useSocket } from "../hooks/useSocket";
-import { selectAuth } from "../redux/slices/auth";
-import { getEnvVariables } from "../helpers/getEnvVariables";
+import React, { createContext, FC, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Socket } from 'socket.io-client';
+import { useSocket } from '../hooks/useSocket';
+import { selectAuth } from '../redux/slices/auth';
+import { getEnvVariables } from '../helpers/getEnvVariables';
 
 const { VITE_WS_URL } = getEnvVariables();
 
@@ -26,15 +26,15 @@ export const SocketProvider: FC<Props> = ({ children }) => {
   const { status } = useSelector(selectAuth);
 
   useEffect(() => {
-    if (status === "not-authenticated") {
-      console.log("Desconectando socket");
+    if (status === 'not-authenticated') {
+      console.log('Desconectando socket');
       desconectarSocket();
     }
   }, [status, desconectarSocket]);
 
   useEffect(() => {
-    if (status === "authenticated") {
-      console.log("conectando socket");
+    if (status === 'authenticated') {
+      console.log('conectando socket');
       conectarSocket();
     }
   }, [status, conectarSocket]);

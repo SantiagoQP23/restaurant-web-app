@@ -1,44 +1,44 @@
-import { FC, useEffect, useState, useContext } from "react";
+import { FC, useEffect, useState, useContext } from 'react';
 
 import {
   Typography,
   Dialog,
   DialogTitle,
   DialogContent,
-  IconButton,
-} from "@mui/material";
-import { Close } from "@mui/icons-material";
+  IconButton
+} from '@mui/material';
+import { Close } from '@mui/icons-material';
 
-import { IClient, ICreateClient } from "../../../../../models";
-import { OrderActionType, OrderContext } from "../../context/Order.context";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../redux/slices/orders/orders.slice";
-import { statusModalClientOrder } from "../../services/sharing-information.service";
+import { IClient, ICreateClient } from '../../../../../models';
+import { OrderActionType, OrderContext } from '../../context/Order.context';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../redux/slices/orders/orders.slice';
+import { statusModalClientOrder } from '../../services/sharing-information.service';
 
 import {
   useClients,
-  useCreateCliente,
-} from "../../../Clients/hooks/useClients";
+  useCreateCliente
+} from '../../../Clients/hooks/useClients';
 
-import { FormClient } from "../../../Clients/components/FormClient.component";
-import { TypeIdentification } from "../../../../../models/common.model";
-import { CreateClientDto } from "../../../Clients/dto/create-client.dto";
-import { useUpdateOrder } from "../../hooks";
+import { FormClient } from '../../../Clients/components/FormClient.component';
+import { TypeIdentification } from '../../../../../models/common.model';
+import { CreateClientDto } from '../../../Clients/dto/create-client.dto';
+import { useUpdateOrder } from '../../hooks';
 
 interface Props {
   client?: IClient;
 }
 
 const initialClient: ICreateClient = {
-  lastName: "",
-  firstName: "",
+  lastName: '',
+  firstName: '',
   identification: {
     type: TypeIdentification.CEDULA,
-    num: "",
+    num: ''
   },
-  numPhone: "",
-  address: "",
-  email: "",
+  numPhone: '',
+  address: '',
+  email: ''
 };
 
 export const ModalClientOrder: FC<Props> = () => {
@@ -65,14 +65,14 @@ export const ModalClientOrder: FC<Props> = () => {
   const onSubmit = (data: ICreateClient) => {
     const { identification, ...dataClient } = data;
 
-    if (data.address === "") delete dataClient.address;
+    if (data.address === '') delete dataClient.address;
 
-    if (data.numPhone === "") delete dataClient.numPhone;
+    if (data.numPhone === '') delete dataClient.numPhone;
 
-    if (data.email === "") delete dataClient.email;
+    if (data.email === '') delete dataClient.email;
 
     let newClient: CreateClientDto = {
-      ...dataClient,
+      ...dataClient
     };
 
     if (
@@ -84,7 +84,7 @@ export const ModalClientOrder: FC<Props> = () => {
       newClient = {
         ...newClient,
         typeIdentification: identification.type,
-        numberIdentification: identification.num,
+        numberIdentification: identification.num
       };
     }
 
@@ -94,7 +94,7 @@ export const ModalClientOrder: FC<Props> = () => {
       } else {
         updateOrder({
           id: activeOrder.id,
-          clientId: res.id,
+          clientId: res.id
         });
       }
 
@@ -108,7 +108,7 @@ export const ModalClientOrder: FC<Props> = () => {
 
   useEffect(() => {
     const suscription = suscription$.subscribe(({ value }) => {
-      console.log("abrir modal");
+      console.log('abrir modal');
       setOpen(value);
     });
 
@@ -121,13 +121,13 @@ export const ModalClientOrder: FC<Props> = () => {
 
   return (
     <>
-      <Dialog open={open} onClose={handleClose} sx={{ width: "auto" }}>
+      <Dialog open={open} onClose={handleClose} sx={{ width: 'auto' }}>
         <DialogTitle
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
+          display='flex'
+          justifyContent='space-between'
+          alignItems='center'
         >
-          <Typography variant="h4">Nuevo cliente</Typography>
+          <Typography variant='h4'>Nuevo cliente</Typography>
           <IconButton onClick={handleClose}>
             <Close />
           </IconButton>

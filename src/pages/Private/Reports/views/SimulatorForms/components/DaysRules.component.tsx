@@ -1,4 +1,14 @@
-import { CardHeader, CardContent, Card, Typography, TextField, FormControl, Grid, CircularProgress, Box } from '@mui/material';
+import {
+  CardHeader,
+  CardContent,
+  Card,
+  Typography,
+  TextField,
+  FormControl,
+  Grid,
+  CircularProgress,
+  Box
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useState } from 'react';
 import { useFetchAndLoad } from '../../../../../../hooks/useFetchAndLoad';
@@ -8,8 +18,11 @@ import { useSnackbar } from 'notistack';
 import { format } from 'date-fns';
 import { DoneOutline, DoneOutlined } from '@mui/icons-material';
 import { RuleDay } from '../../../models/rule-day.model';
-import { updateRuleDay, updateRulesDay, getRulesDay } from '../../../services/rules.service';
-
+import {
+  updateRuleDay,
+  updateRulesDay,
+  getRulesDay
+} from '../../../services/rules.service';
 
 enum DayOrder {
   'Sunday' = 0,
@@ -18,23 +31,26 @@ enum DayOrder {
   'Wednesday' = 3,
   'Thursday' = 4,
   'Friday' = 5,
-  'Saturday' = 6,
-};
-
-enum DayNameSpanish {
-  "Sunday" = "Domingo",
-  "Monday" = "Lunes",
-  "Tuesday" = "Martes",
-  "Wednesday" = "Miércoles",
-  "Thursday" = "Jueves",
-  "Friday" = "Viernes",
-  "Saturday" = "Sábado",
+  'Saturday' = 6
 }
 
+enum DayNameSpanish {
+  'Sunday' = 'Domingo',
+  'Monday' = 'Lunes',
+  'Tuesday' = 'Martes',
+  'Wednesday' = 'Miércoles',
+  'Thursday' = 'Jueves',
+  'Friday' = 'Viernes',
+  'Saturday' = 'Sábado'
+}
 
-
-const Day = ({ dayToUpdate, label }: { dayToUpdate: RuleDay, label: string }) => {
-
+const Day = ({
+  dayToUpdate,
+  label
+}: {
+  dayToUpdate: RuleDay;
+  label: string;
+}) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { loading, callEndpoint } = useFetchAndLoad();
@@ -43,50 +59,34 @@ const Day = ({ dayToUpdate, label }: { dayToUpdate: RuleDay, label: string }) =>
   const [value, setValue] = useState(dayToUpdate.value);
 
   const onSubmit = async () => {
-
-    await callEndpoint(updateRuleDay({
-      id: day.id,
-      value
-    }))
+    await callEndpoint(
+      updateRuleDay({
+        id: day.id,
+        value
+      })
+    )
       .then((resp) => {
-        enqueueSnackbar('Regla actualizada', { variant: 'success' })
-        console.log(resp.data)
-        setDay(resp.data)
-        setValue(resp.data.value)
-      }
-      )
+        enqueueSnackbar('Regla actualizada', { variant: 'success' });
+        console.log(resp.data);
+        setDay(resp.data);
+        setValue(resp.data.value);
+      })
       .catch(() => {
-        enqueueSnackbar('Error al actualizar la regla', { variant: 'error' })
-      }
-      )
-
-  }
-
-
-
+        enqueueSnackbar('Error al actualizar la regla', { variant: 'error' });
+      });
+  };
 
   return (
     <>
-
-      <Card
-      >
-
-        <CardHeader
-          title={label}
-        />
+      <Card>
+        <CardHeader title={label} />
 
         {/* <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>{label}</Typography> */}
 
         <CardContent>
-
-          <Box
-            display="flex"
-
-          >
-
+          <Box display='flex'>
             <TextField
-
-              type="number"
+              type='number'
               fullWidth
               required
               value={value}
@@ -94,41 +94,23 @@ const Day = ({ dayToUpdate, label }: { dayToUpdate: RuleDay, label: string }) =>
                 setValue(Number(e.target.value));
               }}
               inputProps={{
-                step: 0.05,
+                step: 0.05
               }}
-
               size='small'
-
             />
-            {
-              value !== day.value &&
-              (
-                <LoadingButton
-
-                  loading={loading}
-                  onClick={onSubmit}
-
-
-                >
-                  <DoneOutlined />
-                </LoadingButton>
-              )
-            }
+            {value !== day.value && (
+              <LoadingButton loading={loading} onClick={onSubmit}>
+                <DoneOutlined />
+              </LoadingButton>
+            )}
           </Box>
         </CardContent>
       </Card>
     </>
-  )
-}
-
-
-
-
+  );
+};
 
 export const DaysRules = () => {
-
-
-
   const [days, setDays] = useState<RuleDay[]>([]);
   const [daysInit, setDaysInit] = useState<RuleDay[]>([]);
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -138,120 +120,111 @@ export const DaysRules = () => {
   const { loading, callEndpoint } = useFetchAndLoad();
 
   const onSubmit = async () => {
-
     const daysToUpdate: UpdateRuleDayDto[] = days.map((day, index) => {
       return {
         id: day.id,
         value: day.value
-      }
-    })
+      };
+    });
 
     await callEndpoint(updateRulesDay(daysToUpdate))
       .then(() => {
-        enqueueSnackbar('Reglas actualizadas', { variant: 'success' })
-      }
-      )
+        enqueueSnackbar('Reglas actualizadas', { variant: 'success' });
+      })
       .catch(() => {
-        enqueueSnackbar('Error al actualizar las reglas', { variant: 'error' })
-      }
-      )
-
-
-  }
+        enqueueSnackbar('Error al actualizar las reglas', { variant: 'error' });
+      });
+  };
 
   const verifyBtnDisabled = () => {
-    const isDisabled = days.find((day, index) => day.value !== daysInit[index].value) ? true : false;
-    console.log({ isDisabled })
+    const isDisabled = days.find(
+      (day, index) => day.value !== daysInit[index].value
+    )
+      ? true
+      : false;
+    console.log({ isDisabled });
     setBtnDisabled(isDisabled);
-
-
-  }
+  };
 
   // Ordenar los días de la semana por nombre
   // const orderDays = (days: RuleDay[]) => {
 
   //   const daysOrdered = days.sort((a, b) => DayOrder[`${a.day}`] - DayOrder[b.day]);
 
-
   //   return daysOrdered;
 
-
-
   // }
-
 
   const getDaysCall = async () => await callEndpoint(getRulesDay());
 
   const loadDays = (data: RuleDay[]) => {
-
-    const days = data
+    const days = data;
     setDays(days);
     setDaysInit(days);
+  };
 
-  }
+  useAsync(getDaysCall, loadDays, () => {}, []);
 
-  useAsync(getDaysCall, loadDays, () => { }, []);
-
-
-  if (days.length === 0) return <></>
-
+  if (days.length === 0) return <></>;
 
   return (
     <>
-
-      <Typography variant="h4" my={2}>Regla del día</Typography>
-
+      <Typography variant='h4' my={2}>
+        Regla del día
+      </Typography>
 
       {/* <Card>
         <CardHeader title="Reglas del día" />
         <CardContent> */}
-      {
-        loading ?
-          (<CircularProgress />)
-          :
-          (
-            <form>
-              <Grid container spacing={2} >
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <form>
+          <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <Day
+                label='Lunes'
+                dayToUpdate={days.find((day) => day.day === 'Monday')!}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Day
+                label='Martes'
+                dayToUpdate={days.find((day) => day.day === 'Tuesday')!}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Day
+                label='Miércoles'
+                dayToUpdate={days.find((day) => day.day === 'Wednesday')!}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Day
+                label='Jueves'
+                dayToUpdate={days.find((day) => day.day === 'Thursday')!}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Day
+                label='Viernes'
+                dayToUpdate={days.find((day) => day.day === 'Friday')!}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Day
+                label='Sábado'
+                dayToUpdate={days.find((day) => day.day === 'Saturday')!}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Day
+                label='Domingo'
+                dayToUpdate={days.find((day) => day.day === 'Sunday')!}
+              />
+            </Grid>
 
-                <Grid item xs={3}>
-                  <Day
-                    label='Lunes'
-                    dayToUpdate={days.find(day => day.day === 'Monday')!} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Day
-                    label='Martes'
-                    dayToUpdate={days.find(day => day.day === 'Tuesday')!} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Day
-                    label='Miércoles'
-                    dayToUpdate={days.find(day => day.day === 'Wednesday')!} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Day
-                    label='Jueves'
-                    dayToUpdate={days.find(day => day.day === 'Thursday')!} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Day
-                    label='Viernes'
-                    dayToUpdate={days.find(day => day.day === 'Friday')!} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Day
-                    label='Sábado'
-                    dayToUpdate={days.find(day => day.day === 'Saturday')!} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Day
-                    label='Domingo'
-                    dayToUpdate={days.find(day => day.day === 'Sunday')!} />
-                </Grid>
-
-
-
-                {/* {
+            {/* {
                       days.map((day, index) => (
 
 
@@ -284,9 +257,7 @@ export const DaysRules = () => {
                       )
                     } */}
 
-
-
-                {/* 
+            {/* 
                     <Grid item xs={12}>
 
                       <LoadingButton
@@ -299,20 +270,13 @@ export const DaysRules = () => {
                         Guardar
                       </LoadingButton>
                     </Grid> */}
-              </Grid>
-
-
-
-            </form>
-
-          )
-      }
-
+          </Grid>
+        </form>
+      )}
 
       {/* 
         </CardContent>
       </Card> */}
-
     </>
-  )
-}
+  );
+};

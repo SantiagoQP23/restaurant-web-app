@@ -1,14 +1,14 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from 'react';
 
-import { Box, Chip, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Chip, IconButton, Stack, Typography } from '@mui/material';
 
-import { DeleteOutline, EditOutlined } from "@mui/icons-material";
-import { ICreateOrderDetail } from "../../../../../../models";
+import { DeleteOutline, EditOutlined } from '@mui/icons-material';
+import { ICreateOrderDetail } from '../../../../../../models';
 
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { useNewOrderStore } from "../../../store/newOrderStore";
-import { CounterInput, ModalAddDetail } from "../../../components";
-import NiceModal from "@ebay/nice-modal-react";
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { useNewOrderStore } from '../../../store/newOrderStore';
+import { CounterInput, ModalAddDetail } from '../../../components';
+import NiceModal from '@ebay/nice-modal-react';
 
 interface Props {
   detalle: ICreateOrderDetail;
@@ -45,21 +45,21 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
     <>
       <Box
         sx={{
-          whiteSpace: "nowrap",
-          display: "flex",
-          flexDirection: "column",
+          whiteSpace: 'nowrap',
+          display: 'flex',
+          flexDirection: 'column',
           p: 1,
           px: 2,
-          gap: 1,
+          gap: 1
         }}
       >
         <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="flex-start"
+          direction='row'
+          justifyContent='space-between'
+          alignItems='flex-start'
         >
           <Stack>
-            <Typography variant="h4" whiteSpace={"normal"}>
+            <Typography variant='h4' whiteSpace={'normal'}>
               {detalle.quantity} - {detalle.product.name}
               {/* {detalle.productOption && (
                 <Chip
@@ -72,21 +72,21 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
               )} */}
             </Typography>
 
-            <Typography variant="subtitle1" whiteSpace="pre-wrap">
+            <Typography variant='subtitle1' whiteSpace='pre-wrap'>
               {detalle.description && detalle.description}
             </Typography>
           </Stack>
 
-          <Stack direction="row" spacing={1}>
-            <IconButton onClick={editDescription} color="primary" size="small">
+          <Stack direction='row' spacing={1}>
+            <IconButton onClick={editDescription} color='primary' size='small'>
               <EditOutlined />
             </IconButton>
             <IconButton
-              aria-label="Eliminar detalle"
+              aria-label='Eliminar detalle'
               onClick={deleteDetail}
               disabled={false}
-              color="error"
-              size="small"
+              color='error'
+              size='small'
             >
               <DeleteOutline />
             </IconButton>
@@ -94,10 +94,10 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
         </Stack>
 
         <Stack
-          direction="row"
+          direction='row'
           spacing={3}
-          justifyContent="right"
-          alignItems="center"
+          justifyContent='right'
+          alignItems='center'
         >
           <CounterInput
             value={quantity}
@@ -107,12 +107,12 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
             min={1}
           />
 
-          <Typography variant="body1">
+          <Typography variant='body1'>
             {formatMoney(detalle.product.price)}
           </Typography>
         </Stack>
 
-        <Typography variant="h5" textAlign="right">
+        <Typography variant='h5' textAlign='right'>
           {formatMoney(detalle.product.price * quantity)}
         </Typography>
       </Box>

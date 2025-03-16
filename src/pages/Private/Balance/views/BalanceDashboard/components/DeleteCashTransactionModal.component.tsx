@@ -1,6 +1,6 @@
-import NiceModal, { muiDialogV5 } from "@ebay/nice-modal-react";
-import React from "react";
-import { LoadingButton } from "@mui/lab";
+import NiceModal, { muiDialogV5 } from '@ebay/nice-modal-react';
+import React from 'react';
+import { LoadingButton } from '@mui/lab';
 import {
   Dialog,
   DialogTitle,
@@ -9,11 +9,11 @@ import {
   Box,
   DialogActions,
   Button,
-  Stack,
-} from "@mui/material";
-import { CashTransaction } from "../../../models/cash-transaction.model";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { useDeleteCashTransaction } from "../../../hooks/useCashTransactions";
+  Stack
+} from '@mui/material';
+import { CashTransaction } from '../../../models/cash-transaction.model';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { useDeleteCashTransaction } from '../../../hooks/useCashTransactions';
 
 interface Props {
   transaction: CashTransaction;
@@ -34,22 +34,22 @@ export const DeleteCashTransactionModal = NiceModal.create<Props>(
     return (
       <Dialog {...muiDialogV5(modal)}>
         <DialogTitle>
-          <Typography variant="h4" my={1}>
+          <Typography variant='h4' my={1}>
             Eliminar transacción
           </Typography>
         </DialogTitle>
 
         <DialogContent>
-          <Stack spacing={1} direction="column" justifyContent="center">
+          <Stack spacing={1} direction='column' justifyContent='center'>
             <Box>
-              <Typography variant="body1" color="text.primary">
+              <Typography variant='body1' color='text.primary'>
                 {`¿Está seguro de eliminar la transacción ${transaction.description}?`}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {transaction.performedBy.person.firstName}{" "}
+              <Typography variant='body2' color='text.secondary'>
+                {transaction.performedBy.person.firstName}{' '}
                 {transaction.performedBy.person.lastName}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant='body2' color='text.secondary'>
                 {formatMoney(transaction.amount)}
               </Typography>
             </Box>
@@ -57,15 +57,15 @@ export const DeleteCashTransactionModal = NiceModal.create<Props>(
         </DialogContent>
         <DialogActions
           sx={{
-            justifyContent: "center",
+            justifyContent: 'center'
           }}
         >
-          <Button onClick={closeModal} color="inherit">
+          <Button onClick={closeModal} color='inherit'>
             Cancelar
           </Button>
           <LoadingButton
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             onClick={submitDeleteTransaction}
             loading={isLoading}
           >

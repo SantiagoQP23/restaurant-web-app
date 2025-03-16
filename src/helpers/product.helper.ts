@@ -1,4 +1,3 @@
-
 /**
  * @author Steven Rosales
  * @version 1.0 15/03/2025 Add iva to product
@@ -8,9 +7,8 @@
  * @returns The price without IVA
  */
 export const getPriceWithoutIva = (price: number, iva: number) => {
-  return Math.floor(price / (1 + iva / 100) * 100) / 100;
+  return Math.floor((price / (1 + iva / 100)) * 100) / 100;
 };
-
 
 /**
  * @author Steven Rosales
@@ -30,6 +28,9 @@ export const getIvaValue = (price: number, iva: number) => {
  * @param decimalPlaces - The decimal places
  * @returns {string} The formatted value
  */
-export const formatPercentage = (value: number = 0, decimalPlaces: number = 2): string => {
+export const formatPercentage = (
+  value: number = 0,
+  decimalPlaces: number = 2
+): string => {
   return `${value.toFixed(decimalPlaces)}%`;
 };

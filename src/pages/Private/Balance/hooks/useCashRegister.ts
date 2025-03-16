@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   ActiveCashRegister,
   createCashRegister,
@@ -8,33 +8,33 @@ import {
   getAllCashRegisters,
   getCashRegister,
   getCashRegisterActive,
-  updateCashRegister,
-} from "../services/cash-register.service";
-import { useSnackbar } from "notistack";
-import { CashRegister } from "../models/cash-register.model";
-import { CreateCashRegisterDto } from "../dto/create-cash-register.dto";
-import { useCashRegisterStore } from "../../Common/store/useCashRegisterStore";
-import { UpdateCashRegisterDto } from "../dto/update-cash-register.dto";
-import { useDateFilter } from "../../../../hooks/useDateFilter";
-import { Period } from "../../Common/dto/period.model";
-import { usePaginationAsync } from "../../../../hooks/usePaginationAsync";
+  updateCashRegister
+} from '../services/cash-register.service';
+import { useSnackbar } from 'notistack';
+import { CashRegister } from '../models/cash-register.model';
+import { CreateCashRegisterDto } from '../dto/create-cash-register.dto';
+import { useCashRegisterStore } from '../../Common/store/useCashRegisterStore';
+import { UpdateCashRegisterDto } from '../dto/update-cash-register.dto';
+import { useDateFilter } from '../../../../hooks/useDateFilter';
+import { Period } from '../../Common/dto/period.model';
+import { usePaginationAsync } from '../../../../hooks/usePaginationAsync';
 
 export const useAllCashRegister = () => {
   const dateFilter = useDateFilter(Period.MONTHLY);
   const pagination = usePaginationAsync();
 
   const cashRegisterQuery = useQuery(
-    ["cashRegister"],
+    ['cashRegister'],
     () =>
       getAllCashRegisters({
         limit: pagination.rowsPerPage,
         offset: pagination.page,
         endDate: dateFilter.endDate,
         startDate: dateFilter.startDate,
-        period: dateFilter.period,
+        period: dateFilter.period
       }),
     {
-      onSuccess: () => {},
+      onSuccess: () => {}
     }
   );
 
@@ -45,7 +45,7 @@ export const useAllCashRegister = () => {
     pagination.rowsPerPage,
     dateFilter.startDate,
     dateFilter.endDate,
-    dateFilter.period,
+    dateFilter.period
   ]);
 
   useEffect(() => {
@@ -55,23 +55,23 @@ export const useAllCashRegister = () => {
   return {
     cashRegisterQuery,
     ...dateFilter,
-    ...pagination,
+    ...pagination
   };
 };
 
 export const useCashRegister = (term: string) => {
   const cashRegisterQuery = useQuery(
-    ["cashRegister", term],
+    ['cashRegister', term],
     () => getCashRegister(term),
     {
       onError: (error) => {
         console.log(error);
-      },
+      }
     }
   );
 
   return {
-    cashRegisterQuery,
+    cashRegisterQuery
   };
 };
 
@@ -79,7 +79,7 @@ export const useCashRegisterActive = () => {
   // const { setActiveCashRegister } = useCashRegisterStore((state) => state);
 
   const cashRegisterQuery = useQuery<ActiveCashRegister>(
-    ["cashRegisterActive"],
+    ['cashRegisterActive'],
     getCashRegisterActive,
     {
       // enabled: false,
@@ -88,12 +88,12 @@ export const useCashRegisterActive = () => {
       },
       onError: (error) => {
         console.log(error);
-      },
+      }
     }
   );
 
   return {
-    cashRegisterQuery,
+    cashRegisterQuery
   };
 };
 
@@ -101,7 +101,7 @@ export const useAllActiveCashRegisters = () => {
   const { loadCashRegisters } = useCashRegisterStore((state) => state);
 
   const cashRegisterQuery = useQuery<CashRegister[]>(
-    ["cashRegisterActives"],
+    ['cashRegisterActives'],
     getAllActiveCashRegisters,
     {
       onSuccess: (data) => {
@@ -109,12 +109,12 @@ export const useAllActiveCashRegisters = () => {
       },
       onError: (error) => {
         console.log(error);
-      },
+      }
     }
   );
 
   return {
-    cashRegisterQuery,
+    cashRegisterQuery
   };
 };
 
@@ -127,14 +127,14 @@ export const useCreateCashRegister = () => {
     createCashRegister,
     {
       onSuccess: (data) => {
-        enqueueSnackbar("Caja creada correctamente", { variant: "success" });
+        enqueueSnackbar('Caja creada correctamente', { variant: 'success' });
         addCashRegister(data);
       },
       onError: () => {
-        enqueueSnackbar("Ocurrió un error al crear la caja", {
-          variant: "error",
+        enqueueSnackbar('Ocurrió un error al crear la caja', {
+          variant: 'error'
         });
-      },
+      }
     }
   );
 };
@@ -148,16 +148,16 @@ export const useUpdateCashRegister = () => {
     updateCashRegister,
     {
       onSuccess: () => {
-        enqueueSnackbar("Caja actualizada correctamente", {
-          variant: "success",
+        enqueueSnackbar('Caja actualizada correctamente', {
+          variant: 'success'
         });
         setActiveCashRegister(null);
       },
       onError: () => {
-        enqueueSnackbar("Ocurrió un error al actualizar la caja", {
-          variant: "error",
+        enqueueSnackbar('Ocurrió un error al actualizar la caja', {
+          variant: 'error'
         });
-      },
+      }
     }
   );
 };

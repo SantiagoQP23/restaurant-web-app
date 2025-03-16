@@ -1,4 +1,4 @@
-import { Order } from "./orders.model";
+import { Order } from './orders.model';
 
 export interface ITable {
   id: string;

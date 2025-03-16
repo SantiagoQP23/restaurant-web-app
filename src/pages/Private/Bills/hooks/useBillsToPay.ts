@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../redux";
-import { Bill } from "../../../../models/bill.model";
-import { IUser } from "../../../../models";
-import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../redux';
+import { Bill } from '../../../../models/bill.model';
+import { IUser } from '../../../../models';
+import { useEffect, useState } from 'react';
 
-export interface UserSummaryBills extends IUser{
+export interface UserSummaryBills extends IUser {
   totalToPay: number;
   totalInBills: number;
 }
@@ -12,7 +12,9 @@ export interface UserSummaryBills extends IUser{
 export const useBillsToPay = (bills: Bill[]) => {
   const { orders } = useSelector(selectOrders);
 
-  const [usersWithOrders, setUsersWithOrders] = useState<UserSummaryBills[]>([]);
+  const [usersWithOrders, setUsersWithOrders] = useState<UserSummaryBills[]>(
+    []
+  );
 
   const getUsersWithOrders = () => {
     const usersWithOrders: IUser[] = [];
@@ -27,10 +29,7 @@ export const useBillsToPay = (bills: Bill[]) => {
 
   const getUserSummary = (user: IUser): UserSummaryBills => {
     const billsUsers = bills.filter((bill) => bill.createdBy.id === user.id);
-    const totalInBills = billsUsers.reduce(
-      (acc, bill) => acc + bill.total,
-      0
-    );
+    const totalInBills = billsUsers.reduce((acc, bill) => acc + bill.total, 0);
     const totalToPay = orders
       .filter((order) => order.user.id === user.id)
       .reduce((acc, order) => acc + order.total, 0);
@@ -45,8 +44,7 @@ export const useBillsToPay = (bills: Bill[]) => {
 
   useEffect(() => {
     getSummary();
-  }, [bills, orders])
+  }, [bills, orders]);
 
   return { usersWithOrders, getSummary };
-
 };

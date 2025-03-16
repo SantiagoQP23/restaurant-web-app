@@ -1,5 +1,5 @@
-import { Add, ArrowBack } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
+import { Add, ArrowBack } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import {
   Grid,
   Button,
@@ -8,34 +8,34 @@ import {
   Container,
   Card,
   CardContent,
-  Stack,
-} from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+  Stack
+} from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { useFetchAndLoad } from "../../../../../hooks";
-import { ICreateTable } from "../../../../../models";
+import { useFetchAndLoad } from '../../../../../hooks';
+import { ICreateTable } from '../../../../../models';
 import {
   addTable,
   selectTables,
   setActiveTable,
-  updateTable,
-} from "../../../../../redux/slices/tables";
+  updateTable
+} from '../../../../../redux/slices/tables';
 import {
   createTable,
-  updateTable as updateTableS,
-} from "../../services/tables.service";
+  updateTable as updateTableS
+} from '../../services/tables.service';
 
-import { useForm } from "react-hook-form";
-import { TitlePage } from "../../../components/TitlePage.component";
-import { useUpdateTable } from "../../hooks/useTables";
-import { UpdateTableDto } from "../../dto/table.dto";
+import { useForm } from 'react-hook-form';
+import { TitlePage } from '../../../components/TitlePage.component';
+import { useUpdateTable } from '../../hooks/useTables';
+import { UpdateTableDto } from '../../dto/table.dto';
 
 const initialTable: ICreateTable = {
-  name: "",
-  description: "",
-  chairs: 4,
+  name: '',
+  description: '',
+  chairs: 4
 };
 
 export const EditTable = () => {
@@ -63,9 +63,9 @@ export const EditTable = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<ICreateTable>({
-    defaultValues: table,
+    defaultValues: table
   });
 
   const onSubmit = async (form: ICreateTable) => {
@@ -75,7 +75,7 @@ export const EditTable = () => {
         isAvailable: activeTable.isAvailable,
         name: form.name,
         description: form.description,
-        chairs: form.chairs,
+        chairs: form.chairs
       };
 
       updateTableMutation.mutate(data);
@@ -84,11 +84,11 @@ export const EditTable = () => {
         .then((resp) => {
           const { data } = resp;
           dispatch(addTable(data));
-          enqueueSnackbar("Mesa añadida", { variant: "success" });
+          enqueueSnackbar('Mesa añadida', { variant: 'success' });
         })
         .catch((err) => {
           console.log(err);
-          enqueueSnackbar("Error al crear", { variant: "error" });
+          enqueueSnackbar('Error al crear', { variant: 'error' });
         });
     }
   };
@@ -100,16 +100,16 @@ export const EditTable = () => {
 
   return (
     <>
-      <TitlePage title={`${activeTable ? "Editar" : "Crear"} mesa`} />
+      <TitlePage title={`${activeTable ? 'Editar' : 'Crear'} mesa`} />
 
-      <Container maxWidth="xs">
-        <Grid container display="flex" justifyContent="space-between">
-          <Grid item display="flex" justifyContent="left" alignItems="center">
+      <Container maxWidth='xs'>
+        <Grid container display='flex' justifyContent='space-between'>
+          <Grid item display='flex' justifyContent='left' alignItems='center'>
             <Button onClick={handleCancel}>
               <ArrowBack />
             </Button>
-            <Typography variant="h5">
-              {activeTable ? `Mesa ${activeTable.name}` : "Añadir mesa"}{" "}
+            <Typography variant='h5'>
+              {activeTable ? `Mesa ${activeTable.name}` : 'Añadir mesa'}{' '}
             </Typography>
           </Grid>
         </Grid>
@@ -120,22 +120,22 @@ export const EditTable = () => {
               <Grid
                 container
                 spacing={1}
-                display="flex"
-                justifyContent="center"
+                display='flex'
+                justifyContent='center'
               >
                 <Grid item xs={12}>
                   <TextField
                     autoFocus
-                    margin="dense"
-                    label="Nombre de la mesa"
-                    type="text"
+                    margin='dense'
+                    label='Nombre de la mesa'
+                    type='text'
                     fullWidth
-                    {...register("name", {
-                      required: "Este campo es requerido",
+                    {...register('name', {
+                      required: 'Este campo es requerido'
                     })}
                     error={!!errors.name}
                     helperText={
-                      <Typography color="red">
+                      <Typography color='red'>
                         {errors.name?.message}
                       </Typography>
                     }
@@ -145,14 +145,14 @@ export const EditTable = () => {
                 <Grid item xs={12}>
                   <TextField
                     autoFocus
-                    margin="dense"
-                    label="Descripción"
-                    type="text"
+                    margin='dense'
+                    label='Descripción'
+                    type='text'
                     fullWidth
-                    {...register("description", {})}
+                    {...register('description', {})}
                     error={!!errors.description}
                     helperText={
-                      <Typography color="red">
+                      <Typography color='red'>
                         {errors.description?.message}
                       </Typography>
                     }
@@ -162,18 +162,18 @@ export const EditTable = () => {
                 <Grid item xs={12}>
                   <TextField
                     autoFocus
-                    margin="dense"
-                    label="Asientos"
-                    type="number"
+                    margin='dense'
+                    label='Asientos'
+                    type='number'
                     fullWidth
-                    {...register("chairs", {
-                      required: "Este campo es requerido",
-                      maxLength: { value: 2, message: " " },
-                      valueAsNumber: true,
+                    {...register('chairs', {
+                      required: 'Este campo es requerido',
+                      maxLength: { value: 2, message: ' ' },
+                      valueAsNumber: true
                     })}
                     error={!!errors.chairs}
                     helperText={
-                      <Typography color="red">
+                      <Typography color='red'>
                         {errors.chairs?.message}
                       </Typography>
                     }
@@ -181,17 +181,17 @@ export const EditTable = () => {
                 </Grid>
 
                 <LoadingButton
-                  variant="outlined"
-                  type="submit"
+                  variant='outlined'
+                  type='submit'
                   loading={loading}
                 >
-                  {activeTable ? `Editar` : "Crear"}
+                  {activeTable ? `Editar` : 'Crear'}
                 </LoadingButton>
 
                 {loading && (
                   <Button
-                    color="error"
-                    variant="outlined"
+                    color='error'
+                    variant='outlined'
                     onClick={() => cancelEndpoint()}
                   >
                     Cancelar

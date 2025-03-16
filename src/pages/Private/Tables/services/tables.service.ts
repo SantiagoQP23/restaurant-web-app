@@ -1,13 +1,13 @@
-import { restauranteApi } from "../../../../api";
-import { loadAbort } from "../../../../helpers";
-import { ICreateTable, ITable } from "../../../../models";
-import { UpdateTableDto } from "../dto/table.dto";
-import { SubjectDeleteTable } from "../helpers/subjects-tables.helper";
+import { restauranteApi } from '../../../../api';
+import { loadAbort } from '../../../../helpers';
+import { ICreateTable, ITable } from '../../../../models';
+import { UpdateTableDto } from '../dto/table.dto';
+import { SubjectDeleteTable } from '../helpers/subjects-tables.helper';
 
 export const statusModalDeleteTable = new SubjectDeleteTable();
 
 export const getTables = async (): Promise<ITable[]> => {
-  const resp = await restauranteApi.get<ITable[]>("/tables");
+  const resp = await restauranteApi.get<ITable[]>('/tables');
 
   return resp.data;
 };
@@ -16,10 +16,10 @@ export const createTable = (data: ICreateTable) => {
   const controller = loadAbort();
 
   return {
-    call: restauranteApi.post<ITable>("/tables", data, {
-      signal: controller.signal,
+    call: restauranteApi.post<ITable>('/tables', data, {
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };
 
@@ -49,6 +49,6 @@ export const deleteTable = (id: string) => {
 
   return {
     call: restauranteApi.delete(`/tables/${id}`, { signal: controller.signal }),
-    controller,
+    controller
   };
 };

@@ -1,6 +1,6 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect } from 'react';
 
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 import {
   Avatar,
   IconButton,
@@ -8,18 +8,18 @@ import {
   Box,
   Card,
   Typography,
-  CardContent,
-} from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
+  CardContent
+} from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useForm } from 'react-hook-form';
 // import { useAppDispatch } from "../../../../../../hooks";
 // import { setActiveProduct } from "../../../../../../redux";
 
-import UploadTwoToneIcon from "@mui/icons-material/UploadTwoTone";
-import { PhotoSharp } from "@mui/icons-material";
-import { Restaurant } from "../../Common/models/restaurant.model";
-import { useUpdateRestaurantLogo } from "../hooks/useRestaurant";
-import { useRestaurantStore } from "../../Common/store/restaurantStore";
+import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
+import { PhotoSharp } from '@mui/icons-material';
+import { Restaurant } from '../../Common/models/restaurant.model';
+import { useUpdateRestaurantLogo } from '../hooks/useRestaurant';
+import { useRestaurantStore } from '../../Common/store/restaurantStore';
 
 const AvatarWrapper = styled(Card)(
   ({ theme }) => `
@@ -87,7 +87,7 @@ export const FormRestaurantLogo: FC<Props> = ({ restaurant }) => {
 
   const onSubmit = async (data: { file: FileList }) => {
     if (data.file.length === 0) {
-      enqueueSnackbar("Debe seleccionar una imagen", { variant: "error" });
+      enqueueSnackbar('Debe seleccionar una imagen', { variant: 'error' });
       return;
     }
 
@@ -99,44 +99,44 @@ export const FormRestaurantLogo: FC<Props> = ({ restaurant }) => {
   };
 
   useEffect(() => {
-    if (watch("file")?.length === 0) return;
+    if (watch('file')?.length === 0) return;
 
-    convert2base64(watch("file")[0]);
-  }, [watch("file")]);
+    convert2base64(watch('file')[0]);
+  }, [watch('file')]);
 
   return (
-    <Card  >
+    <Card>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <AvatarWrapper>
             {image || restaurant?.logo ? (
               <Avatar
-                variant="rounded"
+                variant='rounded'
                 alt={restaurant.name}
                 src={image || restaurant?.logo}
               />
             ) : (
-              <label htmlFor="icon-button-file">
+              <label htmlFor='icon-button-file'>
                 <Box
                   sx={{
                     //drop file
-                    border: "1px dashed",
-                    borderColor: "divider",
+                    border: '1px dashed',
+                    borderColor: 'divider',
                     borderRadius: 1,
-                    color: "text.disabled",
-                    textAlign: "center",
+                    color: 'text.disabled',
+                    textAlign: 'center',
                     width: 200,
                     height: 100,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
 
-                    ":hover": {
-                      cursor: "pointer",
-                      borderColor: "primary.main",
-                      color: "primary.main",
-                    },
+                    ':hover': {
+                      cursor: 'pointer',
+                      borderColor: 'primary.main',
+                      color: 'primary.main'
+                    }
                   }}
                 >
                   <PhotoSharp />
@@ -146,26 +146,22 @@ export const FormRestaurantLogo: FC<Props> = ({ restaurant }) => {
             )}
             <ButtonUploadWrapper>
               <input
-                id="icon-button-file"
-                type="file"
-                accept="image/*"
-                {...register("file")}
+                id='icon-button-file'
+                type='file'
+                accept='image/*'
+                {...register('file')}
                 hidden
               />
-              <label htmlFor="icon-button-file">
-                <IconButton component="span" color="primary">
+              <label htmlFor='icon-button-file'>
+                <IconButton component='span' color='primary'>
                   <UploadTwoToneIcon />
                 </IconButton>
               </label>
             </ButtonUploadWrapper>
           </AvatarWrapper>
 
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <LoadingButton
-              loading={isLoading}
-              type="submit"
-              variant="outlined"
-            >
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <LoadingButton loading={isLoading} type='submit' variant='outlined'>
               Actualizar
             </LoadingButton>
           </Box>

@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Bill } from "../../../../../../models/bill.model";
+import React, { FC } from 'react';
+import { Bill } from '../../../../../../models/bill.model';
 import {
   Button,
   Card,
@@ -8,13 +8,13 @@ import {
   CardHeader,
   IconButton,
   Stack,
-  Typography,
-} from "@mui/material";
-import { format } from "date-fns";
-import { Label } from "../../../../../../components/ui";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { useNavigate } from "react-router-dom";
-import { Visibility } from "@mui/icons-material";
+  Typography
+} from '@mui/material';
+import { format } from 'date-fns';
+import { Label } from '../../../../../../components/ui';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { useNavigate } from 'react-router-dom';
+import { Visibility } from '@mui/icons-material';
 
 interface Props {
   bill: Bill;
@@ -42,35 +42,33 @@ export const BillCard: FC<Props> = ({ bill }) => {
           title={`Cuenta #${bill.num}`}
           subheader={`${bill.owner.person.firstName} ${bill.owner.person.lastName}`}
           action={
-            <Typography variant="h4">{formatMoney(bill.total)}</Typography>
+            <Typography variant='h4'>{formatMoney(bill.total)}</Typography>
           }
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant='body2' color='text.secondary'>
             Creado el
           </Typography>
           <Typography>
-            {format(new Date(bill.createdAt), "dd/MM/yyyy HH:mm")}
+            {format(new Date(bill.createdAt), 'dd/MM/yyyy HH:mm')}
           </Typography>
         </CardContent>
         <CardActions
           sx={{
-            justifyContent: "space-between",
+            justifyContent: 'space-between'
           }}
         >
-          <Label color={bill.isPaid ? "success" : "warning"}>
-            {bill.isPaid ? "Pagada" : "Pendiente"}
+          <Label color={bill.isPaid ? 'success' : 'warning'}>
+            {bill.isPaid ? 'Pagada' : 'Pendiente'}
           </Label>
           <Stack direction='row' spacing={1}>
-            <IconButton onClick={navigateToBill}
-              size="small"
-            >
+            <IconButton onClick={navigateToBill} size='small'>
               <Visibility />
             </IconButton>
             <Button
-              variant="contained"
-              color="primary"
-              size="small"
+              variant='contained'
+              color='primary'
+              size='small'
               disabled={bill.isPaid}
               onClick={navitateToEditBill}
             >

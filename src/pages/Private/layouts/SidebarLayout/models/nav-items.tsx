@@ -1,9 +1,9 @@
-import Groups3OutlinedIcon from "@mui/icons-material/Groups3Outlined";
-import TableRestaurantOutlinedIcon from "@mui/icons-material/TableRestaurantOutlined";
+import Groups3OutlinedIcon from '@mui/icons-material/Groups3Outlined';
+import TableRestaurantOutlinedIcon from '@mui/icons-material/TableRestaurantOutlined';
 
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 import {
   AccountBalanceWallet,
@@ -13,80 +13,79 @@ import {
   MenuBook,
   ReceiptLong,
   SoupKitchen,
-  Storefront,
-} from "@mui/icons-material";
-import { NavItem } from "../../interfaces";
-
+  Storefront
+} from '@mui/icons-material';
+import { NavItem } from '../../interfaces';
 
 export const navItemsAdmin: NavItem[] = [
   {
-    title: "Dashboard",
+    title: 'Dashboard',
     icon: <DashboardOutlinedIcon />,
-    to: "/reports",
+    to: '/reports'
   },
   {
-    title: "Balance",
+    title: 'Balance',
     icon: <AccountBalanceWallet />,
-    to: "/balance",
-  },
+    to: '/balance'
+  }
 ];
 
 export const navItemsOrders: NavItem[] = [
   {
-    title: "Pedidos",
+    title: 'Pedidos',
     icon: <Assignment />,
-    to: "/orders/",
+    to: '/orders/'
   },
   {
-    title: "Cocina",
+    title: 'Cocina',
     icon: <SoupKitchen />,
-    to: "/orders/actives",
+    to: '/orders/actives'
   },
   {
-    title: "Lista de pedidos",
+    title: 'Lista de pedidos',
     icon: <ListAlt />,
-    to: "/orders/list",
+    to: '/orders/list'
   },
   {
-    title: "Comprobantes",
+    title: 'Comprobantes',
     icon: <ReceiptLong />,
-    to: "/invoices",
-  },
+    to: '/invoices'
+  }
 ];
 
 export const navItemsManagement: NavItem[] = [
   {
-    title: "Menú del restaurante",
+    title: 'Menú del restaurante',
     icon: <MenuBook />,
-    to: "/menu/sections",
+    to: '/menu/sections',
     subItems: [
       {
-        title: "Secciones",
-        to: "/menu/sections",
-        icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+        title: 'Secciones',
+        to: '/menu/sections',
+        icon: <FiberManualRecord sx={{ fontSize: 8 }} />
       },
       {
-        title: "Categorías",
-        to: "/menu/categories",
-        icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+        title: 'Categorías',
+        to: '/menu/categories',
+        icon: <FiberManualRecord sx={{ fontSize: 8 }} />
       },
       {
-        title: "Productos",
-        to: "/menu/products",
-        icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-      },
-    ],
+        title: 'Productos',
+        to: '/menu/products',
+        icon: <FiberManualRecord sx={{ fontSize: 8 }} />
+      }
+    ]
   },
   {
-    title: "Gestión de mesas",
+    title: 'Gestión de mesas',
     icon: <TableRestaurantOutlinedIcon />,
-    to: "/tables",
+    to: '/tables'
   },
   {
-    title: "Gestión de clientes",
+    title: 'Gestión de clientes',
     icon: <Groups3OutlinedIcon />,
-    to: "/clients",
-  },
+    to: '/clients'
+  }
   // {
   //   title: 'Proveedores',
   //   icon: <LocalShipping />,
@@ -96,14 +95,14 @@ export const navItemsManagement: NavItem[] = [
 
 export const navItemsAdmin2: NavItem[] = [
   {
-    title: "Gestión de usuarios",
+    title: 'Gestión de usuarios',
     icon: <PeopleOutlineIcon />,
-    to: "/users",
+    to: '/users'
   },
   {
-    title: "Restaurante",
+    title: 'Restaurante',
     icon: <Storefront />,
-    to: "/restaurant",
-    label: "Nuevo",
-  },
+    to: '/restaurant',
+    label: 'Nuevo'
+  }
 ];

@@ -1,4 +1,4 @@
-import { MenuSection } from "../../interfaces";
+import { MenuSection } from '../../interfaces';
 
 import {
   AccountBalanceWallet,
@@ -8,30 +8,30 @@ import {
   MenuBook,
   ReceiptLong,
   SoupKitchen,
-  Storefront,
-} from "@mui/icons-material";
+  Storefront
+} from '@mui/icons-material';
 
-import Groups3OutlinedIcon from "@mui/icons-material/Groups3Outlined";
-import TableRestaurantOutlinedIcon from "@mui/icons-material/TableRestaurantOutlined";
+import Groups3OutlinedIcon from '@mui/icons-material/Groups3Outlined';
+import TableRestaurantOutlinedIcon from '@mui/icons-material/TableRestaurantOutlined';
 
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
-import { ValidRoles } from "../../../Common/models/valid-roles.model";
+import { ValidRoles } from '../../../Common/models/valid-roles.model';
 
 /**
  * @version 1.1 31-01-2025 Remove finance
  */
 const generalSection: MenuSection = {
-  title: "GENERAL",
+  title: 'GENERAL',
   allowedRoles: [ValidRoles.admin],
   items: [
     {
-      title: "Dashboard",
+      title: 'Dashboard',
       icon: <DashboardOutlinedIcon />,
-      to: "/reports",
-    },
+      to: '/reports'
+    }
     // {
     //   title: "Finanzas",
     //   icon: <AccountBalanceWallet />,
@@ -54,7 +54,7 @@ const generalSection: MenuSection = {
     //     },
     //   ],
     // },
-  ],
+  ]
 };
 
 /**
@@ -62,92 +62,92 @@ const generalSection: MenuSection = {
  * @version v1.1 22-12-2023 Change invoices for bills
  */
 const ordersSection = {
-  title: "PEDIDOS",
+  title: 'PEDIDOS',
   items: [
     {
-      title: "Pedidos",
+      title: 'Pedidos',
       icon: <Assignment />,
-      to: "/orders/",
+      to: '/orders/'
     },
     {
-      title: "Preparación de pedidos",
+      title: 'Preparación de pedidos',
       icon: <SoupKitchen />,
-      to: "/orders/actives",
+      to: '/orders/actives'
       // allowedRoles: [ValidRoles.mesero],
     },
     {
-      title: "Lista de pedidos",
+      title: 'Lista de pedidos',
       icon: <ListAlt />,
-      to: "/orders/list",
+      to: '/orders/list'
     },
     {
-      title: "Cuentas",
+      title: 'Cuentas',
       icon: <ReceiptLong />,
-      to: "/bills",
-    },
-  ],
+      to: '/bills'
+    }
+  ]
 };
 
 const advancedManagementSection = {
-  title: "ADMINISTRACIÓN AVANZADA",
+  title: 'ADMINISTRACIÓN AVANZADA',
   allowedRoles: [ValidRoles.admin],
   items: [
     {
-      title: "Gestión de usuarios",
+      title: 'Gestión de usuarios',
       icon: <PeopleOutlineIcon />,
-      to: "/users",
+      to: '/users'
     },
     {
-      title: "Restaurante",
+      title: 'Restaurante',
       icon: <Storefront />,
-      to: "/restaurant",
-      label: "Nuevo",
-    },
-  ],
+      to: '/restaurant',
+      label: 'Nuevo'
+    }
+  ]
 };
 
 const managementSection = {
-  title: "ADMINISTRACIÓN",
+  title: 'ADMINISTRACIÓN',
   items: [
     {
-      title: "Menú del restaurante",
+      title: 'Menú del restaurante',
       icon: <MenuBook />,
-      to: "/menu/sections",
+      to: '/menu/sections',
       subItems: [
         {
-          title: "Secciones",
-          to: "/menu/sections",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+          title: 'Secciones',
+          to: '/menu/sections',
+          icon: <FiberManualRecord sx={{ fontSize: 8 }} />
         },
         {
-          title: "Categorías",
-          to: "/menu/categories",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+          title: 'Categorías',
+          to: '/menu/categories',
+          icon: <FiberManualRecord sx={{ fontSize: 8 }} />
           // allowedRoles: [ValidRoles.mesero],
         },
         {
-          title: "Productos",
-          to: "/menu/products",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-        },
-      ],
+          title: 'Productos',
+          to: '/menu/products',
+          icon: <FiberManualRecord sx={{ fontSize: 8 }} />
+        }
+      ]
     },
     {
-      title: "Gestión de mesas",
+      title: 'Gestión de mesas',
       icon: <TableRestaurantOutlinedIcon />,
-      to: "/tables",
+      to: '/tables'
     },
     {
-      title: "Gestión de clientes",
+      title: 'Gestión de clientes',
       icon: <Groups3OutlinedIcon />,
-      to: "/clients",
-    },
-  ],
+      to: '/clients'
+    }
+  ]
 };
 
 export const menuSections: MenuSection[] = [
   generalSection,
   ordersSection,
   managementSection,
-  advancedManagementSection,
+  advancedManagementSection
 ];

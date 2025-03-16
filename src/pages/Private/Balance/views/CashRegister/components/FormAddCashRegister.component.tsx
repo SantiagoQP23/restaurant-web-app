@@ -1,15 +1,15 @@
-import { LoadingButton } from "@mui/lab";
-import { Grid, Typography, TextField } from "@mui/material";
-import { CreateCashRegisterDto } from "../../../dto/create-cash-register.dto";
-import { FC, useState } from "react";
-import { useCreateCashRegister } from "../../../hooks/useCashRegister";
-import { format } from "date-fns";
+import { LoadingButton } from '@mui/lab';
+import { Grid, Typography, TextField } from '@mui/material';
+import { CreateCashRegisterDto } from '../../../dto/create-cash-register.dto';
+import { FC, useState } from 'react';
+import { useCreateCashRegister } from '../../../hooks/useCashRegister';
+import { format } from 'date-fns';
 
-interface Props{
+interface Props {
   onSuccess: () => void;
 }
 
-export const FormAddCashRegister:FC<Props> = ({onSuccess}) => {
+export const FormAddCashRegister: FC<Props> = ({ onSuccess }) => {
   const [initialAmount, setInitialAmount] = useState<number>(0);
 
   const { mutateAsync, isLoading } = useCreateCashRegister();
@@ -22,45 +22,45 @@ export const FormAddCashRegister:FC<Props> = ({onSuccess}) => {
 
   const onSubmitCreate = async () => {
     const data: CreateCashRegisterDto = {
-      initialAmount,
+      initialAmount
     };
     await mutateAsync(data).then(() => {
       setInitialAmount(0);
       onSuccess();
     });
-  }
+  };
 
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12} display="flex" justifyContent="space-between">
+        <Grid item xs={12} display='flex' justifyContent='space-between'>
           <Typography>Hora de apertura</Typography>
-          <Typography variant="h6">
-            {format(new Date(), "dd/MM/yyyy HH:mm")}
+          <Typography variant='h6'>
+            {format(new Date(), 'dd/MM/yyyy HH:mm')}
           </Typography>
         </Grid>
 
         <Grid item xs={12}>
           <TextField
-            label="Monto inicial"
-            type="number"
-            variant="outlined"
+            label='Monto inicial'
+            type='number'
+            variant='outlined'
             fullWidth
             // size='small'
             value={initialAmount}
             onChange={handleChangeInitialAmount}
             InputProps={{
-              startAdornment: <Typography variant="h6">$ </Typography>,
+              startAdornment: <Typography variant='h6'>$ </Typography>,
               inputProps: {
-                min: 0,
-              },
+                min: 0
+              }
             }}
           />
         </Grid>
 
         <Grid item xs={12}>
           <LoadingButton
-            variant="contained"
+            variant='contained'
             fullWidth
             loading={isLoading}
             onClick={onSubmitCreate}

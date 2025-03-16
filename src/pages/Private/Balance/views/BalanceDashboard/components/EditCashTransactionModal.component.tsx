@@ -1,4 +1,4 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm } from 'react-hook-form';
 import {
   Button,
   FormControl,
@@ -15,25 +15,25 @@ import {
   DialogContent,
   useTheme,
   useMediaQuery,
-  DialogTitle,
-} from "@mui/material";
-import { useModal } from "../../../../../../hooks";
-import { useState } from "react";
-import { Close, CloseOutlined, Save } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { ModalSelectUser } from "../../../../Users/components/ModalSelectUser.component";
-import { IUser } from "../../../../../../models";
+  DialogTitle
+} from '@mui/material';
+import { useModal } from '../../../../../../hooks';
+import { useState } from 'react';
+import { Close, CloseOutlined, Save } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { ModalSelectUser } from '../../../../Users/components/ModalSelectUser.component';
+import { IUser } from '../../../../../../models';
 import NiceModal, {
   muiDialogV5,
-  useModal as useNiceModal,
-} from "@ebay/nice-modal-react";
-import { TransactionType } from "../../../../Common/enums/transaction-type.enum";
-import { useTransactionCategories } from "../../../hooks/useTransactionCategories";
-import { useUpdateCashTransaction } from "../../../hooks/useCashTransactions";
-import { CreateCashTransactionDto } from "../../../dto/create-cash-transaction.dto";
-import { CashTransaction } from "../../../models/cash-transaction.model";
-import { UpdateCashTransactionDto } from "../../../dto/update-cash-transaction.dto";
+  useModal as useNiceModal
+} from '@ebay/nice-modal-react';
+import { TransactionType } from '../../../../Common/enums/transaction-type.enum';
+import { useTransactionCategories } from '../../../hooks/useTransactionCategories';
+import { useUpdateCashTransaction } from '../../../hooks/useCashTransactions';
+import { CreateCashTransactionDto } from '../../../dto/create-cash-transaction.dto';
+import { CashTransaction } from '../../../models/cash-transaction.model';
+import { UpdateCashTransactionDto } from '../../../dto/update-cash-transaction.dto';
 
 interface Props {
   cashTransaction: CashTransaction;
@@ -43,20 +43,21 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
   ({ cashTransaction }) => {
     const { handleClose, isOpen, handleOpen } = useModal();
 
-    const {category, performedBy} = cashTransaction;
+    const { category, performedBy } = cashTransaction;
 
     const modal = useNiceModal();
-   
+
     const { activeCashRegister } = useCashRegisterStore((state) => state);
     const { data: categories } = useTransactionCategories();
-    const { isLoading, mutateAsync } = useUpdateCashTransaction(cashTransaction);
+    const { isLoading, mutateAsync } =
+      useUpdateCashTransaction(cashTransaction);
 
     const [responsibleUser, setResponsibleUser] = useState<IUser | null>(
       cashTransaction.performedBy
     );
 
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const {
       register,
@@ -64,14 +65,14 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
       formState: { errors, isDirty },
       control,
       reset,
-      watch,
+      watch
     } = useForm<CreateCashTransactionDto>({
       defaultValues: {
         amount: cashTransaction.amount,
         description: cashTransaction.description,
         categoryId: category.id,
-        performedById: performedBy.id,
-      },
+        performedById: performedBy.id
+      }
     });
     const closeDrawer = () => modal.hide();
     const availableCategories = categories?.filter(
@@ -89,7 +90,7 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
 
       const data: UpdateCashTransactionDto = {
         ...form,
-        performedById: responsibleUser.id,
+        performedById: responsibleUser.id
       };
       console.log(data);
 
@@ -103,9 +104,9 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
     const isFormValid =
       responsibleUser &&
       activeCashRegister &&
-      watch("categoryId") !== 0 &&
-      watch("amount") > 0 &&
-      watch("description") !== "";
+      watch('categoryId') !== 0 &&
+      watch('amount') > 0 &&
+      watch('description') !== '';
 
     return (
       <>
@@ -116,24 +117,24 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
           value={responsibleUser}
         />
 
-        <Dialog {...muiDialogV5(modal)} fullScreen={fullScreen} maxWidth="xs">
+        <Dialog {...muiDialogV5(modal)} fullScreen={fullScreen} maxWidth='xs'>
           <DialogTitle>
             <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
+              direction='row'
+              justifyContent='space-between'
+              alignItems='center'
             >
               <Box>
-                <Typography variant="h4">
-                  Editar{" "}
+                <Typography variant='h4'>
+                  Editar{' '}
                   {cashTransaction.type === TransactionType.INCOME
-                    ? "ingreso"
-                    : "gasto"}
+                    ? 'ingreso'
+                    : 'gasto'}
                 </Typography>
               </Box>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <IconButton onClick={closeDrawer} size="small">
-                  <CloseOutlined fontSize="small" />
+              <Stack direction='row' spacing={2} alignItems='center'>
+                <IconButton onClick={closeDrawer} size='small'>
+                  <CloseOutlined fontSize='small' />
                 </IconButton>
               </Stack>
             </Stack>
@@ -143,19 +144,19 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
             {/* <Divider sx={{ mb: 2 }} /> */}
             <FormControl
               fullWidth
-              component="form"
+              component='form'
               onSubmit={handleSubmit(onSubmit)}
-              margin="dense"
+              margin='dense'
             >
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
-                    label="Título"
-                    type="text"
+                    label='Título'
+                    type='text'
                     fullWidth
-                    {...register("description", {
-                      required: "Este campo es requerido",
-                      minLength: { value: 2, message: "Minimo 2 caracteres" },
+                    {...register('description', {
+                      required: 'Este campo es requerido',
+                      minLength: { value: 2, message: 'Minimo 2 caracteres' }
                     })}
                     rows={2}
                     error={!!errors.description}
@@ -165,17 +166,17 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
 
                 <Grid item xs={12}>
                   <TextField
-                    label="Monto"
-                    type="number"
+                    label='Monto'
+                    type='number'
                     fullWidth
                     inputProps={{ step: 0.05, min: 0.05 }}
-                    {...register("amount", {
-                      required: "Este campo es requerido",
+                    {...register('amount', {
+                      required: 'Este campo es requerido',
                       min: {
                         value: 0.05,
-                        message: "Debe ser mayor a 5 centavos",
+                        message: 'Debe ser mayor a 5 centavos'
                       },
-                      valueAsNumber: true,
+                      valueAsNumber: true
                     })}
                     error={!!errors.amount}
                     helperText={errors.amount?.message}
@@ -184,19 +185,19 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
 
                 <Grid item xs={12}>
                   <Stack
-                    direction="row"
+                    direction='row'
                     spacing={2}
-                    justifyContent="space-between"
-                    alignItems="center"
+                    justifyContent='space-between'
+                    alignItems='center'
                   >
-                    <Typography variant="subtitle2">Responsable</Typography>
+                    <Typography variant='subtitle2'>Responsable</Typography>
                     <Box>
                       <Button onClick={handleOpen}>
-                        {responsibleUser ? "Cambiar" : "Seleccionar"}
+                        {responsibleUser ? 'Cambiar' : 'Seleccionar'}
                       </Button>
                       {responsibleUser && (
                         <IconButton
-                          color="error"
+                          color='error'
                           onClick={() => handleChangeResponsible(null)}
                         >
                           <Close />
@@ -204,21 +205,25 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
                       )}
                     </Box>
                   </Stack>
-                  <Typography variant="h6">
+                  <Typography variant='h6'>
                     {responsibleUser
                       ? `${responsibleUser.person.firstName} ${responsibleUser.person.lastName} `
-                      : "No seleccionado"}
+                      : 'No seleccionado'}
                   </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                   <Controller
-                    name="categoryId"
+                    name='categoryId'
                     control={control}
                     render={({ field: { onChange, value } }) => (
                       <FormControl fullWidth sx={{ zIndex: 10000 }}>
                         <InputLabel>Categoría</InputLabel>
-                        <Select onChange={onChange} label="Categoría" value={value}>
+                        <Select
+                          onChange={onChange}
+                          label='Categoría'
+                          value={value}
+                        >
                           {availableCategories?.map((category) => (
                             <MenuItem key={category.id} value={category.id}>
                               {category.name}
@@ -232,18 +237,18 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
 
                 <Grid item xs={12}>
                   <LoadingButton
-                    variant="contained"
-                    color="primary"
-                    type="submit"
+                    variant='contained'
+                    color='primary'
+                    type='submit'
                     loading={isLoading}
                     fullWidth
                     startIcon={<Save />}
                     disabled={!isDirty || !isFormValid}
                   >
-                    Actualizar{" "}
+                    Actualizar{' '}
                     {cashTransaction.type === TransactionType.INCOME
-                      ? "ingreso"
-                      : "gasto"}
+                      ? 'ingreso'
+                      : 'gasto'}
                   </LoadingButton>
                 </Grid>
               </Grid>
