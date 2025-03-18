@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useBill, useUpdateBill } from "../../hooks/useBills";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {
-  Alert,
   Box,
   Button,
   Card,
@@ -25,6 +24,7 @@ import {
   MonetizationOnOutlined,
   CreditCard,
   AttachMoney,
+  PersonAddOutlined,
 } from "@mui/icons-material";
 import { IClient, PaymentMethod } from "../../../../../models";
 import { formatMoney } from "../../../Common/helpers/format-money.helper";
@@ -35,7 +35,8 @@ import { Label } from "../../../../../components/ui";
 import { format } from "date-fns";
 import { UpdateBillDto } from "../../dto";
 import { useCashRegisterStore } from "../../../Common/store/useCashRegisterStore";
-import { CashRegisterItem } from "./components/CashRegisterItem.component";
+import NiceModal from "@ebay/nice-modal-react";
+import { AddClientModal, AddClientModalProps } from "../../../Clients/components/AddClient/AddClientModal.component";
 
 /**
  * Component for pay a bill 
@@ -91,6 +92,11 @@ export const PaymentBill = () => {
     PaymentMethod.CASH
   );
 
+  const openCreateClientModal = () => {
+    const data: AddClientModalProps = { onClientCreated: handleChangeClient };
+    NiceModal.show(AddClientModal, data);
+  }
+
   const handleChangePaymentMethod = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -114,11 +120,11 @@ export const PaymentBill = () => {
 
   const submitPayment = () => {
     if (
-      !bill 
+      !bill
       // !paymentMethod ||
       // (withClient && !client) ||
       // !activeCashRegister
-    ){
+    ) {
       alert("Error al registrar el pago");
       return;
     }
@@ -225,10 +231,17 @@ export const PaymentBill = () => {
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: withClient ? 'space-between' : "flex-end",
                         mt: 2,
                       }}
                     >
+                      {
+                        withClient && (
+                          <Button variant="text" startIcon={<PersonAddOutlined />} onClick={openCreateClientModal}>
+                            Nuevo cliente
+                          </Button>
+                        )
+                      }
                       <Button
                         onClick={handleChangeStep(2)}
                         variant="contained"
