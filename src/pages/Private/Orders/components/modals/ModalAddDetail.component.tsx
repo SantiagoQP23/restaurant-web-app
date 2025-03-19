@@ -160,7 +160,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
           sx={{
             width: {
               xs: '100%',
-              md: 600,
+              md: 600
             }
           }}
         >
@@ -274,7 +274,6 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
                       value={detail?.quantity || 1}
                       onChange={handleQuantityChange}
                     />
-
                   </Stack>
                 </FormControl>
               </>

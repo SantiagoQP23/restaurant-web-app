@@ -66,8 +66,12 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   const { productionAreas } = useProductionAreasStore();
 
-  const [priceWithoutIva, setPriceWithoutIva] = useState<number>(getPriceWithoutIva(selectedProduct.price, selectedProduct.iva));
-  const [unitCostWithoutIva, setUnitCostWithoutIva] = useState<number>(getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva));
+  const [priceWithoutIva, setPriceWithoutIva] = useState<number>(
+    getPriceWithoutIva(selectedProduct.price, selectedProduct.iva)
+  );
+  const [unitCostWithoutIva, setUnitCostWithoutIva] = useState<number>(
+    getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva)
+  );
 
   const { sections } = useSelector(selectMenu);
 
@@ -131,14 +135,22 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   useEffect(() => {
     reset(getUpdateProductDto(selectedProduct));
-    setPriceWithoutIva(getPriceWithoutIva(selectedProduct.price, selectedProduct.iva));
-    setUnitCostWithoutIva(getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva));
+    setPriceWithoutIva(
+      getPriceWithoutIva(selectedProduct.price, selectedProduct.iva)
+    );
+    setUnitCostWithoutIva(
+      getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva)
+    );
   }, [selectedProduct, sections]);
 
   useEffect(() => {
     reset(getUpdateProductDto(selectedProduct));
-    setPriceWithoutIva(getPriceWithoutIva(selectedProduct.price, selectedProduct.iva));
-    setUnitCostWithoutIva(getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva));
+    setPriceWithoutIva(
+      getPriceWithoutIva(selectedProduct.price, selectedProduct.iva)
+    );
+    setUnitCostWithoutIva(
+      getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva)
+    );
   }, []);
 
   function showModalCreateOption(): void {

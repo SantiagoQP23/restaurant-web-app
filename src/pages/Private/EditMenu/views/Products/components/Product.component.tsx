@@ -71,10 +71,18 @@ export const Product: FC<Props> = ({ producto }) => {
       <Card
         sx={{
           width: '100%',
-          height: '100%', // Hace que todos los elementos tengan la misma altura
+          height: '100%' // Hace que todos los elementos tengan la misma altura
         }}
       >
-        <CardContent sx={{ width: '100%', gap: 2, height: '100%', display: 'flex', flexDirection: 'row' }}>
+        <CardContent
+          sx={{
+            width: '100%',
+            gap: 2,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'row'
+          }}
+        >
           <img
             src={
               producto.images

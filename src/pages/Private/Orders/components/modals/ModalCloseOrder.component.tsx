@@ -10,16 +10,14 @@ import {
   Stack,
   Box
 } from '@mui/material';
-import { useContext } from 'react';
 import { Order, TypeOrder } from '../../../../../models/orders.model';
-import { EventsEmitSocket } from '../../interfaces/events-sockets.interface';
 import { SocketResponse } from '../../interfaces/responses-sockets.interface';
 import { useSnackbar } from 'notistack';
-import { SocketContext } from '../../../../../context/SocketContext';
 import { UpdateOrderDto } from '../../dto/update-order.dto';
 import { useDispatch } from 'react-redux';
 import { deleteOrder } from '../../../../../redux';
 import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
+import { useUpdateOrder } from '../../hooks/useEmitWebSocketsEventsOrders';
 
 interface Props {
   order: Order;
@@ -28,11 +26,12 @@ interface Props {
 /**
  * Modal to close order
  * @version 1.1 13/12/2023 Add NiceModal
+ * @version 1.2 15/03/2025 Use useUpdateOrder hook
  */
 export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
   const modal = useModal();
 
-  const { socket } = useContext(SocketContext);
+  const { mutate: updateOrder, isLoading, isOnline } = useUpdateOrder();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -50,12 +49,8 @@ export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
       isClosed: true
     };
 
-    socket?.emit(
-      EventsEmitSocket.updateOrder,
-      data,
-      (response: SocketResponse) => {
-        console.log(response);
-
+    updateOrder(data, {
+      onSuccess: (response: SocketResponse) => {
         if (response.ok) {
           dispatch(deleteOrder(order!.id));
 
@@ -64,7 +59,7 @@ export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
           enqueueSnackbar(response.msg, { variant: 'error' });
         }
       }
-    );
+    });
   };
 
   return (
@@ -105,6 +100,8 @@ export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
           variant='contained'
           color='primary'
           onClick={submitPayOrder}
+          loading={isLoading}
+          disabled={!isOnline}
         >
           Aceptar
         </LoadingButton>

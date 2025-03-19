@@ -25,6 +25,8 @@ import { DeleteClient } from '../DeleteClient/DeleteClient.component';
 import { useClient, useClients } from '../../hooks/useClients';
 import { InputSearch } from '../../../../../components/ui';
 import { TitlePage } from '../../../components/TitlePage.component';
+import NiceModal from '@ebay/nice-modal-react';
+import { AddClientModal } from '../AddClient/AddClientModal.component';
 
 export const ClientsList = () => {
   const [identification, setIdentification] = useState<string>('');
@@ -43,6 +45,10 @@ export const ClientsList = () => {
   const createClient = () => {
     dispatch(resetActiveClient());
     navigate('add');
+  };
+
+  const openCreateClientModal = () => {
+    NiceModal.show(AddClientModal);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +100,6 @@ export const ClientsList = () => {
           </Button>
         }
       />
-
       <ClientsTable clientFound={useClientQuery.data} />
 
       <DeleteClient />

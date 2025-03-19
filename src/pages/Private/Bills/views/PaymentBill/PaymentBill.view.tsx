@@ -23,7 +23,8 @@ import { BillDetailsTable } from '../../components/BillDetailsTable.component';
 import {
   MonetizationOnOutlined,
   CreditCard,
-  AttachMoney
+  AttachMoney,
+  PersonAddOutlined
 } from '@mui/icons-material';
 import { IClient, PaymentMethod } from '../../../../../models';
 import { formatMoney } from '../../../Common/helpers/format-money.helper';
@@ -33,6 +34,9 @@ import { LoadingButton } from '@mui/lab';
 import { Label } from '../../../../../components/ui';
 import { format } from 'date-fns';
 import { UpdateBillDto } from '../../dto';
+import { AddClientModalProps } from '@/pages/Private/Clients/components/AddClient/AddClientModal.component';
+import NiceModal from '@ebay/nice-modal-react';
+import { AddClientModal } from '@/pages/Private/Clients/components/AddClient/AddClientModal.component';
 // import { useCashRegisterStore } from "../../../Common/store/useCashRegisterStore";
 
 /**
@@ -89,6 +93,11 @@ export const PaymentBill = () => {
 
   const [paymentMethod] = useState<PaymentMethod>(PaymentMethod.CASH);
 
+  const openCreateClientModal = () => {
+    const data: AddClientModalProps = { onClientCreated: handleChangeClient };
+    NiceModal.show(AddClientModal, data);
+  };
+
   // const handleChangePaymentMethod = (
   //   event: React.ChangeEvent<HTMLInputElement>
   // ) => {
@@ -118,6 +127,7 @@ export const PaymentBill = () => {
       // !activeCashRegister
     ) {
       alert('Error al registrar el pago');
+
       return;
     }
 
@@ -227,6 +237,15 @@ export const PaymentBill = () => {
                         mt: 2
                       }}
                     >
+                      {withClient && (
+                        <Button
+                          variant='text'
+                          startIcon={<PersonAddOutlined />}
+                          onClick={openCreateClientModal}
+                        >
+                          Nuevo cliente
+                        </Button>
+                      )}
                       <Button
                         onClick={handleChangeStep(2)}
                         variant='contained'

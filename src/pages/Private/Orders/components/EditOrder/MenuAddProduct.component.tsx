@@ -87,8 +87,7 @@ export const Categories: FC<Props> = ({ categories }) => {
 };
 
 const AllMenu: FC = () => {
-  const { activeCategory } =
-    useSelector(selectMenu);
+  const { activeCategory } = useSelector(selectMenu);
 
   // const { isOpen, handleClose, handleOpen } = useModal();
 
