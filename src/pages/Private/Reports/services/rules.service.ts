@@ -1,13 +1,13 @@
-import { RuleWeek } from "../models/rule-week.model";
-import { RuleDay } from "../models/rule-day.model";
-import { RuleWeather } from "../models/rule-weather.model";
-import { restauranteApi } from "../../../../api";
-import { loadAbort } from "../../../../helpers";
-import { UpdateRestaurantDto } from "../views/FootfallSimulation/dto/update-restaurant.dto";
-import { UpdateRuleDayDto } from "../views/FootfallSimulation/dto/update-rule-day.dto";
-import { UpdateRuleWeatherDto } from "../views/FootfallSimulation/dto/update-rule-weather";
-import { UpdateRuleWeekDto } from "../views/FootfallSimulation/dto/update-rule-week.dto";
-import { Restaurant } from "../../Common/models/restaurant.model";
+import { RuleWeek } from '../models/rule-week.model';
+import { RuleDay } from '../models/rule-day.model';
+import { RuleWeather } from '../models/rule-weather.model';
+import { restauranteApi } from '../../../../api';
+import { loadAbort } from '../../../../helpers';
+import { UpdateRestaurantDto } from '../views/FootfallSimulation/dto/update-restaurant.dto';
+import { UpdateRuleDayDto } from '../views/FootfallSimulation/dto/update-rule-day.dto';
+import { UpdateRuleWeatherDto } from '../views/FootfallSimulation/dto/update-rule-weather';
+import { UpdateRuleWeekDto } from '../views/FootfallSimulation/dto/update-rule-week.dto';
+import { Restaurant } from '../../Common/models/restaurant.model';
 // import { Restaurant } from '../models/restaurant.model';
 
 export const getRulesWeek = () => {
@@ -15,9 +15,9 @@ export const getRulesWeek = () => {
 
   return {
     call: restauranteApi.get<RuleWeek[]>(`rule-week`, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };
 
@@ -26,9 +26,9 @@ export const updateRulesWeek = (rulesWeek: UpdateRuleWeekDto[]) => {
 
   return {
     call: restauranteApi.patch<RuleWeek[]>(`rule-week`, rulesWeek, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };
 
@@ -37,9 +37,9 @@ export const getRulesDay = () => {
 
   return {
     call: restauranteApi.get<RuleDay[]>(`rule-day`, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };
 
@@ -48,9 +48,9 @@ export const updateRulesDay = (rulesDay: UpdateRuleDayDto[]) => {
 
   return {
     call: restauranteApi.patch<RuleDay[]>(`rule-day`, rulesDay, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };
 export const updateRuleDay = (ruleDay: UpdateRuleDayDto) => {
@@ -58,9 +58,9 @@ export const updateRuleDay = (ruleDay: UpdateRuleDayDto) => {
 
   return {
     call: restauranteApi.patch<RuleDay>(`rule-day/${ruleDay.id}`, ruleDay, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };
 
@@ -69,9 +69,9 @@ export const getRulesWeather = () => {
 
   return {
     call: restauranteApi.get<RuleWeather>(`rule-weather`, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };
 
@@ -80,19 +80,19 @@ export const updateRulesWeather = (rulesWeather: UpdateRuleWeatherDto[]) => {
 
   return {
     call: restauranteApi.patch<RuleWeather[]>(`rule-weather`, rulesWeather, {
-      signal: controller.signal,
+      signal: controller.signal
     }),
-    controller,
+    controller
   };
 };
 
 export const getRestaurant = async (
   restaurantId: string
 ): Promise<Restaurant> => {
+  console.log({ restaurantId });
   const resp = await restauranteApi.get<Restaurant>(
     `restaurant/${restaurantId}`
   );
-
   return resp.data;
 };
 

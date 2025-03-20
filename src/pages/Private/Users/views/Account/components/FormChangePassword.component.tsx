@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -6,15 +5,15 @@ import {
   Container,
   FormControl,
   Alert,
-  Stack,
-} from "@mui/material";
-import { useForm } from "react-hook-form";
+  Stack
+} from '@mui/material';
+import { useForm } from 'react-hook-form';
 import {
   ChangePassword,
-  ChangePasswordDto,
-} from "../../../dto/change-password.dto";
-import { useChangePasswordUser } from "../../../hooks/useUsers";
-import { LoadingButton } from "@mui/lab";
+  ChangePasswordDto
+} from '../../../dto/change-password.dto';
+import { useChangePasswordUser } from '../../../hooks/useUsers';
+import { LoadingButton } from '@mui/lab';
 
 export const FormChangePassword = () => {
   const { isLoading, mutateAsync } = useChangePasswordUser();
@@ -24,20 +23,20 @@ export const FormChangePassword = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
+    watch
   } = useForm<ChangePassword>({
     defaultValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    }
   });
 
   // const [isSamePassword, setIsSamePassword] = useState(true);
 
   const onSubmit = (form: ChangePassword) => {
     if (form.newPassword !== form.confirmPassword) {
-      console.log("Las contraseñas no coinciden");
+      console.log('Las contraseñas no coinciden');
       // setIsSamePassword(false);
 
       return;
@@ -53,8 +52,8 @@ export const FormChangePassword = () => {
   };
 
   const validateSamePassword = (): boolean => {
-    if (watch("confirmPassword").length > 0)
-      return watch("confirmPassword") === watch("newPassword");
+    if (watch('confirmPassword').length > 0)
+      return watch('confirmPassword') === watch('newPassword');
 
     return true;
   };
@@ -63,66 +62,66 @@ export const FormChangePassword = () => {
 
   return (
     <>
-      <Container maxWidth="xs">
+      <Container maxWidth='xs'>
         <Card>
           <CardContent>
             <FormControl
-              component="form"
+              component='form'
               onSubmit={handleSubmit(onSubmit)}
               fullWidth
             >
               <Stack spacing={2}>
                 <TextField
-                  label="Contraseña actual"
-                  type="password"
+                  label='Contraseña actual'
+                  type='password'
                   fullWidth
-                  {...register("currentPassword", {
-                    required: "Este campo es requerido",
+                  {...register('currentPassword', {
+                    required: 'Este campo es requerido'
                   })}
                 />
                 <TextField
-                  label="Nueva contraseña"
-                  type="password"
+                  label='Nueva contraseña'
+                  type='password'
                   fullWidth
-                  {...register("newPassword", {
-                    required: "Este campo es requerido",
+                  {...register('newPassword', {
+                    required: 'Este campo es requerido',
                     minLength: {
                       value: 6,
-                      message: "Minimo 6 caracteres",
+                      message: 'Minimo 6 caracteres'
                     },
                     pattern: {
                       value:
                         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/,
                       message:
-                        "Minimo 6 caracteres, al menos una letra mayúscula, una letra minúscula y un número",
-                    },
+                        'Minimo 6 caracteres, al menos una letra mayúscula, una letra minúscula y un número'
+                    }
                   })}
                   helperText={
                     errors.newPassword?.message ||
-                    "Minimo 6 caracteres, al menos una letra mayúscula, una letra minúscula y un número"
+                    'Minimo 6 caracteres, al menos una letra mayúscula, una letra minúscula y un número'
                   }
                   error={!!errors.newPassword}
                 />
 
                 <TextField
-                  label="Confirmar contraseña"
-                  type="password"
+                  label='Confirmar contraseña'
+                  type='password'
                   fullWidth
-                  {...register("confirmPassword", {
-                    required: "Este campo es requerido",
+                  {...register('confirmPassword', {
+                    required: 'Este campo es requerido'
                   })}
                   helperText={errors.confirmPassword?.message}
                   error={!!errors.confirmPassword}
                 />
 
                 {!isSamePassword && (
-                  <Alert severity="error">Las contraseñas no coinciden</Alert>
+                  <Alert severity='error'>Las contraseñas no coinciden</Alert>
                 )}
 
                 <LoadingButton
-                  variant="contained"
-                  color="primary"
-                  type="submit"
+                  variant='contained'
+                  color='primary'
+                  type='submit'
                   loading={isLoading}
                   disabled={!isSamePassword}
                 >

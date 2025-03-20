@@ -1,9 +1,9 @@
-import { FC, ReactNode } from "react";
-import { Box, useTheme, CssBaseline } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { FC, ReactNode } from 'react';
+import { Box, useTheme, CssBaseline } from '@mui/material';
+import { Outlet } from 'react-router-dom';
 
-import Sidebar from "./Sidebar/Sidebar.component";
-import Header from "./Header/Header.component";
+import Sidebar from './Sidebar/Sidebar.component';
+import Header from './Header/Header.component';
 
 interface SidebarLayoutProps {
   children?: ReactNode;
@@ -17,7 +17,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
     <>
       <Box
         sx={{
-          display: "flex",
+          display: 'flex'
         }}
       >
         <CssBaseline />
@@ -25,12 +25,12 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
         <Sidebar />
         <Box
           sx={{
-            position: "relative",
+            position: 'relative',
             zIndex: 5,
-            display: "block",
+            display: 'block',
             flex: 1,
-            width: "100%",
-            pt: `${theme.header.height}`,
+            width: '100%',
+            pt: `${theme.header.height}`
           }}
         >
           <Outlet />

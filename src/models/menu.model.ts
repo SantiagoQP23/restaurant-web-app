@@ -1,4 +1,4 @@
-import { ProductionArea } from "../pages/Private/Common/models/production-area.model";
+import { ProductionArea } from '../pages/Private/Common/models/production-area.model';
 
 export interface Menu {
   sections: ISection[];
@@ -41,14 +41,14 @@ export interface ICreateCategory {
 }
 
 export enum ProductStatus {
-  AVAILABLE = "AVAILABLE",
-  OUT_OF_STOCK = "OUT_OF_STOCK",
-  OUT_OF_SEASON = "OUT_OF_SEASON",
+  AVAILABLE = 'AVAILABLE',
+  OUT_OF_STOCK = 'OUT_OF_STOCK',
+  OUT_OF_SEASON = 'OUT_OF_SEASON'
 }
 export enum ProductStatusSpanish {
-  AVAILABLE = "Disponible",
-  OUT_OF_STOCK = "Agotado",
-  OUT_OF_SEASON = "Fuera de temporada",
+  AVAILABLE = 'Disponible',
+  OUT_OF_STOCK = 'Agotado',
+  OUT_OF_SEASON = 'Fuera de temporada'
 }
 
 /**
@@ -57,6 +57,8 @@ export enum ProductStatusSpanish {
  * @version 1.1 16/12/2023 Adds productionArea field.
  * @version 1.2 17/12/2023 Adds unitCost and quantity fields.
  * @version 1.3 18/12/2023 Adds options field.
+ * @author Steven Rosales
+ * @version 1.4 15/03/2025 Add iva to product
  */
 export interface IProduct {
   id: string;
@@ -72,6 +74,7 @@ export interface IProduct {
   unitCost: number;
   quantity: number;
   options: ProductOption[];
+  iva: number;
 }
 
 /**

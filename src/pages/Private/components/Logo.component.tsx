@@ -99,7 +99,7 @@ const LogoText = styled(Box)(
 
 export const Logo = () => {
   return (
-    <LogoWrapper to="/menu">
+    <LogoWrapper to='/menu'>
       <LogoSignWrapper>
         <LogoSign>
           <LogoSignInner />
@@ -107,12 +107,12 @@ export const Logo = () => {
       </LogoSignWrapper>
       <Hidden smDown>
         <LogoTextWrapper>
-          <Tooltip title="Version 1.1.0" arrow placement="right">
+          <Tooltip title='Version 1.1.0' arrow placement='right'>
             <VersionBadge>1.1</VersionBadge>
           </Tooltip>
           <LogoText>RESTAURANTE</LogoText>
         </LogoTextWrapper>
       </Hidden>
     </LogoWrapper>
-  )
-}
+  );
+};

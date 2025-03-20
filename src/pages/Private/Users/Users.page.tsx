@@ -1,12 +1,12 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Container } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Container } from '@mui/material';
+import { Outlet } from 'react-router-dom';
 
 const Users: FC = () => {
   return (
     <div>
-      <Container maxWidth="lg">
+      <Container maxWidth='lg'>
         <Outlet />
       </Container>
     </div>

@@ -1,5 +1,5 @@
-import { Order, IOrderDetail, OrderStatus } from "../../../../../../models";
-import { ProductionArea } from "../../../../Common/models/production-area.model";
+import { Order, IOrderDetail, OrderStatus } from '../../../../../../models';
+import { ProductionArea } from '../../../../Common/models/production-area.model';
 import {
   Accordion,
   AccordionDetails,
@@ -8,12 +8,12 @@ import {
   Stack,
   Tab,
   Tabs,
-  Typography,
-} from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
-import { DetailInProgress } from "./DetailInProgress.component";
-import { useState } from "react";
-import { Label } from "../../../../../../components/ui";
+  Typography
+} from '@mui/material';
+import { ExpandMore } from '@mui/icons-material';
+import { DetailInProgress } from './DetailInProgress.component';
+import { useState } from 'react';
+import { Label } from '../../../../../../components/ui';
 
 interface Props {
   orderId: string;
@@ -26,7 +26,7 @@ export const ProductionAreaOrder = ({
   details,
   productionArea,
   orderId,
-  order,
+  order
 }: Props) => {
   const [expanded, setExpanded] = useState<boolean>(
     order.status === OrderStatus.DELIVERED ? true : false
@@ -55,17 +55,17 @@ export const ProductionAreaOrder = ({
     <Box>
       <Accordion
         sx={{
-          "& .MuiAccordionSummary-content": {
-            alignItems: "center",
+          '& .MuiAccordionSummary-content': {
+            alignItems: 'center'
           },
-          border: "1px solid",
-          borderRadius: "10px",
-          mb: 2,
+          border: '1px solid',
+          borderRadius: '10px',
+          mb: 2
         }}
         defaultExpanded
       >
-        <AccordionSummary expandIcon={<ExpandMore />} >
-          <Typography variant="h6">
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography variant='h6'>
             <b>{productionArea.name}</b>: {`${totalProducts} productos`}
           </Typography>
         </AccordionSummary>
@@ -74,29 +74,29 @@ export const ProductionAreaOrder = ({
             <Tabs
               value={expanded ? 1 : 0}
               onChange={handleExpanded}
-              indicatorColor="primary"
+              indicatorColor='primary'
               // allowScrollButtonsMobile
-              variant="scrollable"
-              scrollButtons="auto"
+              variant='scrollable'
+              scrollButtons='auto'
               sx={{
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "transparent",
+                '& .MuiTabs-indicator': {
+                  backgroundColor: 'transparent',
 
-                  borderColor: "transparent",
-                  boxShadow: "none",
-                  borderRadius: "0",
-                  color: "text.primary",
+                  borderColor: 'transparent',
+                  boxShadow: 'none',
+                  borderRadius: '0',
+                  color: 'text.primary'
                 },
-                "& .MuiTab-indicatorSpan": {
-                  borderRadius: "10px 10px 0 0",
-                  color: "text.primary",
-                },
+                '& .MuiTab-indicatorSpan': {
+                  borderRadius: '10px 10px 0 0',
+                  color: 'text.primary'
+                }
               }}
             >
               {
                 <Tab
                   // disabled={order.status === OrderStatus.DELIVERED}
-                  label="Por entregar"
+                  label='Por entregar'
                   icon={
                     <Label>
                       {
@@ -106,16 +106,16 @@ export const ProductionAreaOrder = ({
                       }
                     </Label>
                   }
-                  iconPosition="end"
+                  iconPosition='end'
                   sx={{
-                    "&.Mui-selected, &.Mui-selected:hover": {
-                      color: (theme) => theme.colors.alpha.black[100],
-                    },
+                    '&.Mui-selected, &.Mui-selected:hover': {
+                      color: (theme) => theme.colors.alpha.black[100]
+                    }
                   }}
                 />
               }
               <Tab
-                label={"Entregado"}
+                label={'Entregado'}
                 icon={
                   <Label>
                     {
@@ -125,24 +125,23 @@ export const ProductionAreaOrder = ({
                     }
                   </Label>
                 }
-                iconPosition="end"
+                iconPosition='end'
                 sx={{
-                  "&.Mui-selected, &.Mui-selected:hover": {
-                    color: (theme) => theme.colors.alpha.black[100],
-                  },
+                  '&.Mui-selected, &.Mui-selected:hover': {
+                    color: (theme) => theme.colors.alpha.black[100]
+                  }
                 }}
               />
             </Tabs>
           )}
           <Stack spacing={1}>
             {detailsStatus.map((detail) => (
-                  <DetailInProgress
-                    key={detail.id}
-                    detail={detail}
-                    orderId={orderId}
-                  />
-                )
-            )}
+              <DetailInProgress
+                key={detail.id}
+                detail={detail}
+                orderId={orderId}
+              />
+            ))}
           </Stack>
         </AccordionDetails>
       </Accordion>

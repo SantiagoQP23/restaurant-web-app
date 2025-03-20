@@ -1,5 +1,4 @@
-import { TypeOrder } from "../../../../models";
-
+import { TypeOrder } from '../../../../models';
 
 export interface CreateOrderDto {
   clientId?: string;

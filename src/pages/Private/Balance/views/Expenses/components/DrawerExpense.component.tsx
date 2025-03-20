@@ -1,6 +1,5 @@
-
-import { Expense } from "../../../models/expense.model";
-import { FC } from "react";
+import { Expense } from '../../../models/expense.model';
+import { FC } from 'react';
 
 interface Props {
   open: boolean;

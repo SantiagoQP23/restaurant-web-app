@@ -1,7 +1,34 @@
 import { useState, FC, useEffect } from 'react';
 
-import { ArrowDownward, CreditCard, Edit, Paid, Print } from '@mui/icons-material';
-import { Card, CardHeader, Button, CardContent, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Typography, IconButton, TablePagination, Avatar, ListItem, ListItemAvatar, ListItemText, List, ListItemSecondaryAction, Stack } from '@mui/material';
+import {
+  ArrowDownward,
+  CreditCard,
+  Edit,
+  Paid,
+  Print
+} from '@mui/icons-material';
+import {
+  Card,
+  CardHeader,
+  Button,
+  CardContent,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+  IconButton,
+  TablePagination,
+  Avatar,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  List,
+  ListItemSecondaryAction,
+  Stack
+} from '@mui/material';
 import { format } from 'date-fns';
 import { PaymentMethod } from '../../../../Orders/models/Invoice.model';
 import { Expense } from '../../../models/expense.model';
@@ -18,52 +45,38 @@ interface Props {
 }
 
 export const ExpensesList: FC<Props> = ({ cashRegister, editable = false }) => {
-
-
-
-
   const [activeExpense, setActiveExpense] = useState<Expense | null>(null);
 
   const { isOpen, handleClose, handleOpen } = useModal();
 
   const handleOpenDrawer = (activeExpense: Expense) => {
-
-    console.log('change expense')
-    console.log(activeExpense)
+    console.log('change expense');
+    console.log(activeExpense);
     setActiveExpense(activeExpense);
     handleOpen();
-  }
+  };
 
   const handlePrint = async (expense: Expense) => {
-
     const pdf = await generatePdfExpense(expense);
 
     pdf.open();
-
-  }
-
-
-
+  };
 
   return (
     <>
-
-      {
-        activeExpense && (
-          <DrawerExpense
-            open={isOpen}
-            onClose={handleClose}
-            expense={activeExpense}
-
-          />
-        )
-      }
+      {activeExpense && (
+        <DrawerExpense
+          open={isOpen}
+          onClose={handleClose}
+          expense={activeExpense}
+        />
+      )}
       <Card>
-
-        <CardHeader title='Lista de gastos'
-        // action={
-        //   <Button variant='outlined' size='small'>Añadir</Button>
-        // }
+        <CardHeader
+          title='Lista de gastos'
+          // action={
+          //   <Button variant='outlined' size='small'>Añadir</Button>
+          // }
         />
 
         {/* <List>
@@ -95,30 +108,22 @@ export const ExpensesList: FC<Props> = ({ cashRegister, editable = false }) => {
 
         </List> */}
 
-
         <TableContainer>
-
-
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Descripción</TableCell>
                 <TableCell>Cantidad</TableCell>
                 <TableCell align='center'>Acciones</TableCell>
-
               </TableRow>
-
             </TableHead>
 
             <TableBody>
-
               {
                 // .map((expense) => (
                 //   <TableRow key={expense.id}>
                 //     <TableCell
-
                 //     >
-
                 //       <ListItem>
                 //         <ListItemAvatar>
                 //           {
@@ -126,11 +131,9 @@ export const ExpensesList: FC<Props> = ({ cashRegister, editable = false }) => {
                 //               ? (
                 //                 <Paid color='success' />
                 //               ) : (
-
                 //                 <CreditCard color='warning' />
                 //               )
                 //           }
-
                 //         </ListItemAvatar>
                 //         <ListItemText
                 //           primary={expense.transaction.description}
@@ -140,24 +143,17 @@ export const ExpensesList: FC<Props> = ({ cashRegister, editable = false }) => {
                 //           }}
                 //         />
                 //       </ListItem>
-
-
                 //     </TableCell>
-
-
                 //     <TableCell>
                 //       <Typography
                 //         color='error.main'
                 //       >
                 //         - {formatMoney(expense.transaction.amount)}
                 //       </Typography>
-
-
                 //     </TableCell>
                 //     <TableCell
                 //       align='center'
                 //     >
-
                 //       <Stack direction='row' spacing={2}  justifyContent='center'>
                 //         <IconButton
                 //           color='primary'
@@ -165,11 +161,9 @@ export const ExpensesList: FC<Props> = ({ cashRegister, editable = false }) => {
                 //         >
                 //           <Print />
                 //         </IconButton>
-
                 //         {
                 //           editable && (
                 //             <Button
-                              
                 //               startIcon={<Edit />}
                 //               size='small'
                 //               onClick={() => handleOpenDrawer(expense)}
@@ -179,21 +173,12 @@ export const ExpensesList: FC<Props> = ({ cashRegister, editable = false }) => {
                 //           )
                 //         }
                 //       </Stack>
-
                 //     </TableCell>
-
                 //   </TableRow>
-
-
                 // ))
               }
-
-
             </TableBody>
-
           </Table>
-
-
         </TableContainer>
         {/* <TablePagination
 
@@ -206,11 +191,7 @@ export const ExpensesList: FC<Props> = ({ cashRegister, editable = false }) => {
           onRowsPerPageChange={() => { }}
 
         /> */}
-
-
-
-
       </Card>
     </>
-  )
-}
+  );
+};

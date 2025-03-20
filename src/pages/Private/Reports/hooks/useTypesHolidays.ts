@@ -1,18 +1,18 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { TypeHoliday } from "../models/type-holiday.model";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { TypeHoliday } from '../models/type-holiday.model';
 import {
   createHoliday,
   deleteHoliday,
   getTypesHolidays,
-  updateHoliday,
-} from "../services/holidays.service";
-import { useSnackbar } from "notistack";
-import { UpdateHolidayDto } from "../views/FootfallSimulation/dto/update-holiday.dto";
-import { Holiday } from "../models/holiday.model";
-import { CreateHolidayDto } from "../views/FootfallSimulation/dto/create-holiday.dto";
+  updateHoliday
+} from '../services/holidays.service';
+import { useSnackbar } from 'notistack';
+import { UpdateHolidayDto } from '../views/FootfallSimulation/dto/update-holiday.dto';
+import { Holiday } from '../models/holiday.model';
+import { CreateHolidayDto } from '../views/FootfallSimulation/dto/create-holiday.dto';
 
 export const useTypesHolidays = () => {
-  return useQuery<TypeHoliday[]>(["typesHolidays"], getTypesHolidays);
+  return useQuery<TypeHoliday[]>(['typesHolidays'], getTypesHolidays);
 };
 
 export const useUpdateTypeHoliday = (callback?: () => void) => {
@@ -25,16 +25,16 @@ export const useUpdateTypeHoliday = (callback?: () => void) => {
     {
       onSuccess: async (data) => {
         console.log(data);
-        enqueueSnackbar("Feriado actualizado", { variant: "success" });
-        await queryClient.cancelQueries(["holidays"]);
+        enqueueSnackbar('Feriado actualizado', { variant: 'success' });
+        await queryClient.cancelQueries(['holidays']);
 
         const previousHolidays = queryClient.getQueryData<Holiday[]>([
-          "holidays",
+          'holidays'
         ]);
 
         if (previousHolidays) {
           queryClient.setQueryData(
-            ["holidays"],
+            ['holidays'],
             previousHolidays.map((currentHoliday) => {
               if (currentHoliday.id === data!.id) {
                 return data;
@@ -50,8 +50,8 @@ export const useUpdateTypeHoliday = (callback?: () => void) => {
       },
       onError: (error) => {
         console.log(error);
-        enqueueSnackbar("Error al actualizar feriado", { variant: "error" });
-      },
+        enqueueSnackbar('Error al actualizar feriado', { variant: 'error' });
+      }
     }
   );
 };
@@ -63,16 +63,16 @@ export const useCreateTypeHoliday = (callback?: () => void) => {
 
   return useMutation<Holiday, unknown, CreateHolidayDto>(createHoliday, {
     onSuccess: async (data) => {
-      enqueueSnackbar("Feriado creado", { variant: "success" });
+      enqueueSnackbar('Feriado creado', { variant: 'success' });
 
-      await queryClient.cancelQueries(["holidays"]);
+      await queryClient.cancelQueries(['holidays']);
 
       const previousHolidays = queryClient.getQueryData<Holiday[]>([
-        "holidays",
+        'holidays'
       ]);
 
       if (previousHolidays) {
-        queryClient.setQueryData(["holidays"], [...previousHolidays, data]);
+        queryClient.setQueryData(['holidays'], [...previousHolidays, data]);
       }
 
       callback && callback();
@@ -81,8 +81,8 @@ export const useCreateTypeHoliday = (callback?: () => void) => {
     },
     onError: (error) => {
       console.log(error);
-      enqueueSnackbar("Error al crear feriado", { variant: "error" });
-    },
+      enqueueSnackbar('Error al crear feriado', { variant: 'error' });
+    }
   });
 };
 
@@ -93,15 +93,15 @@ export const useDeleteTypeHoliday = (callback?: () => void) => {
 
   return useMutation<Holiday, unknown, string>(deleteHoliday, {
     onSuccess: async (data) => {
-      await queryClient.cancelQueries(["holidays"]);
+      await queryClient.cancelQueries(['holidays']);
 
       const previousHolidays = queryClient.getQueryData<Holiday[]>([
-        "holidays",
+        'holidays'
       ]);
 
       if (previousHolidays) {
         queryClient.setQueryData(
-          ["holidays"],
+          ['holidays'],
           previousHolidays.filter(
             (currentHoliday) => currentHoliday.id !== data.id
           )
@@ -114,7 +114,7 @@ export const useDeleteTypeHoliday = (callback?: () => void) => {
     },
     onError: (error) => {
       console.log(error);
-      enqueueSnackbar("Error al eliminar feriado", { variant: "error" });
-    },
+      enqueueSnackbar('Error al eliminar feriado', { variant: 'error' });
+    }
   });
 };

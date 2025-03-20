@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { ICreateOrderDetail, ITable, TypeOrder } from "../../../../models";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { ICreateOrderDetail, ITable, TypeOrder } from '../../../../models';
 
 interface NewOrderState {
   table: ITable | null;
@@ -36,14 +36,14 @@ const initialState: NewOrderState = {
   people: 0,
   orderType: TypeOrder.IN_PLACE,
   totalProducts: 0,
-  notes: "",
-  deliveryTime: new Date(),
+  notes: '',
+  deliveryTime: new Date()
 };
 
 export const useNewOrderStore = create<NewOrderState & NewOrderActions>()(
   persist(
     (set, get) => ({
-      title: "New Order",
+      title: 'New Order',
       ...initialState,
 
       setTable: (table: ITable | null) => set({ table }),
@@ -63,7 +63,6 @@ export const useNewOrderStore = create<NewOrderState & NewOrderActions>()(
         // }
 
         set({ details: [...details, detail] });
-
       },
 
       removeDetail: (detail: ICreateOrderDetail) => {
@@ -81,7 +80,9 @@ export const useNewOrderStore = create<NewOrderState & NewOrderActions>()(
         const details = get().details;
 
         const index = details.findIndex(
-          (d) => d.product.id === detail.product.id && d.productOption?.id === detail.productOption?.id
+          (d) =>
+            d.product.id === detail.product.id &&
+            d.productOption?.id === detail.productOption?.id
         );
 
         if (index !== -1) {
@@ -89,7 +90,7 @@ export const useNewOrderStore = create<NewOrderState & NewOrderActions>()(
             ...details[index],
             quantity: detail.quantity,
             description: detail.description,
-            productOption: detail.productOption,
+            productOption: detail.productOption
           };
 
           details[index] = updatedDetail;
@@ -103,10 +104,10 @@ export const useNewOrderStore = create<NewOrderState & NewOrderActions>()(
       setNotes: (notes: string) => set({ notes }),
       setDeliveryTime: (deliveryTime: Date | null) => set({ deliveryTime }),
 
-      reset: () => set(initialState),
+      reset: () => set(initialState)
     }),
     {
-      name: "newOrderStore",
+      name: 'newOrderStore'
     }
   )
 );

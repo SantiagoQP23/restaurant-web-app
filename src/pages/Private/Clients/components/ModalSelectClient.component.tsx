@@ -1,24 +1,21 @@
-import { Add, Close
- } from "@mui/icons-material";
+import { Add, Close } from '@mui/icons-material';
 import {
   Dialog,
   DialogTitle,
   Typography,
   IconButton,
-
   ListItemText,
-
   Paper,
   InputBase,
   CircularProgress,
   DialogContent,
   Stack,
-  Box,
-} from "@mui/material";
-import { IClient } from "../../../../models";
-import { FC } from "react";
-import { useClients } from "../hooks/useClients";
-import SearchIcon from "@mui/icons-material/Search";
+  Box
+} from '@mui/material';
+import { IClient } from '../../../../models';
+import { FC } from 'react';
+import { useClients } from '../hooks/useClients';
+import SearchIcon from '@mui/icons-material/Search';
 
 interface Props {
   onChange: (client: IClient | null) => void;
@@ -40,17 +37,17 @@ export const ModalSelectClient: FC<Props> = ({ open, onClose, onChange }) => {
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth="md"
+      maxWidth='md'
       sx={{
-        zIndex: 10500,
+        zIndex: 10500
       }}
     >
       <DialogTitle
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
+        display='flex'
+        justifyContent='space-between'
+        alignItems='center'
       >
-        <Typography variant="h4">Clientes</Typography>
+        <Typography variant='h4'>Clientes</Typography>
         <IconButton onClick={onClose}>
           <Close />
         </IconButton>
@@ -58,22 +55,22 @@ export const ModalSelectClient: FC<Props> = ({ open, onClose, onChange }) => {
 
       <DialogContent>
         <Paper
-          component="form"
-          sx={{ p: "2px 4px", display: "flex", alignItems: "center" }}
+          component='form'
+          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center' }}
           elevation={1}
         >
           <InputBase
-            type="text"
+            type='text'
             onChange={handleChangeSearch}
             sx={{ ml: 1, flex: 1 }}
-            placeholder="Buscar cliente"
-            inputProps={{ "aria-label": "Buscar cliente" }}
+            placeholder='Buscar cliente'
+            inputProps={{ 'aria-label': 'Buscar cliente' }}
             value={search}
           />
           <IconButton
-            type="button"
-            sx={{ p: "10px" }}
-            aria-label="search"
+            type='button'
+            sx={{ p: '10px' }}
+            aria-label='search'
             // onClick={updateList}
           >
             {clientsQuery.isLoading ? (
@@ -84,20 +81,20 @@ export const ModalSelectClient: FC<Props> = ({ open, onClose, onChange }) => {
           </IconButton>
         </Paper>
 
-        <Stack sx={{ width: 325, my: 2 }} direction="column" spacing={2}>
+        <Stack sx={{ width: 325, my: 2 }} direction='column' spacing={2}>
           {clientsQuery.data?.clients.map((client) => (
             <Box
               key={client.id}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
             >
               <ListItemText
-                primary={client.person.firstName + " " + client.person.lastName}
+                primary={client.person.firstName + ' ' + client.person.lastName}
                 secondary={client.person.email}
               />
 
-              <IconButton size="small" onClick={() => handleChange(client)}>
+              <IconButton size='small' onClick={() => handleChange(client)}>
                 <Add />
               </IconButton>
             </Box>

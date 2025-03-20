@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { replaceNumbersWithAsterisks } from "../utils/encrypt.util";
+import { useState } from 'react';
+import { replaceNumbersWithAsterisks } from '../utils/encrypt.util';
 
 export const useEncryptMoney = (money: string) => {
   const [visible, setVisible] = useState(false);
@@ -13,6 +13,6 @@ export const useEncryptMoney = (money: string) => {
   return {
     txtMoney,
     toggleVisibility,
-    visible,
+    visible
   };
 };

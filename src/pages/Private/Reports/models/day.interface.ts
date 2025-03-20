@@ -8,20 +8,14 @@ export interface IDay {
   tempMin: number;
   holiday: boolean;
   weatherCode: number;
-
 }
 
-export enum WeatherbitCodes {
-
-
-}
-
-
+export enum WeatherbitCodes {}
 
 export enum TypeFootfall {
-  REAL = "REAL",
-  SIMULATED = "SIMULATED",
-  PREDICTED = "PREDICTED"
+  REAL = 'REAL',
+  SIMULATED = 'SIMULATED',
+  PREDICTED = 'PREDICTED'
 }
 
 export interface Footfall {
@@ -31,18 +25,15 @@ export interface Footfall {
   quantity: number;
 }
 
-
 interface Codes {
   [id: number]: {
-    code: number,
-    description: string,
-    descriptionEs: string,
-    iconDay: string
-    nightIcon: string
-
-  }
+    code: number;
+    description: string;
+    descriptionEs: string;
+    iconDay: string;
+    nightIcon: string;
+  };
 }
-
 
 export const codes: Codes = {
   200: {
@@ -331,11 +322,8 @@ export const codes: Codes = {
     descriptionEs: 'Precipitación desconocida',
     iconDay: 'u00d',
     nightIcon: 'u00n'
-  },
-
-}
-
-
+  }
+};
 
 export enum WeatherCode {
   ThunderstormLightRain = 200,
@@ -375,7 +363,7 @@ export enum WeatherCode {
   ScatteredClouds = 802,
   BrokenClouds = 803,
   OvercastClouds = 804,
-  UnknownPrecipitation = 900,
+  UnknownPrecipitation = 900
 }
 
 export enum WeatherInSpanish {
@@ -416,8 +404,7 @@ export enum WeatherInSpanish {
   ScatteredClouds = 'Nubes dispersas',
   BrokenClouds = 'Nubes rotas',
   OvercastClouds = 'Nubes cubiertas',
-  UnknownPrecipitation = 'Precipitación desconocida',
-
+  UnknownPrecipitation = 'Precipitación desconocida'
 }
 
 export interface WeatherIcon {
@@ -427,12 +414,28 @@ export interface WeatherIcon {
 }
 
 export const weatherIcons: WeatherIcon[] = [
-  { code: WeatherCode.ThunderstormLightRain, dayIcon: 't01d', nightIcon: 't01n' },
+  {
+    code: WeatherCode.ThunderstormLightRain,
+    dayIcon: 't01d',
+    nightIcon: 't01n'
+  },
   { code: WeatherCode.ThunderstormRain, dayIcon: 't02d', nightIcon: 't02n' },
-  { code: WeatherCode.ThunderstormHeavyRain, dayIcon: 't03d', nightIcon: 't03n' },
-  { code: WeatherCode.ThunderstormLightDrizzle, dayIcon: 't04d', nightIcon: 't04n' },
+  {
+    code: WeatherCode.ThunderstormHeavyRain,
+    dayIcon: 't03d',
+    nightIcon: 't03n'
+  },
+  {
+    code: WeatherCode.ThunderstormLightDrizzle,
+    dayIcon: 't04d',
+    nightIcon: 't04n'
+  },
   { code: WeatherCode.ThunderstormDrizzle, dayIcon: 't04d', nightIcon: 't04n' },
-  { code: WeatherCode.ThunderstormHeavyDrizzle, dayIcon: 't04d', nightIcon: 't04n' },
+  {
+    code: WeatherCode.ThunderstormHeavyDrizzle,
+    dayIcon: 't04d',
+    nightIcon: 't04n'
+  },
   { code: WeatherCode.ThunderstormHail, dayIcon: 't05d', nightIcon: 't05n' },
   { code: WeatherCode.LightDrizzle, dayIcon: 'd01d', nightIcon: 'd01n' },
   { code: WeatherCode.Drizzle, dayIcon: 'd02d', nightIcon: 'd02n' },
@@ -464,8 +467,11 @@ export const weatherIcons: WeatherIcon[] = [
   { code: WeatherCode.ScatteredClouds, dayIcon: 'c02d', nightIcon: 'c02n' },
   { code: WeatherCode.BrokenClouds, dayIcon: 'c03d', nightIcon: 'c03n' },
   { code: WeatherCode.OvercastClouds, dayIcon: 'c04d', nightIcon: 'c04n' },
-  { code: WeatherCode.UnknownPrecipitation, dayIcon: 'u00d', nightIcon: 'u00n' }
-
+  {
+    code: WeatherCode.UnknownPrecipitation,
+    dayIcon: 'u00d',
+    nightIcon: 'u00n'
+  }
 ];
 
 /*

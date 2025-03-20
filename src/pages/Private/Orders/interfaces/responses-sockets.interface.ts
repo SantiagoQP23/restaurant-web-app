@@ -6,7 +6,6 @@ export interface SocketResponse {
   msg: string;
 }
 
-
 export interface SocketResponseOrder extends SocketResponse {
   order?: Order;
 }

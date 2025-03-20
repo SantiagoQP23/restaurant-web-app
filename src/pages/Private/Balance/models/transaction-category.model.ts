@@ -1,4 +1,4 @@
-import { TransactionType } from "../../Common/enums/transaction-type.enum";
+import { TransactionType } from '../../Common/enums/transaction-type.enum';
 
 export interface TransactionCategory {
   id: number;

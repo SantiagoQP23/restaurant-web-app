@@ -1,4 +1,4 @@
-import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 import {
   Button,
   CardContent,
@@ -7,14 +7,14 @@ import {
   DialogTitle,
   Grid,
   InputAdornment,
-  TextField,
-} from "@mui/material";
-import { IProduct } from "../../../../../../models";
-import { LoadingButton } from "@mui/lab";
-import { useForm } from "react-hook-form";
-import { CreateProductOptionDto } from "../../../dto";
-import { useCreateProductOption } from "../../../hooks/useProductOptions";
-import { AttachMoney } from "@mui/icons-material";
+  TextField
+} from '@mui/material';
+import { IProduct } from '../../../../../../models';
+import { LoadingButton } from '@mui/lab';
+import { useForm } from 'react-hook-form';
+import { CreateProductOptionDto } from '../../../dto';
+import { useCreateProductOption } from '../../../hooks/useProductOptions';
+import { AttachMoney } from '@mui/icons-material';
 
 interface Props {
   product: IProduct;
@@ -30,13 +30,13 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
       handleSubmit,
       formState: { errors, isDirty },
       register,
-      reset,
+      reset
     } = useForm<CreateProductOptionDto>({
       defaultValues: {
-        name: "",
+        name: '',
         productId: product.id,
-        price: product.price,
-      },
+        price: product.price
+      }
     });
 
     const onSubmit = (data: CreateProductOptionDto) => {
@@ -54,27 +54,27 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
       <>
         <Dialog {...muiDialogV5(modal)}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogTitle variant="h5">
+            <DialogTitle variant='h5'>
               Añadir opción de {product.name}
             </DialogTitle>
             <CardContent
               sx={{
-                width: 300,
+                width: 300
               }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
                     autoFocus
-                    label="Nombre del producto"
-                    type="text"
+                    label='Nombre del producto'
+                    type='text'
                     fullWidth
-                    {...register("name", {
-                      required: "Este campo es requerido",
+                    {...register('name', {
+                      required: 'Este campo es requerido',
                       minLength: {
                         value: 2,
-                        message: "Minimo 2 caracteres",
-                      },
+                        message: 'Minimo 2 caracteres'
+                      }
                     })}
                     helperText={errors.name?.message}
                   />
@@ -82,26 +82,26 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
 
                 <Grid item xs={12}>
                   <TextField
-                    label="Precio"
+                    label='Precio'
                     InputProps={{
                       startAdornment: (
-                        <InputAdornment position="start">
+                        <InputAdornment position='start'>
                           <AttachMoney />
                         </InputAdornment>
-                      ),
+                      )
                     }}
                     fullWidth
-                    type="number"
+                    type='number'
                     inputProps={{
-                      step: 0.05,
+                      step: 0.05
                     }}
-                    {...register("price", {
-                      required: "Este campo es requerido",
+                    {...register('price', {
+                      required: 'Este campo es requerido',
                       min: {
                         value: 0.25,
-                        message: "El valor debe ser mayor a $0.25",
+                        message: 'El valor debe ser mayor a $0.25'
                       },
-                      valueAsNumber: true,
+                      valueAsNumber: true
                     })}
                     helperText={errors.price?.message}
                     error={!!errors.price}
@@ -113,10 +113,10 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
             <DialogActions>
               <Button onClick={closeModal}>Cancelar</Button>
               <LoadingButton
-                variant="contained"
-                color="primary"
+                variant='contained'
+                color='primary'
                 loading={isLoading}
-                type="submit"
+                type='submit'
                 disabled={!isDirty}
               >
                 Aceptar

@@ -1,65 +1,60 @@
 import { FC } from 'react';
 import { ICategory } from '../../../../../../models/menu.model';
-import {  Typography, Stack, Chip } from '@mui/material';
+import { Typography, Stack, Chip } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectMenu, setActiveCategory } from '../../../../../../redux/slices/menu/menu.slice';
-
-
+import {
+  selectMenu,
+  setActiveCategory
+} from '../../../../../../redux/slices/menu/menu.slice';
 
 interface Props {
-  categories: ICategory[]
+  categories: ICategory[];
 }
 
-
-
 export const Categories: FC<Props> = ({ categories }) => {
-
   const { activeCategory } = useSelector(selectMenu);
 
   const dispatch = useDispatch();
 
   const changeCategory = (category: ICategory) => {
     dispatch(setActiveCategory(category));
-  }
+  };
 
   if (!activeCategory) {
-
     return (
-      <Typography variant='body1' textAlign='center'>Seleccione una sección</Typography>
+      <Typography variant='body1' textAlign='center'>
+        Seleccione una sección
+      </Typography>
     );
   }
 
   return (
     <>
       <Stack
-        direction="row"
+        direction='row'
         sx={{
           width: 'auto',
-          overflowX: 'auto',
+          overflowX: 'auto'
         }}
         spacing={1}
         pb={1}
       >
-        {
-          categories.map((category, index) => {
-              
-              if (category.isActive)
-                return (
-                  <Chip 
-                  label={category.name}
-                  key={category.id}
-                  variant={activeCategory.id === category.id ? "filled" : "outlined"}
-                  onClick={() => changeCategory(category)}
-                  color={activeCategory.id === category.id ? 'info' : 'default'}
-
-                  clickable
-                  />
-                )
-          })
-        }
-
+        {categories.map((category, index) => {
+          if (category.isActive)
+            return (
+              <Chip
+                label={category.name}
+                key={category.id}
+                variant={
+                  activeCategory.id === category.id ? 'filled' : 'outlined'
+                }
+                onClick={() => changeCategory(category)}
+                color={activeCategory.id === category.id ? 'info' : 'default'}
+                clickable
+              />
+            );
+        })}
       </Stack>
-
 
       {/* <Box sx={{ display: 'flex', flexDirection: {xs: 'column', md: 'row'} }}> */}
 
@@ -99,9 +94,6 @@ export const Categories: FC<Props> = ({ categories }) => {
 
         </Box>
       </Card> */}
-
-
-
     </>
-  )
-}
+  );
+};

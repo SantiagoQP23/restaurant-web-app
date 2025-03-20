@@ -1,12 +1,16 @@
-import { People } from "@mui/icons-material"
-import { Card, CardHeader, Button, CardContent, Typography } from "@mui/material"
+import { People } from '@mui/icons-material';
+import {
+  Card,
+  CardHeader,
+  Button,
+  CardContent,
+  Typography
+} from '@mui/material';
 import { NavLink as RouterLink } from 'react-router-dom';
-import { useClients } from "../../../../Clients/hooks/useClients";
-
+import { useClients } from '../../../../Clients/hooks/useClients';
 
 export const ClientsSummary = () => {
-
-  const {clientsQuery} = useClients();
+  const { clientsQuery } = useClients();
 
   return (
     <Card>
@@ -16,7 +20,7 @@ export const ClientsSummary = () => {
           <Button
             variant='outlined'
             component={RouterLink}
-            to="/clients"
+            to='/clients'
             size='small'
           >
             Ver todo
@@ -24,17 +28,16 @@ export const ClientsSummary = () => {
         }
       />
 
-      <CardContent sx={{
-        display: 'flex',
-        gap: 1,
-        alignItems: 'center'
-
-      }}>
-
+      <CardContent
+        sx={{
+          display: 'flex',
+          gap: 1,
+          alignItems: 'center'
+        }}
+      >
         <People />
         <Typography variant='h3'>{clientsQuery.data?.length}</Typography>
-
       </CardContent>
     </Card>
-  )
-}
+  );
+};

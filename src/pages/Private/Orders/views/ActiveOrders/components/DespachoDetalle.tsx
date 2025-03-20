@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useContext } from "react";
+import { FC, useEffect, useState, useContext } from 'react';
 import {
   Box,
   Button,
@@ -7,24 +7,24 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Typography,
-} from "@mui/material";
+  Typography
+} from '@mui/material';
 
 import {
   AddCircleOutline,
   CheckOutlined,
-  RemoveCircleOutline,
-} from "@mui/icons-material";
+  RemoveCircleOutline
+} from '@mui/icons-material';
 
-import { IOrderDetail } from "../../../../../../models";
-import { useCounter } from "../../../hooks";
-import { statusModalDispatchDetail } from "../../../services/orders.service";
-import { SocketContext } from "../../../../../../context/SocketContext";
-import { useSnackbar } from "notistack";
-import { EventsEmitSocket } from "../../../interfaces/events-sockets.interface";
+import { IOrderDetail } from '../../../../../../models';
+import { useCounter } from '../../../hooks';
+import { statusModalDispatchDetail } from '../../../services/orders.service';
+import { SocketContext } from '../../../../../../context/SocketContext';
+import { useSnackbar } from 'notistack';
+import { EventsEmitSocket } from '../../../interfaces/events-sockets.interface';
 
-import { SocketResponseOrder } from "../../../interfaces/responses-sockets.interface";
-import { UpdateOrderDetailDto } from "../../../dto/update-order-detail.dto";
+import { SocketResponseOrder } from '../../../interfaces/responses-sockets.interface';
+import { UpdateOrderDetailDto } from '../../../dto/update-order-detail.dto';
 
 interface Props {}
 
@@ -37,19 +37,19 @@ export const DespachoDetalle: FC<Props> = () => {
     state: counter,
     increment,
     decrement,
-    setCounter,
+    setCounter
   } = useCounter(0, 1, detail?.quantity);
 
   const [open, setOpen] = useState(false);
 
-  const [orderId, setorderId] = useState("");
+  const [orderId, setorderId] = useState('');
 
   const { socket } = useContext(SocketContext);
 
   const { enqueueSnackbar } = useSnackbar();
 
   const updateDetail = () => {
-    console.log("Despachando detalle");
+    console.log('Despachando detalle');
 
     dispatchDetail(counter);
 
@@ -60,7 +60,7 @@ export const DespachoDetalle: FC<Props> = () => {
     const data: UpdateOrderDetailDto = {
       orderId,
       id: detail!.id,
-      qtyDelivered: quantity,
+      qtyDelivered: quantity
     };
 
     socket?.emit(
@@ -68,7 +68,7 @@ export const DespachoDetalle: FC<Props> = () => {
       data,
       ({ ok, msg }: SocketResponseOrder) => {
         if (!ok) {
-          enqueueSnackbar(msg, { variant: "error" });
+          enqueueSnackbar(msg, { variant: 'error' });
         }
       }
     );
@@ -98,25 +98,25 @@ export const DespachoDetalle: FC<Props> = () => {
           <Typography>Cantidad: {detail?.quantity}</Typography>
 
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
           >
             <Box>
               <Typography>Cantidad entregada: </Typography>
             </Box>
 
-            <Box alignContent="right">
+            <Box alignContent='right'>
               <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
+                display='flex'
+                justifyContent='space-between'
+                alignItems='center'
               >
                 <IconButton onClick={decrement}>
                   <RemoveCircleOutline />
                 </IconButton>
 
-                <Typography sx={{ width: 40, textAlign: "center" }}>
+                <Typography sx={{ width: 40, textAlign: 'center' }}>
                   {counter}
                 </Typography>
                 <IconButton onClick={increment}>
@@ -129,7 +129,7 @@ export const DespachoDetalle: FC<Props> = () => {
 
         <DialogActions>
           <Button
-            variant="outlined"
+            variant='outlined'
             onClick={() => {
               setOpen(false);
             }}
@@ -137,15 +137,15 @@ export const DespachoDetalle: FC<Props> = () => {
             Cancelar
           </Button>
           <Button
-            type="submit"
-            variant="contained"
+            type='submit'
+            variant='contained'
             onClick={updateDetail}
             disabled={false}
           >
             Actualizar
           </Button>
           <Button
-            variant="contained"
+            variant='contained'
             onClick={() => {
               dispatchDetail(detail!.quantity!);
               setOpen(false);

@@ -1,27 +1,27 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect } from 'react';
 
-import { Box, Grid, Typography } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { InputSearch } from "../../../../../components/ui";
-import { IProduct, ICategory } from "../../../../../models";
+import { Box, Grid, Typography } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { InputSearch } from '../../../../../components/ui';
+import { IProduct, ICategory } from '../../../../../models';
 import {
   selectMenu,
   setActiveCategory,
-  setActiveSection,
-} from "../../../../../redux";
+  setActiveSection
+} from '../../../../../redux';
 
-import { findProductsByName, getProducts } from "../../../../../helpers";
-import { useModal } from "../../../../../hooks";
-import { ICreateOrderDetail } from "../../../../../models/orders.model";
+import { findProductsByName, getProducts } from '../../../../../helpers';
+// import { useModal } from '../../../../../hooks';
+// import { ICreateOrderDetail } from '../../../../../models/orders.model';
 
-import { ProductListAddToOrder } from "./MenuAddProduct/ProductListAddToOrder.component";
+import { ProductListAddToOrder } from './MenuAddProduct/ProductListAddToOrder.component';
 
 interface Props {
   categories: ICategory[];
 }
 
 export const Categories: FC<Props> = ({ categories }) => {
-  const { activeSection, activeCategory } = useSelector(selectMenu);
+  const { activeCategory } = useSelector(selectMenu);
 
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ export const Categories: FC<Props> = ({ categories }) => {
 
   if (!activeCategory) {
     return (
-      <Typography variant="body1" textAlign="center">
+      <Typography variant='body1' textAlign='center'>
         Seleccione una sección
       </Typography>
     );
@@ -40,42 +40,42 @@ export const Categories: FC<Props> = ({ categories }) => {
   return (
     <>
       <Box
-        sx={{ display: "flex", overflowX: "auto", gap: 2 }}
-        alignItems="center"
+        sx={{ display: 'flex', overflowX: 'auto', gap: 2 }}
+        alignItems='center'
       >
-        {" "}
-        {categories.map((category, index) => {
+        {' '}
+        {categories.map((category) => {
           if (category.isActive)
             return (
               <Box
                 // variant={activeCategory.id === category.id ? "contained" : "outlined"}
                 key={category.id}
                 sx={{
-                  border: "1px solid",
+                  border: '1px solid',
                   borderRadius: 2,
-                  borderColor: "primary.main",
+                  borderColor: 'primary.main',
 
                   color:
                     activeCategory.id === category.id
-                      ? "white"
-                      : "primary.main",
+                      ? 'white'
+                      : 'primary.main',
                   backgroundColor:
                     activeCategory.id === category.id
-                      ? "primary.main"
-                      : "white",
+                      ? 'primary.main'
+                      : 'white',
 
                   p: 1,
 
-                  "&:hover": {
-                    backgroundColor: "primary.main",
-                    color: "white",
-                    cursor: "pointer",
-                  },
+                  '&:hover': {
+                    backgroundColor: 'primary.main',
+                    color: 'white',
+                    cursor: 'pointer'
+                  }
                 }}
                 onClick={() => changeCategory(category)}
-                textAlign="center"
+                textAlign='center'
               >
-                <Typography variant="h5" textAlign="center">
+                <Typography variant='h5' textAlign='center'>
                   {category.name}
                 </Typography>
               </Box>
@@ -87,17 +87,16 @@ export const Categories: FC<Props> = ({ categories }) => {
 };
 
 const AllMenu: FC = () => {
-  const { sections, activeSection, categories, activeCategory } =
-    useSelector(selectMenu);
+  const { activeCategory } = useSelector(selectMenu);
 
-  const { isOpen, handleClose, handleOpen } = useModal();
+  // const { isOpen, handleClose, handleOpen } = useModal();
 
-  const [detail, setDetail] = useState<ICreateOrderDetail | null>(null);
+  // const [detail, setDetail] = useState<ICreateOrderDetail | null>(null);
 
-  const newDetail = (detail: ICreateOrderDetail) => {
-    setDetail(detail);
-    handleOpen();
-  };
+  // const newDetail = (detail: ICreateOrderDetail) => {
+  //   setDetail(detail);
+  //   handleOpen();
+  // };
 
   return (
     <>
@@ -125,7 +124,7 @@ const AllMenu: FC = () => {
 export const MenuAddProduct = () => {
   const { sections } = useSelector(selectMenu);
 
-  const [nameProduct, setNameProduct] = useState("");
+  const [nameProduct, setNameProduct] = useState('');
 
   const [products, setProducts] = useState<IProduct[]>([]);
 
@@ -153,15 +152,15 @@ export const MenuAddProduct = () => {
       <Grid
         container
         spacing={1}
-        sx={{ display: "flex", alignItems: "center", mb: 1 }}
+        sx={{ display: 'flex', alignItems: 'center', mb: 1 }}
       >
         <Grid item xs={12} mb={1}>
           <InputSearch
             handleChange={handleChange}
             search={searchProduct}
-            placeholder={"Nombre del producto"}
+            placeholder={'Nombre del producto'}
             value={nameProduct}
-            reset={() => setNameProduct("")}
+            reset={() => setNameProduct('')}
           />
         </Grid>
         <Grid item xs={12} mb={1}>

@@ -16,13 +16,13 @@ import {
   TableContainer,
   TableRow,
   Tooltip,
-  Typography,
-} from "@mui/material";
-import { useRef, useState } from "react";
-import NotificationsActiveTwoToneIcon from "@mui/icons-material/NotificationsActiveTwoTone";
-import { styled } from "@mui/material/styles";
+  Typography
+} from '@mui/material';
+import { useRef, useState } from 'react';
+import NotificationsActiveTwoToneIcon from '@mui/icons-material/NotificationsActiveTwoTone';
+import { styled } from '@mui/material/styles';
 
-import { format, formatDistance, subDays } from "date-fns";
+import { format, formatDistance, subDays } from 'date-fns';
 import {
   Assignment,
   Ballot,
@@ -31,20 +31,20 @@ import {
   DvrOutlined,
   ExpandLess,
   Input,
-  ReadMore,
-} from "@mui/icons-material";
-import { useSelector } from "react-redux";
-import { selectAuth, selectOrders } from "../../../../../../../redux";
-import { Label } from "../../../../../../../components/ui";
-import { getPaymentMethod } from "../../../../../Common/helpers/get-payment-method";
+  ReadMore
+} from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import { selectAuth, selectOrders } from '../../../../../../../redux';
+import { Label } from '../../../../../../../components/ui';
+import { getPaymentMethod } from '../../../../../Common/helpers/get-payment-method';
 import {
   OrderStatus,
   OrderStatusPay,
-  TypeOrder,
-} from "../../../../../../../models";
-import { getTypeOrder } from "../../../../../Common/helpers/get-type-order.helper";
-import { formatMoney } from "../../../../../Common/helpers/format-money.helper";
-import { LabelStatusOrder } from "../../../../../Orders/components/LabelStatusOrder.component";
+  TypeOrder
+} from '../../../../../../../models';
+import { getTypeOrder } from '../../../../../Common/helpers/get-type-order.helper';
+import { formatMoney } from '../../../../../Common/helpers/format-money.helper';
+import { LabelStatusOrder } from '../../../../../Orders/components/LabelStatusOrder.component';
 import {
   Stack,
   ListItemSecondaryAction,
@@ -56,12 +56,12 @@ import {
   Avatar,
   CardHeader,
   ListItemButton,
-  Button,
-} from "@mui/material";
-import { TabsStatusOrder } from "../../../../../Orders/components/TabsStatusOrder.component";
-import { useNavigate } from "react-router-dom";
-import NiceModal from "@ebay/nice-modal-react";
-import { DrawerMyOrders } from "./DrawerMyOrders.component";
+  Button
+} from '@mui/material';
+import { TabsStatusOrder } from '../../../../../Orders/components/TabsStatusOrder.component';
+import { useNavigate } from 'react-router-dom';
+import NiceModal from '@ebay/nice-modal-react';
+import { DrawerMyOrders } from './DrawerMyOrders.component';
 
 const NotificationsBadge = styled(Badge)(
   ({ theme }) => `
@@ -92,8 +92,6 @@ function HeaderNotifications() {
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 
-  
-
   const { orders } = useSelector(selectOrders);
 
   const { user } = useSelector(selectAuth);
@@ -103,7 +101,7 @@ function HeaderNotifications() {
 
   const [statusPayFilter, setStatusPayFilter] = useState<
     OrderStatusPay | string
-  >(" ");
+  >(' ');
 
   const handleOpen = (): void => {
     setOpen(true);
@@ -124,7 +122,7 @@ function HeaderNotifications() {
 
   const openDrawerMyOrders = () => {
     NiceModal.show(DrawerMyOrders);
-  }
+  };
 
   const ordersUser = orders.filter((order) => order.user.id === user!.id);
 
@@ -133,7 +131,7 @@ function HeaderNotifications() {
     : orders;
 
   ordersFiltered =
-    statusPayFilter !== " "
+    statusPayFilter !== ' '
       ? ordersFiltered.filter(
           (order) =>
             (order.isPaid ? OrderStatusPay.PAY : OrderStatusPay.NO_PAY) ===
@@ -143,7 +141,7 @@ function HeaderNotifications() {
 
   return (
     <>
-      <Tooltip arrow title="Mis pedidos">
+      <Tooltip arrow title='Mis pedidos'>
         <IconButton
           ref={ref}
           onClick={openDrawerMyOrders}
@@ -154,13 +152,13 @@ function HeaderNotifications() {
           }
         >
           <Badge
-            badgeContent={""}
+            badgeContent={''}
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right'
             }}
-            color="info"
-            variant="dot"
+            color='info'
+            variant='dot'
             // size="small"
           >
             <Assignment />
@@ -172,23 +170,23 @@ function HeaderNotifications() {
         onClose={handleClose}
         open={isOpen}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right'
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right'
         }}
       >
         <Box
           sx={{ p: 2 }}
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
+          display='flex'
+          alignItems='center'
+          justifyContent='space-between'
         >
-          <Typography variant="h4">Mis pedidos</Typography>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Label color="info">{ordersUser.length}</Label>
+          <Typography variant='h4'>Mis pedidos</Typography>
+          <Stack direction='row' spacing={1} alignItems='center'>
+            <Label color='info'>{ordersUser.length}</Label>
             <IconButton onClick={handleClose}>
               <ExpandLess />
             </IconButton>
@@ -197,28 +195,28 @@ function HeaderNotifications() {
         <Box
           sx={{
             mb: 1,
-            width: 250,
+            width: 250
             // displays: 'flex',
             // justifyContent: 'right',
           }}
         >
           <List
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1
             }}
           >
             <ListItem
               sx={{
                 backgroundColor: theme.colors.warning.lighter,
                 borderRadius: 1,
-                color: theme.palette.warning.main,
+                color: theme.palette.warning.main
               }}
             >
-              <ListItemText primary="Pendientes" />
+              <ListItemText primary='Pendientes' />
               <ListItemSecondaryAction>
-                <Label color="warning">
+                <Label color='warning'>
                   {
                     ordersUser.filter(
                       (order) => order.status === OrderStatus.PENDING
@@ -231,12 +229,12 @@ function HeaderNotifications() {
               sx={{
                 backgroundColor: theme.colors.info.lighter,
                 borderRadius: 1,
-                color: theme.palette.info.main,
+                color: theme.palette.info.main
               }}
             >
-              <ListItemText primary="En preparación" />
+              <ListItemText primary='En preparación' />
               <ListItemSecondaryAction>
-                <Label color="info">
+                <Label color='info'>
                   {
                     ordersUser.filter(
                       (order) => order.status === OrderStatus.IN_PROGRESS
@@ -249,12 +247,12 @@ function HeaderNotifications() {
               sx={{
                 backgroundColor: theme.colors.success.lighter,
                 borderRadius: 1,
-                color: theme.palette.success.main,
+                color: theme.palette.success.main
               }}
             >
-              <ListItemText primary="Entregados" />
+              <ListItemText primary='Entregados' />
               <ListItemSecondaryAction>
-                <Label color="success">
+                <Label color='success'>
                   {
                     ordersUser.filter(
                       (order) => order.status === OrderStatus.DELIVERED
@@ -267,7 +265,7 @@ function HeaderNotifications() {
             <Button
               onClick={() => {
                 handleClose();
-                navigate("/users/profile");
+                navigate('/users/profile');
               }}
             >
               Ver todos

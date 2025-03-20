@@ -1,17 +1,23 @@
 import { TypeIdentification } from '../../../../../models/common.model';
 import { CreateUser } from '../../models/create-user.model';
-import { useSnackbar } from "notistack";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useFetchAndLoad } from "../../../../../hooks";
-import { ArrowBack } from "@mui/icons-material";
-import { Container, Card, CardContent, Grid, Typography, Button } from "@mui/material";
-import { FormUser } from "../FormUser.component";
+import { useSnackbar } from 'notistack';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useFetchAndLoad } from '../../../../../hooks';
+import { ArrowBack } from '@mui/icons-material';
+import {
+  Container,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  Button
+} from '@mui/material';
+import { FormUser } from '../FormUser.component';
 import { createUser } from '../../services/users.service';
-import { addUser } from "../../../../../redux";
-import { TitlePage } from "../../../components/TitlePage.component";
-import { useCreateUser } from "../../hooks/useUsers";
-
+import { addUser } from '../../../../../redux';
+import { TitlePage } from '../../../components/TitlePage.component';
+import { useCreateUser } from '../../hooks/useUsers';
 
 const initialUser: CreateUser = {
   username: '',
@@ -19,18 +25,16 @@ const initialUser: CreateUser = {
   lastName: '',
   email: '',
   role: {
-    name: "mesero",
+    name: 'mesero'
   },
   numPhone: '',
   identification: {
     type: TypeIdentification.CEDULA,
-    num: "",
-  },
-}
-
+    num: ''
+  }
+};
 
 export const AddUser = () => {
-
   const user = initialUser;
 
   // const { loading, callEndpoint } = useFetchAndLoad();
@@ -44,11 +48,11 @@ export const AddUser = () => {
   const navigate = useNavigate();
 
   async function onSubmit(form: CreateUser) {
-    console.log(form)
+    console.log(form);
 
     const { identification, role, ...dataUser } = form;
 
-    if (form.numPhone === "") {
+    if (form.numPhone === '') {
       delete dataUser.numPhone;
     }
 
@@ -57,11 +61,10 @@ export const AddUser = () => {
       typeIdentification: identification.type,
       numberIdentification: identification.num,
       rol: form.role.name,
-      email: form.email!,
+      email: form.email!
+    };
 
-    }
-
-    mutateAsync(newUser)
+    mutateAsync(newUser);
 
     // await callEndpoint(createUser(newUser))
     //   .then((res) => {
@@ -75,38 +78,24 @@ export const AddUser = () => {
     //     console.log(err);
     //     enqueueSnackbar('Error al crear usuario', { variant: 'error' });
     //   })
-
-
-
   }
-
 
   return (
     <>
-      <TitlePage
-        title="Agregar usuario"
-      />
+      <TitlePage title='Agregar usuario' />
 
       <Container maxWidth='md'>
-
-
         <Card>
           <CardContent>
-
             <FormUser
-
               user={user}
               onSubmit={onSubmit}
               loading={isLoading}
               isNew={true}
             />
-
           </CardContent>
         </Card>
-
       </Container>
-
     </>
-
-  )
-}
+  );
+};

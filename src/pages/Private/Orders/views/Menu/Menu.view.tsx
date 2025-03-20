@@ -1,25 +1,20 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import NiceModal from "@ebay/nice-modal-react";
+import { useNavigate } from 'react-router-dom';
 
-import { useNavigate } from "react-router-dom";
-
-import { Button, Container } from "@mui/material";
+import { Container } from '@mui/material';
 
 import {
   selectMenu,
-  setActiveCategory,
   setActiveOrder,
-  setActiveSection,
-} from "../../../../../redux";
+  setActiveSection
+} from '../../../../../redux';
 
-import { TitlePage } from "../../../components/TitlePage.component";
+import { TitlePage } from '../../../components/TitlePage.component';
 
-import { AddProductsMenu, CartWidget } from "./components";
-import { useNewOrderStore } from "../../store/newOrderStore";
-import { Add } from "@mui/icons-material";
-import { RegisteredModals } from "../../../modals";
+import { AddProductsMenu, CartWidget } from './components';
+import { useNewOrderStore } from '../../store/newOrderStore';
 
 export const Menu = () => {
   const { sections } = useSelector(selectMenu);
@@ -30,9 +25,9 @@ export const Menu = () => {
 
   const navigate = useNavigate();
 
-  const showModalCreateProduct = () => {
-    NiceModal.show(RegisteredModals.ModalCreateProduct);
-  };
+  // const showModalCreateProduct = () => {
+  //   NiceModal.show(RegisteredModals.ModalCreateProduct);
+  // };
 
   useEffect(() => {
     dispatch(setActiveSection(sections[0]));
@@ -42,9 +37,9 @@ export const Menu = () => {
 
   return (
     <>
-      <Container maxWidth="xl">
+      <Container maxWidth='xl'>
         <TitlePage
-          title="Menú"
+          title='Menú'
           action={
             <>
               {/* <Button
@@ -69,7 +64,7 @@ export const Menu = () => {
           0
         )}
         onClick={() => {
-          navigate("/orders/add");
+          navigate('/orders/add');
         }}
       />
     </>

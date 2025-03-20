@@ -1,9 +1,9 @@
-import { restauranteApi } from "../../../../api";
-import { TransactionCategory } from "../models/transaction-category.model";
+import { restauranteApi } from '../../../../api';
+import { TransactionCategory } from '../models/transaction-category.model';
 
 export const getTransactionCategories = async () => {
   const response = await restauranteApi.get<TransactionCategory[]>(
-    "/transaction-category"
+    '/transaction-category'
   );
   return response.data;
 };
@@ -12,7 +12,7 @@ export const createTransactionCategory = async (
   createTransactionCategoryDto: TransactionCategory
 ) => {
   const response = await restauranteApi.post<TransactionCategory>(
-    "/transaction-category",
+    '/transaction-category',
     createTransactionCategoryDto
   );
   return response.data;

@@ -1,16 +1,34 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
 import {
-  Box, Card, Checkbox, CircularProgress, IconButton,
+  Box,
+  Card,
+  Checkbox,
+  CircularProgress,
+  IconButton,
   InputBase,
-  LinearProgress, Paper, Switch, Table, TableBody, TableCell,
-  TableContainer, TableHead, TablePagination, TableRow,
-  Tooltip, Typography, useTheme
+  LinearProgress,
+  Paper,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Tooltip,
+  Typography,
+  useTheme
 } from '@mui/material/';
 
-import { useDispatch, } from 'react-redux';
-import { useFetchAndLoad, } from '../../../../../hooks';
-import { loadClients, setActiveClient, updateClient } from '../../../../../redux/slices/clients/clients.slice';
+import { useDispatch } from 'react-redux';
+import { useFetchAndLoad } from '../../../../../hooks';
+import {
+  loadClients,
+  setActiveClient,
+  updateClient
+} from '../../../../../redux/slices/clients/clients.slice';
 import { getClients } from '../../services';
 
 import { IClient } from '../../../../../models/client.model';
@@ -18,22 +36,20 @@ import { IClient } from '../../../../../models/client.model';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { useNavigate } from 'react-router-dom';
-import { statusModalDeleteClient, updateClient as updateClientS } from '../../services/clients.service';
+import {
+  statusModalDeleteClient,
+  updateClient as updateClientS
+} from '../../services/clients.service';
 import { useSnackbar } from 'notistack';
 import { useClients } from '../../hooks/useClients';
 import SearchIcon from '@mui/icons-material/Search';
 import { Label } from '../../../../../components/ui';
 
-
 interface Props {
   clientFound?: IClient;
-  
 }
 
-
-
 const TableRowClient: FC<{ client: IClient }> = ({ client }) => {
-
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -42,46 +58,32 @@ const TableRowClient: FC<{ client: IClient }> = ({ client }) => {
 
   const theme = useTheme();
 
-  const {enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const editClient = (client: IClient) => {
     dispatch(setActiveClient(client));
-    navigate('edit')
-  }
-
-
+    navigate('edit');
+  };
 
   const deleteClient = () => {
-    console.log('deleteClient')
+    console.log('deleteClient');
     statusModalDeleteClient.setSubject(true, client);
-  }
+  };
 
   const submitChangeStatus = async (client: IClient) => {
-
     // await callEndpoint(updateClientS( client.id, {isActive: !client.isActive}))
     // .then((res) => {
     //   console.log(res);
     //   dispatch(updateClient({...client, isActive: !client.isActive}));
-
-    // })  
+    // })
     // .catch((err) => {
     //   console.log(err);
     //   enqueueSnackbar('Error al actualizar el estado del usuario', {variant: 'error'})
     // })
-
-
-
-  }
-
-
-
+  };
 
   return (
-
-
-
-
-    < TableRow >
+    <TableRow>
       {/* <TableCell padding='checkbox'>
         <Switch checked={client.isActive} onClick={() => submitChangeStatus(client)} color={client.isActive ? 'success' : 'warning'} />
 
@@ -89,9 +91,9 @@ const TableRowClient: FC<{ client: IClient }> = ({ client }) => {
       </TableCell> */}
       <TableCell>
         <Typography
-          variant="body1"
-          fontWeight="bold"
-          color="text.primary"
+          variant='body1'
+          fontWeight='bold'
+          color='text.primary'
           gutterBottom
           noWrap
         >
@@ -100,9 +102,9 @@ const TableRowClient: FC<{ client: IClient }> = ({ client }) => {
       </TableCell>
       <TableCell>
         <Typography
-          variant="body1"
-          fontWeight="bold"
-          color="text.primary"
+          variant='body1'
+          fontWeight='bold'
+          color='text.primary'
           gutterBottom
           noWrap
         >
@@ -110,47 +112,30 @@ const TableRowClient: FC<{ client: IClient }> = ({ client }) => {
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography
-          variant="body1"
-
-          color="text.primary"
-          gutterBottom
-          noWrap
-        >
+        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
           {client.person?.identification?.num}
-
         </Typography>
       </TableCell>
 
       <TableCell>
-        <Typography
-          variant="body1"
-
-          color="text.primary"
-          gutterBottom
-          noWrap
-        >
+        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
           {client.address}
         </Typography>
       </TableCell>
-     
-      <TableCell>
-        <Typography
-          variant="body1"
 
-          color="text.primary"
-          gutterBottom
-          noWrap
-        >
+      <TableCell>
+        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
           {client.person?.email}
         </Typography>
       </TableCell>
       <TableCell>
-       <Label color={client.isActive ? 'success' : 'error'}>{client.isActive ? 'Activo' : 'Inactivo'}</Label>
+        <Label color={client.isActive ? 'success' : 'error'}>
+          {client.isActive ? 'Activo' : 'Inactivo'}
+        </Label>
       </TableCell>
 
-      <TableCell align="right">
-        <Tooltip title="Editar cliente" arrow>
+      <TableCell align='right'>
+        <Tooltip title='Editar cliente' arrow>
           <IconButton
             sx={{
               '&:hover': {
@@ -158,11 +143,11 @@ const TableRowClient: FC<{ client: IClient }> = ({ client }) => {
               },
               color: theme.palette.primary.main
             }}
-            color="inherit"
-            size="small"
+            color='inherit'
+            size='small'
             onClick={() => editClient(client)}
           >
-            <EditTwoToneIcon fontSize="small" />
+            <EditTwoToneIcon fontSize='small' />
           </IconButton>
         </Tooltip>
         {/* <Tooltip title="Delete Order" arrow>
@@ -179,96 +164,83 @@ const TableRowClient: FC<{ client: IClient }> = ({ client }) => {
           </IconButton>
         </Tooltip> */}
       </TableCell>
-
-
-
-
     </TableRow>
-  )
-}
-
+  );
+};
 
 export const ClientsTable: FC<Props> = ({ clientFound }) => {
-
-
-  const {  clientsQuery, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage, handleChangeSearch, search} = useClients();
-
-
+  const {
+    clientsQuery,
+    page,
+    rowsPerPage,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    handleChangeSearch,
+    search
+  } = useClients();
 
   return (
-<>
-    <Paper
-        component="form"
-        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center'}}
+    <>
+      <Paper
+        component='form'
+        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center' }}
       >
-
         <InputBase
           type='text'
           onChange={handleChangeSearch}
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Buscar cliente"
+          placeholder='Buscar cliente'
           inputProps={{ 'aria-label': 'Buscar cliente' }}
           value={search}
         />
         <IconButton
-          type="button"
+          type='button'
           sx={{ p: '10px' }}
-          aria-label="search"
+          aria-label='search'
           // onClick={updateList}
         >
-          {
-            clientsQuery.isLoading
-              ? <CircularProgress size={20} />
-              : <SearchIcon />
-          }
+          {clientsQuery.isLoading ? (
+            <CircularProgress size={20} />
+          ) : (
+            <SearchIcon />
+          )}
         </IconButton>
-
-
       </Paper>
 
-
-
-
-    <Box sx={{ height: 400, width: '100%', my: 1 }} >
-
-      <Card>
-
-        <TableContainer>
-          <Table>
-            <TableHead>
-
-              <TableRow>
-                {/* <TableCell padding="checkbox">
+      <Box sx={{ height: 400, width: '100%', my: 1 }}>
+        <Card>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {/* <TableCell padding="checkbox">
                   <Checkbox  />
                  
                 </TableCell> */}
-                <TableCell>Nombres</TableCell>
-                <TableCell>Tipo de identificación</TableCell>
-                <TableCell>Número de identificación</TableCell>
-                <TableCell>address</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Estado</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
+                  <TableCell>Nombres</TableCell>
+                  <TableCell>Tipo de identificación</TableCell>
+                  <TableCell>Número de identificación</TableCell>
+                  <TableCell>address</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Estado</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {clientFound ? (
+                  <TableRowClient client={clientFound} />
+                ) : (
+                  clientsQuery.data &&
+                  clientsQuery.data?.clients.map((client) => (
+                    <TableRowClient client={client} key={client.id} />
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-            </TableHead>
-            <TableBody>
-              {
-                clientFound
-                  ? <TableRowClient client={clientFound} />
-                  : clientsQuery.data && clientsQuery.data?.clients.map(client => (
-
-                    <TableRowClient client={client} key={client.id} />))
-
-
-              }
-            </TableBody>
-
-          </Table>
-        </TableContainer>
-      
           <TablePagination
-            component="div"
+            component='div'
             count={clientsQuery.data?.length || 0}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
@@ -276,13 +248,8 @@ export const ClientsTable: FC<Props> = ({ clientFound }) => {
             rowsPerPage={rowsPerPage}
             rowsPerPageOptions={[5, 10, 25, 30]}
           />
-      </Card>
-
-
-
-
-    </Box>
-</>
-
+        </Card>
+      </Box>
+    </>
   );
-}
+};

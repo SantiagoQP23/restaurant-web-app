@@ -1,26 +1,22 @@
-import { FC, useState } from "react";
+import { FC, useState } from 'react';
 
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 import {
   Box,
   IconButton,
   Typography,
   LinearProgress,
-  TableCell,
-  TableRow,
-  Stack,
   Checkbox,
   Chip,
   Card,
-  CardContent,
   CardHeader,
   CardActions,
   Popover,
   MenuItem,
   FormControlLabel,
-  Button,
-} from "@mui/material";
+  Button
+} from '@mui/material';
 
 import {
   SaveOutlined,
@@ -28,26 +24,20 @@ import {
   EditOutlined,
   CheckCircle,
   CheckCircleOutline,
-  MoreVert,
-  Visibility,
-  Done,
-} from "@mui/icons-material";
-import { IOrderDetail } from "../../../../../../models";
+  MoreVert
+} from '@mui/icons-material';
+import { IOrderDetail, TypeOrder } from '../../../../../../models';
 
-import { UpdateOrderDetailDto } from "../../../dto/update-order-detail.dto";
-import { selectOrders } from "../../../../../../redux/slices/orders/orders.slice";
-import { statusModalDeleteOrderDetail } from "../../../services/orders.service";
-import { styled } from "@mui/material/styles";
-import { useUpdateOrderDetail } from "../../../hooks";
-import { CounterInput } from "../../../components/CounterInput.component";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import NiceModal from "@ebay/nice-modal-react";
-import {
-  LinearProgressWrapper,
-  ModalEditOrderDetail,
-} from "../../../components";
-import { bindPopover } from "material-ui-popup-state";
-import { bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
+import { UpdateOrderDetailDto } from '../../../dto/update-order-detail.dto';
+import { selectOrders } from '../../../../../../redux/slices/orders/orders.slice';
+import { statusModalDeleteOrderDetail } from '../../../services/orders.service';
+import { useUpdateOrderDetail } from '../../../hooks';
+import { CounterInput } from '../../../components/CounterInput.component';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import NiceModal from '@ebay/nice-modal-react';
+import { ModalEditOrderDetail } from '../../../components';
+import { bindPopover } from 'material-ui-popup-state';
+import { bindTrigger, usePopupState } from 'material-ui-popup-state/hooks';
 
 interface Props {
   detail: IOrderDetail;
@@ -55,11 +45,13 @@ interface Props {
 
 /**
  * @version 1.0 17-01-2024
+ * @author Steven Rosales
+ * @version 1.1 17/03/2025 Adds type order
  */
 export const OrderDetailCard: FC<Props> = ({ detail }) => {
   const popupState = usePopupState({
-    variant: "popover",
-    popupId: "popoverOrderDetail",
+    variant: 'popover',
+    popupId: 'popoverOrderDetail'
   });
 
   const [quantity, setQuantity] = useState(detail.quantity);
@@ -93,7 +85,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
     const data: UpdateOrderDetailDto = {
       orderId: activeOrder!.id,
       id: detail.id,
-      quantity,
+      quantity
     };
 
     update(data);
@@ -103,7 +95,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
     const data: UpdateOrderDetailDto = {
       orderId: activeOrder!.id,
       id: detail!.id,
-      qtyDelivered: qtyDelivered,
+      qtyDelivered: qtyDelivered
     };
 
     update(data);
@@ -112,7 +104,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
   const showEditDetailModal = () =>
     NiceModal.show(ModalEditOrderDetail, {
       detail: detail,
-      orderId: activeOrder!.id,
+      orderId: activeOrder!.id
     });
 
   const showDeleteDetailModal = () =>
@@ -130,7 +122,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
 
   const isDeleteable = detail.qtyDelivered === 0;
 
-  const qtyToDeliver = detail.quantity - detail.qtyDelivered;
+  // const qtyToDeliver = detail.quantity - detail.qtyDelivered;
 
   const quantityChanged =
     quantity !== detail.quantity &&
@@ -143,61 +135,73 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
         <CardHeader
           // avatar={<Typography variant="h6">{detail.quantity}</Typography>}
           subheader={
-            <Typography variant="h5" component="div" mt={0.5}>
-              {detail.quantity} {detail.product.name}{" "}
-              {detail.productOption && (
-                <Chip
-                  sx={{ ml: 1 }}
-                  label={detail.productOption?.name}
-                  size="small"
-                />
+            <>
+              <Typography variant='h5' component='div' mt={0.5}>
+                {detail.quantity} {detail.product.name}{' '}
+                {detail.productOption && (
+                  <Chip
+                    sx={{ ml: 1 }}
+                    label={detail.productOption?.name}
+                    size='small'
+                  />
+                )}
+              </Typography>
+              {detail.typeOrderDetail === TypeOrder.TAKE_AWAY && (
+                <Typography
+                  alignItems='center'
+                  display='flex'
+                  sx={{ color: `warning.main` }}
+                  gap={1}
+                >
+                  <Typography>Para llevar</Typography>
+                </Typography>
               )}
-            </Typography>
+            </>
           }
           action={
             <IconButton {...bindTrigger(popupState)}>
-              <MoreVert fontSize="small" />
+              <MoreVert fontSize='small' />
             </IconButton>
           }
         />
         <Box px={2}>
           {detail.description && (
-            <Typography variant="h6" whiteSpace="pre-wrap">
+            <Typography variant='h6' whiteSpace='pre-wrap'>
               {detail.description}
             </Typography>
           )}
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              mt: 1,
+              display: 'flex',
+              alignItems: 'center',
+              width: '100%',
+              mt: 1
             }}
           >
-            <Box sx={{ width: "100px", mr: 1 }}>
+            <Box sx={{ width: '100px', mr: 1 }}>
               <LinearProgress
-                variant="determinate"
+                variant='determinate'
                 value={(detail.qtyDelivered * 100) / detail.quantity}
-                color="success"
+                color='success'
               />
             </Box>
-            <Box sx={{ minWidth: 100, display: "flex", alignItems: "center" }}>
+            <Box sx={{ minWidth: 100, display: 'flex', alignItems: 'center' }}>
               {detail.quantity === detail.qtyDelivered ? (
                 <Typography
-                  fontSize="0.7rem"
-                  component="div"
-                  color="warning"
-                  variant="h5"
-                  alignItems="center"
+                  fontSize='0.7rem'
+                  component='div'
+                  color='warning'
+                  variant='h5'
+                  alignItems='center'
                 >
                   Entregado
                 </Typography>
               ) : (
                 <>
-                  <Typography fontSize="0.7rem" color="text.secondary">
+                  <Typography fontSize='0.7rem' color='text.secondary'>
                     {detail.quantity - detail.qtyDelivered} por entregar
                   </Typography>
-                  <Button size="small">+1</Button>
+                  <Button size='small'>+1</Button>
                 </>
               )}
             </Box>
@@ -205,11 +209,11 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
         </Box>
         <CardActions
           sx={{
-            justifyContent: "space-between",
-            alignItems: "center",
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}
         >
-          <Box display="flex">
+          <Box display='flex'>
             <CounterInput
               value={quantity}
               onChange={handleChangeQuantity}
@@ -217,7 +221,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
             />
             {quantityChanged && (
               <IconButton
-                color="primary"
+                color='primary'
                 onClick={(e) => {
                   e.stopPropagation();
                   updateQuantity();
@@ -227,11 +231,11 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
               </IconButton>
             )}
           </Box>
-          <Box display="flex" gap={1}>
-            <Typography variant="subtitle1" component="div">
+          <Box display='flex' gap={1}>
+            <Typography variant='subtitle1' component='div'>
               {formatMoney(detail.price)}
             </Typography>
-            <Typography variant="h4" component="div">
+            <Typography variant='h4' component='div'>
               {formatMoney(detail.amount)}
             </Typography>
           </Box>
@@ -240,10 +244,10 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
           <Box>
             {detail.qtyDelivered > quantity && (
               <Typography
-                variant="subtitle1"
-                fontSize="0.8rem"
-                component="div"
-                color="error"
+                variant='subtitle1'
+                fontSize='0.8rem'
+                component='div'
+                color='error'
               >
                 La cantidad debe ser mayor o igual a la entregada
               </Typography>
@@ -254,14 +258,14 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
 
       <Popover
         {...bindPopover(popupState)}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{
           paper: {
             sx: {
-              width: 140,
-            },
-          },
+              width: 140
+            }
+          }
         }}
       >
         <MenuItem>
@@ -272,24 +276,24 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
                 checkedIcon={<CheckCircle />}
                 checked={checked}
                 onChange={handleChangeChecked}
-                inputProps={{ "aria-label": "controlled" }}
-                color="success"
+                inputProps={{ 'aria-label': 'controlled' }}
+                color='success'
               />
             }
-            label={checked ? "Entregado" : "Entregar"}
+            label={checked ? 'Entregado' : 'Entregar'}
           />
         </MenuItem>
 
         <MenuItem onClick={handleEdit}>
-          <EditOutlined fontSize="small" sx={{ mr: 2 }} />
+          <EditOutlined fontSize='small' sx={{ mr: 2 }} />
           Editar
         </MenuItem>
         <MenuItem
-          sx={{ color: "error.main" }}
+          sx={{ color: 'error.main' }}
           onClick={handleDelete}
           disabled={!isDeleteable}
         >
-          <DeleteOutline fontSize="small" sx={{ mr: 2 }} />
+          <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
           Eliminar
         </MenuItem>
       </Popover>

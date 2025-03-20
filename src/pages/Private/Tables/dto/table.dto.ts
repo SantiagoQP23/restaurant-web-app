@@ -1,5 +1,3 @@
-
-
 export interface CreateTableDto {
   name: string;
   description: string;

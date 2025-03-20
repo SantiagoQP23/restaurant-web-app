@@ -1,47 +1,47 @@
-import { IUser, IProduct, ProductOption } from ".";
-import { ITable } from "./table.model";
+import { IUser, IProduct, ProductOption } from '.';
+import { ITable } from './table.model';
 // import { Invoice } from "../pages/Private/Orders/models/Invoice.model";
-import { Bill } from "./bill.model";
+import { Bill } from './bill.model';
 
 export enum OrderStatus {
-  PENDING = "PENDING",
-  IN_PROGRESS = "IN_PROGRESS",
+  PENDING = 'PENDING',
+  IN_PROGRESS = 'IN_PROGRESS',
   // READY = 'READY',
-  DELIVERED = "DELIVERED",
-  CANCELLED = "CANCELLED",
+  DELIVERED = 'DELIVERED',
+  CANCELLED = 'CANCELLED'
 }
 
 export enum OrderStatusPay {
-  NO_PAY = "NO_PAY",
-  PAY = "PAY",
-  PARTIAL_PAY = "PARTIAL_PAY",
+  NO_PAY = 'NO_PAY',
+  PAY = 'PAY',
+  PARTIAL_PAY = 'PARTIAL_PAY'
 }
 
 export enum TypeOrder {
-  TAKE_AWAY = "TAKE_AWAY",
-  IN_PLACE = "IN_PLACE",
+  TAKE_AWAY = 'TAKE_AWAY',
+  IN_PLACE = 'IN_PLACE'
   //DELIVERY = 'ENTREGA DOMICILIO',
 }
 
 export enum PaymentMethod {
-  CASH = "CASH",
+  CASH = 'CASH',
   // CARD = 'CARD',
-  TRANSFER = "TRANSFER",
+  TRANSFER = 'TRANSFER'
 }
 
 export enum OrderStatusSpanish {
-  PENDING = "PENDIENTE",
-  IN_PROGRESS = "PREPARANDO",
-  READY = "LISTO",
-  DELIVERED = "ENTREGADO",
-  CANCELLED = "CANCELADO",
+  PENDING = 'PENDIENTE',
+  IN_PROGRESS = 'PREPARANDO',
+  READY = 'LISTO',
+  DELIVERED = 'ENTREGADO',
+  CANCELLED = 'CANCELADO'
 }
 
 /**
  * Order Model
  * @version v1.1 22-12-2023 Adds the field bills and remove invoices
  */
-export interface  Order {
+export interface Order {
   notes: string;
   deliveryTime: Date;
   createdAt: Date;
@@ -60,6 +60,11 @@ export interface  Order {
   bills: Bill[];
 }
 
+/**
+ * Order Detail Model
+ * @author Steven Rosales
+ * @version v1.1 22-12-2023 Adds type order
+ */
 export interface IOrderDetail {
   id: string;
 
@@ -83,6 +88,7 @@ export interface IOrderDetail {
 
   price: number;
 
+  typeOrderDetail: TypeOrder;
   productOption?: ProductOption;
 }
 

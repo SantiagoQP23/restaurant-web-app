@@ -1,70 +1,66 @@
-import { LoadingButton } from "@mui/lab";
-import { TypeOrder } from "../../../../../models";
-import { useDrawerInvoiceStore } from "../../store/drawerInvoiceStore"
-import { Box, Button, Dialog, DialogActions, DialogContent, Stack, Typography, DialogTitle } from '@mui/material';
-import { useRemoveInvoice } from "../../hooks/useInvoices";
-import { useDeleteInvoice, useUpdateInvoiceOrder } from "../../hooks/useInvocesOrder";
-import { UpdateInvoiceDto } from "../../dto";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../redux";
-
-
+import { LoadingButton } from '@mui/lab';
+import { TypeOrder } from '../../../../../models';
+import { useDrawerInvoiceStore } from '../../store/drawerInvoiceStore';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Stack,
+  Typography,
+  DialogTitle
+} from '@mui/material';
+import { useRemoveInvoice } from '../../hooks/useInvoices';
+import {
+  useDeleteInvoice,
+  useUpdateInvoiceOrder
+} from '../../hooks/useInvocesOrder';
+import { UpdateInvoiceDto } from '../../dto';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../redux';
 
 export const ModalDeleteInvoice = () => {
-
-  const { activeInvoice, handleCloseModal, openModal, handleCloseDrawer, } = useDrawerInvoiceStore();
+  const { activeInvoice, handleCloseModal, openModal, handleCloseDrawer } =
+    useDrawerInvoiceStore();
 
   // const { mutateAsync, isLoading } = useRemoveInvoice();
 
-  const {activeOrder }  = useSelector(selectOrders);
+  const { activeOrder } = useSelector(selectOrders);
 
-  const {loading, deleteInvoiceOrder} = useDeleteInvoice();
-
+  const { loading, deleteInvoiceOrder } = useDeleteInvoice();
 
   const submitDeleteInvoice = () => {
+    console.log('delete invoice');
 
-    console.log('delete invoice')
-
-    if (activeInvoice && activeOrder){
-
-      const data : UpdateInvoiceDto = {
+    if (activeInvoice && activeOrder) {
+      const data: UpdateInvoiceDto = {
         id: activeInvoice.id,
-        orderId: activeOrder.id,
+        orderId: activeOrder.id
         // isActive: false
-      }
+      };
 
-      deleteInvoiceOrder(data)
-
-
+      deleteInvoiceOrder(data);
     }
-        // mutateAsync(activeInvoice.id);
-
-
+    // mutateAsync(activeInvoice.id);
 
     handleCloseModal();
     handleCloseDrawer();
-
-  }
+  };
 
   return (
     <Dialog
       open={openModal}
       onClose={handleCloseModal}
-
       sx={{
         zIndex: 2500
       }}
-
     >
-
       <DialogTitle>Eliminar factura</DialogTitle>
 
       <DialogContent>
-
-
         <Stack spacing={1} direction='column' justifyContent='center'>
           <Box>
-
             {/* <Typography variant="body1" color="text.primary"> {
               order?.type === TypeOrder.IN_PLACE
 
@@ -73,7 +69,6 @@ export const ModalDeleteInvoice = () => {
                 : 'Para llevar'
 
             }</Typography> */}
-
           </Box>
           {/*           
   {
@@ -85,19 +80,16 @@ export const ModalDeleteInvoice = () => {
     </Box>
     )
   } */}
-
-
-
         </Stack>
-
-
       </DialogContent>
       <DialogActions
         sx={{
           justifyContent: 'center'
         }}
       >
-        <Button onClick={handleCloseModal} color="inherit">Cancelar</Button>
+        <Button onClick={handleCloseModal} color='inherit'>
+          Cancelar
+        </Button>
         <LoadingButton
           variant='contained'
           color='error'
@@ -107,10 +99,6 @@ export const ModalDeleteInvoice = () => {
           Eliminar
         </LoadingButton>
       </DialogActions>
-
-
-
-
     </Dialog>
-  )
-}
+  );
+};

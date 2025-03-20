@@ -1,41 +1,32 @@
-
-
-export enum TypeIdentification{
-  CEDULA = "CEDULA",
-  RUC = "RUC"
+export enum TypeIdentification {
+  CEDULA = 'CEDULA',
+  RUC = 'RUC'
 }
 
-export interface Identification{
-  id: string;  
-  type: TypeIdentification;
-  num: string;
-
-}
-
-
-export interface CreateIdentification{
+export interface Identification {
+  id: string;
   type: TypeIdentification;
   num: string;
 }
 
+export interface CreateIdentification {
+  type: TypeIdentification;
+  num: string;
+}
 
 export interface IPerson {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
-  identification: Identification
+  identification: Identification;
   numPhone?: string;
 }
 
-
-
-
-export interface CreatePerson{
+export interface CreatePerson {
   firstName: string;
   lastName: string;
   email?: string;
   numPhone?: string;
   identification: CreateIdentification;
 }
-

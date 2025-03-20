@@ -1,14 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
-import { Container } from "@mui/material";
-import { useCashRegisterActive } from "./hooks/useCashRegister";
+import { Container } from '@mui/material';
+import { useCashRegisterActive } from './hooks/useCashRegister';
 
 const Balance = () => {
   useCashRegisterActive();
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth='lg'>
         <Outlet />
       </Container>
     </>

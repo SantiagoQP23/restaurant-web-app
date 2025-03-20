@@ -1,17 +1,17 @@
-import { Container } from "@mui/material/";
+import { Container } from '@mui/material/';
 
-import { Navigate, useParams } from "react-router-dom";
-import { useProduct } from "../../hooks/useProducts";
-import { TitlePage } from "../../../components";
-import { FormProduct } from "./components/FormProduct.component";
-import { useSelector } from "react-redux";
-import { selectMenu } from "../../../../../redux";
+import { Navigate, useParams } from 'react-router-dom';
+import { useProduct } from '../../hooks/useProducts';
+import { TitlePage } from '../../../components';
+import { FormProduct } from './components/FormProduct.component';
+import { useSelector } from 'react-redux';
+import { selectMenu } from '../../../../../redux';
 
 export const EditProduct = () => {
   const params = useParams();
 
   if (!params.id) {
-    return <Navigate to="/menu/products" />;
+    return <Navigate to='/menu/products' />;
   }
   // This update activeProduct in redux
   const { isLoading } = useProduct(params.id);
@@ -30,7 +30,7 @@ export const EditProduct = () => {
     <>
       <TitlePage title={product.name} />
 
-      <Container maxWidth="md">
+      <Container maxWidth='md'>
         {product && <FormProduct product={product} />}
       </Container>
     </>

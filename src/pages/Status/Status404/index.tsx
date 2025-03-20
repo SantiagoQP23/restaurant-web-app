@@ -40,41 +40,40 @@ const ButtonSearch = styled(Button)(
 function Status404() {
   return (
     <>
-     {/*  <Helmet>
+      {/*  <Helmet>
         <title>Status - 404</title>
       </Helmet> */}
       <MainContent>
-        <Container maxWidth="md">
-          <Box textAlign="center">
-            <img alt="404" height={180} src="/static/images/status/404.svg" />
-            <Typography variant="h5" sx={{ my: 2 }}>
+        <Container maxWidth='md'>
+          <Box textAlign='center'>
+            <img alt='404' height={180} src='/static/images/status/404.svg' />
+            <Typography variant='h5' sx={{ my: 2 }}>
               La página que estás buscando no existe
             </Typography>
-            
           </Box>
-          <Container maxWidth="sm">
+          <Container maxWidth='sm'>
             <Card sx={{ textAlign: 'center', mt: 3, p: 4 }}>
-              <FormControl variant="outlined" fullWidth>
+              <FormControl variant='outlined' fullWidth>
                 <OutlinedInputWrapper
-                  type="text"
-                  placeholder="Search terms here..."
+                  type='text'
+                  placeholder='Search terms here...'
                   endAdornment={
-                    <InputAdornment position="end">
-                      <ButtonSearch variant="contained" size="small">
+                    <InputAdornment position='end'>
+                      <ButtonSearch variant='contained' size='small'>
                         Search
                       </ButtonSearch>
                     </InputAdornment>
                   }
                   startAdornment={
-                    <InputAdornment position="start">
+                    <InputAdornment position='start'>
                       <SearchTwoToneIcon />
                     </InputAdornment>
                   }
                 />
               </FormControl>
               <Divider sx={{ my: 4 }}>O</Divider>
-              <Button href="/menu" variant="outlined">
-               Ir a menú principal
+              <Button href='/menu' variant='outlined'>
+                Ir a menú principal
               </Button>
             </Card>
           </Container>

@@ -1,9 +1,6 @@
-import { TypeOrder } from "../../../../models";
-
+import { TypeOrder } from '../../../../models';
 
 export const getTypeOrder = (typeOrder: TypeOrder): string => {
-
-
   switch (typeOrder) {
     case TypeOrder.IN_PLACE:
       return 'Para servir';
@@ -12,5 +9,4 @@ export const getTypeOrder = (typeOrder: TypeOrder): string => {
     default:
       return '';
   }
-}
-
+};

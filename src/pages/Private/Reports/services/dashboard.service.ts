@@ -1,8 +1,8 @@
-import { restauranteApi } from "../../../../api";
-import { DateIncome } from "../models/date-orders.interface";
-import { CustomGroupBy, } from "../hooks/useFilterSoldProducts";
-import { DateFilterDto } from "../../Common/dto";
-import { Period, GroupBy } from "../../Common/dto/period.model";
+import { restauranteApi } from '../../../../api';
+import { DateIncome } from '../models/date-orders.interface';
+import { CustomGroupBy } from '../hooks/useFilterSoldProducts';
+import { DateFilterDto } from '../../Common/dto';
+import { Period, GroupBy } from '../../Common/dto/period.model';
 
 export interface FilterDto {
   period: Period;
@@ -49,7 +49,6 @@ export interface ResponseIncomesByUser {
 export const getBestSellingProducts = async (
   filterDto: FilterDto
 ): Promise<ResultBestSellingProducts> => {
-
   const { period, startDate, endDate, offset = 0, limit = 10 } = filterDto;
 
   const resp = await restauranteApi.get<ResultBestSellingProducts>(
@@ -65,8 +64,8 @@ export const getBestSellingProducts = async (
         customGroupBy:
           filterDto.customGroupBy === CustomGroupBy.PRODUCT
             ? filterDto.customGroupBy
-            : undefined,
-      },
+            : undefined
+      }
     }
   );
 
@@ -77,7 +76,6 @@ export const getBestSellingProducts = async (
 export const getBestSellingCategories = async (
   filterDto: FilterDto
 ): Promise<BestSellingCategoriesResponse> => {
-
   const { period, startDate, endDate, offset = 0, limit = 10 } = filterDto;
 
   const resp = await restauranteApi.get<BestSellingCategoriesResponse>(
@@ -88,8 +86,8 @@ export const getBestSellingCategories = async (
         startDate,
         endDate,
         offset: limit * offset,
-        limit,
-      },
+        limit
+      }
     }
   );
 
@@ -101,7 +99,6 @@ export const getBestSellingCategories = async (
 export const getIncomesByUser = async (
   filterDto: DateFilterDto
 ): Promise<ResponseIncomesByUser[]> => {
-
   const { period, startDate, endDate } = filterDto;
 
   const resp = await restauranteApi.get<ResponseIncomesByUser[]>(
@@ -110,8 +107,8 @@ export const getIncomesByUser = async (
       params: {
         period,
         startDate,
-        endDate,
-      },
+        endDate
+      }
     }
   );
 
@@ -157,8 +154,8 @@ export const getIncomesDate = async (
       startDate,
       endDate,
       offset: limit * offset,
-      limit,
-    },
+      limit
+    }
   });
 
   return resp.data;

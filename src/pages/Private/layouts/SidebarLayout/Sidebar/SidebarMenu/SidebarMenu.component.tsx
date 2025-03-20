@@ -1,7 +1,7 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled } from '@mui/material';
 
-import { MenuSection } from "./MenuSection.component";
-import { menuSections } from "../../data/MenuData";
+import { MenuSection } from './MenuSection.component';
+import { menuSections } from '../../data/MenuData';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `

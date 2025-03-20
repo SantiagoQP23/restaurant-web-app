@@ -1,7 +1,7 @@
-import { restauranteApi } from "../../../../api";
-import { CreateCashTransactionDto } from "../dto/create-cash-transaction.dto";
-import { UpdateCashTransactionDto } from "../dto/update-cash-transaction.dto";
-import { CashTransaction } from "../models/cash-transaction.model";
+import { restauranteApi } from '../../../../api';
+import { CreateCashTransactionDto } from '../dto/create-cash-transaction.dto';
+import { UpdateCashTransactionDto } from '../dto/update-cash-transaction.dto';
+import { CashTransaction } from '../models/cash-transaction.model';
 
 // export const getCashTransactions = async (filterDto: FilterCashTransactionsDto): Promise<CashTransactionsResponse> => {
 
@@ -22,7 +22,7 @@ export const createCashTransaction = async (
   expense: CreateCashTransactionDto
 ): Promise<CashTransaction> => {
   const { data } = await restauranteApi.post<CashTransaction>(
-    "/cash-transactions",
+    '/cash-transactions',
     expense
   );
 

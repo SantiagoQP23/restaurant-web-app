@@ -1,6 +1,1 @@
-
-
-
-export interface UpdateInvoiceDetailDto {
-
-}
+export interface UpdateInvoiceDetailDto {}

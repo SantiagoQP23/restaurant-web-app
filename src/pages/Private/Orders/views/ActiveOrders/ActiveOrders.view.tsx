@@ -1,12 +1,12 @@
-import { Container, Button, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { DespachoDetalle, ListActiveOrders } from "./components";
-import { Add, Cached } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
+import { Container, Button, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { DespachoDetalle, ListActiveOrders } from './components';
+import { Add, Cached } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 
-import { Clock } from "../OrdersList/components/Clock.component";
-import { TitlePage } from "../../../components/TitlePage.component";
-import { useActiveOrders } from "../../hooks";
+import { Clock } from '../OrdersList/components/Clock.component';
+import { TitlePage } from '../../../components/TitlePage.component';
+import { useActiveOrders } from '../../hooks';
 
 export const ActiveOrders = () => {
   const navigate = useNavigate();
@@ -15,16 +15,16 @@ export const ActiveOrders = () => {
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ mb: 4 }}>
+      <Container maxWidth='xl' sx={{ mb: 4 }}>
         <TitlePage
-          title="Pedidos activos"
+          title='Pedidos activos'
           action={
-            <Stack direction="row" spacing={1}>
+            <Stack direction='row' spacing={1}>
               <LoadingButton
-                variant="text"
+                variant='text'
                 loading={activeOrdersQuery.isFetching}
                 onClick={() => activeOrdersQuery.refetch()}
-                size="small"
+                size='small'
                 startIcon={<Cached />}
               >
                 Actualizar
@@ -32,11 +32,11 @@ export const ActiveOrders = () => {
 
               <Button
                 onClick={() => {
-                  navigate("/orders/tables");
+                  navigate('/orders/tables');
                 }}
-                color="primary"
-                variant="contained"
-                size="small"
+                color='primary'
+                variant='contained'
+                size='small'
                 startIcon={<Add />}
               >
                 Nuevo pedido

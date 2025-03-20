@@ -1,8 +1,6 @@
-
 export const pedidoStart = () => {
   console.log('pedidoStart');
 };
-
 
 /* 
 import { restauranteApi } from "../../../api";
@@ -12,7 +10,6 @@ import { IOrder } from '../../../models/orders.model';
 
  */
 
-
 // Establecer la fecha de los pedidos
 /* export const pedidoStartSetFecha = (fecha: string): AppThunk => async (
   dispatch,
@@ -21,7 +18,6 @@ import { IOrder } from '../../../models/orders.model';
   dispatch(pedidoSetFecha(fecha));
 
 }; */
-
 
 // Cargar los pedidos del dia
 /* export const pedidoStartLoaded = (fecha: string): AppThunk => async (
@@ -39,7 +35,6 @@ import { IOrder } from '../../../models/orders.model';
   }
 
 }; */
-
 
 // Añadir un pedido
 /* export const pedidoStartAdded = (): AppThunk => async (
@@ -62,8 +57,6 @@ import { IOrder } from '../../../models/orders.model';
     console.log(error);
   }
 }; */
-
-
 
 // Eliminar un pedido
 /* export const pedidoStartDeleted = (idPedido: number): AppThunk => async (
@@ -117,4 +110,3 @@ export const pedidoStart = (fecha: string): AppThunk => async (
   
 };
  */
-

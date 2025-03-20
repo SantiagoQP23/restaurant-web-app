@@ -1,18 +1,18 @@
-import { FC, useContext } from "react";
+import { FC, useContext } from 'react';
 
 import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import { NavLink as RouterLink } from "react-router-dom";
+  ListItemText
+} from '@mui/material';
+import { NavLink as RouterLink } from 'react-router-dom';
 
-import { SidebarContext } from "../../../../Common/contexts/SidebarContext";
-import { NavItem } from "../../../interfaces";
-import { selectAuth } from "../../../../../../redux";
-import { useSelector } from "react-redux";
-import { ValidRoles } from "../../../../Common/models/valid-roles.model";
+import { SidebarContext } from '../../../../Common/contexts/SidebarContext';
+import { NavItem } from '../../../interfaces';
+import { selectAuth } from '../../../../../../redux';
+import { useSelector } from 'react-redux';
+import { ValidRoles } from '../../../../Common/models/valid-roles.model';
 
 interface Props {
   item: NavItem;
@@ -31,7 +31,7 @@ export const NavItemButton: FC<Props> = ({ item }) => {
   }
 
   return (
-    <ListItem component="div" key={item.to}>
+    <ListItem component='div' key={item.to}>
       <ListItemButton
         disableRipple
         component={RouterLink}
@@ -39,13 +39,13 @@ export const NavItemButton: FC<Props> = ({ item }) => {
         to={item.to!}
         sx={{
           minHeight: 48,
-          justifyContent: "initial",
+          justifyContent: 'initial',
           px: 2.5,
-          "&.active": {
-            color: "primary.main",
-            bgcolor: "action.selected",
-            fontWeight: "bold",
-          },
+          '&.active': {
+            color: 'primary.main',
+            bgcolor: 'action.selected',
+            fontWeight: 'bold'
+          }
         }}
         end
       >
@@ -53,14 +53,14 @@ export const NavItemButton: FC<Props> = ({ item }) => {
           sx={{
             minWidth: 0,
             mr: 3,
-            justifyContent: "center",
+            justifyContent: 'center'
           }}
         >
           {item.icon}
         </ListItemIcon>
         <ListItemText
           primary={item.title}
-          sx={{ opacity: 1, color: "text.primary" }}
+          sx={{ opacity: 1, color: 'text.primary' }}
         />
       </ListItemButton>
     </ListItem>

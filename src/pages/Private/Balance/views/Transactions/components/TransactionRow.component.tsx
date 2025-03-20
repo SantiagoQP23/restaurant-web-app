@@ -1,13 +1,13 @@
-import React, { FC } from "react";
-import { Transaction } from "../../../models/transaction.model";
+import React, { FC } from 'react';
+import { Transaction } from '../../../models/transaction.model';
 import {
   ArrowCircleDown,
   ArrowCircleUp,
   DeleteOutline,
   EditOutlined,
   MoreVert,
-  Print,
-} from "@mui/icons-material";
+  Print
+} from '@mui/icons-material';
 import {
   TableRow,
   TableCell,
@@ -17,19 +17,19 @@ import {
   Typography,
   IconButton,
   Popover,
-  MenuItem,
-} from "@mui/material";
-import { format } from "date-fns";
-import { TransactionType } from "../../../../Common/enums/transaction-type.enum";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
+  MenuItem
+} from '@mui/material';
+import { format } from 'date-fns';
+import { TransactionType } from '../../../../Common/enums/transaction-type.enum';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 import {
   bindPopover,
   bindTrigger,
-  usePopupState,
-} from "material-ui-popup-state/hooks";
-import { DeleteTransactionModal } from "./DeleteTransactionModal.component";
-import NiceModal from "@ebay/nice-modal-react";
-import { EditTransactionModal } from "./EditTransactionModal.component";
+  usePopupState
+} from 'material-ui-popup-state/hooks';
+import { DeleteTransactionModal } from './DeleteTransactionModal.component';
+import NiceModal from '@ebay/nice-modal-react';
+import { EditTransactionModal } from './EditTransactionModal.component';
 
 interface Props {
   transaction: Transaction;
@@ -37,8 +37,8 @@ interface Props {
 
 export const TransactionRow: FC<Props> = ({ transaction }) => {
   const popupState = usePopupState({
-    variant: "popover",
-    popupId: "popoverMenuProduct",
+    variant: 'popover',
+    popupId: 'popoverMenuProduct'
   });
 
   const showDeleteTransactionModal = () => {
@@ -68,16 +68,16 @@ export const TransactionRow: FC<Props> = ({ transaction }) => {
           <ListItem>
             <ListItemAvatar>
               {transaction.type === TransactionType.INCOME ? (
-                <ArrowCircleDown color="success" />
+                <ArrowCircleDown color='success' />
               ) : (
-                <ArrowCircleUp color="error" />
+                <ArrowCircleUp color='error' />
               )}
             </ListItemAvatar>
             <ListItemText
               primary={transaction.title}
               secondary={transaction.description}
               primaryTypographyProps={{
-                variant: "h5",
+                variant: 'h5'
               }}
             />
           </ListItem>
@@ -88,10 +88,10 @@ export const TransactionRow: FC<Props> = ({ transaction }) => {
               primary={`${transaction.createdBy.person.firstName} ${transaction.createdBy.person.lastName}`}
               secondary={format(
                 new Date(transaction.createdAt),
-                "dd/MM/yyyy HH:mm"
+                'dd/MM/yyyy HH:mm'
               )}
               primaryTypographyProps={{
-                variant: "h5",
+                variant: 'h5'
               }}
             />
           </ListItem>
@@ -99,16 +99,16 @@ export const TransactionRow: FC<Props> = ({ transaction }) => {
 
         <TableCell>
           {transaction.type === TransactionType.INCOME ? (
-            <Typography color="success.main">
+            <Typography color='success.main'>
               + {formatMoney(transaction.amount)}
             </Typography>
           ) : (
-            <Typography color="error.main">
+            <Typography color='error.main'>
               - {formatMoney(transaction.amount)}
             </Typography>
           )}
         </TableCell>
-        <TableCell align="center">
+        <TableCell align='center'>
           <IconButton {...bindTrigger(popupState)}>
             <MoreVert />
           </IconButton>
@@ -116,18 +116,18 @@ export const TransactionRow: FC<Props> = ({ transaction }) => {
       </TableRow>
       <Popover
         {...bindPopover(popupState)}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{
           paper: {
             sx: {
-              width: 140,
-            },
-          },
+              width: 140
+            }
+          }
         }}
       >
         <MenuItem onClick={handlePrint}>
-          <Print fontSize="small" sx={{ mr: 2 }} />
+          <Print fontSize='small' sx={{ mr: 2 }} />
           Imprimir
         </MenuItem>
       </Popover>

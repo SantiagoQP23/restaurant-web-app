@@ -1,8 +1,8 @@
-import React, { FC } from "react";
-import NiceModal from "@ebay/nice-modal-react";
-import { CashRegister } from "../../../models/cash-register.model";
-import { CloseCashRegisterModal } from "../../CloseCashRegister/CloseCashRegisterModal.component";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
+import React, { FC } from 'react';
+import NiceModal from '@ebay/nice-modal-react';
+import { CashRegister } from '../../../models/cash-register.model';
+import { CloseCashRegisterModal } from '../../CloseCashRegister/CloseCashRegisterModal.component';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 import {
   ArrowCircleDown,
   ArrowCircleUp,
@@ -10,8 +10,8 @@ import {
   Lock,
   SaveAlt,
   Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
+  VisibilityOff
+} from '@mui/icons-material';
 import {
   Card,
   CardHeader,
@@ -23,11 +23,11 @@ import {
   Button,
   Divider,
   Box,
-  IconButton,
-} from "@mui/material";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { useEncryptMoney } from "../../../../Common/hooks/useEncrypt";
-import { format } from "date-fns";
+  IconButton
+} from '@mui/material';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { useEncryptMoney } from '../../../../Common/hooks/useEncrypt';
+import { format } from 'date-fns';
 
 interface Props {
   cashRegister: CashRegister;
@@ -63,53 +63,53 @@ export const CashRegisterCard: FC<Props> = ({ cashRegister }) => {
         border: (theme) =>
           activeCashRegister?.id === cashRegister.id
             ? `1px solid ${theme.palette.primary.main}`
-            : "",
+            : ''
       }}
       onClick={onClick}
     >
       <CardHeader
-        title={"Caja "}
+        title={'Caja '}
         titleTypographyProps={{
-          variant: "h5",
+          variant: 'h5'
         }}
         subheader={
           cashRegister.createdBy.person.firstName +
-          " " +
+          ' ' +
           cashRegister.createdBy.person.lastName +
-          " - " +
-          format(new Date(cashRegister.createdAt), "HH:mm")
+          ' - ' +
+          format(new Date(cashRegister.createdAt), 'HH:mm')
         }
         action={
-          <IconButton onClick={toggleVisibility} size="small">
+          <IconButton onClick={toggleVisibility} size='small'>
             {!balanceEncrypt.visible ? <Visibility /> : <VisibilityOff />}
           </IconButton>
         }
         // avatar={<Paid color="success" fontSize="large" />}
       />
       <CardContent>
-        <Typography variant="h3" mb={1}>
+        <Typography variant='h3' mb={1}>
           {balanceEncrypt.txtMoney}
         </Typography>
 
-        <Box display="flex" justifyContent="center">
+        <Box display='flex' justifyContent='center'>
           <ListItem>
-            <ArrowCircleDown color="success" sx={{ mr: 1 }} />
+            <ArrowCircleDown color='success' sx={{ mr: 1 }} />
             <ListItemText
               primary={incomeEncrypt.txtMoney}
               primaryTypographyProps={{
-                variant: "h4",
-                color: "success.main",
+                variant: 'h4',
+                color: 'success.main'
               }}
             />
           </ListItem>
 
           <ListItem>
-            <ArrowCircleUp color="error" sx={{ mr: 1 }} />
+            <ArrowCircleUp color='error' sx={{ mr: 1 }} />
             <ListItemText
               primary={expenseEncrypt.txtMoney}
               primaryTypographyProps={{
-                variant: "h4",
-                color: "error.main",
+                variant: 'h4',
+                color: 'error.main'
               }}
             />
           </ListItem>
@@ -118,17 +118,17 @@ export const CashRegisterCard: FC<Props> = ({ cashRegister }) => {
         <Divider sx={{ my: 1 }} />
 
         <Grid container spacing={1}>
-          <Grid item xs={12} display="flex" justifyContent="center" gap={1}>
-            <Button size="small" startIcon={<SaveAlt />}>
+          <Grid item xs={12} display='flex' justifyContent='center' gap={1}>
+            <Button size='small' startIcon={<SaveAlt />}>
               Depositar
             </Button>
-            <Button startIcon={<ArrowOutward />} size="small">
+            <Button startIcon={<ArrowOutward />} size='small'>
               Transferir
             </Button>
             <Button
               onClick={() => showCloseCashRegisterModal(cashRegister)}
-              color="error"
-              size="small"
+              color='error'
+              size='small'
               startIcon={<Lock />}
             >
               Cerrar

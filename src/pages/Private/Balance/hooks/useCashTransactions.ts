@@ -1,16 +1,16 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
 import {
   createCashTransaction,
   deleteCashTransaction,
-  updateCashTransaction,
-} from "../services/cash-transactions.service";
-import { useSnackbar } from "notistack";
-import { queryClient } from "../../../../api/query-client";
-import { UpdateCashTransactionDto } from "../dto/update-cash-transaction.dto";
-import { CashTransaction } from "../models/cash-transaction.model";
-import { CreateCashTransactionDto } from "../dto/create-cash-transaction.dto";
-import { useCashRegisterStore } from "../../Common/store/useCashRegisterStore";
-import { TransactionType } from "../../Common/enums/transaction-type.enum";
+  updateCashTransaction
+} from '../services/cash-transactions.service';
+import { useSnackbar } from 'notistack';
+import { queryClient } from '../../../../api/query-client';
+import { UpdateCashTransactionDto } from '../dto/update-cash-transaction.dto';
+import { CashTransaction } from '../models/cash-transaction.model';
+import { CreateCashTransactionDto } from '../dto/create-cash-transaction.dto';
+import { useCashRegisterStore } from '../../Common/store/useCashRegisterStore';
+import { TransactionType } from '../../Common/enums/transaction-type.enum';
 
 export const useCreateCashTransaction = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -21,7 +21,7 @@ export const useCreateCashTransaction = () => {
     createCashTransaction,
     {
       onSuccess: (cashTransaction) => {
-        enqueueSnackbar("Transacción creada", { variant: "success" });
+        enqueueSnackbar('Transacción creada', { variant: 'success' });
         if (activeCashRegister) {
           const totalIncome =
             cashTransaction.type === TransactionType.INCOME
@@ -41,18 +41,18 @@ export const useCreateCashTransaction = () => {
             totalExpense,
             cashTransactions: [
               cashTransaction,
-              ...activeCashRegister.cashTransactions,
-            ],
+              ...activeCashRegister.cashTransactions
+            ]
           };
           setActiveCashRegister(cashRegisterUpdated);
           updateCashRegister(cashRegisterUpdated);
         }
 
-        queryClient.invalidateQueries({ queryKey: ["cashRegisterActive"] });
+        queryClient.invalidateQueries({ queryKey: ['cashRegisterActive'] });
       },
       onError: () => {
-        enqueueSnackbar("Error al crear la transacción", { variant: "error" });
-      },
+        enqueueSnackbar('Error al crear la transacción', { variant: 'error' });
+      }
     }
   );
 };
@@ -66,8 +66,8 @@ export const useUpdateCashTransaction = (cashTransaction: CashTransaction) => {
     (data) => updateCashTransaction(cashTransaction.id, data),
     {
       onSuccess: (cashTransactionUpdated) => {
-        enqueueSnackbar("Transacción actualizada", {
-          variant: "success",
+        enqueueSnackbar('Transacción actualizada', {
+          variant: 'success'
         });
 
         if (activeCashRegister) {
@@ -78,7 +78,7 @@ export const useUpdateCashTransaction = (cashTransaction: CashTransaction) => {
 
           const cashRegisterUpdated = {
             ...activeCashRegister,
-            cashTransactions: transactionsUpdated,
+            cashTransactions: transactionsUpdated
           };
 
           if (cashTransaction.amount !== cashTransactionUpdated.amount) {
@@ -105,13 +105,13 @@ export const useUpdateCashTransaction = (cashTransaction: CashTransaction) => {
           updateCashRegister(cashRegisterUpdated);
         }
 
-        queryClient.invalidateQueries(["cashRegisterActive"]);
+        queryClient.invalidateQueries(['cashRegisterActive']);
       },
       onError: () => {
-        enqueueSnackbar("Error al actualizar la transacción", {
-          variant: "error",
+        enqueueSnackbar('Error al actualizar la transacción', {
+          variant: 'error'
         });
-      },
+      }
     }
   );
 };
@@ -123,7 +123,7 @@ export const useDeleteCashTransaction = (cashTransaction: CashTransaction) => {
 
   return useMutation(() => deleteCashTransaction(cashTransaction.id), {
     onSuccess: () => {
-      enqueueSnackbar("Transacción eliminada", { variant: "success" });
+      enqueueSnackbar('Transacción eliminada', { variant: 'success' });
       if (activeCashRegister) {
         const totalIncome =
           cashTransaction.type === TransactionType.INCOME
@@ -141,18 +141,18 @@ export const useDeleteCashTransaction = (cashTransaction: CashTransaction) => {
             totalIncome - totalExpense + activeCashRegister.initialAmount,
           cashTransactions: activeCashRegister.cashTransactions.filter(
             (c) => c.id !== cashTransaction.id
-          ),
+          )
         };
         setActiveCashRegister(cashRegisterUpdated);
         updateCashRegister(cashRegisterUpdated);
       }
 
-      queryClient.invalidateQueries(["cashRegisterActive"]);
+      queryClient.invalidateQueries(['cashRegisterActive']);
     },
     onError: () => {
-      enqueueSnackbar("Error al eliminar la transacción", {
-        variant: "error",
+      enqueueSnackbar('Error al eliminar la transacción', {
+        variant: 'error'
       });
-    },
+    }
   });
 };

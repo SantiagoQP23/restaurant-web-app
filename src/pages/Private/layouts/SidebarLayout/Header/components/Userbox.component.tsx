@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from 'react';
 
 import {
   Avatar,
@@ -12,21 +12,21 @@ import {
   Typography,
   ListItemButton,
   ListItemSecondaryAction,
-  Badge,
-} from "@mui/material";
+  Badge
+} from '@mui/material';
 
-import { styled } from "@mui/material";
+import { styled } from '@mui/material';
 
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
-import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
-import { startLogout, selectAuth } from "../../../../../../redux/slices/auth";
-import { useAppDispatch, useAppSelector } from "../../../../../../hooks";
-import { Roles } from "../../../../../../models/auth.model";
-import { Circle } from "@mui/icons-material";
-import { SocketContext } from "../../../../../../context/SocketContext";
-import { Label } from "../../../../../../components/ui";
-import { ValidRoles } from "../../../../Common/models/valid-roles.model";
+import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
+import { startLogout, selectAuth } from '../../../../../../redux/slices/auth';
+import { useAppDispatch, useAppSelector } from '../../../../../../hooks';
+import { Roles } from '../../../../../../models/auth.model';
+import { Circle } from '@mui/icons-material';
+import { SocketContext } from '../../../../../../context/SocketContext';
+import { Label } from '../../../../../../components/ui';
+import { ValidRoles } from '../../../../Common/models/valid-roles.model';
 
 // background: ${grey[900]};
 
@@ -65,8 +65,8 @@ export const Userbox = () => {
 
   const user = {
     name: userState?.username!,
-    avatar: "/static/images/avatars/2.jpg",
-    jobtitle: Roles[`${userState?.role.name! as ValidRoles}`],
+    avatar: '/static/images/avatars/2.jpg',
+    jobtitle: Roles[`${userState?.role.name! as ValidRoles}`]
   };
 
   const ref = useRef<any>(null);
@@ -87,21 +87,21 @@ export const Userbox = () => {
   return (
     <>
       <Badge
-        overlap="circular"
-        color={online ? "success" : "error"}
-        variant="dot"
+        overlap='circular'
+        color={online ? 'success' : 'error'}
+        variant='dot'
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: 'bottom',
+          horizontal: 'right'
         }}
-        badgeContent={""}
+        badgeContent={''}
         sx={{
-          cursor: "pointer",
+          cursor: 'pointer'
         }}
         // component={Button}
       >
         <Avatar
-          variant="circular"
+          variant='circular'
           alt={user.name}
           ref={ref}
           onClick={handleOpen}
@@ -128,44 +128,44 @@ export const Userbox = () => {
         onClose={handleClose}
         open={isOpen}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right'
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right'
         }}
       >
-        <MenuUserBox sx={{ minWidth: 210 }} display="flex">
+        <MenuUserBox sx={{ minWidth: 210 }} display='flex'>
           {/* <Avatar variant="rounded" alt={user.name} src={user.avatar} /> */}
           <UserBoxText>
-            <UserBoxLabel variant="body1">
-              {user.name}{" "}
+            <UserBoxLabel variant='body1'>
+              {user.name}{' '}
               <Circle
                 sx={{ fontSize: 10 }}
-                color={online ? "success" : "error"}
+                color={online ? 'success' : 'error'}
               />
             </UserBoxLabel>
-            <UserBoxDescription variant="body2">
+            <UserBoxDescription variant='body2'>
               {user.jobtitle}
             </UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
-        <List sx={{ p: 1 }} component="nav">
+        <List sx={{ p: 1 }} component='nav'>
           <ListItemButton
-            to="/users/profile"
+            to='/users/profile'
             component={NavLink}
             onClick={handleClose}
           >
-            <ListItemText primary="Mi perfil" />
+            <ListItemText primary='Mi perfil' />
             <ListItemSecondaryAction>
-              <Label color="info">Nuevo</Label>
+              <Label color='info'>Nuevo</Label>
             </ListItemSecondaryAction>
           </ListItemButton>
 
           <ListItemButton
-            to="/users/account"
+            to='/users/account'
             component={NavLink}
             onClick={handleClose}
           >
@@ -173,7 +173,7 @@ export const Userbox = () => {
                 <AccountBoxTwoToneIcon fontSize="small" />
 
               </ListItemIcon> */}
-            <ListItemText primary="Mi cuenta" />
+            <ListItemText primary='Mi cuenta' />
             <ListItemSecondaryAction>
               {/* <Label color="info">Nuevo</Label> */}
             </ListItemSecondaryAction>
@@ -208,7 +208,7 @@ export const Userbox = () => {
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth onClick={() => handleLogout()}>
+          <Button color='primary' fullWidth onClick={() => handleLogout()}>
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
             Cerrar sesión
           </Button>

@@ -1,17 +1,17 @@
-import React, { FC, useState } from "react";
-import { LabelStatusOrder } from "../../../components";
+import React, { FC, useState } from 'react';
+import { LabelStatusOrder } from '../../../components';
 import {
   useTheme,
   Box,
   Button,
   Card,
   CardHeader,
-  MobileStepper,
-} from "@mui/material";
-import { useUpdateOrder } from "../../../hooks";
-import { OrderStatus } from "../../../../../../models";
-import { UpdateOrderDto } from "../../../dto";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+  MobileStepper
+} from '@mui/material';
+import { useUpdateOrder } from '../../../hooks';
+import { OrderStatus } from '../../../../../../models';
+import { UpdateOrderDto } from '../../../dto';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
 interface Props {
   orderId: string;
@@ -48,7 +48,7 @@ export const EditOrderStatus: FC<Props> = ({ orderId, status }) => {
   const changeStatusOrder = (status: OrderStatus) => {
     const data: UpdateOrderDto = {
       id: orderId,
-      status,
+      status
     };
 
     updateOrder(data);
@@ -57,9 +57,9 @@ export const EditOrderStatus: FC<Props> = ({ orderId, status }) => {
   return (
     <Card>
       <CardHeader
-        title="Estado"
+        title='Estado'
         action={
-          <Box display="flex" justifyContent="center">
+          <Box display='flex' justifyContent='center'>
             {activeStatus === 0 && (
               <LabelStatusOrder status={OrderStatus.PENDING} />
             )}
@@ -78,19 +78,19 @@ export const EditOrderStatus: FC<Props> = ({ orderId, status }) => {
       <Box>
         <MobileStepper
           steps={3}
-          position="static"
+          position='static'
           activeStep={activeStatus}
           sx={{
-            background: "transparent",
+            background: 'transparent'
           }}
           nextButton={
             <Button
-              size="small"
+              size='small'
               onClick={handleNext}
               disabled={activeStatus === 3 - 1}
             >
               Next
-              {theme.direction === "rtl" ? (
+              {theme.direction === 'rtl' ? (
                 <KeyboardArrowLeft />
               ) : (
                 <KeyboardArrowRight />
@@ -99,11 +99,11 @@ export const EditOrderStatus: FC<Props> = ({ orderId, status }) => {
           }
           backButton={
             <Button
-              size="small"
+              size='small'
               onClick={handleBack}
               disabled={activeStatus === 0}
             >
-              {theme.direction === "rtl" ? (
+              {theme.direction === 'rtl' ? (
                 <KeyboardArrowRight />
               ) : (
                 <KeyboardArrowLeft />

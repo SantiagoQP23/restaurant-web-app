@@ -1,13 +1,13 @@
-import { lazy, useEffect } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { lazy, useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { checkAuthToken, selectAuth } from "../redux/slices/auth";
-import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
-import { PublicRoutes } from "../models";
+import { checkAuthToken, selectAuth } from '../redux/slices/auth';
+import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
+import { PublicRoutes } from '../models';
 
-import { Public } from "../pages/Public/Public.page";
+import { Public } from '../pages/Public/Public.page';
 
-const Private = lazy(() => import("../pages/Private/Private"));
+const Private = lazy(() => import('../pages/Private/Private'));
 
 export const AppRouter = () => {
   const dispatch = useAppDispatch();
@@ -20,12 +20,12 @@ export const AppRouter = () => {
 
   return (
     <Routes>
-      {status === "not-authenticated" ? (
+      {status === 'not-authenticated' ? (
         <>
-          <Route path="/*" element={<Public />} />
+          <Route path='/*' element={<Public />} />
         </>
       ) : (
-        user && <Route path="/*" element={<Private />} />
+        user && <Route path='/*' element={<Private />} />
       )}
     </Routes>
   );

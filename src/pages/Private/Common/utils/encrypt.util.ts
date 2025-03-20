@@ -3,7 +3,7 @@ export const replaceNumbersWithAsterisks = (inputString: string): string => {
   const regex = /\d/g;
 
   // Replace matched numbers with asterisks
-  const resultString = inputString.replace(regex, "*");
+  const resultString = inputString.replace(regex, '*');
 
   return resultString;
 };

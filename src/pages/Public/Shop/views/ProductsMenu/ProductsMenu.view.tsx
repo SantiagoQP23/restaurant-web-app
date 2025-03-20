@@ -1,18 +1,18 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from '@mui/material';
 
-import NiceModal from "@ebay/nice-modal-react";
+import NiceModal from '@ebay/nice-modal-react';
 
-import { ComboBoxProducts } from "../../../../Private/EditMenu/components/products/ComboBoxProducts.component";
-import { TitlePage } from "../../../../Private/components";
-import { FilterList } from "@mui/icons-material";
-import { Product } from "../../../../Private/Orders/views";
-import { useSelector } from "react-redux";
-import { IProduct } from "../../../../../models";
-import { selectMenu } from "../../../../../redux";
-import { useMenu } from "../../../../../hooks";
-import { useNavigate } from "react-router-dom";
-import { RegisteredModals } from "../../../../Private/modals";
-import { useMemo } from "react";
+import { ComboBoxProducts } from '../../../../Private/EditMenu/components/products/ComboBoxProducts.component';
+import { TitlePage } from '../../../../Private/components';
+import { FilterList } from '@mui/icons-material';
+import { Product } from '../../../../Private/Orders/views';
+import { useSelector } from 'react-redux';
+import { IProduct } from '../../../../../models';
+import { selectMenu } from '../../../../../redux';
+import { useMenu } from '../../../../../hooks';
+import { useNavigate } from 'react-router-dom';
+import { RegisteredModals } from '../../../../Private/modals';
+import { useMemo } from 'react';
 
 export const ProductsMenu = () => {
   const { activeCategory, products } = useSelector(selectMenu);
@@ -52,11 +52,11 @@ export const ProductsMenu = () => {
 
   return (
     <>
-      <TitlePage title="Productos" />
+      <TitlePage title='Productos' />
 
       <Box
         sx={{
-          width: "250px",
+          width: '250px'
         }}
       >
         <ComboBoxProducts selectProduct={navigateToProduct} />
@@ -64,18 +64,18 @@ export const ProductsMenu = () => {
 
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          my: 2,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          my: 2
         }}
       >
-        <Typography variant="h4">{activeCategory?.name}</Typography>
+        <Typography variant='h4'>{activeCategory?.name}</Typography>
 
         <Button
-          variant="text"
+          variant='text'
           endIcon={<FilterList />}
-          color="inherit"
+          color='inherit'
           onClick={openDrawerProductsFilter}
         >
           Categorías

@@ -1,8 +1,8 @@
-import { Typography, Grid } from "@mui/material";
-import { TypeOrder } from "../../../../../../models";
-import { OrderCard } from "./OrderCard.component";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../../redux";
+import { Typography, Grid } from '@mui/material';
+import { TypeOrder } from '../../../../../../models';
+import { OrderCard } from './OrderCard.component';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../../redux';
 
 export const TakeAwayOrders = () => {
   const { orders } = useSelector(selectOrders);
@@ -23,7 +23,7 @@ export const TakeAwayOrders = () => {
           </Grid>
         </>
       ) : (
-        <Typography variant="h4">No hay pedidos para llevar</Typography>
+        <Typography variant='h4'>No hay pedidos para llevar</Typography>
       )}
     </>
   );

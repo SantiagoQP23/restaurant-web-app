@@ -1,5 +1,3 @@
+import { DateFilterDto, PaginationDto } from './';
 
-import { DateFilterDto , PaginationDto } from './';
-
-export interface DateFiltePaginationDto extends DateFilterDto, PaginationDto {
-}
+export interface DateFiltePaginationDto extends DateFilterDto, PaginationDto {}

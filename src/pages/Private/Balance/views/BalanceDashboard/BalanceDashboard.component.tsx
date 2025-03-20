@@ -1,5 +1,5 @@
-import { Add, History } from "@mui/icons-material";
-import { TitlePage } from "../../../components/TitlePage.component";
+import { Add, History } from '@mui/icons-material';
+import { TitlePage } from '../../../components/TitlePage.component';
 import {
   Grid,
   Card,
@@ -9,29 +9,29 @@ import {
   Tabs,
   Tab,
   TableContainer,
-  Typography,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useCashRegisterStore } from "../../../Common/store/useCashRegisterStore";
-import { AddCashRegisterModal } from "./components/AddCashRegisterModal.component";
-import { useEffect, useState } from "react";
+  Typography
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useCashRegisterStore } from '../../../Common/store/useCashRegisterStore';
+import { AddCashRegisterModal } from './components/AddCashRegisterModal.component';
+import { useEffect, useState } from 'react';
 
-import { TransactionType } from "../../../Common/enums/transaction-type.enum";
-import { CashTransactionsTable } from "./components/CashTransactionsTable.component";
-import NiceModal from "@ebay/nice-modal-react";
-import { CashRegisterCard } from "./components/CashRegisterCard.component";
-import { AddCashTransactionModal } from "./components/AddCashTransactionModal.component";
-import { CashTransaction } from "../../models/cash-transaction.model";
+import { TransactionType } from '../../../Common/enums/transaction-type.enum';
+import { CashTransactionsTable } from './components/CashTransactionsTable.component';
+import NiceModal from '@ebay/nice-modal-react';
+import { CashRegisterCard } from './components/CashRegisterCard.component';
+import { AddCashTransactionModal } from './components/AddCashTransactionModal.component';
+import { CashTransaction } from '../../models/cash-transaction.model';
 
 export enum AddTransactionTabs {
-  INCOMES = "add-incomes",
-  EXPENSES = "add-expenses",
+  INCOMES = 'add-incomes',
+  EXPENSES = 'add-expenses'
 }
 
 export enum ViewTransactionFilter {
-  INCOMES = "incomes",
-  EXPENSES = "expenses",
-  ALL = "all",
+  INCOMES = 'incomes',
+  EXPENSES = 'expenses',
+  ALL = 'all'
 }
 
 export const BalanceDashboard = () => {
@@ -46,18 +46,18 @@ export const BalanceDashboard = () => {
   >(activeCashRegister?.cashTransactions || []);
 
   const [transactionFilter, setTransactionFilter] = useState<
-    TransactionType | "all"
-  >("all");
+    TransactionType | 'all'
+  >('all');
 
-  const handleChangeTransactionFilter = (value: TransactionType | "all") => {
+  const handleChangeTransactionFilter = (value: TransactionType | 'all') => {
     setTransactionFilter(() => {
       handleChangeCashTransaction(value);
       return value;
     });
   };
 
-  const handleChangeCashTransaction = (value: TransactionType | "all") => {
-    if (value === "all") {
+  const handleChangeCashTransaction = (value: TransactionType | 'all') => {
+    if (value === 'all') {
       setFilteredCashTransactions(activeCashRegister?.cashTransactions || []);
     } else {
       setFilteredCashTransactions(
@@ -84,18 +84,18 @@ export const BalanceDashboard = () => {
   return (
     <>
       <TitlePage
-        title="Cajas"
+        title='Cajas'
         action={
-          <Stack direction="row" spacing={1}>
+          <Stack direction='row' spacing={1}>
             <Button
               startIcon={<History />}
-              onClick={() => navigateTo("/financial/cash-register")}
+              onClick={() => navigateTo('/financial/cash-register')}
             >
               Historial
             </Button>
             <Button
               startIcon={<Add />}
-              variant="contained"
+              variant='contained'
               onClick={showAddCashRegisterModal}
               disabled={cashRegisters.length > 0}
             >
@@ -114,15 +114,13 @@ export const BalanceDashboard = () => {
           </Grid>
         ))}
 
-        {
-          cashRegisters.length === 0 && (
-            <Grid item xs={12}>
-              <Typography variant="h4" textAlign="center" my={5}>
-                No hay cajas activas
-              </Typography>
-            </Grid>
-          )
-        }
+        {cashRegisters.length === 0 && (
+          <Grid item xs={12}>
+            <Typography variant='h4' textAlign='center' my={5}>
+              No hay cajas activas
+            </Typography>
+          </Grid>
+        )}
       </Grid>
 
       <Grid container spacing={2} mt={1}>
@@ -132,34 +130,34 @@ export const BalanceDashboard = () => {
               value={transactionFilter}
               onChange={(e, value) => handleChangeTransactionFilter(value)}
             >
-              <Tab label="Todos" value={"all"} />
-              <Tab label="Ingresos" value={TransactionType.INCOME} />
-              <Tab label="Gastos" value={TransactionType.EXPENSE} />
+              <Tab label='Todos' value={'all'} />
+              <Tab label='Ingresos' value={TransactionType.INCOME} />
+              <Tab label='Gastos' value={TransactionType.EXPENSE} />
             </Tabs>
             <Card>
               <CardHeader
-                title="Transacciones"
+                title='Transacciones'
                 action={
-                  <Stack direction="row" spacing={1}>
+                  <Stack direction='row' spacing={1}>
                     <Button
                       startIcon={<Add />}
-                      size="small"
+                      size='small'
                       onClick={() =>
                         openAddTransactionDrawer(TransactionType.INCOME)
                       }
-                      color="success"
-                      variant="contained"
+                      color='success'
+                      variant='contained'
                     >
                       Ingreso
                     </Button>
                     <Button
                       startIcon={<Add />}
-                      size="small"
+                      size='small'
                       onClick={() =>
                         openAddTransactionDrawer(TransactionType.EXPENSE)
                       }
-                      color="error"
-                      variant="contained"
+                      color='error'
+                      variant='contained'
                     >
                       Gasto
                     </Button>

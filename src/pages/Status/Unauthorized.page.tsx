@@ -1,5 +1,15 @@
-import { Container, Box, Typography, Card, FormControl, InputAdornment, Divider, Button, styled, OutlinedInput } from "@mui/material"
-
+import {
+  Container,
+  Box,
+  Typography,
+  Card,
+  FormControl,
+  InputAdornment,
+  Divider,
+  Button,
+  styled,
+  OutlinedInput
+} from '@mui/material';
 
 const MainContent = styled(Box)(
   ({ theme }) => `
@@ -23,23 +33,21 @@ const OutlinedInputWrapper = styled(OutlinedInput)(
 export const UnauthorizedPage = () => {
   return (
     <MainContent>
-      <Container maxWidth="md">
-        <Box textAlign="center">
-
-          <Typography variant="h3" sx={{ my: 2 }}>
+      <Container maxWidth='md'>
+        <Box textAlign='center'>
+          <Typography variant='h3' sx={{ my: 2 }}>
             No estas autorizado para ver esta página
           </Typography>
           <Typography
-            variant="h6"
-            color="text.secondary"
-            fontWeight="normal"
+            variant='h6'
+            color='text.secondary'
+            fontWeight='normal'
             sx={{ mb: 4 }}
           >
             Por favor, solicite permisos al administrador
           </Typography>
         </Box>
-
       </Container>
     </MainContent>
-  )
-}
+  );
+};

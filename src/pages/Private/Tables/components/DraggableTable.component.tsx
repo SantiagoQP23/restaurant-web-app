@@ -1,22 +1,22 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { useSortable } from "@dnd-kit/sortable";
+import { useSortable } from '@dnd-kit/sortable';
 
-import { CSS } from "@dnd-kit/utilities";
+import { CSS } from '@dnd-kit/utilities';
 
-import NiceModal from "@ebay/nice-modal-react";
+import NiceModal from '@ebay/nice-modal-react';
 
-import { ITable } from "../../../../models";
-import { Box, Button, Card, CardHeader, IconButton } from "@mui/material";
-import { Dehaze, DeleteTwoTone, EditOutlined } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setActiveTable } from "../../../../redux";
-import { UpdateTableDto } from "../dto/table.dto";
-import { useUpdateTable } from "../hooks/useTables";
-import { RegisteredModals } from "../../modals";
+import { ITable } from '../../../../models';
+import { Box, Button, Card, CardHeader, IconButton } from '@mui/material';
+import { Dehaze, DeleteTwoTone, EditOutlined } from '@mui/icons-material';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setActiveTable } from '../../../../redux';
+import { UpdateTableDto } from '../dto/table.dto';
+import { useUpdateTable } from '../hooks/useTables';
+import { RegisteredModals } from '../../modals';
 
-import { ModalDeleteTableProps } from "./ModalDeleteTable.component";
+import { ModalDeleteTableProps } from './ModalDeleteTable.component';
 
 interface Props {
   table: ITable;
@@ -35,16 +35,16 @@ export const DraggableTable: FC<Props> = ({ table, reorder }) => {
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition
   };
   const editTable = () => {
     dispatch(setActiveTable(table));
-    navigate("edit");
+    navigate('edit');
   };
 
   const deleteTable = () => {
     const props: ModalDeleteTableProps = {
-      table,
+      table
     };
 
     NiceModal.show(RegisteredModals.ModalDeleteTable, props);
@@ -53,7 +53,7 @@ export const DraggableTable: FC<Props> = ({ table, reorder }) => {
   const enableTable = () => {
     const data: UpdateTableDto = {
       isActive: true,
-      id: table.id,
+      id: table.id
     };
 
     updateTableMutation.mutate(data);
@@ -66,26 +66,26 @@ export const DraggableTable: FC<Props> = ({ table, reorder }) => {
           <CardHeader
             title={`Mesa ${table.name}`}
             avatar={
-              reorder && <Dehaze {...listeners} sx={{ cursor: "pointer" }} />
+              reorder && <Dehaze {...listeners} sx={{ cursor: 'pointer' }} />
             }
             subheader={`Asientos: ${table.chairs}`}
             titleTypographyProps={{
-              variant: "h5",
+              variant: 'h5'
             }}
             action={
-              <Box display="flex" alignItems="center">
+              <Box display='flex' alignItems='center'>
                 {table.isActive ? (
                   <>
-                    <IconButton onClick={editTable} color="primary">
-                      <EditOutlined fontSize="medium" />
+                    <IconButton onClick={editTable} color='primary'>
+                      <EditOutlined fontSize='medium' />
                     </IconButton>
 
-                    <IconButton onClick={deleteTable} color="error">
-                      <DeleteTwoTone fontSize="medium" />
+                    <IconButton onClick={deleteTable} color='error'>
+                      <DeleteTwoTone fontSize='medium' />
                     </IconButton>
                   </>
                 ) : (
-                  <Button variant="outlined" size="small" onClick={enableTable}>
+                  <Button variant='outlined' size='small' onClick={enableTable}>
                     Habilitar
                   </Button>
                 )}

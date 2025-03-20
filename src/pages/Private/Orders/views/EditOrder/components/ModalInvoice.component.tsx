@@ -1,7 +1,3 @@
-
-
 export const ModalInvoice = () => {
-  return (
-    <div>ModalInvoice</div>
-  )
-}
+  return <div>ModalInvoice</div>;
+};

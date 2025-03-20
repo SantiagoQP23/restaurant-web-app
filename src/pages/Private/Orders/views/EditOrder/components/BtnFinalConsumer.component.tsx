@@ -1,44 +1,44 @@
-import { Box, Typography, Button } from "@mui/material";
-import { useClient } from "../../../../Clients/hooks/useClients";
-import { IClient } from "../../../../../../models";
-import { FC } from "react";
+import { Box, Typography, Button } from '@mui/material';
+import { useClient } from '../../../../Clients/hooks/useClients';
+import { IClient } from '../../../../../../models';
+import { FC } from 'react';
 
 interface Props {
   setClient: (client: IClient | null) => void;
 }
 
-export const BtnFinalConsumer:FC<Props> = ({setClient}) => {
-  const { data, isLoading } = useClient("0999999999", true);
+export const BtnFinalConsumer: FC<Props> = ({ setClient }) => {
+  const { data, isLoading } = useClient('0999999999', true);
 
   if (!data) return null;
 
   const selectFinalConsumer = () => {
     setClient(data);
-  }
+  };
 
   return (
     <>
       <Box
         sx={{
-          border: "1px dotted",
-          borderColor: "secondary.main",
+          border: '1px dotted',
+          borderColor: 'secondary.main',
           borderRadius: 1,
           p: 1,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
         }}
       >
         {isLoading ? (
-          "Cargando..."
+          'Cargando...'
         ) : (
           <>
-            <Typography variant="h4">
+            <Typography variant='h4'>
               {data.person.lastName} {data.person.firstName}
             </Typography>
             <Button
-              variant="outlined"
-              size="small"
+              variant='outlined'
+              size='small'
               onClick={selectFinalConsumer}
             >
               Seleccionar

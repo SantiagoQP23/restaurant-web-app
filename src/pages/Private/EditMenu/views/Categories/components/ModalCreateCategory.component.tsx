@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 import {
   Button,
   Dialog,
@@ -12,15 +12,15 @@ import {
   MenuItem,
   Select,
   Stack,
-  TextField,
-} from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { addCategory, selectMenu } from "../../../../../../redux";
-import { CreateCategoryDto } from "../../../dto";
-import { LoadingButton } from "@mui/lab";
-import { useCreateCategory } from "../../../hooks/useCategories";
-import { useEditMenuStore } from "../../../hooks/useEditMenuStore";
+  TextField
+} from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCategory, selectMenu } from '../../../../../../redux';
+import { CreateCategoryDto } from '../../../dto';
+import { LoadingButton } from '@mui/lab';
+import { useCreateCategory } from '../../../hooks/useCategories';
+import { useEditMenuStore } from '../../../hooks/useEditMenuStore';
 
 export const ModalCreateCategory = NiceModal.create(() => {
   const modal = useModal();
@@ -31,14 +31,14 @@ export const ModalCreateCategory = NiceModal.create(() => {
 
   const { isLoading, mutateAsync } = useCreateCategory();
 
-  const {addCategoryToSection} = useEditMenuStore();
+  const { addCategoryToSection } = useEditMenuStore();
 
   const {
     control,
     handleSubmit,
     formState: { errors, isDirty },
     register,
-    reset,
+    reset
   } = useForm<CreateCategoryDto>();
 
   const closeModal = () => {
@@ -49,15 +49,15 @@ export const ModalCreateCategory = NiceModal.create(() => {
     mutateAsync(data).then((category) => {
       dispatch(addCategory(category));
       addCategoryToSection(category, category.section.id);
-      
+
       closeModal();
     });
   };
 
   useEffect(() => {
     const initialForm: CreateCategoryDto = {
-      name: "",
-      sectionId: activeSection?.id || "",
+      name: '',
+      sectionId: activeSection?.id || ''
     };
     reset(initialForm);
   }, []);
@@ -65,34 +65,34 @@ export const ModalCreateCategory = NiceModal.create(() => {
   return (
     <Dialog {...muiDialogV5(modal)}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogTitle variant="h5">Crear categoría</DialogTitle>
+        <DialogTitle variant='h5'>Crear categoría</DialogTitle>
 
         <DialogContent sx={{ width: 300 }}>
           <Stack spacing={2}>
             <TextField
               autoFocus
-              label="Nombre de la Categoria"
-              type="text"
+              label='Nombre de la Categoria'
+              type='text'
               fullWidth
-              {...register("name", {
-                required: "Este campo es requerido",
-                minLength: { value: 2, message: "Minimo 2 caracteres" },
+              {...register('name', {
+                required: 'Este campo es requerido',
+                minLength: { value: 2, message: 'Minimo 2 caracteres' }
               })}
               error={!!errors.name}
               helperText={errors.name?.message}
             />
             <Controller
-              name="sectionId"
+              name='sectionId'
               control={control}
-              rules={{ required: "Este campo es requerido" }}
+              rules={{ required: 'Este campo es requerido' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <FormControl fullWidth>
-                    <InputLabel id="select-seccion">Seccion</InputLabel>
+                    <InputLabel id='select-seccion'>Seccion</InputLabel>
                     <Select
-                      labelId="select-seccion"
-                      label="Seccion"
-                      margin="dense"
+                      labelId='select-seccion'
+                      label='Seccion'
+                      margin='dense'
                       // disabled
                       value={value}
                       onChange={onChange}
@@ -116,8 +116,8 @@ export const ModalCreateCategory = NiceModal.create(() => {
           <Button onClick={closeModal}>Cancelar</Button>
           <LoadingButton
             loading={isLoading}
-            type="submit"
-            variant="contained"
+            type='submit'
+            variant='contained'
             disabled={!isDirty}
           >
             Guardar

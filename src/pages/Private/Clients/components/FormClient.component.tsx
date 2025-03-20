@@ -1,7 +1,8 @@
-import { FC } from "react";
-import { IClient, ICreateClient } from "../../../../models/client.model";
-import { Controller, useForm, useWatch } from "react-hook-form";
-import { LoadingButton } from "@mui/lab";
+import { FC } from 'react';
+import { ICreateClient } from '../../../../models/client.model';
+import { Controller, useForm, useWatch } from 'react-hook-form';
+import { LoadingButton } from '@mui/lab';
+
 import {
   Grid,
   Select,
@@ -9,10 +10,9 @@ import {
   TextField,
   Typography,
   FormControl,
-  InputLabel,
-  Button,
-} from "@mui/material";
-import { TypeIdentification } from "../../../../models/common.model";
+  InputLabel
+} from '@mui/material';
+import { TypeIdentification } from '../../../../models/common.model';
 
 interface Props {
   client: ICreateClient;
@@ -26,36 +26,36 @@ export const FormClient: FC<Props> = ({ client, onSubmit, loading, msg }) => {
     register,
     handleSubmit,
     formState: { errors },
-    control,
+    control
   } = useForm<ICreateClient>({
-    defaultValues: client,
+    defaultValues: client
   });
 
-  const identification = useWatch({ control, name: "identification" });
+  const identification = useWatch({ control, name: 'identification' });
 
   const lenghtIdentification =
     identification.type === TypeIdentification.CEDULA ? 10 : 13;
 
   return (
     <>
-      <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
+      <FormControl component='form' onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Nombres"
+              label='Nombres'
               fullWidth
-              {...register("firstName", {
-                required: "Este campo es requerido",
-                minLength: { value: 2, message: "Minimo 2 caracteres" },
+              {...register('firstName', {
+                required: 'Este campo es requerido',
+                minLength: { value: 2, message: 'Minimo 2 caracteres' },
                 validate: (value: any) => {
                   if (!isNaN(value)) {
-                    return "No se permiten números en este campo";
+                    return 'No se permiten números en este campo';
                   }
-                },
+                }
               })}
               helperText={
-                <Typography color="red">
-                  {errors.firstName?.message}{" "}
+                <Typography color='red'>
+                  {errors.firstName?.message}{' '}
                 </Typography>
               }
               onKeyDown={(e) => {
@@ -68,20 +68,20 @@ export const FormClient: FC<Props> = ({ client, onSubmit, loading, msg }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Apellidos"
+              label='Apellidos'
               fullWidth
-              {...register("lastName", {
-                required: "Este campo es requerido",
-                minLength: { value: 2, message: "Minimo 2 caracteres" },
+              {...register('lastName', {
+                required: 'Este campo es requerido',
+                minLength: { value: 2, message: 'Minimo 2 caracteres' },
 
                 validate: (value: any) => {
                   if (!isNaN(Number(value)))
-                    return "No se permiten números en este campo";
+                    return 'No se permiten números en este campo';
                   return true;
-                },
+                }
               })}
               helperText={
-                <Typography color="red">{errors.lastName?.message} </Typography>
+                <Typography color='red'>{errors.lastName?.message} </Typography>
               }
               onKeyDown={(e) => {
                 const allowedCharsRegex = /^[a-zA-ZáéíóúñÁÉÍÓÚÑ ]*$/;
@@ -94,19 +94,19 @@ export const FormClient: FC<Props> = ({ client, onSubmit, loading, msg }) => {
 
           <Grid item xs={12} sm={6}>
             <Controller
-              name="identification.type"
+              name='identification.type'
               control={control}
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <FormControl fullWidth>
-                    <InputLabel id="select-seccion">
+                    <InputLabel id='select-seccion'>
                       Tipo de identificación
                     </InputLabel>
                     <Select
-                      labelId="select-seccion"
-                      label="Tipo de identificación"
+                      labelId='select-seccion'
+                      label='Tipo de identificación'
                       fullWidth
-                      margin="dense"
+                      margin='dense'
                       value={value}
                       onChange={onChange}
                       onBlur={onBlur}
@@ -125,22 +125,22 @@ export const FormClient: FC<Props> = ({ client, onSubmit, loading, msg }) => {
 
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Número de identificación"
+              label='Número de identificación'
               fullWidth
-              type="number"
-              {...register("identification.num", {
+              type='number'
+              {...register('identification.num', {
                 minLength: {
                   value: lenghtIdentification,
-                  message: `Minimo ${lenghtIdentification} caracteres`,
+                  message: `Minimo ${lenghtIdentification} caracteres`
                 },
                 maxLength: {
                   value: lenghtIdentification,
-                  message: `Máximo ${lenghtIdentification} caracteres`,
-                },
+                  message: `Máximo ${lenghtIdentification} caracteres`
+                }
               })}
               helperText={
-                <Typography color="red">
-                  {errors.identification?.num?.message}{" "}
+                <Typography color='red'>
+                  {errors.identification?.num?.message}{' '}
                 </Typography>
               }
             />
@@ -148,53 +148,53 @@ export const FormClient: FC<Props> = ({ client, onSubmit, loading, msg }) => {
 
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Email"
+              label='Email'
               fullWidth
-              {...register("email", {
+              {...register('email', {
                 pattern: {
                   value: /\S+@\S+\.\S+/,
-                  message: "Email no válido",
+                  message: 'Email no válido'
                 },
-                minLength: { value: 2, message: "Minimo 2 caracteres" },
+                minLength: { value: 2, message: 'Minimo 2 caracteres' }
               })}
               helperText={
-                <Typography color="red">{errors.email?.message} </Typography>
+                <Typography color='red'>{errors.email?.message} </Typography>
               }
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Número de teléfono"
+              label='Número de teléfono'
               fullWidth
-              type="number"
-              {...register("numPhone", {
-                minLength: { value: 10, message: "Minimo 10 caracteres" },
-                maxLength: { value: 10, message: "Máximo 10 caracteres" },
+              type='number'
+              {...register('numPhone', {
+                minLength: { value: 10, message: 'Minimo 10 caracteres' },
+                maxLength: { value: 10, message: 'Máximo 10 caracteres' }
               })}
               helperText={
-                <Typography color="red">{errors.numPhone?.message} </Typography>
+                <Typography color='red'>{errors.numPhone?.message} </Typography>
               }
             />
           </Grid>
 
           <Grid item xs={12}>
             <TextField
-              label="Dirección"
+              label='Dirección'
               rows={3}
               fullWidth
               multiline
-              {...register("address", {
-                minLength: { value: 2, message: "Minimo 2 caracteres" },
+              {...register('address', {
+                minLength: { value: 2, message: 'Minimo 2 caracteres' }
               })}
               helperText={
-                <Typography color="red">{errors.address?.message} </Typography>
+                <Typography color='red'>{errors.address?.message} </Typography>
               }
             />
           </Grid>
 
-          <Grid item xs={12} display="flex" justifyContent="right">
-            <LoadingButton variant="contained" type="submit" loading={loading}>
-              {msg || "Guardar"}
+          <Grid item xs={12} display='flex' justifyContent='right'>
+            <LoadingButton variant='contained' type='submit' loading={loading}>
+              {msg || 'Guardar'}
             </LoadingButton>
           </Grid>
         </Grid>

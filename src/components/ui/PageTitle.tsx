@@ -15,21 +15,20 @@ export const PageTitle: FC<PageTitleProps> = ({
   ...rest
 }) => {
   return (
-    <Grid container justifyContent="space-between" alignItems="center" {...rest}>
+    <Grid
+      container
+      justifyContent='space-between'
+      alignItems='center'
+      {...rest}
+    >
       <Grid item>
-        <Typography variant="h3" component="h5" gutterBottom>
+        <Typography variant='h3' component='h5' gutterBottom>
           {heading}
         </Typography>
-        <Typography variant="subtitle1">
-          {subHeading}
-        </Typography>
+        <Typography variant='subtitle1'>{subHeading}</Typography>
       </Grid>
 
-
-      <Grid item>
-        {docs}
-      </Grid>
-
+      <Grid item>{docs}</Grid>
     </Grid>
   );
 };

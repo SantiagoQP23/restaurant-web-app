@@ -5,21 +5,17 @@ export interface IPerson {
   firstName: string;
   lastName: string;
   email?: string;
-  identification?: Identification
+  identification?: Identification;
   numPhone?: string;
 }
 
-
 export interface IClient {
-
   id: string;
   person: IPerson;
   address: string;
   isActive: boolean;
 }
 
-export interface ICreateClient extends CreatePerson{
-
+export interface ICreateClient extends CreatePerson {
   address?: string;
-
 }

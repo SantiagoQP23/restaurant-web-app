@@ -1,7 +1,7 @@
-import { FC } from "react";
-import { Autocomplete, TextField } from "@mui/material";
-import { useClients } from "../../Clients/hooks/useClients";
-import { IClient } from "../../../../models";
+import { FC } from 'react';
+import { Autocomplete, TextField } from '@mui/material';
+import { useClients } from '../../Clients/hooks/useClients';
+import { IClient } from '../../../../models';
 
 interface Props {
   client: IClient | null;
@@ -14,25 +14,25 @@ export const ComboBoxClient: FC<Props> = ({ client, handleChangeClient }) => {
   return (
     <>
       <Autocomplete
-        id="combo-box-client"
+        id='combo-box-client'
         filterOptions={(x) => x}
         options={clientsQuery.data?.clients || []}
         getOptionLabel={(option) =>
-          option.person.lastName + " " + option.person.firstName
+          option.person.lastName + ' ' + option.person.firstName
         }
         value={client}
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Cliente (opcional)"
-            variant="outlined"
+            label='Cliente (opcional)'
+            variant='outlined'
           />
         )}
         onChange={(event, newValue: IClient | null) => {
           handleChangeClient(newValue);
           // setClients(newValue ? [newValue, ...clients] : clients)
         }}
-        noOptionsText="Sin clientes"
+        noOptionsText='Sin clientes'
         onInputChange={(e, newInputValue) => {
           const event = e as React.ChangeEvent<HTMLInputElement>;
 

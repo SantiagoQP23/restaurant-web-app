@@ -1,5 +1,5 @@
-import { io, Manager, Socket } from "socket.io-client";
-import { useEffect, useState, useCallback } from "react";
+import { io, Manager, Socket } from 'socket.io-client';
+import { useEffect, useState, useCallback } from 'react';
 
 export const useSocket = (serverPath: string) => {
   const [online, setOnline] = useState<boolean | undefined>(false);
@@ -7,15 +7,15 @@ export const useSocket = (serverPath: string) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   const conectarSocket = useCallback(() => {
-    const token = localStorage.getItem("token") || "";
+    const token = localStorage.getItem('token') || '';
 
     const manager = new Manager(serverPath, {
       extraHeaders: {
-        authentication: token,
-      },
+        authentication: token
+      }
     });
 
-    const socketTemp = manager.socket("/");
+    const socketTemp = manager.socket('/');
 
     setSocket(socketTemp);
 
@@ -43,13 +43,13 @@ export const useSocket = (serverPath: string) => {
   }, [socket]);
 
   useEffect(() => {
-    socket?.on("connect", () => {
+    socket?.on('connect', () => {
       setOnline(true);
     });
   }, [socket]);
 
   useEffect(() => {
-    socket?.on("disconnect", () => {
+    socket?.on('disconnect', () => {
       setOnline(false);
     });
   }, [socket]);
@@ -58,6 +58,6 @@ export const useSocket = (serverPath: string) => {
     socket,
     online,
     conectarSocket,
-    desconectarSocket,
+    desconectarSocket
   };
 };

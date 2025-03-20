@@ -1,13 +1,13 @@
-import { createContext, FC } from "react";
+import { createContext, FC } from 'react';
 
-import { ICategory, IProduct, ISection } from "../models";
+import { ICategory, IProduct, ISection } from '../models';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { setActiveSection } from "../redux/slices/menu";
-import { useAppDispatch } from "../hooks/useRedux";
-import { useSelector } from "react-redux";
-import { selectMenu } from "../redux/slices/menu/menu.slice";
+import { setActiveSection } from '../redux/slices/menu';
+import { useAppDispatch } from '../hooks/useRedux';
+import { useSelector } from 'react-redux';
+import { selectMenu } from '../redux/slices/menu/menu.slice';
 
 interface IMenuContext {
   changeSection: (idSection: string) => void;
@@ -117,7 +117,7 @@ export const MenuProvider: FC<Props> = ({ children }) => {
         categories: categoriasSeccion,
         products: productosCategoria,
         activeCategory,
-        activeSection,
+        activeSection
       }}
     >
       {children}

@@ -1,5 +1,3 @@
-
-
 export const generateRandomColor = () => {
   // Generar valores aleatorios para los componentes RGB
   const red = Math.floor(Math.random() * 256);
@@ -11,4 +9,3 @@ export const generateRandomColor = () => {
 
   return color;
 };
-

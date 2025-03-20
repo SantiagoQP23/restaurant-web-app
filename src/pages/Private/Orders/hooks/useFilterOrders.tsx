@@ -1,15 +1,11 @@
-import { usePagination } from "@mui/lab";
-import { useDateFilter } from "../../../../hooks/useDateFilter"
-import { Period } from "../../Common/dto/period.model";
-import { usePaginationAsync } from "../../../../hooks/usePaginationAsync";
-import { useState } from "react";
-import { IClient, ITable, IUser, OrderStatus } from "../../../../models";
-
-
+import { usePagination } from '@mui/lab';
+import { useDateFilter } from '../../../../hooks/useDateFilter';
+import { Period } from '../../Common/dto/period.model';
+import { usePaginationAsync } from '../../../../hooks/usePaginationAsync';
+import { useState } from 'react';
+import { IClient, ITable, IUser, OrderStatus } from '../../../../models';
 
 export const useFilterOrders = () => {
-
-
   const dateFilter = useDateFilter(Period.CUSTOM);
 
   const pagination = usePaginationAsync();
@@ -24,31 +20,27 @@ export const useFilterOrders = () => {
 
   const [isPaid, setIsPaid] = useState<boolean | null>(null);
 
-
   const handleChangeUser = (user: IUser | null) => {
     setUser(user);
-  }
+  };
 
   const handleChangeTable = (table: ITable | null) => {
     setTable(table);
-  }
+  };
 
   const handleChangeClient = (client: IClient | null) => {
-
     setClient(client);
-  }
+  };
 
   const handleChangeStatus = (status: OrderStatus | null) => {
     setStatus(status);
-  }
+  };
 
   const handleChangeIsPaid = (isPaid: boolean | null) => {
     setIsPaid(isPaid);
-  }
-
+  };
 
   return {
-
     user,
     table,
     client,
@@ -59,11 +51,8 @@ export const useFilterOrders = () => {
     handleChangeClient,
     handleChangeStatus,
     handleChangeIsPaid,
-    
-
-
 
     ...dateFilter,
     ...pagination
-  }
-}
+  };
+};

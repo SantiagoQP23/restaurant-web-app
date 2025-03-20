@@ -5,35 +5,34 @@ import {
   Stack,
   Typography,
   Box,
-  Button,
-} from "@mui/material";
-import { Bar } from "react-chartjs-2";
-import { NavLink as RouterLink } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+  Button
+} from '@mui/material';
+import { Bar } from 'react-chartjs-2';
+import { NavLink as RouterLink } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   FinanceResponse,
-  getFinances,
-} from "../../../services/finances.service";
-import { GroupBy, Period } from "../../../../Common/dto/period.model";
-import { startOfWeek } from "date-fns";
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
+  getFinances
+} from '../../../services/finances.service';
+import { GroupBy, Period } from '../../../../Common/dto/period.model';
+import { startOfWeek } from 'date-fns';
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 
 export const IncomesAndExpensesSummary = () => {
-
   const { data, isLoading } = useQuery<FinanceResponse[]>(
-    ["financials"],
+    ['financials'],
     () => {
       return getFinances({
         period: Period.CUSTOM,
         startDate: startOfWeek(new Date()),
         endDate: new Date(),
-        groupBy: GroupBy.DAY,
+        groupBy: GroupBy.DAY
       });
     },
     {
       onSuccess: (data) => {
         console.log(data);
-      },
+      }
     }
   );
 
@@ -42,30 +41,30 @@ export const IncomesAndExpensesSummary = () => {
     // labels: data?.map(finance => format(new Date(finance.date), 'eeee dd/MM/yyyy', { locale: es })),
     datasets: [
       {
-        label: "Ingresos",
+        label: 'Ingresos',
         data: data?.map((finance) => finance.income.total),
-        backgroundColor: "rgba(75, 192, 192, 1)", // Color sólido
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: 'rgba(75, 192, 192, 1)', // Color sólido
+        borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
-        tension: 0.4,
+        tension: 0.4
       },
       {
-        label: "Gastos",
+        label: 'Gastos',
         data: data?.map((finance) => finance.expense.total),
-        backgroundColor: "rgba(255, 99, 132, 1)", // Color sólido
-        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: 'rgba(255, 99, 132, 1)', // Color sólido
+        borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
-        tension: 0.4,
-      },
-    ],
+        tension: 0.4
+      }
+    ]
   };
 
   const options = {
     scales: {
       y: {
-        beginAtZero: true,
-      },
-    },
+        beginAtZero: true
+      }
+    }
   };
 
   const totalIncomes =
@@ -79,13 +78,13 @@ export const IncomesAndExpensesSummary = () => {
   return (
     <Card>
       <CardHeader
-        title="Finanzas"
+        title='Finanzas'
         action={
           <Button
-            variant="outlined"
+            variant='outlined'
             component={RouterLink}
-            to="finances"
-            size="small"
+            to='finances'
+            size='small'
           >
             Ver todo
           </Button>
@@ -98,28 +97,28 @@ export const IncomesAndExpensesSummary = () => {
           mt={2}
           spacing={5}
           // divider={<Divider orientation='vertical'/>}
-          direction="row"
-          justifyContent="center"
-          textAlign="center"
+          direction='row'
+          justifyContent='center'
+          textAlign='center'
         >
           <Box>
-            <Typography variant="caption">Ventas</Typography>
-            <Typography variant="h4" color="success.main">
+            <Typography variant='caption'>Ventas</Typography>
+            <Typography variant='h4' color='success.main'>
               {formatMoney(totalIncomes)}
             </Typography>
           </Box>
 
           <Box>
-            <Typography variant="caption">Gastos</Typography>
-            <Typography variant="h4" color="error.main">
+            <Typography variant='caption'>Gastos</Typography>
+            <Typography variant='h4' color='error.main'>
               {formatMoney(totalExpenses)}
             </Typography>
           </Box>
           <Box>
-            <Typography variant="caption">Balance</Typography>
+            <Typography variant='caption'>Balance</Typography>
             <Typography
-              variant="h4"
-              color={balance >= 0 ? "success.main" : "error.main"}
+              variant='h4'
+              color={balance >= 0 ? 'success.main' : 'error.main'}
             >
               {formatMoney(balance)}
             </Typography>

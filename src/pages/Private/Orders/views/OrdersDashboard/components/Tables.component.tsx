@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
   Stack,
@@ -6,30 +6,30 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
-} from "@mui/material";
+  SelectChangeEvent
+} from '@mui/material';
 import {
   selectOrders,
   selectTables,
-  setActiveTable,
-} from "../../../../../../redux";
+  setActiveTable
+} from '../../../../../../redux';
 
-import { ITable } from "../../../../../../models";
+import { ITable } from '../../../../../../models';
 
-import { Table } from "./Table.component";
-import NiceModal from "@ebay/nice-modal-react";
-import { RegisteredModals } from "../../../../modals";
-import { useEffect, useState } from "react";
+import { Table } from './Table.component';
+import NiceModal from '@ebay/nice-modal-react';
+import { RegisteredModals } from '../../../../modals';
+import { useEffect, useState } from 'react';
 
 enum StatusTable {
-  FREE = "FREE",
-  BUSY = "BUSY",
+  FREE = 'FREE',
+  BUSY = 'BUSY'
 }
 
 export const Tables = () => {
   const { tables } = useSelector(selectTables);
 
-  const [tablesStatus, setTablesStatus] = useState<string>("");
+  const [tablesStatus, setTablesStatus] = useState<string>('');
   const [filteredTables, setFilteredTables] = useState<ITable[]>([]);
 
   const dispatchRedux = useDispatch();
@@ -62,7 +62,7 @@ export const Tables = () => {
 
   return (
     <>
-      <Stack direction="row" justifyContent="right" alignItems="center" mb={2}>
+      <Stack direction='row' justifyContent='right' alignItems='center' mb={2}>
         {/* <Stack
           direction="row"
           justifyContent="space-between"

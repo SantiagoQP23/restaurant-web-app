@@ -1,9 +1,3 @@
+import { PaginationDto, SearchDto } from '../../Common/dto';
 
-
-import { PaginationDto, SearchDto } from "../../Common/dto";
-
-
-
-export interface FilterClientsDto extends PaginationDto, SearchDto{
-  
-}
+export interface FilterClientsDto extends PaginationDto, SearchDto {}

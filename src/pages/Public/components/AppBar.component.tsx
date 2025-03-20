@@ -1,6 +1,6 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent } from 'react';
 
-import { NavLink as RouterLink, useNavigate } from "react-router-dom";
+import { NavLink as RouterLink, useNavigate } from 'react-router-dom';
 
 import {
   Container,
@@ -16,30 +16,30 @@ import {
   Stack,
   ListItemButton,
   ListItemText,
-  ListItem,
-} from "@mui/material/";
+  ListItem
+} from '@mui/material/';
 
-import AdbIcon from "@mui/icons-material/Adb";
-import MenuIcon from "@mui/icons-material/Menu";
-import { ButtonTheme } from "../../Private/layouts/SidebarLayout/components";
-import { useRestaurantStore } from "../../Private/Common/store/restaurantStore";
+import AdbIcon from '@mui/icons-material/Adb';
+import MenuIcon from '@mui/icons-material/Menu';
+import { ButtonTheme } from '../../Private/layouts/SidebarLayout/components';
+import { useRestaurantStore } from '../../Private/Common/store/restaurantStore';
 
 const pages = [
   {
-    name: "Inicio",
-    path: "/",
+    name: 'Inicio',
+    path: '/'
   },
-  { name: "Productos", path: "/shop" },
+  { name: 'Productos', path: '/shop' },
   {
-    name: "Acerca de",
-    path: "/about",
+    name: 'Acerca de',
+    path: '/about'
   },
   {
-    name: "Contacto",
-    path: "/contact",
-  },
+    name: 'Contacto',
+    path: '/contact'
+  }
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const AppBar = () => {
   const navigate = useNavigate();
@@ -67,78 +67,78 @@ export const AppBar = () => {
   return (
     <>
       <MuiAppBar
-        position="static"
-        sx={{ py: 2, backgroundColor: "transparent" }}
+        position='static'
+        sx={{ py: 2, backgroundColor: 'transparent' }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth='xl'>
           <Toolbar disableGutters>
             {/* Mobile */}
-            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <img
                 src={restaurant?.logo}
-                alt="logo"
-                width="60px"
+                alt='logo'
+                width='60px'
                 style={{ borderRadius: 8 }}
               />
             </Box>
             {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
             <Typography
-              variant="h5"
+              variant='h5'
               noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
+              component='a'
+              href='#app-bar-with-responsive-menu'
               sx={{
                 mr: 2,
-                display: { xs: "flex", md: "none" },
+                display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                textDecoration: "none",
-                color: "text.primary",
+                textDecoration: 'none',
+                color: 'text.primary'
               }}
             >
               {restaurant?.name}
             </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <ButtonTheme />
 
               <Button
-                onClick={() => navigate("/auth/login")}
-                size="small"
+                onClick={() => navigate('/auth/login')}
+                size='small'
                 sx={{ ml: 1 }}
               >
                 Iniciar sesión
               </Button>
 
               <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
+                size='large'
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
                 onClick={handleOpenNavMenu}
               >
                 <MenuIcon />
               </IconButton>
               <Menu
-                id="menu-appbar"
+                id='menu-appbar'
                 anchorEl={anchorElNav}
                 anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
+                  vertical: 'bottom',
+                  horizontal: 'left'
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
+                  vertical: 'top',
+                  horizontal: 'left'
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  display: { xs: 'block', md: 'none' }
                 }}
               >
                 {pages.map((page) => (
                   <MenuItem key={page.path} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page.name}</Typography>
+                    <Typography textAlign='center'>{page.name}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -147,47 +147,50 @@ export const AppBar = () => {
             {/* Desktop */}
 
             <Box
-              display="flex"
-              alignItems="center"
-              justifyContent={{ xs: "space-between", md: "flex-start" }}
-              sx={{ display: { xs: "none", md: "flex" }, flexGrow: 1 }}
+              display='flex'
+              alignItems='center'
+              justifyContent={{ xs: 'space-between', md: 'flex-start' }}
+              sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}
             >
               <Stack
-                sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
-                direction="row"
+                sx={{
+                  display: { xs: 'none', md: 'flex' },
+                  alignItems: 'center'
+                }}
+                direction='row'
                 spacing={2}
                 flexGrow={1}
               >
                 <Box>
                   <img
                     src={restaurant?.logo}
-                    alt="logo"
-                    width="60px"
+                    alt='logo'
+                    width='60px'
                     style={{ borderRadius: 8 }}
                   />
                 </Box>
                 <Typography
-                  variant="h6"
+                  variant='h6'
                   noWrap
-                  component="a"
-                  href="#app-bar-with-responsive-menu"
+                  component='a'
+                  href='#app-bar-with-responsive-menu'
                   sx={{
                     mr: 2,
-                    fontWeight: "bold",
-                    color: "text.primary",
-                    textDecoration: "none",
+                    fontWeight: 'bold',
+                    color: 'text.primary',
+                    textDecoration: 'none'
                   }}
                 >
                   Restaurante {restaurant?.name}
                 </Typography>
               </Stack>
               <Stack
-                direction="row"
+                direction='row'
                 spacing={2}
-                alignItems="center"
+                alignItems='center'
                 // sx={{ flexGrow: 1 }}
                 flexGrow={1}
-                justifyContent="center"
+                justifyContent='center'
               >
                 {pages.map((page) => (
                   <ListItem
@@ -199,13 +202,13 @@ export const AppBar = () => {
                       minHeight: 48,
                       // justifyContent: open ? "initial" : "center",
                       px: 2.5,
-                      "&.active": {
-                        color: "primary.main",
+                      '&.active': {
+                        color: 'primary.main',
                         // bgcolor: "action.selected",
-                        fontWeight: "fontWeightBold",
+                        fontWeight: 'fontWeightBold'
                       },
-                      textAlign: "center",
-                      color: "secondary.main",
+                      textAlign: 'center',
+                      color: 'secondary.main'
                     }}
                     end
                   >
@@ -213,7 +216,7 @@ export const AppBar = () => {
                       primary={page.name}
                       primaryTypographyProps={{
                         fontSize: 14,
-                        fontWeight: "bold",
+                        fontWeight: 'bold'
                       }}
                       // sx={{ opacity: open ? 1 : 0 }}
                     />
@@ -221,19 +224,19 @@ export const AppBar = () => {
                 ))}
               </Stack>
               <Stack
-                direction="row"
+                direction='row'
                 spacing={1}
-                alignItems="center"
+                alignItems='center'
                 flexGrow={1}
-                justifyContent="right"
+                justifyContent='right'
               >
                 <ButtonTheme />
 
                 <Box>
                   <Button
-                    onClick={() => navigate("/auth/login")}
-                    variant="contained"
-                    size="small"
+                    onClick={() => navigate('/auth/login')}
+                    variant='contained'
+                    size='small'
                   >
                     Iniciar sesión
                   </Button>

@@ -81,4 +81,3 @@ Label.propTypes = {
     'info'
   ])
 };
-

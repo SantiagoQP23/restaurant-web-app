@@ -1,5 +1,3 @@
-
-
 import { loadAbort } from '../../../../helpers/load-abort-axios.helper';
 import restauranteApi from '../../../../api/restauranteApi';
 import { Holiday } from '../models/holiday.model';
@@ -9,39 +7,31 @@ import { UpdateHolidayDto } from '../views/FootfallSimulation/dto/update-holiday
 import { UpdateTypeHolidayDto } from '../views/FootfallSimulation/dto/update-type-holiday.dto';
 import { TypeHoliday } from '../models/type-holiday.model';
 
-
 export const statusModalHoliday = new SubjectHoliday();
 export const statusModalDeleteHoliday = new SubjectHoliday();
 
-
-
-export const updateTypeHoliday = async (holiday: UpdateTypeHolidayDto): Promise<TypeHoliday> => {
-
-  const { data } = await restauranteApi.patch<TypeHoliday>(`type-holiday/${holiday.id}`,
-    holiday)
+export const updateTypeHoliday = async (
+  holiday: UpdateTypeHolidayDto
+): Promise<TypeHoliday> => {
+  const { data } = await restauranteApi.patch<TypeHoliday>(
+    `type-holiday/${holiday.id}`,
+    holiday
+  );
 
   return data;
-
-}
+};
 
 export const getTypesHolidays = async (): Promise<TypeHoliday[]> => {
-
-  const { data } = await restauranteApi.get<TypeHoliday[]>(`type-holiday`)
+  const { data } = await restauranteApi.get<TypeHoliday[]>(`type-holiday`);
 
   return data;
-  
-}
+};
 
 export const deleteHoliday = async (holidayId: string): Promise<Holiday> => {
-
-  const {data} = await restauranteApi.delete<Holiday>(`holiday/${holidayId}`)
+  const { data } = await restauranteApi.delete<Holiday>(`holiday/${holidayId}`);
 
   return data;
-
-
-}
-
-
+};
 
 // export const getTypesHolidays = () => {
 
@@ -54,14 +44,11 @@ export const deleteHoliday = async (holidayId: string): Promise<Holiday> => {
 //   }
 // }
 
-
 export const getHolidays = async (): Promise<Holiday[]> => {
-
-  const { data } = await restauranteApi.get<Holiday[]>(`holiday`)
+  const { data } = await restauranteApi.get<Holiday[]>(`holiday`);
 
   return data;
- 
-}
+};
 
 // export const getHolidays = () => {
 
@@ -75,40 +62,34 @@ export const getHolidays = async (): Promise<Holiday[]> => {
 
 // }
 export const getHolidaysPrediction = () => {
-
   const controller = loadAbort();
 
   return {
-    call: restauranteApi.get<Holiday[]>(`holiday/prediction`,
-      { signal: controller.signal }),
+    call: restauranteApi.get<Holiday[]>(`holiday/prediction`, {
+      signal: controller.signal
+    }),
     controller
-  }
-
-}
-
+  };
+};
 
 export const getHolidayById = (id: string) => {
-
   const controller = loadAbort();
 
   return {
-    call: restauranteApi.get<Holiday>(`holiday/${id}`,
-      { signal: controller.signal }),
+    call: restauranteApi.get<Holiday>(`holiday/${id}`, {
+      signal: controller.signal
+    }),
     controller
-  }
+  };
+};
 
-}
-
-
-
-export const createHoliday = async (holiday: CreateHolidayDto): Promise<Holiday> => {
-
-  const { data } = await restauranteApi.post<Holiday>(`holiday`,
-    holiday)
+export const createHoliday = async (
+  holiday: CreateHolidayDto
+): Promise<Holiday> => {
+  const { data } = await restauranteApi.post<Holiday>(`holiday`, holiday);
 
   return data;
-
-}
+};
 
 // export const createHoliday = (holiday: CreateHolidayDto) => {
 
@@ -123,16 +104,17 @@ export const createHoliday = async (holiday: CreateHolidayDto): Promise<Holiday>
 
 // }
 
-
-
-export const updateHoliday = async(holidayId: string, holiday: UpdateHolidayDto): Promise<Holiday> => {
-
-  const { data } = await restauranteApi.patch<Holiday>(`holiday/${holidayId}`,
-    holiday)
+export const updateHoliday = async (
+  holidayId: string,
+  holiday: UpdateHolidayDto
+): Promise<Holiday> => {
+  const { data } = await restauranteApi.patch<Holiday>(
+    `holiday/${holidayId}`,
+    holiday
+  );
 
   return data;
-
-}
+};
 
 // export const updateHoliday = (holidayId: string, holiday: UpdateHolidayDto) => {
 
@@ -147,7 +129,6 @@ export const updateHoliday = async(holidayId: string, holiday: UpdateHolidayDto)
 
 // }
 
-
 // export const updateTypeHoliday = (holidayId: string, holiday: UpdateTypeHolidayDto) => {
 
 //   const controller = loadAbort();
@@ -160,5 +141,3 @@ export const updateHoliday = async(holidayId: string, holiday: UpdateHolidayDto)
 //   }
 
 // }
-
-

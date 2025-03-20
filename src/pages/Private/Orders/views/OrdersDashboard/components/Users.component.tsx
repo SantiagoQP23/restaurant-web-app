@@ -1,23 +1,23 @@
-import { Grid } from "@mui/material";
+import { Grid } from '@mui/material';
 
-import { OrdersUser } from "./OrdersUser.component";
-import { useQuery } from "@tanstack/react-query";
-import { useDateFilter } from "../../../../../../hooks/useDateFilter";
+import { OrdersUser } from './OrdersUser.component';
+import { useQuery } from '@tanstack/react-query';
+import { useDateFilter } from '../../../../../../hooks/useDateFilter';
 import {
   ResponseIncomesByUser,
-  getIncomesByUser,
-} from "../../../../Reports/services/dashboard.service";
-import { Period } from "../../../../Common/dto/period.model";
+  getIncomesByUser
+} from '../../../../Reports/services/dashboard.service';
+import { Period } from '../../../../Common/dto/period.model';
 
 export const Users = () => {
   const { period, startDate, endDate } = useDateFilter(Period.MONTHLY);
 
   const { data } = useQuery<ResponseIncomesByUser[]>(
-    ["best-selling-products", { period, startDate, endDate }],
+    ['best-selling-products', { period, startDate, endDate }],
     () => {
       return getIncomesByUser({
         period,
-        startDate,
+        startDate
       });
     }
   );

@@ -1,4 +1,4 @@
-import { ICategory, IProduct, ISection } from "../models";
+import { ICategory, IProduct, ISection } from '../models';
 
 export const getProducts = (sections: ISection[]): IProduct[] => {
   const products: IProduct[] = [];

@@ -1,51 +1,51 @@
-import { Navigate, RouteObject } from "react-router-dom";
-import { Shop } from "../Shop/Shop.page";
-import { Login } from "../Auth/Login";
-import { Signup } from "../Auth/Signup";
-import { ProductsMenu } from "../Shop/views/ProductsMenu/ProductsMenu.view";
-import { Product } from "../Shop/views/Product/Product.page";
-import { Home } from "../Home/Home.page";
+import { Navigate, RouteObject } from 'react-router-dom';
+import { Shop } from '../Shop/Shop.page';
+import { Login } from '../Auth/Login';
+import { Signup } from '../Auth/Signup';
+import { ProductsMenu } from '../Shop/views/ProductsMenu/ProductsMenu.view';
+import { Product } from '../Shop/views/Product/Product.page';
+import { Home } from '../Home/Home.page';
 
 export const PublicRouter: RouteObject[] = [
   {
-    path: "",
+    path: '',
     children: [
-      { path: "", element: <Home /> },
+      { path: '', element: <Home /> },
       {
-        path: "shop",
+        path: 'shop',
         element: <Shop />,
         children: [
           {
-            path: "",
-            element: <ProductsMenu />,
+            path: '',
+            element: <ProductsMenu />
           },
           {
-            path: "product/:id",
-            element: <Product />,
+            path: 'product/:id',
+            element: <Product />
           },
           {
-            path: "*",
-            element: <Navigate to="" />,
-          },
-        ],
-      },
-    ],
+            path: '*',
+            element: <Navigate to='' />
+          }
+        ]
+      }
+    ]
   },
   {
-    path: "auth",
+    path: 'auth',
     children: [
       {
-        path: "login",
-        element: <Login />,
+        path: 'login',
+        element: <Login />
       },
       {
-        path: "register",
-        element: <Signup />,
-      },
-    ],
+        path: 'register',
+        element: <Signup />
+      }
+    ]
   },
   {
-    path: "*",
-    element: <Navigate to="/shop" />,
-  },
+    path: '*',
+    element: <Navigate to='/shop' />
+  }
 ];

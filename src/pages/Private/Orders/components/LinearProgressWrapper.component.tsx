@@ -1,5 +1,4 @@
-import { LinearProgress, styled } from "@mui/material";
-
+import { LinearProgress, styled } from '@mui/material';
 
 export const LinearProgressWrapper = styled(LinearProgress)(
   ({ theme }) => `

@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const ProductionAreas = () => {
-  return (
-    <div>ProductionAreas</div>
-  )
-}
+  return <div>ProductionAreas</div>;
+};

@@ -1,23 +1,23 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createIncome,
   deleteIncome,
   getIncomes,
-  updateIncome,
-} from "../services/incomes.service";
-import { useSnackbar } from "notistack";
-import { CreateIncomeDto } from "../dto/create-income.dto";
-import { Income } from "../models/income.model";
-import { UpdateIncomeDto } from "../dto/update-income.dto";
+  updateIncome
+} from '../services/incomes.service';
+import { useSnackbar } from 'notistack';
+import { CreateIncomeDto } from '../dto/create-income.dto';
+import { Income } from '../models/income.model';
+import { UpdateIncomeDto } from '../dto/update-income.dto';
 // import { queryClient } from '../../../../main';
-import { useFilterIncomes } from "./useFilterIncomes";
+import { useFilterIncomes } from './useFilterIncomes';
 
 export const useIncomes = () => {
   const filter = useFilterIncomes();
 
-  const incomesQuery = useQuery(["incomes"], () =>
+  const incomesQuery = useQuery(['incomes'], () =>
     getIncomes({
       offset: filter.page,
       limit: filter.rowsPerPage,
@@ -25,7 +25,7 @@ export const useIncomes = () => {
       endDate: filter.endDate,
       period: filter.period,
       cashRegisterId: filter.cashRegister ? filter.cashRegister.id : undefined,
-      userId: filter.user ? filter.user.id : undefined,
+      userId: filter.user ? filter.user.id : undefined
     })
   );
 
@@ -38,7 +38,7 @@ export const useIncomes = () => {
     filter.period,
     filter.cashRegister,
     filter.user,
-    filter.rowsPerPage,
+    filter.rowsPerPage
   ]);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const useIncomes = () => {
 
   return {
     incomesQuery,
-    ...filter,
+    ...filter
   };
 };
 
@@ -57,14 +57,14 @@ export const useCreateIncome = () => {
 
   return useMutation<Income, unknown, CreateIncomeDto>(createIncome, {
     onSuccess: () => {
-      enqueueSnackbar("Ingreso creado correctamente", { variant: "success" });
-      queryClient.invalidateQueries({ queryKey: ["cashRegisterActive"] });
+      enqueueSnackbar('Ingreso creado correctamente', { variant: 'success' });
+      queryClient.invalidateQueries({ queryKey: ['cashRegisterActive'] });
 
-      queryClient.invalidateQueries(["incomes"]);
+      queryClient.invalidateQueries(['incomes']);
     },
     onError: () => {
-      enqueueSnackbar("Error al crear el ingreso", { variant: "error" });
-    },
+      enqueueSnackbar('Error al crear el ingreso', { variant: 'error' });
+    }
   });
 };
 
@@ -74,18 +74,18 @@ export const useUpdateIncome = () => {
 
   return useMutation<Income, unknown, UpdateIncomeDto>(updateIncome, {
     onSuccess: () => {
-      enqueueSnackbar("Ingreso actualizado correctamente", {
-        variant: "success",
+      enqueueSnackbar('Ingreso actualizado correctamente', {
+        variant: 'success'
       });
-      queryClient.invalidateQueries({ queryKey: ["cashRegisterActive"] });
+      queryClient.invalidateQueries({ queryKey: ['cashRegisterActive'] });
 
-      queryClient.invalidateQueries(["incomes"]);
+      queryClient.invalidateQueries(['incomes']);
 
       // queryClient.invalidateQueries(['cashRegisterActive']);
     },
     onError: () => {
-      enqueueSnackbar("Error al actualizar el ingreso", { variant: "error" });
-    },
+      enqueueSnackbar('Error al actualizar el ingreso', { variant: 'error' });
+    }
   });
 };
 
@@ -96,15 +96,15 @@ export const useDeleteIncome = (id: string) => {
 
   return useMutation(() => deleteIncome(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cashRegisterActive"] });
+      queryClient.invalidateQueries({ queryKey: ['cashRegisterActive'] });
 
-      queryClient.invalidateQueries(["incomes"]);
-      enqueueSnackbar("Ingreso eliminado correctamente", {
-        variant: "success",
+      queryClient.invalidateQueries(['incomes']);
+      enqueueSnackbar('Ingreso eliminado correctamente', {
+        variant: 'success'
       });
     },
     onError: () => {
-      enqueueSnackbar("Error al eliminar el ingreso", { variant: "error" });
-    },
+      enqueueSnackbar('Error al eliminar el ingreso', { variant: 'error' });
+    }
   });
 };

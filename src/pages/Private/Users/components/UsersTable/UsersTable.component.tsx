@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect } from 'react';
 
 import {
   Box,
@@ -19,23 +19,23 @@ import {
   TableSortLabel,
   Paper,
   InputBase,
-  CircularProgress,
-} from "@mui/material";
-import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+  CircularProgress
+} from '@mui/material';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import {
   resetActiveUser,
   selectUsers,
-  setActiveUser,
-} from "../../../../../redux/slices/users/users.slice";
-import { useSelector, useDispatch } from "react-redux";
-import { IUser, Roles } from "../../../../../models/auth.model";
-import { useNavigate } from "react-router-dom";
-import { useTheme } from "@mui/material/";
-import { Label } from "../../../../../components/ui";
-import { useUsers } from "../../hooks/useUsers";
-import SearchIcon from "@mui/icons-material/Search";
-import { selectAuth } from "../../../../../redux";
-import { ValidRoles } from "../../../Common/models/valid-roles.model";
+  setActiveUser
+} from '../../../../../redux/slices/users/users.slice';
+import { useSelector, useDispatch } from 'react-redux';
+import { IUser, Roles } from '../../../../../models/auth.model';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/';
+import { Label } from '../../../../../components/ui';
+import { useUsers } from '../../hooks/useUsers';
+import SearchIcon from '@mui/icons-material/Search';
+import { selectAuth } from '../../../../../redux';
+import { ValidRoles } from '../../../Common/models/valid-roles.model';
 
 export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
   const navigate = useNavigate();
@@ -50,9 +50,9 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
     dispatch(setActiveUser(user));
 
     if (currentUser!.id === user.id) {
-      navigate("/users/account");
+      navigate('/users/account');
     } else {
-      navigate("edit");
+      navigate('edit');
     }
   };
 
@@ -68,9 +68,9 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
       </TableCell> */}
       <TableCell>
         <Typography
-          variant="body1"
-          fontWeight="bold"
-          color="text.primary"
+          variant='body1'
+          fontWeight='bold'
+          color='text.primary'
           gutterBottom
           noWrap
         >
@@ -79,29 +79,29 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
       </TableCell>
 
       <TableCell>
-        <Typography variant="body1" color="text.primary" gutterBottom noWrap>
+        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
           {user.person.identification.num}
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1" color="text.primary" gutterBottom noWrap>
+        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
           {user.username}
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1" color="text.primary" gutterBottom noWrap>
+        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
           {user.person.email}
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1" color="text.primary" gutterBottom noWrap>
+        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
           <Label
             color={
-              user?.role.name === "admin"
-                ? "info"
-                : user?.role.name === "mesero"
-                ? "primary"
-                : "secondary"
+              user?.role.name === 'admin'
+                ? 'info'
+                : user?.role.name === 'mesero'
+                  ? 'primary'
+                  : 'secondary'
             }
           >
             {Roles[`${user?.role.name! as ValidRoles}`]}
@@ -110,27 +110,27 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
       </TableCell>
 
       <TableCell>
-        <Typography variant="body1" color="text.primary" gutterBottom noWrap>
-          <Label color={user.isActive ? "success" : "error"}>
-            {user.isActive ? "Activo" : "Inactivo"}
+        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
+          <Label color={user.isActive ? 'success' : 'error'}>
+            {user.isActive ? 'Activo' : 'Inactivo'}
           </Label>
         </Typography>
       </TableCell>
 
-      <TableCell align="right">
-        <Tooltip title="Edit Order" arrow>
+      <TableCell align='right'>
+        <Tooltip title='Edit Order' arrow>
           <IconButton
             sx={{
-              "&:hover": {
-                background: theme.colors.primary.lighter,
+              '&:hover': {
+                background: theme.colors.primary.lighter
               },
-              color: theme.palette.primary.main,
+              color: theme.palette.primary.main
             }}
-            color="inherit"
-            size="small"
+            color='inherit'
+            size='small'
             onClick={() => editUser(user)}
           >
-            <EditTwoToneIcon fontSize="small" />
+            <EditTwoToneIcon fontSize='small' />
           </IconButton>
         </Tooltip>
         {/*   <Tooltip title="Delete Order" arrow>
@@ -166,7 +166,7 @@ export const UsersTable: FC<Props> = ({}) => {
 
     handleChangeSearch,
     handleChangePage,
-    handleChangeRowsPerPage,
+    handleChangeRowsPerPage
   } = useUsers();
 
   const { users } = useSelector(selectUsers);
@@ -179,12 +179,12 @@ export const UsersTable: FC<Props> = ({}) => {
 
   const editUser = (user: IUser) => {
     dispatch(setActiveUser(user));
-    navigate("edit");
+    navigate('edit');
   };
 
   const createUser = () => {
     dispatch(resetActiveUser());
-    navigate("add");
+    navigate('add');
   };
 
   const updateList = () => {
@@ -198,21 +198,21 @@ export const UsersTable: FC<Props> = ({}) => {
   return (
     <>
       <Paper
-        component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center" }}
+        component='form'
+        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center' }}
       >
         <InputBase
-          type="text"
+          type='text'
           onChange={handleChangeSearch}
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Buscar usuario"
-          inputProps={{ "aria-label": "Buscar usuario" }}
+          placeholder='Buscar usuario'
+          inputProps={{ 'aria-label': 'Buscar usuario' }}
           value={search}
         />
         <IconButton
-          type="button"
-          sx={{ p: "10px" }}
-          aria-label="search"
+          type='button'
+          sx={{ p: '10px' }}
+          aria-label='search'
           onClick={updateList}
         >
           {usersQuery.isLoading ? (
@@ -223,11 +223,11 @@ export const UsersTable: FC<Props> = ({}) => {
         </IconButton>
       </Paper>
 
-      <Box sx={{ height: 400, width: "100%", my: 1 }}>
+      <Box sx={{ height: 400, width: '100%', my: 1 }}>
         {usersQuery.isLoading && <LinearProgress />}
         <Card>
           <TableContainer>
-            <Table size={dense ? "small" : "medium"}>
+            <Table size={dense ? 'small' : 'medium'}>
               <TableHead>
                 <TableRow>
                   {/* <TableCell padding="checkbox">
@@ -262,13 +262,13 @@ export const UsersTable: FC<Props> = ({}) => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Box p={2} display="flex" justifyContent="space-between">
+          <Box p={2} display='flex' justifyContent='space-between'>
             <FormControlLabel
               control={<Switch checked={dense} onChange={handleChangeDense} />}
-              label="Dense padding"
+              label='Dense padding'
             />
             <TablePagination
-              component="div"
+              component='div'
               count={usersQuery.data?.count || 0}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}

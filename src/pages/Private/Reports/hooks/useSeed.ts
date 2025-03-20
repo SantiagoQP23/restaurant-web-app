@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { enqueueSnackbar } from "notistack";
-import { executeSeed } from "../services/footfall.service";
-
+import { useQuery } from '@tanstack/react-query';
+import { enqueueSnackbar } from 'notistack';
+import { executeSeed } from '../services/footfall.service';
 
 export const useSeed = () => {
   return useQuery(['seed'], executeSeed, {
@@ -12,5 +11,5 @@ export const useSeed = () => {
     onError: () => {
       enqueueSnackbar('Error al iniciar la simulación', { variant: 'error' });
     }
-  })
-}
+  });
+};

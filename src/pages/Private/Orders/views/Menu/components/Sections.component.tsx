@@ -1,15 +1,15 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect } from 'react';
 
-import { ISection } from "../../../../../../models";
+import { ISection } from '../../../../../../models';
 
-import { useAppSelector } from "../../../../../../hooks";
-import { useDispatch } from "react-redux";
+import { useAppSelector } from '../../../../../../hooks';
+import { useDispatch } from 'react-redux';
 import {
   selectMenu,
   setActiveCategory,
-  setActiveSection,
-} from "../../../../../../redux";
-import { Chip, Stack } from "@mui/material";
+  setActiveSection
+} from '../../../../../../redux';
+import { Chip, Stack } from '@mui/material';
 
 interface Props {
   sections: ISection[];
@@ -37,10 +37,10 @@ export const Sections: FC<Props> = ({ sections }) => {
   return (
     <>
       <Stack
-        direction="row"
+        direction='row'
         sx={{
-          width: "auto",
-          overflowX: "auto",
+          width: 'auto',
+          overflowX: 'auto'
         }}
         spacing={1}
         py={1}
@@ -53,7 +53,7 @@ export const Sections: FC<Props> = ({ sections }) => {
                 key={section.id}
                 onClick={() => changeSection(section.id)}
                 clickable
-                color={activeSection?.id === section.id ? "info" : "default"}
+                color={activeSection?.id === section.id ? 'info' : 'default'}
               />
             );
         })}

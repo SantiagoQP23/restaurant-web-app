@@ -1,26 +1,26 @@
-import { Navigate, RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from 'react-router-dom';
 
-import SidebarLayout from "../layouts/SidebarLayout/SidebarLayout.component";
+import SidebarLayout from '../layouts/SidebarLayout/SidebarLayout.component';
 
-import { PrivateRoutes } from "../../../models";
-import { OrderRouter } from "../Orders/router";
-import { MenuEditRouter } from "../EditMenu/router/MenuEdit.router";
-import { ClientsRouter } from "../Clients/router/Clients.router";
-import { TablesRouter } from "../Tables/router/Tables.router";
-import { UsersRouter, UserRouter } from "../Users/router/Users.router";
-import { ReportsRouter } from "../Reports/router/Reports.router";
-import { BalanceRouter } from "../Balance/router/Balance.router";
-import { SuppliersRouter } from "../Suppliers/router/Suppliers.router";
-import { InvoiceRouter } from "../Invoices/router/Invoice.router";
-import { RestaurantRouter } from "../Restaurant/router";
-import { UnauthorizedPage } from "../../Status/Unauthorized.page";
-import Auth from "../components/Auth.component";
-import { ValidRoles } from "../Common/models/valid-roles.model";
-import { BillsRouter } from "../Bills/routers/Bills.router";
+import { PrivateRoutes } from '../../../models';
+import { OrderRouter } from '../Orders/router';
+import { MenuEditRouter } from '../EditMenu/router/MenuEdit.router';
+import { ClientsRouter } from '../Clients/router/Clients.router';
+import { TablesRouter } from '../Tables/router/Tables.router';
+import { UsersRouter, UserRouter } from '../Users/router/Users.router';
+import { ReportsRouter } from '../Reports/router/Reports.router';
+import { BalanceRouter } from '../Balance/router/Balance.router';
+import { SuppliersRouter } from '../Suppliers/router/Suppliers.router';
+import { InvoiceRouter } from '../Invoices/router/Invoice.router';
+import { RestaurantRouter } from '../Restaurant/router';
+import { UnauthorizedPage } from '../../Status/Unauthorized.page';
+import Auth from '../components/Auth.component';
+import { ValidRoles } from '../Common/models/valid-roles.model';
+import { BillsRouter } from '../Bills/routers/Bills.router';
 
 export const PrivateRouter: RouteObject[] = [
   {
-    path: "/",
+    path: '/',
     element: <SidebarLayout />,
     children: [
       // MenuRouter,
@@ -34,47 +34,47 @@ export const PrivateRouter: RouteObject[] = [
       {
         path: PrivateRoutes.USERS,
         element: <Auth allowedRoles={[ValidRoles.admin]} />,
-        children: [UsersRouter],
+        children: [UsersRouter]
       },
       {
         path: PrivateRoutes.REPORTS,
         element: <Auth allowedRoles={[ValidRoles.admin]} />,
-        children: [ReportsRouter],
+        children: [ReportsRouter]
       },
       {
         path: '/financial',
         element: <Auth allowedRoles={[ValidRoles.admin]} />,
-        children: [BalanceRouter],
+        children: [BalanceRouter]
       },
       {
-        path: "restaurant",
+        path: 'restaurant',
         element: <Auth allowedRoles={[ValidRoles.admin]} />,
-        children: [RestaurantRouter],
+        children: [RestaurantRouter]
       },
       SuppliersRouter,
 
       {
-        path: "unauthorized",
-        element: <UnauthorizedPage />,
+        path: 'unauthorized',
+        element: <UnauthorizedPage />
       },
       {
-        path: "/auth/login",
-        element: <Navigate to={PrivateRoutes.ORDERS} />,
+        path: '/auth/login',
+        element: <Navigate to={PrivateRoutes.ORDERS} />
       },
       {
-        path: "",
-        element: <Navigate to={PrivateRoutes.ORDERS} />,
+        path: '',
+        element: <Navigate to={PrivateRoutes.ORDERS} />
       },
       {
-        path: "ORD.ORDERS",
-        element: <Navigate to={PrivateRoutes.ORDERS} />,
+        path: 'ORD.ORDERS',
+        element: <Navigate to={PrivateRoutes.ORDERS} />
       },
       {
-        path: "*",
-        element: <Navigate to={PrivateRoutes.ORDERS} />,
-      },
-    ],
-  },
+        path: '*',
+        element: <Navigate to={PrivateRoutes.ORDERS} />
+      }
+    ]
+  }
 ];
 
 //   {

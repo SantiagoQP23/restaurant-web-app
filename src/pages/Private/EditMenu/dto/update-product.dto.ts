@@ -5,4 +5,5 @@ export interface UpdateProductDto extends Partial<CreateProductDto> {
   //image: string;
   isActive?: boolean;
   isPublic?: boolean;
+  iva?: number;
 }

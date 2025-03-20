@@ -1,5 +1,5 @@
-import { useTransactions } from "../../hooks/useTransactions";
-import { TransactionsTable } from "./components/TransactionsTable.view";
+import { useTransactions } from '../../hooks/useTransactions';
+import { TransactionsTable } from './components/TransactionsTable.view';
 import {
   Card,
   CardHeader,
@@ -10,11 +10,11 @@ import {
   Select,
   TableContainer,
   TablePagination,
-  TextField,
-} from "@mui/material";
-import { TitlePage } from "../../../components";
-import { DesktopDatePicker, DesktopDateTimePicker } from "@mui/x-date-pickers";
-import { Period } from "../../../Common/dto/period.model";
+  TextField
+} from '@mui/material';
+import { TitlePage } from '../../../components';
+import { DesktopDatePicker, DesktopDateTimePicker } from '@mui/x-date-pickers';
+import { Period } from '../../../Common/dto/period.model';
 
 export const Transactions = () => {
   const {
@@ -30,21 +30,21 @@ export const Transactions = () => {
 
   return (
     <>
-      <TitlePage title="Transacciones" />
+      <TitlePage title='Transacciones' />
 
       <Card>
-        <CardHeader title="Transacciones" />
+        <CardHeader title='Transacciones' />
         <Grid container spacing={2} p={2}>
           <Grid item xs={12} md={4}>
             <FormControl fullWidth>
-              <InputLabel id="select-period-label">Periodo</InputLabel>
+              <InputLabel id='select-period-label'>Periodo</InputLabel>
               <Select
-                labelId="select-period-label"
+                labelId='select-period-label'
                 value={period}
                 onChange={handleChangePeriod}
                 fullWidth
-                label="Periodo"
-                size="medium"
+                label='Periodo'
+                size='medium'
               >
                 <MenuItem value={Period.DAILY}>Diario</MenuItem>
                 <MenuItem value={Period.MONTHLY}>Mensual</MenuItem>
@@ -57,13 +57,13 @@ export const Transactions = () => {
 
           <Grid item xs={12} md={4}>
             <DesktopDatePicker
-              label="Fecha de inicio"
+              label='Fecha de inicio'
               inputFormat={
                 period === Period.MONTHLY
-                  ? "yyyy MMMM"
+                  ? 'yyyy MMMM'
                   : period === Period.YEARLY
-                  ? "yyyy"
-                  : "yyyy-MM-dd"
+                    ? 'yyyy'
+                    : 'yyyy-MM-dd'
               }
               value={startDate}
               onChange={handleChangeStartDate}
@@ -72,10 +72,10 @@ export const Transactions = () => {
               maxDate={endDate ? endDate : undefined}
               views={
                 period === Period.MONTHLY
-                  ? ["month", "year"]
+                  ? ['month', 'year']
                   : period === Period.YEARLY
-                  ? ["year"]
-                  : ["day"]
+                    ? ['year']
+                    : ['day']
               }
             />
           </Grid>
@@ -83,8 +83,8 @@ export const Transactions = () => {
           {startDate && period === Period.CUSTOM && (
             <Grid item xs={12} md={4}>
               <DesktopDateTimePicker
-                label="Fecha de fin"
-                inputFormat="yyyy-MM-dd"
+                label='Fecha de fin'
+                inputFormat='yyyy-MM-dd'
                 value={endDate}
                 onChange={handleChangeEndDate}
                 renderInput={(params) => <TextField {...params} />}
@@ -102,7 +102,7 @@ export const Transactions = () => {
 
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
+          component='div'
           count={data?.count || 0}
           rowsPerPage={filter.rowsPerPage}
           page={filter.page}

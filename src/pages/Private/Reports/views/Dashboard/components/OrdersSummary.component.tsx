@@ -3,17 +3,17 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
-import { NavLink as RouterLink } from "react-router-dom";
-import { DateOrders } from "../../../models/date-orders.interface";
-import { useFetchAndLoad } from "../../../../../../hooks/useFetchAndLoad";
-import { Assignment } from "@mui/icons-material";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../../redux";
-import { useOrders } from "../../../../Orders/hooks/useOrders";
-import { Label } from "../../../../../../components/ui";
+  Typography
+} from '@mui/material';
+import { useState } from 'react';
+import { NavLink as RouterLink } from 'react-router-dom';
+import { DateOrders } from '../../../models/date-orders.interface';
+import { useFetchAndLoad } from '../../../../../../hooks/useFetchAndLoad';
+import { Assignment } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../../redux';
+import { useOrders } from '../../../../Orders/hooks/useOrders';
+import { Label } from '../../../../../../components/ui';
 
 export const OrdersSummary = () => {
   const [datesOrders, setDatesOrders] = useState<DateOrders[]>([]);
@@ -36,14 +36,14 @@ export const OrdersSummary = () => {
     <>
       <Card>
         <CardHeader
-          title={<Typography variant="h4">Pedidos</Typography>}
+          title={<Typography variant='h4'>Pedidos</Typography>}
           action={
             <Button
               disableRipple
-              to="/orders/list"
+              to='/orders/list'
               component={RouterLink}
-              variant="outlined"
-              size="small"
+              variant='outlined'
+              size='small'
             >
               Ver más
             </Button>
@@ -52,16 +52,16 @@ export const OrdersSummary = () => {
 
         <CardContent
           sx={{
-            display: "flex",
+            display: 'flex',
             gap: 1,
-            alignItems: "center",
+            alignItems: 'center'
           }}
         >
-          <Assignment color="info" fontSize="large" />
-          <Typography variant="h3" component="div" textAlign="center">
+          <Assignment color='info' fontSize='large' />
+          <Typography variant='h3' component='div' textAlign='center'>
             {ordersQuery.data?.count}
           </Typography>
-          <Label color="info">{orders.length} activos</Label>
+          <Label color='info'>{orders.length} activos</Label>
         </CardContent>
 
         {/* <CardActions

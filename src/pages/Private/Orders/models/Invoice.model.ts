@@ -1,19 +1,17 @@
-import { IClient, IUser } from "../../../../models";
-import { InvoiceDetail } from "./invoice-detail.model";
+import { IClient, IUser } from '../../../../models';
+import { InvoiceDetail } from './invoice-detail.model';
 
 export enum PaymentMethod {
-  CASH = "CASH",
+  CASH = 'CASH',
   // CARD = 'CARD',
-  TRANSFER = "TRANSFER",
+  TRANSFER = 'TRANSFER'
 }
-
 
 export enum InvoiceStatus {
   PAID = 'PAID',
   PENDING = 'PENDING',
-  DRAFT = 'DRAFT', // Si está draft eliminar completamente la factura
+  DRAFT = 'DRAFT' // Si está draft eliminar completamente la factura
 }
-
 
 export interface Invoice {
   id: string;

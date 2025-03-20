@@ -1,13 +1,13 @@
-import { useState, FC } from "react";
+import { useState, FC } from 'react';
 
-import { Add, CancelOutlined } from "@mui/icons-material";
-import { Button, Card, CardContent, Stack } from "@mui/material";
-import { ComboBoxProducts } from "../../../../EditMenu/components/products/ComboBoxProducts.component";
-import { Order, IProduct } from "../../../../../../models";
-import { useDispatch } from "react-redux";
-import { setActiveOrder } from "../../../../../../redux";
-import NiceModal from "@ebay/nice-modal-react";
-import { ModalAddDetail } from "../../../components";
+import { Add, CancelOutlined } from '@mui/icons-material';
+import { Button, Card, CardContent, Stack } from '@mui/material';
+import { ComboBoxProducts } from '../../../../EditMenu/components/products/ComboBoxProducts.component';
+import { Order, IProduct } from '../../../../../../models';
+import { useDispatch } from 'react-redux';
+import { setActiveOrder } from '../../../../../../redux';
+import NiceModal from '@ebay/nice-modal-react';
+import { ModalAddDetail } from '../../../components';
 
 interface Props {
   order: Order;
@@ -45,7 +45,7 @@ export const BtnAddProduct: FC<Props> = ({ order }) => {
       <Card
         sx={{
           // bgcolor: 'transparent',
-          boxShadow: "none",
+          boxShadow: 'none'
         }}
       >
         {clicked ? (
@@ -57,10 +57,10 @@ export const BtnAddProduct: FC<Props> = ({ order }) => {
                   selectProduct={addProductoToOrder}
                 />
                 <Button
-                  color="inherit"
+                  color='inherit'
                   startIcon={<CancelOutlined />}
                   onClick={handleCancel}
-                  size="small"
+                  size='small'
                 >
                   Cancelar
                 </Button>
@@ -71,9 +71,9 @@ export const BtnAddProduct: FC<Props> = ({ order }) => {
           <Button
             startIcon={<Add />}
             fullWidth
-            variant="text"
+            variant='text'
             onClick={handleAddProduct}
-            color="inherit"
+            color='inherit'
           >
             Añadir producto
           </Button>

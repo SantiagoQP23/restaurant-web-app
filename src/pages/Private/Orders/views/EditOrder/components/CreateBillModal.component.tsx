@@ -1,9 +1,9 @@
-import React from "react";
-import { Account } from "./Account.component";
+import React from 'react';
+import { Account } from './Account.component';
 import NiceModal, {
   muiDialogV5,
-  useModal as useNiceModal,
-} from "@ebay/nice-modal-react";
+  useModal as useNiceModal
+} from '@ebay/nice-modal-react';
 import {
   Box,
   Button,
@@ -15,10 +15,10 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { CloseOutlined } from "@mui/icons-material";
-import { Order } from "@/models";
+  useTheme
+} from '@mui/material';
+import { CloseOutlined } from '@mui/icons-material';
+import { Order } from '@/models';
 // import { useModal } from "@/hooks";
 
 interface Props {
@@ -26,8 +26,8 @@ interface Props {
 }
 
 /**
- * Modal to create a bill 
- * 
+ * Modal to create a bill
+ *
  * @author Santiago Quirumbay
  *
  */
@@ -36,27 +36,27 @@ export const CreateBillModal = NiceModal.create<Props>(({ order }) => {
   const modal = useNiceModal();
 
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   const closeModal = () => {
     modal.hide();
   };
 
   return (
     <>
-      <Dialog {...muiDialogV5(modal)} fullScreen={fullScreen} maxWidth="lg">
+      <Dialog {...muiDialogV5(modal)} fullScreen={fullScreen} maxWidth='lg'>
         <DialogTitle>
           <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
           >
             <Box>
-              <Typography variant="h4">Add bill</Typography>
+              <Typography variant='h4'>Add bill</Typography>
             </Box>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <IconButton onClick={modal.hide} size="small">
-                <CloseOutlined fontSize="small" />
+            <Stack direction='row' spacing={2} alignItems='center'>
+              <IconButton onClick={modal.hide} size='small'>
+                <CloseOutlined fontSize='small' />
               </IconButton>
             </Stack>
           </Stack>

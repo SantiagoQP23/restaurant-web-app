@@ -1,4 +1,4 @@
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 import {
   Dialog,
   DialogTitle,
@@ -8,20 +8,20 @@ import {
   Button,
   Typography,
   Stack,
-  Box,
-} from "@mui/material";
-import { Order, TypeOrder } from "../../../../../models/orders.model";
-import { useSnackbar } from "notistack";
-import { UpdateOrderDto } from "../../dto/update-order.dto";
-import { useDispatch } from "react-redux";
-import { deleteOrder } from "../../../../../redux";
-import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
-import { useUpdateOrder } from "../../hooks";
+  Box
+} from '@mui/material';
+import { Order, TypeOrder } from '../../../../../models/orders.model';
+import { SocketResponse } from '../../interfaces/responses-sockets.interface';
+import { useSnackbar } from 'notistack';
+import { UpdateOrderDto } from '../../dto/update-order.dto';
+import { useDispatch } from 'react-redux';
+import { deleteOrder } from '../../../../../redux';
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
+import { useUpdateOrder } from '../../hooks/useEmitWebSocketsEventsOrders';
 
 interface Props {
   order: Order;
 }
-
 
 /**
  * Modal to close order
@@ -42,22 +42,21 @@ export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
   };
 
   const submitPayOrder = () => {
-    console.log("pagar orden");
+    console.log('pagar orden');
 
     const data: UpdateOrderDto = {
       id: order!.id,
-      isClosed: true,
+      isClosed: true
     };
 
     updateOrder(data, {
-      onSuccess: (response) => {
-
+      onSuccess: (response: SocketResponse) => {
         if (response.ok) {
           dispatch(deleteOrder(order!.id));
 
           closeModal();
         } else {
-          enqueueSnackbar(response.msg, { variant: "error" });
+          enqueueSnackbar(response.msg, { variant: 'error' });
         }
       }
     });
@@ -65,26 +64,27 @@ export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
 
   return (
     <Dialog {...muiDialogV5(modal)}>
-      <DialogTitle id="alert-dialog-title" textAlign="center" variant="h4">
+      <DialogTitle id='alert-dialog-title' textAlign='center' variant='h4'>
         Cerrar pedido
       </DialogTitle>
       <Divider />
       <DialogContent>
         <Stack spacing={2}>
-          <Typography variant="h6" textAlign="center">
+          <Typography variant='h6' textAlign='center'>
             <b>Mesa: </b>
-            {`${order?.type === TypeOrder.IN_PLACE
-              ? `Mesa ${order?.table?.name || ""}`
-              : "Para llevar"
-              }`}
+            {`${
+              order?.type === TypeOrder.IN_PLACE
+                ? `Mesa ${order?.table?.name || ''}`
+                : 'Para llevar'
+            }`}
           </Typography>
 
           <Box>
-            <Typography variant="h4" textAlign="center">
+            <Typography variant='h4' textAlign='center'>
               ¿Desea cerrar el pedido?
             </Typography>
 
-            <Typography color="secondary" fontSize={12} textAlign="center">
+            <Typography color='secondary' fontSize={12} textAlign='center'>
               Luego de cerrar el pedido ya no podrá editarlo
             </Typography>
           </Box>
@@ -92,13 +92,13 @@ export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
       </DialogContent>
       <DialogActions
         sx={{
-          justifyContent: "center",
+          justifyContent: 'center'
         }}
       >
         <Button onClick={closeModal}>Cancelar</Button>
         <LoadingButton
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           onClick={submitPayOrder}
           loading={isLoading}
           disabled={!isOnline}

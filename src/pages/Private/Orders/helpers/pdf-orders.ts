@@ -1,38 +1,38 @@
-import { ICreatePDF, Img, PdfMakeWrapper, Txt } from "pdfmake-wrapper";
-import { Order, TypeOrder } from "../../../../models";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import { formatMoney } from "../../Common/helpers/format-money.helper";
+import { ICreatePDF, Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { Order, TypeOrder } from '../../../../models';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { formatMoney } from '../../Common/helpers/format-money.helper';
 
-import logo from "../../../../assets/logo3.png";
+import logo from '../../../../assets/logo3.png';
 
 export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
   PdfMakeWrapper.setFonts(pdfFonts);
 
   const pdf = new PdfMakeWrapper();
 
-  pdf.pageSize("A7");
+  pdf.pageSize('A7');
   pdf.pageMargins([10, 10, 10, 10]);
   pdf.defaultStyle({
-    fontSize: 8,
+    fontSize: 8
   });
 
   pdf.add(
     await new Img(logo)
       .width(35)
       .height(35)
-      .alignment("center")
+      .alignment('center')
       .margin([0, 0, 0, 10])
       .build()
   );
 
-  pdf.add(new Txt("Restaurant Doña Yoli").alignment("center").bold().end);
+  pdf.add(new Txt('Restaurant Doña Yoli').alignment('center').bold().end);
 
   pdf.add(
     pdf.add(
       new Txt(`Pedido N° ${order.num}`)
-        .alignment("center")
+        .alignment('center')
         .bold()
         .fontSize(10)
         .margin([0, 10, 0, 10]).end
@@ -42,7 +42,7 @@ export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
   pdf.add(
     new Txt(
       `Tipo: ${
-        order.type === TypeOrder.IN_PLACE ? "Para servir" : "Para llevar"
+        order.type === TypeOrder.IN_PLACE ? 'Para servir' : 'Para llevar'
       }`
     ).margin([0, 0, 0, 5]).end
   );
@@ -53,21 +53,21 @@ export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
 
   pdf.add(
     new Txt(
-      `Fecha: ${format(new Date(order.createdAt), "dd MMMM yyyy HH:mm", {
-        locale: es,
+      `Fecha: ${format(new Date(order.createdAt), 'dd MMMM yyyy HH:mm', {
+        locale: es
       })}`
     ).margin([0, 0, 0, 5]).end
   );
 
   pdf.add(
     new Txt(
-      `Entrega: ${format(new Date(order.deliveryTime), "dd MMMM yyyy HH:mm", {
-        locale: es,
+      `Entrega: ${format(new Date(order.deliveryTime), 'dd MMMM yyyy HH:mm', {
+        locale: es
       })}`
     ).margin([0, 0, 0, 10]).end
   );
 
-  pdf.add(new Txt("Mesero").bold().end);
+  pdf.add(new Txt('Mesero').bold().end);
 
   pdf.add(
     new Txt(
@@ -76,11 +76,11 @@ export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
   );
 
   if (order.notes) {
-    pdf.add(new Txt("Notas").bold().margin([0, 0, 0, 5]).end);
+    pdf.add(new Txt('Notas').bold().margin([0, 0, 0, 5]).end);
     pdf.add(new Txt(`${order.notes}`).margin([0, 0, 0, 10]).end);
   }
 
-  pdf.add(new Txt("Productos").bold().margin([0, 0, 0, 5]).end);
+  pdf.add(new Txt('Productos').bold().margin([0, 0, 0, 5]).end);
 
   order.details.forEach((detail) => {
     pdf.add(new Txt(`${detail.quantity} - ${detail.product.name}`).end);
@@ -88,7 +88,7 @@ export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
   });
 
   pdf.add(
-    new Txt("Total " + formatMoney(order.total)).margin([0, 10, 0, 0]).bold()
+    new Txt('Total ' + formatMoney(order.total)).margin([0, 10, 0, 0]).bold()
       .end
   );
 

@@ -1,19 +1,15 @@
-
-
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IUser } from '../../../models';
-import { AppThunk, RootState } from "../../store";
-import { Restaurant } from "../../../pages/Private/Reports/models/restaurant.model";
-
+import { AppThunk, RootState } from '../../store';
+import { Restaurant } from '../../../pages/Private/Reports/models/restaurant.model';
 
 export interface AuthState {
-  user: IUser | null,
-  error?: string,
+  user: IUser | null;
+  error?: string;
   status: 'checking' | 'authenticated' | 'not-authenticated';
   restaurant: Restaurant | null;
 }
-
 
 /*
 usuario:  idUsuario: 1,
@@ -44,20 +40,19 @@ export const authSlice = createSlice({
     onLogout: (state, { payload }: PayloadAction<string>) => {
       state.error = payload;
       state.user = null;
-      state.status = 'not-authenticated'
+      state.status = 'not-authenticated';
     },
     onChecking: (state) => {
-      state.status = "checking";
+      state.status = 'checking';
       state.user = null;
       state.error = '';
-
     },
-    clearErrorMessage: (state) => {state.error = ''},
+    clearErrorMessage: (state) => {
+      state.error = '';
+    },
     loadRestaurant: (state, { payload }: PayloadAction<Restaurant>) => {
       state.restaurant = payload;
-    },
-
-
+    }
 
     /*  authUsuariosLoad: (state, action: PayloadAction<IUsuario[]>) => {
        state.usuarios = action.payload;
@@ -75,34 +70,21 @@ export const authSlice = createSlice({
          : u
          );
      }, */
-
-
-
   }
-
 });
-
-
-
-
 
 export const {
   clearErrorMessage,
   onChecking,
   onLogin,
   onLogout,
-  loadRestaurant,
+  loadRestaurant
   /*  authUsuarioAdd,
    authUsuarioUpdate,
    authUsuarioDelete,
    authUsuariosLoad */
-
 } = authSlice.actions;
 
 export const selectAuth = (state: RootState) => state.auth;
-
-
-
-
 
 export default authSlice.reducer;

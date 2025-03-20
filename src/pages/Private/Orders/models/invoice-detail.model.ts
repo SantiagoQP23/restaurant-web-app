@@ -1,8 +1,6 @@
-import { IOrderDetail, IProduct } from "../../../../models";
-
+import { IOrderDetail, IProduct } from '../../../../models';
 
 export interface InvoiceDetail {
-
   id: string;
 
   title: string;
@@ -22,6 +20,4 @@ export interface InvoiceDetail {
   createdAt: Date;
 
   updatedAt: Date;
-
-
 }

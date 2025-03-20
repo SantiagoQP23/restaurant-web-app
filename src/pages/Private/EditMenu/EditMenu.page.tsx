@@ -1,5 +1,5 @@
-import { Outlet } from "react-router-dom";
-import { Container } from "@mui/material";
+import { Outlet } from 'react-router-dom';
+import { Container } from '@mui/material';
 
 // import { PageTitleWrapper, PageTitle } from "../../../components/ui";
 // import { TitlePage } from "../components/TitlePage.component";
@@ -7,7 +7,7 @@ import { Container } from "@mui/material";
 export const EditMenu = () => {
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth='lg'>
         {/* <TitlePage
           title='Editar menú'
         />

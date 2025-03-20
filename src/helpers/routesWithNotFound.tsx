@@ -5,16 +5,11 @@ interface Props {
   children: JSX.Element[] | JSX.Element;
 }
 
-
-export const RoutesWithNotFound = ({children}: Props) => {
+export const RoutesWithNotFound = ({ children }: Props) => {
   return (
     <Routes>
       {children}
-      <Route path="*" element={
-        
-         <Status404 />
-        
-      } />
+      <Route path='*' element={<Status404 />} />
     </Routes>
-  )
-}
+  );
+};

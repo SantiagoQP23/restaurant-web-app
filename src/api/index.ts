@@ -1,3 +1,1 @@
-
-export  {default as restauranteApi} from './restauranteApi'
-
+export { default as restauranteApi } from './restauranteApi';

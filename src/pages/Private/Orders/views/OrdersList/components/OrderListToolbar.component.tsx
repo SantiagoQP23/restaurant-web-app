@@ -1,18 +1,18 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { styled } from "@mui/material/styles";
+import { styled } from '@mui/material/styles';
 
-import { Toolbar, Grid, TextField } from "@mui/material";
-import { IUser } from "../../../../../../models";
+import { Toolbar, Grid, TextField } from '@mui/material';
+import { IUser } from '../../../../../../models';
 
-import { DesktopDatePicker } from "@mui/x-date-pickers";
-import { ComboBoxUser } from "../../../components/ComboBoxUser.component";
+import { DesktopDatePicker } from '@mui/x-date-pickers';
+import { ComboBoxUser } from '../../../components/ComboBoxUser.component';
 
 const StyledRoot = styled(Toolbar)(({ theme }) => ({
   // height: 96,
-  display: "flex",
-  justifyContent: "space-between",
-  padding: theme.spacing(0, 1, 0, 3),
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: theme.spacing(0, 1, 0, 3)
 }));
 
 interface Props {
@@ -33,7 +33,7 @@ export const OrderListToolbar: FC<Props> = ({
   startDate,
   handleChangeStartDate,
   endDate,
-  handleChangeEndDate,
+  handleChangeEndDate
 }) => {
   return (
     <StyledRoot>
@@ -41,13 +41,13 @@ export const OrderListToolbar: FC<Props> = ({
         container
         spacing={2}
         sx={{
-          p: 1,
+          p: 1
         }}
       >
         <Grid item xs={6} sm={4} md={3} lg={2}>
           <DesktopDatePicker
-            label="Fecha de inicio"
-            inputFormat="yyyy-MM-dd"
+            label='Fecha de inicio'
+            inputFormat='yyyy-MM-dd'
             value={startDate}
             onChange={handleChangeStartDate}
             renderInput={(params) => <TextField {...params} />}
@@ -57,8 +57,8 @@ export const OrderListToolbar: FC<Props> = ({
 
         <Grid item xs={6} sm={4} md={3} lg={2}>
           <DesktopDatePicker
-            label="Fecha de fin"
-            inputFormat="yyyy-MM-dd"
+            label='Fecha de fin'
+            inputFormat='yyyy-MM-dd'
             value={endDate}
             onChange={handleChangeEndDate}
             renderInput={(params) => <TextField {...params} />}

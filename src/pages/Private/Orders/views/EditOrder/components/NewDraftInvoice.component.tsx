@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from "react";
+import { FC, ChangeEvent } from 'react';
 
 import {
   Card,
@@ -12,18 +12,18 @@ import {
   CardActions,
   Table,
   IconButton,
-  Typography,
-} from "@mui/material";
+  Typography
+} from '@mui/material';
 
-import { formatMoney } from "../../../../Common/helpers/format-money.helper";
-import { useInvoiceStore } from "../../../store/invoiceStore";
-import { Close, DeleteOutline, MoreVert } from "@mui/icons-material";
-import { CreateInvoiceDto } from "../../../dto";
-import { useSelector } from "react-redux";
-import { selectOrders } from "../../../../../../redux";
-import { useCashRegisterStore } from "../../../../Common/store/useCashRegisterStore";
-import { LoadingButton } from "@mui/lab";
-import { useCreateInvoiceOrder } from "../../../hooks/useInvocesOrder";
+import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { useInvoiceStore } from '../../../store/invoiceStore';
+import { Close, DeleteOutline, MoreVert } from '@mui/icons-material';
+import { CreateInvoiceDto } from '../../../dto';
+import { useSelector } from 'react-redux';
+import { selectOrders } from '../../../../../../redux';
+import { useCashRegisterStore } from '../../../../Common/store/useCashRegisterStore';
+import { LoadingButton } from '@mui/lab';
+import { useCreateInvoiceOrder } from '../../../hooks/useInvocesOrder';
 
 interface Props {
   invoice: any;

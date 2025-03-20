@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 import {
   FootfallResponse,
   getFootfall,
@@ -6,28 +6,28 @@ import {
   executeSimulation,
   getPredictionFootfall,
   getComparisonFootfall,
-  updateForecastFootfall,
-} from "../services/footfall.service";
-import { useDateFilter } from "../../../../hooks/useDateFilter";
-import { Period, GroupBy } from "../../Common/dto/period.model";
-import { useEffect } from "react";
-import { queryClient } from "../../../../api/query-client";
+  updateForecastFootfall
+} from '../services/footfall.service';
+import { useDateFilter } from '../../../../hooks/useDateFilter';
+import { Period, GroupBy } from '../../Common/dto/period.model';
+import { useEffect } from 'react';
+import { queryClient } from '../../../../api/query-client';
 
 export const useFootfall = () => {
-  return useQuery(["footfall"], getFootfall, {});
+  return useQuery(['footfall'], getFootfall, {});
 };
 
 export const useUpdateFootfallPrediction = () => {
   const updatePredictionQuery = useQuery(
-    ["updateFootfallPrediction"],
+    ['updateFootfallPrediction'],
     () => {
       return updateForecastFootfall();
     },
     {
       enabled: false,
       onSuccess: () => {
-        queryClient.invalidateQueries(["forecastFootfall"]);
-      },
+        queryClient.invalidateQueries(['forecastFootfall']);
+      }
     }
   );
 
@@ -38,18 +38,18 @@ export const useSimulatedFootfall = (period: Period, groupBy: GroupBy) => {
   const dateFilter = useDateFilter(period);
 
   const simulatedFootfallQuery = useQuery<FootfallResponse>(
-    ["simulatedFootfall", dateFilter.startDate, dateFilter.endDate],
+    ['simulatedFootfall', dateFilter.startDate, dateFilter.endDate],
     () =>
       getSimulatedFootfall({
         startDate: dateFilter.startDate,
         endDate: dateFilter.endDate,
         period: dateFilter.period,
-        groupBy,
+        groupBy
       }),
     {
       onSuccess: (data) => {
         console.log(data);
-      },
+      }
     }
   );
 
@@ -59,19 +59,19 @@ export const useSimulatedFootfall = (period: Period, groupBy: GroupBy) => {
 
   return {
     ...dateFilter,
-    simulatedFootfallQuery,
+    simulatedFootfallQuery
   };
 };
 
 export const useExecuteSimulation = () => {
   const executeSimulationQuery = useQuery(
-    ["executeSimulation"],
+    ['executeSimulation'],
     executeSimulation,
     {
       onSuccess: (data) => {
         console.log(data);
-        queryClient.invalidateQueries(["simulatedFootfall"]);
-      },
+        queryClient.invalidateQueries(['simulatedFootfall']);
+      }
     }
   );
 
@@ -80,14 +80,14 @@ export const useExecuteSimulation = () => {
 
 export const useForecastFootfall = () => {
   const forecastFootfallQuery = useQuery(
-    ["forecastFootfall"],
+    ['forecastFootfall'],
     () => {
       return getPredictionFootfall();
     },
     {
       onSuccess: (data) => {
         console.log(data);
-      },
+      }
     }
   );
 
@@ -98,18 +98,18 @@ export const useComparisonFootfall = (period: Period, groupBy: GroupBy) => {
   const dateFilter = useDateFilter(period);
 
   const comparisonFootfallQuery = useQuery(
-    ["comparisonFootfall", dateFilter.startDate, dateFilter.endDate],
+    ['comparisonFootfall', dateFilter.startDate, dateFilter.endDate],
     () =>
       getComparisonFootfall({
         startDate: dateFilter.startDate,
         endDate: dateFilter.endDate,
         period: dateFilter.period,
-        groupBy,
+        groupBy
       }),
     {
       onSuccess: (data) => {
         console.log(data);
-      },
+      }
     }
   );
 
@@ -119,6 +119,6 @@ export const useComparisonFootfall = (period: Period, groupBy: GroupBy) => {
 
   return {
     ...dateFilter,
-    comparisonFootfallQuery,
+    comparisonFootfallQuery
   };
 };

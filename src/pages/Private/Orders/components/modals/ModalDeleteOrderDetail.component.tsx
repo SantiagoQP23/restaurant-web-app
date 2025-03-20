@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import { IOrderDetail } from "../../../../../models";
+import { IOrderDetail } from '../../../../../models';
 
 import {
   Dialog,
@@ -10,13 +10,13 @@ import {
   DialogActions,
   Button,
   Stack,
-  Box,
-} from "@mui/material";
+  Box
+} from '@mui/material';
 
-import { DeleteOrderDetailDto } from "../../dto/delete-order-detail.dto";
-import { statusModalDeleteOrderDetail } from "../../services/orders.service";
-import { useDeleteOrderDetail } from "../../hooks/";
-import { LoadingButton } from "@mui/lab";
+import { DeleteOrderDetailDto } from '../../dto/delete-order-detail.dto';
+import { statusModalDeleteOrderDetail } from '../../services/orders.service';
+import { useDeleteOrderDetail } from '../../hooks/';
+import { LoadingButton } from '@mui/lab';
 
 /**
  * Component that shows a modal to delete an order detail
@@ -38,13 +38,13 @@ export const ModalDeleteOrderDetail = () => {
   const {
     mutate: deleteOrderDetail,
     isLoading,
-    isOnline,
+    isOnline
   } = useDeleteOrderDetail();
 
   const deleteDetail = () => {
     const data: DeleteOrderDetailDto = {
       detailId: detail!.id,
-      orderId: orderId!,
+      orderId: orderId!
     };
 
     deleteOrderDetail(data);
@@ -66,36 +66,36 @@ export const ModalDeleteOrderDetail = () => {
   return (
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
-        <Typography variant="h4" my={1}>
+        <Typography variant='h4' my={1}>
           ¿Está seguro de eliminar el producto del pedido?
         </Typography>
       </DialogTitle>
 
       <DialogContent>
-        <Stack spacing={2} direction="row" justifyContent="center">
+        <Stack spacing={2} direction='row' justifyContent='center'>
           <Box>
-            <Typography variant="caption">Cantidad</Typography>
-            <Typography variant="h5">{detail?.quantity}</Typography>
+            <Typography variant='caption'>Cantidad</Typography>
+            <Typography variant='h5'>{detail?.quantity}</Typography>
           </Box>
           <Box>
-            <Typography variant="caption">Producto</Typography>
-            <Typography variant="h5">{detail?.product.name}</Typography>
+            <Typography variant='caption'>Producto</Typography>
+            <Typography variant='h5'>{detail?.product.name}</Typography>
           </Box>
         </Stack>
       </DialogContent>
 
       <DialogActions
         sx={{
-          justifyContent: "center",
+          justifyContent: 'center'
         }}
       >
-        <Button color="inherit" onClick={closeModal}>
+        <Button color='inherit' onClick={closeModal}>
           Cancelar
         </Button>
 
         <LoadingButton
-          variant="contained"
-          color="error"
+          variant='contained'
+          color='error'
           onClick={deleteDetail}
           loading={isLoading}
           disabled={!isOnline}

@@ -1,6 +1,6 @@
 // import { Period } from "../../..//models/period.model";
 
-import { GroupBy, Period } from "./period.model";
+import { GroupBy, Period } from './period.model';
 
 export interface DateFilterDto {
   startDate?: Date | null;

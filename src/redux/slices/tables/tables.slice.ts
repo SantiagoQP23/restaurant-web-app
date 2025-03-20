@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
 
-import { ITable } from "../../../models";
+import { ITable } from '../../../models';
 
 export interface tablesState {
   tables: ITable[];
@@ -10,11 +10,11 @@ export interface tablesState {
 
 const initialState: tablesState = {
   tables: [],
-  activeTable: null,
+  activeTable: null
 };
 
 export const tablesSlice = createSlice({
-  name: "tables",
+  name: 'tables',
   initialState,
   reducers: {
     addTable: (state, action: PayloadAction<ITable>) => {
@@ -38,8 +38,8 @@ export const tablesSlice = createSlice({
     resetTables: () => ({ ...initialState }),
     resetactiveTable: (state) => {
       state.activeTable = null;
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -49,7 +49,7 @@ export const {
   loadTables,
   setActiveTable,
   resetTables,
-  resetactiveTable,
+  resetactiveTable
 } = tablesSlice.actions;
 
 export const selectTables = (state: RootState) => state.tables;

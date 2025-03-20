@@ -1,16 +1,16 @@
-import { loadAbort } from "../../../../helpers/load-abort-axios.helper";
-import restauranteApi from "../../../../api/restauranteApi";
-import { Order } from "../../../../models/orders.model";
+import { loadAbort } from '../../../../helpers/load-abort-axios.helper';
+import restauranteApi from '../../../../api/restauranteApi';
+import { Order } from '../../../../models/orders.model';
 import {
   SubjectDescriptionDetail,
   SubjectDispatchDetail,
   SubjectModalDeleteOrder,
   SubjectModalPayOrder,
-  SubjectEditOrderDetail,
-} from "../helpers/subject-orders.helper";
-import { DateFiltePaginationDto } from "../../Common/dto";
-import { FilterOrdersDto } from "../dto/filter-orders.dto";
-import { SubjectGenerator } from "../../Common/helpers/subject-generator.helper";
+  SubjectEditOrderDetail
+} from '../helpers/subject-orders.helper';
+import { DateFiltePaginationDto } from '../../Common/dto';
+import { FilterOrdersDto } from '../dto/filter-orders.dto';
+import { SubjectGenerator } from '../../Common/helpers/subject-generator.helper';
 
 interface ModalOrder {
   value: boolean;
@@ -41,8 +41,8 @@ export const getOrders = async (filterDto: FilterOrdersDto) => {
     params: {
       ...restFilter,
       offset: limit * offset,
-      limit,
-    },
+      limit
+    }
   });
 
   return data;
@@ -57,8 +57,8 @@ export const getActiveOrders = async (filterDto: DateFiltePaginationDto) => {
       startDate,
       endDate,
       offset: limit * offset,
-      limit,
-    },
+      limit
+    }
   });
 
   return data;
@@ -73,7 +73,7 @@ export const getOrdersToday = () => {
 
       { signal: controller.signal }
     ),
-    controller,
+    controller
   };
 };
 
@@ -89,18 +89,18 @@ export const getOrdersByDate = (find?: FindOrderByDate) => {
 
   if (find) {
     call = restauranteApi.get<Order[]>(
-      `orders/${find.startDate ? `?startDate=${find.startDate}` : ""}`,
+      `orders/${find.startDate ? `?startDate=${find.startDate}` : ''}`,
       { signal: controller.signal }
     );
   } else {
     call = restauranteApi.get<Order[]>(`orders`, {
-      signal: controller.signal,
+      signal: controller.signal
     });
   }
 
   return {
     call,
-    controller,
+    controller
   };
 };
 

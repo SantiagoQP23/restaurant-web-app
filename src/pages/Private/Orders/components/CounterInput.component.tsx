@@ -1,8 +1,8 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect } from 'react';
 
-import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
-import { Stack, IconButton, InputBase } from "@mui/material";
-import { useCounter } from "../hooks";
+import { RemoveCircleOutline, AddCircleOutline } from '@mui/icons-material';
+import { Stack, IconButton, InputBase } from '@mui/material';
+import { useCounter } from '../hooks';
 
 interface Props {
   min?: number;
@@ -19,13 +19,13 @@ export const CounterInput: FC<Props> = ({
   max,
   step,
   onChange,
-  fullWidth = false,
+  fullWidth = false
 }) => {
   const {
     state: counter,
     increment,
     decrement,
-    setCounter,
+    setCounter
   } = useCounter(value, step, max, min);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,30 +46,30 @@ export const CounterInput: FC<Props> = ({
   return (
     <>
       <Stack
-        direction="row"
-        alignItems="center"
-        width={fullWidth ? "100%" : 110}
-        justifyContent="center"
+        direction='row'
+        alignItems='center'
+        width={fullWidth ? '100%' : 110}
+        justifyContent='center'
       >
-        <IconButton size="small" onClick={decrement}>
+        <IconButton size='small' onClick={decrement}>
           <RemoveCircleOutline />
         </IconButton>
 
         <InputBase
           value={counter}
           onChange={handleChange}
-          type="number"
-          size="small"
+          type='number'
+          size='small'
           inputProps={{
             min: 0.5,
-            step: step || 0.5,
+            step: step || 0.5
           }}
           sx={{
-            input: { textAlign: "center", WebkitAppearance: "none" },
+            input: { textAlign: 'center', WebkitAppearance: 'none' }
           }}
         />
 
-        <IconButton size="small" onClick={increment}>
+        <IconButton size='small' onClick={increment}>
           <AddCircleOutline />
         </IconButton>
       </Stack>

@@ -5,16 +5,16 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  Dialog,
-} from "@mui/material";
-import NiceModal, { muiDialogV5, useModal } from "@ebay/nice-modal-react";
+  Dialog
+} from '@mui/material';
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 
-import { ICategory } from "../../../../../../models";
-import { updateCategory } from "../../../../../../redux";
-import { useAppDispatch } from "../../../../../../hooks/useRedux";
-import { useUpdateCategory } from "../../../hooks/useCategories";
+import { ICategory } from '../../../../../../models';
+import { updateCategory } from '../../../../../../redux';
+import { useAppDispatch } from '../../../../../../hooks/useRedux';
+import { useUpdateCategory } from '../../../hooks/useCategories';
 
 export interface Props {
   category: ICategory;
@@ -43,23 +43,23 @@ export const ModalDeleteCategory = NiceModal.create<Props>(({ category }) => {
   return (
     <>
       <Dialog {...muiDialogV5(modal)}>
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle id='alert-dialog-title'>
           {`¿Esta seguro de eliminar la categoría ${category!.name}?`}
         </DialogTitle>
         <Divider />
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id='alert-dialog-description'>
             Se eliminarán todos los productos que pertenecen a esta categoría
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeModal} color="inherit">
+          <Button onClick={closeModal} color='inherit'>
             Cancelar
           </Button>
           <LoadingButton
             loading={isLoading}
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             onClick={eliminarCategoria}
           >
             Aceptar

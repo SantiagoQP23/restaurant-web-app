@@ -1,19 +1,14 @@
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs';
 import { ITable } from '../../../../models/table.model';
 
-
-
 export class SubjectDeleteTable {
-  subject$ = new Subject<{value: boolean, table: ITable}>();
+  subject$ = new Subject<{ value: boolean; table: ITable }>();
 
-  getSubject(){
-
+  getSubject() {
     return this.subject$.asObservable();
   }
 
-  setSubject(value: boolean, table: ITable){
-    this.subject$.next({value, table});
+  setSubject(value: boolean, table: ITable) {
+    this.subject$.next({ value, table });
   }
 }
-
-

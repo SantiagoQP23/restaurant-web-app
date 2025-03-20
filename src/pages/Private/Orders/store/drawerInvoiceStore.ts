@@ -1,10 +1,7 @@
-import { create } from "zustand";
-import { Invoice } from "../models/Invoice.model";
-
-
+import { create } from 'zustand';
+import { Invoice } from '../models/Invoice.model';
 
 interface DrawerInvoiceState {
-
   activeInvoice: Invoice | null;
 
   open: boolean;
@@ -28,10 +25,7 @@ interface DrawerInvoiceState {
   handleCloseDrawer: () => void;
 }
 
-
-
 export const useDrawerInvoiceStore = create<DrawerInvoiceState>((set, get) => ({
-
   title: 'Drawer Invoice',
 
   activeInvoice: null,
@@ -54,9 +48,5 @@ export const useDrawerInvoiceStore = create<DrawerInvoiceState>((set, get) => ({
 
   handleCloseModal: () => set({ openModal: false }),
 
-  handleCloseDrawer: () => set({ open: false, activeInvoice: null }),
-
-
-
-
+  handleCloseDrawer: () => set({ open: false, activeInvoice: null })
 }));

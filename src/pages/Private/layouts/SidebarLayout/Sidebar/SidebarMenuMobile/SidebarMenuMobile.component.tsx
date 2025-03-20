@@ -24,7 +24,12 @@ import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../../../../redux';
 import { ExpandLess, ExpandMore, ListAlt } from '@mui/icons-material';
 import { Typography } from '@mui/material';
-import { navItemsAdmin, navItemsAdmin2, navItemsManagement, navItemsOrders } from '../../models';
+import {
+  navItemsAdmin,
+  navItemsAdmin2,
+  navItemsManagement,
+  navItemsOrders
+} from '../../models';
 import { Label } from '../../../../../../components/ui';
 import { NavItem } from '../../../interfaces';
 
@@ -143,9 +148,9 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-    'transform',
-    'opacity'
-  ])};
+                  'transform',
+                  'opacity'
+                ])};
                 width: 6px;
                 height: 6px;
                 transform: scale(0);
@@ -170,21 +175,15 @@ const SubMenuWrapper = styled(Box)(
 `
 );
 
-
 export interface NavItemButtonProps {
-  item: NavItem
-
+  item: NavItem;
 }
 export const NavItemButton: FC<NavItemButtonProps> = ({ item }) => {
-
   const { closeSidebar, open, toggleSidebar } = useContext(SidebarContext);
 
-
   return (
-    <ListItem component="div" key={item.to}>
-
+    <ListItem component='div' key={item.to}>
       <ListItemButton
-
         disableRipple
         component={RouterLink}
         onClick={closeSidebar}
@@ -196,9 +195,8 @@ export const NavItemButton: FC<NavItemButtonProps> = ({ item }) => {
           color: 'text.primary',
           '&.active': {
             bgcolor: 'action.selected',
-            fontWeight: 'fontWeightBold',
-          },
-
+            fontWeight: 'fontWeightBold'
+          }
         }}
         end
       >
@@ -206,26 +204,19 @@ export const NavItemButton: FC<NavItemButtonProps> = ({ item }) => {
           sx={{
             minWidth: 0,
             mr: 3,
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           {item.icon}
-
         </ListItemIcon>
 
         <ListItemText primary={item.title} sx={{}} />
-
       </ListItemButton>
-
     </ListItem>
-  )
-
-}
-
-
+  );
+};
 
 function SidebarMenuMobile() {
-
   const { closeSidebar, open, toggleSidebar } = useContext(SidebarContext);
 
   const [openOrders, setOpenOrders] = useState(true);
@@ -236,13 +227,9 @@ function SidebarMenuMobile() {
     setOpenOrders(!openOrders);
   };
 
-
-
   const handleOpenMenuRestaurant = () => {
     setOpenMenuRestaurant(!openMenuRestaurant);
   };
-
-
 
   const { user } = useSelector(selectAuth);
 
@@ -260,64 +247,32 @@ function SidebarMenuMobile() {
         </List> */}
 
         <List
-          component="div"
+          component='div'
           subheader={
-
-            <ListSubheader
-
-              component="div" disableSticky>
-              <Typography
-                color='text.primary'
-
-              >
-                GENERAL
-
-              </Typography>
+            <ListSubheader component='div' disableSticky>
+              <Typography color='text.primary'>GENERAL</Typography>
             </ListSubheader>
           }
         >
-
           <SubMenuWrapper>
-
-            <List component="div">
-
-              {
-                navItemsAdmin.map((item, index) => (
-                  <NavItemButton key={index} item={item} />
-                ))
-              }
-
+            <List component='div'>
+              {navItemsAdmin.map((item, index) => (
+                <NavItemButton key={index} item={item} />
+              ))}
             </List>
-
           </SubMenuWrapper>
+        </List>
 
-
-          </List>
-
-          <List
-          component="div"
+        <List
+          component='div'
           subheader={
-
-            <ListSubheader
-
-              component="div" disableSticky>
-              <Typography
-                color='text.primary'
-
-              >
-                PEDIDOS
-
-              </Typography>
+            <ListSubheader component='div' disableSticky>
+              <Typography color='text.primary'>PEDIDOS</Typography>
             </ListSubheader>
           }
         >
-
-
           <SubMenuWrapper>
-            <List component="div">
-
-
-
+            <List component='div'>
               {/* <ListItem
                 disablePadding
               >
@@ -354,83 +309,92 @@ function SidebarMenuMobile() {
 
               </ListItem> */}
 
-              <Collapse in={openOrders} >
-
-
-                {
-                  navItemsOrders.map((item, index) => (
-                    <ListItem component="div" key={item.to}>
-
-                      <ListItemButton
-
-                        disableRipple
-                        component={RouterLink}
-                        onClick={closeSidebar}
-                        to={item.to}
+              <Collapse in={openOrders}>
+                {navItemsOrders.map((item, index) => (
+                  <ListItem component='div' key={item.to}>
+                    <ListItemButton
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to={item.to}
+                      sx={{
+                        minHeight: 48,
+                        justifyContent: 'center',
+                        px: 2.5,
+                        color: 'text.primary',
+                        '&.active': {
+                          bgcolor: 'action.selected',
+                          fontWeight: 'fontWeightBold'
+                        }
+                      }}
+                      end
+                    >
+                      <ListItemIcon
                         sx={{
-                          minHeight: 48,
-                          justifyContent: 'center',
-                          px: 2.5,
-                          color: 'text.primary',
-                          '&.active': {
-                            bgcolor: 'action.selected',
-                            fontWeight: 'fontWeightBold',
-                          },
-
+                          minWidth: 0,
+                          mr: 3,
+                          justifyContent: 'center'
                         }}
-                        end
                       >
-                        <ListItemIcon
-                          sx={{
-                            minWidth: 0,
-                            mr: 3,
-                            justifyContent: 'center',
-                          }}
-                        >
-                          {item.icon}
+                        {item.icon}
+                      </ListItemIcon>
 
-                        </ListItemIcon>
-
-                        <ListItemText primary={item.title} sx={{}} />
-
-                      </ListItemButton>
-
-                    </ListItem>
-
-                  ))
-                }
-
+                      <ListItemText primary={item.title} sx={{}} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
               </Collapse>
-
             </List>
           </SubMenuWrapper>
-
         </List>
         <List
-          component="div"
+          component='div'
           subheader={
-            <ListSubheader component="div" disableSticky>
-              <Typography
-                color='text.primary'
-
-              >
-                Administración
-
-              </Typography>
+            <ListSubheader component='div' disableSticky>
+              <Typography color='text.primary'>Administración</Typography>
             </ListSubheader>
           }
         >
           <SubMenuWrapper>
+            <List component='div'>
+              {navItemsManagement.map((item, index) => (
+                <ListItem component='div' key={item.to}>
+                  <ListItemButton
+                    disableRipple
+                    component={RouterLink}
+                    onClick={closeSidebar}
+                    to={item.to}
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: 'center',
+                      px: 2.5,
+                      color: 'text.primary',
+                      '&.active': {
+                        bgcolor: 'action.selected',
+                        fontWeight: 'fontWeightBold'
+                      }
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: 3,
+                        justifyContent: 'center'
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
 
-            <List component="div">
+                    <ListItemText primary={item.title} sx={{}} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
 
-              {
-                navItemsManagement.map((item, index) => (
-
-                  <ListItem component="div" key={item.to}>
-
+              {user &&
+                user.role.name === 'admin' &&
+                navItemsAdmin2.map((item, index) => (
+                  <ListItem component='div' key={item.to}>
                     <ListItemButton
-
                       disableRipple
                       component={RouterLink}
                       onClick={closeSidebar}
@@ -442,95 +406,32 @@ function SidebarMenuMobile() {
                         color: 'text.primary',
                         '&.active': {
                           bgcolor: 'action.selected',
-                          fontWeight: 'fontWeightBold',
-                        },
-
+                          fontWeight: 'fontWeightBold'
+                        }
                       }}
                     >
                       <ListItemIcon
                         sx={{
                           minWidth: 0,
                           mr: 3,
-                          justifyContent: 'center',
+                          justifyContent: 'center'
                         }}
                       >
                         {item.icon}
-
-                      </ListItemIcon>
-
-                      <ListItemText primary={item.title} sx={{}} />
-
-                    </ListItemButton>
-
-
-
-
-
-                  </ListItem>
-
-                ))
-              }
-
-              {
-                user && user.role.name === 'admin' && (navItemsAdmin2.map((item, index) => (
-                  <ListItem component="div" key={item.to}>
-
-                    <ListItemButton
-
-                      disableRipple
-                      component={RouterLink}
-                      onClick={closeSidebar}
-                      to={item.to}
-                      sx={{
-                        minHeight: 48,
-                        justifyContent: 'center',
-                        px: 2.5,
-                        color: 'text.primary',
-                        '&.active': {
-                          bgcolor: 'action.selected',
-                          fontWeight: 'fontWeightBold',
-                        },
-
-                      }}
-                    >
-                      <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: 3,
-                          justifyContent: 'center',
-                        }}
-                      >
-                        {item.icon}
-
                       </ListItemIcon>
 
                       <ListItemText primary={item.title} sx={{}} />
                       {item.label && (
                         <ListItemSecondaryAction>
-                          <Label color="info">{item.label}</Label>
+                          <Label color='info'>{item.label}</Label>
                         </ListItemSecondaryAction>
                       )}
-
                     </ListItemButton>
-
-
-
-
-
                   </ListItem>
-
-                ))
-                )
-              }
-
+                ))}
             </List>
-
-
-
           </SubMenuWrapper>
         </List>
-
-
       </MenuWrapper>
     </>
   );

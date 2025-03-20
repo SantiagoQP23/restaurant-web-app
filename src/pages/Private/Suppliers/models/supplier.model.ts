@@ -1,6 +1,4 @@
-import { IPerson } from "../../../../models";
-
-
+import { IPerson } from '../../../../models';
 
 export interface Supplier {
   id: string;

@@ -15,11 +15,10 @@ export const SidebarContext = createContext<SidebarContext>(
 );
 
 interface Props {
-  children: JSX.Element | JSX.Element[]
+  children: JSX.Element | JSX.Element[];
 }
 
 export const SidebarProvider: FC<Props> = ({ children }) => {
-
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -28,7 +27,6 @@ export const SidebarProvider: FC<Props> = ({ children }) => {
 
   const handleDrawerClose = () => {
     setOpen(false);
-
   };
 
   const [sidebarToggle, setSidebarToggle] = useState<boolean>(false);
@@ -41,7 +39,14 @@ export const SidebarProvider: FC<Props> = ({ children }) => {
 
   return (
     <SidebarContext.Provider
-      value={{ sidebarToggle, toggleSidebar, closeSidebar, handleDrawerOpen, handleDrawerClose, open }}
+      value={{
+        sidebarToggle,
+        toggleSidebar,
+        closeSidebar,
+        handleDrawerOpen,
+        handleDrawerClose,
+        open
+      }}
     >
       {children}
     </SidebarContext.Provider>

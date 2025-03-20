@@ -1,6 +1,8 @@
-import { CreateIdentification, Identification, TypeIdentification } from '../../../../../models/common.model';
-
-
+import {
+  CreateIdentification,
+  Identification,
+  TypeIdentification
+} from '../../../../../models/common.model';
 
 export interface CreateSupplierDto {
   firstName: string;

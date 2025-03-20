@@ -1,5 +1,5 @@
-import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { Close, Delete, DeleteOutline } from "@mui/icons-material";
+import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { Close, Delete, DeleteOutline } from '@mui/icons-material';
 import {
   AppBar,
   Box,
@@ -14,22 +14,22 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  useTheme,
-} from "@mui/material";
-import React from "react";
-import { Bill } from "../../../../models/bill.model";
-import { BillDetailsTable } from "./BillDetailsTable.component";
-import { Label } from "../../../../components/ui";
-import { formatMoney } from "../../Common/helpers/format-money.helper";
-import { useNavigate } from "react-router-dom";
-import { DeleteBillModal } from "./DeleteBillModal.component";
-import { Scrollbar } from "../../components";
+  useTheme
+} from '@mui/material';
+import React from 'react';
+import { Bill } from '../../../../models/bill.model';
+import { BillDetailsTable } from './BillDetailsTable.component';
+import { Label } from '../../../../components/ui';
+import { formatMoney } from '../../Common/helpers/format-money.helper';
+import { useNavigate } from 'react-router-dom';
+import { DeleteBillModal } from './DeleteBillModal.component';
+import { Scrollbar } from '../../components';
 
 interface Props {
   bill: Bill;
 }
 
-const headerHeight = "64px";
+const headerHeight = '64px';
 
 export const DrawerBill = NiceModal.create<Props>(({ bill }) => {
   const modal = useModal();
@@ -61,83 +61,83 @@ export const DrawerBill = NiceModal.create<Props>(({ bill }) => {
   return (
     <>
       <Drawer
-        anchor="right"
+        anchor='right'
         open={modal.visible}
         onClose={closeDrawer}
         PaperProps={{
           sx: {
             width: {
-              xs: "100vw",
-              sm: "80vw",
-              md: 500,
+              xs: '100vw',
+              sm: '80vw',
+              md: 500
             },
-            border: "none",
-            overflow: "hidden",
-          },
+            border: 'none',
+            overflow: 'hidden'
+          }
         }}
         sx={{
-          zIndex: 10000,
+          zIndex: 10000
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", py: 2, px: 2.5 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="h4">
+            <Typography variant='h4'>
               Cuenta N°{bill.num}
               {bill.isActive && (
                 <Label
                   sx={{ ml: 1 }}
-                  color={bill.isPaid ? "success" : "warning"}
+                  color={bill.isPaid ? 'success' : 'warning'}
                 >
-                  {bill.isPaid ? "Pagado" : "Por pagar"}
+                  {bill.isPaid ? 'Pagado' : 'Por pagar'}
                 </Label>
               )}
             </Typography>
           </Box>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction='row' spacing={2} alignItems='center'>
             {bill.isActive ? (
-              <Tooltip title="Eliminar">
-                <IconButton color="error" onClick={handleDeleteBill}>
+              <Tooltip title='Eliminar'>
+                <IconButton color='error' onClick={handleDeleteBill}>
                   <DeleteOutline />
                 </IconButton>
               </Tooltip>
             ) : (
-              <Label color="error">Eliminado</Label>
+              <Label color='error'>Eliminado</Label>
             )}
-            <Tooltip title="Cerrar">
-              <IconButton color="primary" onClick={closeDrawer}>
+            <Tooltip title='Cerrar'>
+              <IconButton color='primary' onClick={closeDrawer}>
                 <Close />
               </IconButton>
             </Tooltip>
           </Stack>
         </Box>
-        <Divider sx={{ borderStyle: "dashed" }} />
-        <Scrollbar height={"100%"}>
-          <Stack direction="column" spacing={2} px={2} mt={1}>
+        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Scrollbar height={'100%'}>
+          <Stack direction='column' spacing={2} px={2} mt={1}>
             <Box>
-              <Typography color="text.secondary" fontSize="0.8rem">
+              <Typography color='text.secondary' fontSize='0.8rem'>
                 Creado por
               </Typography>
-              <Typography variant="h6">
-                {bill.createdBy.person.firstName}{" "}
+              <Typography variant='h6'>
+                {bill.createdBy.person.firstName}{' '}
                 {bill.createdBy.person.lastName}
               </Typography>
             </Box>
             <Card>
-              <CardHeader title="Detalle" />
+              <CardHeader title='Detalle' />
               <TableContainer>
                 <BillDetailsTable details={bill.details} />
               </TableContainer>
             </Card>
 
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <Typography variant="h5" fontWeight="bold">
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Typography variant='h5' fontWeight='bold'>
                 Total: {formatMoney(bill.total)}
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
               <Button
-                variant="contained"
-                color="primary"
+                variant='contained'
+                color='primary'
                 onClick={navigateToBill}
               >
                 Ver
@@ -145,8 +145,8 @@ export const DrawerBill = NiceModal.create<Props>(({ bill }) => {
 
               {!bill.isPaid && (
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   onClick={navitateToEditBill}
                   disabled={bill.isPaid || !bill.isActive}
                 >

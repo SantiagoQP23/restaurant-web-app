@@ -1,8 +1,5 @@
-
-
-export interface CreateSectionDto{
+export interface CreateSectionDto {
   name: string;
 }
 
-export interface UpdateSectionDto extends Partial<CreateSectionDto>{
-}
+export interface UpdateSectionDto extends Partial<CreateSectionDto> {}

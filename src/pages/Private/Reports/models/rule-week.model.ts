@@ -1,7 +1,3 @@
-
-
-
-
 export enum ValidWeeks {
   FIRST = '1-8',
   SECOND = '9-15',
@@ -10,13 +6,10 @@ export enum ValidWeeks {
   FIFTH = '25-31'
 }
 
-
 export interface RuleWeek {
+  id: string;
 
-    id: string;
+  week: ValidWeeks;
 
-    week: ValidWeeks;
-
-    value: number;
-
+  value: number;
 }

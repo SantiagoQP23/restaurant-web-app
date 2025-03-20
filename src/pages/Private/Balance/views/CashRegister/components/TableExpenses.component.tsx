@@ -1,29 +1,30 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from "@mui/material"
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TablePagination
+} from '@mui/material';
 import { CashRegister } from '../../../models/cash-register.model';
 
-import { FC, useEffect } from "react";
+import { FC, useEffect } from 'react';
 
 interface Props {
   cashRegister: CashRegister;
 }
 
-export const TableExpenses: FC<Props> = ({cashRegister}) => {
-
+export const TableExpenses: FC<Props> = ({ cashRegister }) => {
   // const { expensesQuery, ...filterExpenses } = useExpenses();
-
 
   // useEffect(() => {
   //   filterExpenses.handleChangeCashRegister(cashRegister)
   // }, [])
 
-
-
   return (
     <>
-
       <TableContainer>
-
-
         <Table>
           <TableHead>
             <TableRow>
@@ -32,13 +33,10 @@ export const TableExpenses: FC<Props> = ({cashRegister}) => {
               <TableCell>Importe</TableCell>
               <TableCell>Forma de pago</TableCell>
               <TableCell>Acciones</TableCell>
-
             </TableRow>
-
           </TableHead>
 
           <TableBody>
-
             {
               // expensesQuery.data?.expenses.map((expense) => (
               //   <TableRow key={expense.id}>
@@ -46,7 +44,6 @@ export const TableExpenses: FC<Props> = ({cashRegister}) => {
               //       <Typography variant='h5'>
               //         {expense.transaction.description}
               //       </Typography>
-
               //       {
               //         expense.supplier && (
               //           <Typography variant='body2'>
@@ -58,33 +55,20 @@ export const TableExpenses: FC<Props> = ({cashRegister}) => {
               //     <TableCell>
               //       <Typography>
               //         {format(new Date(expense.createdAt), 'dd/MM/yyyy')}
-
               //       </Typography>
               //       <Typography>
               //         {format(new Date(expense.createdAt), 'HH:mm')}
-
               //       </Typography>
               //     </TableCell>
-
               //     <TableCell>$ {expense.transaction.amount}</TableCell>
               //     <TableCell>{expense.transaction.paymentMethod === PaymentMethod.CASH ? 'Efectivo' : 'Transferencia'}</TableCell>
               //     <TableCell>
-                    
-
               //     </TableCell>
-
               //   </TableRow>
-
-
               // ))
             }
-
-
           </TableBody>
-
         </Table>
-
-
       </TableContainer>
       {/* <TablePagination
 
@@ -98,5 +82,5 @@ export const TableExpenses: FC<Props> = ({cashRegister}) => {
 
       /> */}
     </>
-  )
-}
+  );
+};

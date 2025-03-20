@@ -6,32 +6,33 @@ import { addClient } from '../../../../../redux/slices/clients';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { FormClient } from '../FormClient.component';
-import { Container, Card, CardContent, Button, Grid, Typography } from '@mui/material';
+import {
+  Container,
+  Card,
+  CardContent,
+  Button,
+  Grid,
+  Typography
+} from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { CreateClientDto } from '../../dto/create-client.dto';
 import { TitlePage } from '../../../components/TitlePage.component';
 import { useCreateCliente } from '../../hooks/useClients';
 
-
-
-
 const initialClient: ICreateClient = {
-  lastName: "",
-  firstName: "",
+  lastName: '',
+  firstName: '',
   identification: {
     type: TypeIdentification.CEDULA,
-    num: "",
+    num: ''
   },
-  numPhone: "",
-  address: "",
-  email: "",
-}
-
-
+  numPhone: '',
+  address: '',
+  email: ''
+};
 
 export const AddClient = () => {
-
   const client = initialClient;
 
   const { loading, callEndpoint } = useFetchAndLoad();
@@ -43,61 +44,53 @@ export const AddClient = () => {
 
   const navigate = useNavigate();
 
-
   async function onSubmit(form: ICreateClient) {
-
     const { identification, ...dataClient } = form;
 
-    if (form.address === "") delete dataClient.address;
+    if (form.address === '') delete dataClient.address;
 
-    if (form.numPhone === "") delete dataClient.numPhone;
+    if (form.numPhone === '') delete dataClient.numPhone;
 
-    if (form.email === "") delete dataClient.email;
+    if (form.email === '') delete dataClient.email;
 
     let newClient: CreateClientDto = {
-      ...dataClient,
-    }
+      ...dataClient
+    };
 
-    if (identification.type === TypeIdentification.CEDULA && identification.num.length === 10
-      || identification.type === TypeIdentification.RUC && identification.num.length === 13
+    if (
+      (identification.type === TypeIdentification.CEDULA &&
+        identification.num.length === 10) ||
+      (identification.type === TypeIdentification.RUC &&
+        identification.num.length === 13)
     ) {
       newClient = {
         ...newClient,
         typeIdentification: identification.type,
         numberIdentification: identification.num
-      }
+      };
     }
 
-  
-    mutateAsync(newClient)
-      .then((data) => {
-        dispatch(addClient(data));
-        navigate('/clients');
-      }
-      )
-
-
+    mutateAsync(newClient).then((data) => {
+      dispatch(addClient(data));
+      navigate('/clients');
+    });
   }
-
-
 
   return (
     <>
-
-      <TitlePage title="Nuevo cliente" />
-
+      <TitlePage title='Nuevo cliente' />
 
       <Container maxWidth={'sm'}>
-
-
         <Card>
           <CardContent>
-            <FormClient onSubmit={onSubmit} client={client} loading={isLoading} />
-
+            <FormClient
+              onSubmit={onSubmit}
+              client={client}
+              loading={isLoading}
+            />
           </CardContent>
         </Card>
       </Container>
-
     </>
-  )
-} 
+  );
+};
