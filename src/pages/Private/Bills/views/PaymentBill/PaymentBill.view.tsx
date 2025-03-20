@@ -46,6 +46,7 @@ import { AddClientModal } from '@/pages/Private/Clients/components/AddClient/Add
  * @version 1.1 28-02-2025 Remove payment method
  * @author Steven Rosales
  * @version 1.2 15-03-2025 Add iva to bill
+ * @version 1.3 20-03-2025 Remove iva from bill
  */
 export const PaymentBill = () => {
   const { id } = useParams();
