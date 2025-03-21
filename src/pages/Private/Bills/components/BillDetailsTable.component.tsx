@@ -6,14 +6,9 @@ import {
   TableCell,
   TableBody,
   TableRow,
-  Typography
 } from '@mui/material';
 import { formatMoney } from '../../Common/helpers/format-money.helper';
-import {
-  getIvaValue,
-  getPriceWithoutIva,
-  formatPercentage
-} from '@/helpers/product.helper';
+
 
 interface Props {
   details: BillDetail[];
@@ -22,6 +17,7 @@ interface Props {
 /**
  * @author Steven Rosales
  * @version 1.0 15-03-2025 Add iva to bill
+ * @version 1.1 20-03-2025 Remove iva from bill
  */
 export const BillDetailsTable: FC<Props> = ({ details }) => {
   return (
@@ -43,23 +39,13 @@ export const BillDetailsTable: FC<Props> = ({ details }) => {
               <TableCell align='center'>{detail.quantity}</TableCell>
               <TableCell>{detail.orderDetail.product.name}</TableCell>
               <TableCell align='right'>
-                {formatMoney(
-                  getPriceWithoutIva(
-                    detail.orderDetail.price,
-                    detail.orderDetail.product.iva
-                  )
-                )}
+                {formatMoney(detail.orderDetail.price)}
               </TableCell>
               <TableCell align='right'>
-                {formatMoney(
-                  getIvaValue(
-                    detail.orderDetail.price,
-                    detail.orderDetail.product.iva
-                  )
-                )}
-                <Typography variant='caption' color='textSecondary'>
+                {formatMoney(detail.orderDetail.price)}
+                {/* <Typography variant='caption' color='textSecondary'>
                   {` (${formatPercentage(Number(detail.orderDetail.product.iva))})`}
-                </Typography>
+                </Typography> */}
               </TableCell>
               <TableCell align='right'>{formatMoney(detail.total)}</TableCell>
             </TableRow>

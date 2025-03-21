@@ -31,29 +31,29 @@ const generalSection: MenuSection = {
       title: 'Dashboard',
       icon: <DashboardOutlinedIcon />,
       to: '/reports'
-    }
-    // {
-    //   title: "Finanzas",
-    //   icon: <AccountBalanceWallet />,
-    //   to: "/financial",
-    //   subItems: [
-    //     {
-    //       title: "Transacciones",
-    //       to: "/financial/transactions",
-    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-    //     },
-    //     {
-    //       title: "Caja",
-    //       to: "/financial/cash-register/actives",
-    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-    //     },
-    //     {
-    //       title: "Cuentas",
-    //       to: "/financial/accounts",
-    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-    //     },
-    //   ],
-    // },
+    },
+    {
+      title: "Finanzas",
+      icon: <AccountBalanceWallet />,
+      to: "/financial",
+      subItems: [
+        {
+          title: "Transacciones",
+          to: "/financial/transactions",
+          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+        },
+        {
+          title: "Caja",
+          to: "/financial/cash-register/actives",
+          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+        },
+        {
+          title: "Cuentas",
+          to: "/financial/accounts",
+          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+        },
+      ],
+    },
   ]
 };
 
