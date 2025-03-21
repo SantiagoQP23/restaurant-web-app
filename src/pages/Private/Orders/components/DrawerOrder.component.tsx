@@ -148,24 +148,6 @@ export const DrawerOrder = NiceModal.create<Props>(({ table }) => {
                 </Typography>
 
                 <Stack alignItems="center" mt={2} spacing={5}>
-                  {/* <Box>
-                    <Switch
-                      checked={table?.isAvailable}
-                      onChange={(e, value) => handleChangeStatusTable(value)}
-                      inputProps={{ "aria-label": "controlled" }}
-                      color={activeTable?.isAvailable ? "success" : "error"}
-                    />
-                    <Label
-                      color={activeTable?.isAvailable ? "success" : "error"}
-                    >
-                      <Circle
-                        sx={{ fontSize: 10, mr: 1 }}
-                        color={activeTable?.isAvailable ? "success" : "error"}
-                      />
-
-                      {activeTable?.isAvailable ? "Disponible" : "Ocupada"}
-                    </Label>
-                  </Box> */}
                   <Button
                     variant="contained"
                     color="primary"
