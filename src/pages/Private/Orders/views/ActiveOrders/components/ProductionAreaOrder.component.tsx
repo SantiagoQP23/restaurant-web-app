@@ -140,6 +140,7 @@ export const ProductionAreaOrder = ({
                 key={detail.id}
                 detail={detail}
                 orderId={orderId}
+                typeOrder={order.type}
               />
             ))}
           </Stack>

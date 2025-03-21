@@ -13,14 +13,16 @@ import {
   Checkbox
 } from '@mui/material';
 
-import { IOrderDetail } from '../../../../../../models';
+import { IOrderDetail, TypeOrder } from '../../../../../../models';
 import {
   CheckCircle,
   CheckCircleOutline,
+  LocalDiningOutlined,
   More,
   MoreVertOutlined,
   PlusOne,
-  PlusOneOutlined
+  PlusOneOutlined,
+  TakeoutDiningOutlined
 } from '@mui/icons-material';
 import { UpdateOrderDetailDto } from '../../../dto';
 import { useUpdateOrderDetail } from '../../../hooks';
@@ -46,6 +48,7 @@ const LinearProgressWrapper = styled(LinearProgress)(
 interface Props {
   detail: IOrderDetail;
   orderId: string;
+  typeOrder: TypeOrder;
 }
 
 /**
@@ -54,8 +57,9 @@ interface Props {
  * @version 1.1 20/12/2023 Adds product options chip
  * @version 1.2 28/12/2023 Adds useUpdateOrderDetail hook
  * @version 1.3 01/03/2025 Fix: Buttons to increase quantity delivered
+ * @version 1.4 20-01-2025 Adds order detail type icon
  */
-export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
+export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
   const { mutate: update } = useUpdateOrderDetail();
 
   const [checked, setChecked] = useState(
@@ -123,7 +127,7 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
 
         <ListItemText
           primary={
-            <>
+            <Stack direction='row' alignItems='center' gap={1}>
               {detail.product.name}
               {detail.productOption && (
                 <Chip
@@ -132,7 +136,11 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
                   size='small'
                 />
               )}
-            </>
+              {detail.typeOrderDetail !== typeOrder && (
+                detail.typeOrderDetail === TypeOrder.IN_PLACE ? <LocalDiningOutlined /> : <TakeoutDiningOutlined />
+
+              )}
+            </Stack>
           }
           primaryTypographyProps={{
             variant: 'h4',
@@ -145,6 +153,8 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId }) => {
                 detail.qtyDelivered === detail.quantity
                   ? 'line-through'
                   : 'none'
+              ,
+              alignItems: 'center'
             }
           }}
           secondary={
