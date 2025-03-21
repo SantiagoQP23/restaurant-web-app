@@ -54,6 +54,7 @@ const generalSection: MenuSection = {
         //   to: "/financial/accounts",
         //   icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
         // },
+
       ],
     },
   ]

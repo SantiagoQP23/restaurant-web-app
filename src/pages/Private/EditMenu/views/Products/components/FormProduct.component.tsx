@@ -33,7 +33,7 @@ import { useProductionAreasStore } from '../../../../Common/store/production-are
 import NiceModal from '@ebay/nice-modal-react';
 import { ModalCreateProductOption } from './ModalCreateProductOption.component';
 import { ProductOptionItem } from './ProductOptionItem.component';
-import { getPriceWithoutIva } from '@/helpers/product.helper';
+import { getPriceWithIva } from '@/helpers/product.helper';
 
 interface Props {
   product: IProduct;
@@ -66,12 +66,8 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   const { productionAreas } = useProductionAreasStore();
 
-  const [priceWithoutIva, setPriceWithoutIva] = useState<number>(
-    getPriceWithoutIva(selectedProduct.price, selectedProduct.iva)
-  );
-  const [unitCostWithoutIva, setUnitCostWithoutIva] = useState<number>(
-    getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva)
-  );
+  const [priceWithoutIva, setPriceWithoutIva] = useState<number>(getPriceWithIva(selectedProduct.price, selectedProduct.iva));
+  const [unitCostWithoutIva, setUnitCostWithoutIva] = useState<number>(getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva));
 
   const { sections } = useSelector(selectMenu);
 
@@ -96,12 +92,12 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   const onPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(event.target.value || '0');
-    setPriceWithoutIva(getPriceWithoutIva(value, selectedProduct.iva));
+    setPriceWithoutIva(getPriceWithIva(value, selectedProduct.iva));
   };
 
   const onUnitCostChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(event.target.value || '0');
-    setUnitCostWithoutIva(getPriceWithoutIva(value, selectedProduct.iva));
+    setUnitCostWithoutIva(getPriceWithIva(value, selectedProduct.iva));
   };
 
   const {
@@ -135,22 +131,14 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   useEffect(() => {
     reset(getUpdateProductDto(selectedProduct));
-    setPriceWithoutIva(
-      getPriceWithoutIva(selectedProduct.price, selectedProduct.iva)
-    );
-    setUnitCostWithoutIva(
-      getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva)
-    );
+    setPriceWithoutIva(getPriceWithIva(selectedProduct.price, selectedProduct.iva));
+    setUnitCostWithoutIva(getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva));
   }, [selectedProduct, sections]);
 
   useEffect(() => {
     reset(getUpdateProductDto(selectedProduct));
-    setPriceWithoutIva(
-      getPriceWithoutIva(selectedProduct.price, selectedProduct.iva)
-    );
-    setUnitCostWithoutIva(
-      getPriceWithoutIva(selectedProduct.unitCost, selectedProduct.iva)
-    );
+    setPriceWithoutIva(getPriceWithIva(selectedProduct.price, selectedProduct.iva));
+    setUnitCostWithoutIva(getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva));
   }, []);
 
   function showModalCreateOption(): void {
@@ -452,7 +440,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                   </Grid>
                   <Grid item xs={6} md={3}>
                     <TextField
-                      label='$ sin IVA'
+                      label='$ con IVA'
                       fullWidth
                       disabled
                       type='number'
@@ -461,7 +449,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                   </Grid>
                   <Grid item xs={6} md={3}>
                     <TextField
-                      label='$ unitario sin IVA'
+                      label='$ unitario con IVA'
                       fullWidth
                       disabled
                       type='number'
