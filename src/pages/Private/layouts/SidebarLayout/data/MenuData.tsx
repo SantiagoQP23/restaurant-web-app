@@ -22,6 +22,8 @@ import { ValidRoles } from '../../../Common/models/valid-roles.model';
 
 /**
  * @version 1.1 31-01-2025 Remove finance
+ * @author Steven Rosales
+ * @version 1.2 20-03-2025 Add cash register
  */
 const generalSection: MenuSection = {
   title: 'GENERAL',
@@ -47,11 +49,12 @@ const generalSection: MenuSection = {
           to: "/financial/cash-register/actives",
           icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
         },
-        {
-          title: "Cuentas",
-          to: "/financial/accounts",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-        },
+        // {
+        //   title: "Cuentas",
+        //   to: "/financial/accounts",
+        //   icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+        // },
+
       ],
     },
   ]
