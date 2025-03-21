@@ -48,8 +48,12 @@ interface Props {
  * @version 1.3 28/12/2023 Adds useCreateOrderDetail hook
  * @version 1.4 31/01/2025 Options hidden
  * @version 1.5 01/03/2025 Fix: Validation to add product to order and quantity delivered
+ *
  * @author Steven Rosales
  * @version 1.6 17/03/2025 Adds type order
+ *
+ * @author Santiago Quirumbay
+ * @version 1.7 20-03-2025 Default order detail type
  */
 export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const modal = useModal();
@@ -65,12 +69,13 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const [selectedOption] = useState<ProductOption | undefined>(
     detail.productOption ? detail.productOption : undefined
   );
-  const [typeOrder, setTypeOrder] = useState<TypeOrder>(TypeOrder.IN_PLACE);
+  const { activeOrder } = useSelector(selectOrders);
+
+  const [typeOrder, setTypeOrder] = useState<TypeOrder>(activeOrder ? activeOrder.type : TypeOrder.IN_PLACE);
 
   const { addDetail, details, updateDetail } = useNewOrderStore(
     (state) => state
   );
-  const { activeOrder } = useSelector(selectOrders);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -184,7 +189,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
             <FormControl>
               <RadioGroup
                 aria-labelledby='demo-radio-buttons-group-label'
-                defaultValue={TypeOrder.IN_PLACE}
+                value={typeOrder}
                 name='radio-buttons-group'
                 onChange={(e) => {
                   handleTypeChange(e.target.value as TypeOrder);
