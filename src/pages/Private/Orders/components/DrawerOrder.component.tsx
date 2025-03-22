@@ -166,14 +166,16 @@ export const DrawerOrder = NiceModal.create<Props>(({ table }) => {
                       {activeTable?.isAvailable ? "Disponible" : "Ocupada"}
                     </Label>
                   </Box> */}
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    startIcon={<Add />}
-                    onClick={handleAddOrder}
-                  >
-                    Añadir pedido
-                  </Button>
+                  <Stack alignItems="center" mt={2} spacing={5}>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      startIcon={<Add />}
+                      onClick={handleAddOrder}
+                    >
+                      Añadir pedido
+                    </Button>
+                  </Stack>
                 </Stack>
               </Box>
             </Stack>

@@ -11,26 +11,21 @@ import {
   CardHeader,
   CardContent,
   Typography,
-  Tooltip
-} from '@mui/material';
-import { TitlePage } from '../../../components';
-import { Tables } from './components/Tables.component';
-import {
-  Add,
-  Assignment,
-  LocalDining,
-  PendingActions,
-  SoupKitchen
-} from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import { OrderStatus, TypeOrder } from '../../../../../models';
-import { useNewOrderStore } from '../../store/newOrderStore';
-import { Users } from './components/Users.component';
-import { Label } from '../../../../../components/ui';
-import { TakeAwayOrders } from './components/TakeAwayOrders.component';
-import { useSelector } from 'react-redux';
-import { selectOrders } from '../../../../../redux';
-import { LinearProgressWrapper } from '../../components';
+  Tooltip,
+} from "@mui/material";
+import { TitlePage } from "../../../components";
+import { Tables } from "./components/Tables.component";
+import { Add, Assignment, LocalDining, PendingActions, SoupKitchen } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { OrderStatus, TypeOrder } from "../../../../../models";
+import { useNewOrderStore } from "../../store/newOrderStore";
+import { Users } from "./components/Users.component";
+import { Label } from "../../../../../components/ui";
+import { TakeAwayOrders } from "./components/TakeAwayOrders.component";
+import { useSelector } from "react-redux";
+import { selectOrders, selectTables } from "../../../../../redux";
+import { LinearProgressWrapper } from "../../components";
+import { TableInformation } from "../../components/TableInformation.component";
 
 enum DashboardViews {
   TABLES = 'TABLES',
@@ -39,6 +34,7 @@ enum DashboardViews {
 }
 
 export const OrdersDashboard = () => {
+  const { activeTable } = useSelector(selectTables);
   const [view, setView] = useState(DashboardViews.TABLES);
 
   const { orders } = useSelector(selectOrders);
@@ -75,113 +71,148 @@ export const OrdersDashboard = () => {
 
   return (
     <>
-      <Container maxWidth='lg'>
-        <TitlePage
-          title='Pedidos'
-          action={
-            <Stack direction='row' spacing={1}>
-              <Button
-                variant='contained'
-                startIcon={<Add />}
-                onClick={createOrderTakeAway}
-                size='small'
-              >
-                Crear pedido para llevar
-              </Button>
-            </Stack>
-          }
-        />
+      <Box px={{ xs: 2, md: 10 }}>
 
-        <Grid container spacing={2} mb={2}>
-          <Grid item xs={6} md={6} lg={3}>
-            <Card>
-              <CardHeader
-                avatar={<Assignment color='primary' />}
-                title='Total de pedidos'
-              />
-              <CardContent>
-                <Typography variant='h1'>{orders.length}</Typography>
-                <Tooltip title='Pedidos pagados'>
-                  <LinearProgressWrapper
-                    value={(paidOrders * 100) / totalOrders}
-                    variant='determinate'
-                    color='primary'
+        <Grid container spacing={2}>
+          <Grid item lg={activeTable ? 9 : 12}>
+
+            <TitlePage
+              title="Pedidos"
+              action={
+                <Stack direction="row" spacing={1}>
+                  <Button
+                    variant="contained"
+                    startIcon={<Add />}
+                    onClick={createOrderTakeAway}
+                    size="small"
+                  >
+                    Crear pedido para llevar
+                  </Button>
+                </Stack>
+              }
+            />
+
+            <Grid container spacing={2} mb={2}>
+              <Grid item xs={6} md={6} lg={3}>
+                <Card>
+                  <CardHeader avatar={<Assignment color="primary" />} title="Total de pedidos" />
+                  <CardContent>
+                    <Typography variant="h1">{orders.length}</Typography>
+                    <Tooltip title="Pedidos pagados">
+                      <LinearProgressWrapper
+                        value={(paidOrders * 100) / totalOrders}
+                        variant="determinate"
+                        color="primary"
+                      />
+                    </Tooltip>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={6} lg={3}>
+                <Card>
+                  <CardHeader
+                    avatar={<PendingActions color="warning" />}
+                    title="Pendientes"
                   />
-                </Tooltip>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={6} lg={3}>
-            <Card>
-              <CardHeader
-                avatar={<PendingActions color='warning' />}
-                title='Pendientes'
+                  <CardContent>
+                    <Typography variant="h1">{pendingOrders}</Typography>
+                    <LinearProgressWrapper
+                      value={(pendingOrders * 100) / totalOrders}
+                      variant="determinate"
+                      color="warning"
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={6} lg={3}>
+                <Card>
+                  <CardHeader
+                    avatar={<SoupKitchen color="info" />}
+                    title="En proceso"
+                  />
+                  <CardContent>
+                    <Typography variant="h1">{inProgressOrders}</Typography>
+                    <LinearProgressWrapper
+                      value={(inProgressOrders * 100) / totalOrders}
+                      variant="determinate"
+                      color="info"
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={6} lg={3}>
+                <Card>
+                  <CardHeader
+                    avatar={<LocalDining color="success" />}
+                    title="Entregados"
+                  />
+                  <CardContent>
+                    <Typography variant="h1">{deliveredOrders}</Typography>
+                    <LinearProgressWrapper
+                      value={(deliveredOrders * 100) / totalOrders}
+                      variant="determinate"
+                      color="success"
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+
+            <Tabs value={view} onChange={(e, value) => setView(value)}>
+              <Tab value={DashboardViews.TABLES} label="Mesas" />
+              {/* <Tab value={DashboardViews.USERS} label="Usuarios" icon={<Label sx={{ml: 1}} color="info">new</Label>} iconPosition="end" /> */}
+              <Tab
+                value={DashboardViews.TAKE_AWAY}
+                label="Para llevar"
+                icon={
+                  <Label sx={{ ml: 1 }} color="info">
+                    {ordersTakeAway}
+                  </Label>
+                }
+                iconPosition="end"
               />
-              <CardContent>
-                <Typography variant='h1'>{pendingOrders}</Typography>
-                <LinearProgressWrapper
-                  value={(pendingOrders * 100) / totalOrders}
-                  variant='determinate'
-                  color='warning'
-                />
-              </CardContent>
-            </Card>
+            </Tabs>
+
+            <Box mt={2}>
+              {view === DashboardViews.TABLES && <Tables />}
+              {/* {view === DashboardViews.USERS && <Users />} */}
+              {view === DashboardViews.TAKE_AWAY && <TakeAwayOrders />}
+            </Box>
+            <Box>
+
+
+
+            </Box>
           </Grid>
-          <Grid item xs={6} md={6} lg={3}>
-            <Card>
-              <CardHeader
-                avatar={<SoupKitchen color='info' />}
-                title='En proceso'
-              />
-              <CardContent>
-                <Typography variant='h1'>{inProgressOrders}</Typography>
-                <LinearProgressWrapper
-                  value={(inProgressOrders * 100) / totalOrders}
-                  variant='determinate'
-                  color='info'
-                />
-              </CardContent>
-            </Card>
+          <Grid item lg={3}>
+            {activeTable && <TableInformation table={activeTable} />}
+            {/* <Typography> */}
+            {/*   dsaf;lkj */}
+            {/* </Typography> */}
           </Grid>
-          <Grid item xs={6} md={6} lg={3}>
-            <Card>
-              <CardHeader
-                avatar={<LocalDining color='success' />}
-                title='Entregados'
-              />
-              <CardContent>
-                <Typography variant='h1'>{deliveredOrders}</Typography>
-                <LinearProgressWrapper
-                  value={(deliveredOrders * 100) / totalOrders}
-                  variant='determinate'
-                  color='success'
-                />
-              </CardContent>
-            </Card>
-          </Grid>
+
         </Grid>
 
-        <Tabs value={view} onChange={(e, value) => setView(value)}>
-          <Tab value={DashboardViews.TABLES} label='Mesas' />
-          {/* <Tab value={DashboardViews.USERS} label="Usuarios" icon={<Label sx={{ml: 1}} color="info">new</Label>} iconPosition="end" /> */}
-          <Tab
-            value={DashboardViews.TAKE_AWAY}
-            label='Para llevar'
-            icon={
-              <Label sx={{ ml: 1 }} color='info'>
-                {ordersTakeAway}
-              </Label>
-            }
-            iconPosition='end'
-          />
-        </Tabs>
-
-        <Box mt={2}>
-          {view === DashboardViews.TABLES && <Tables />}
-          {/* {view === DashboardViews.USERS && <Users />} */}
-          {view === DashboardViews.TAKE_AWAY && <TakeAwayOrders />}
-        </Box>
-      </Container>
+        {/* <Tabs value={view} onChange={(e, value) => setView(value)}> */}
+        {/*   <Tab value={DashboardViews.TABLES} label='Mesas' /> */}
+        {/*   <Tab value={DashboardViews.USERS} label="Usuarios" icon={<Label sx={{ml: 1}} color="info">new</Label>} iconPosition="end" /> */}
+        {/*   <Tab */}
+        {/*     value={DashboardViews.TAKE_AWAY} */}
+        {/*     label='Para llevar' */}
+        {/*     icon={ */}
+        {/*       <Label sx={{ ml: 1 }} color='info'> */}
+        {/*         {ordersTakeAway} */}
+        {/*       </Label> */}
+        {/*     } */}
+        {/*     iconPosition='end' */}
+        {/*   /> */}
+        {/* </Tabs> */}
+        {/**/}
+        {/* <Box mt={2}> */}
+        {/*   {view === DashboardViews.TABLES && <Tables />} */}
+        {/*   {view === DashboardViews.TAKE_AWAY && <TakeAwayOrders />} */}
+        {/* </Box> */}
+      </Box>
     </>
   );
 };

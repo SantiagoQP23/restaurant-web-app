@@ -8,12 +8,12 @@ import {
   Typography,
   Badge,
   Stack,
-  CardHeader
-} from '@mui/material';
-import { ITable, OrderStatus } from '../../../../../../models';
-import { useSelector } from 'react-redux';
-import { selectOrders } from '../../../../../../redux';
-import { Label } from '../../../../../../components/ui';
+  CardHeader,
+} from "@mui/material";
+import { ITable, OrderStatus } from "../../../../../../models";
+import { useDispatch, useSelector } from "react-redux";
+import { selectOrders, setActiveTable } from "../../../../../../redux";
+import { Label } from "../../../../../../components/ui";
 import {
   DrawerOrder,
   LabelStatusOrder,
@@ -31,6 +31,7 @@ interface Props {
 
 export const Table: FC<Props> = ({ table, handleClickTable }) => {
   const { orders } = useSelector(selectOrders);
+  const dispatch = useDispatch();
 
   const ordersTable = orders.filter((order) => order.table?.id === table.id);
 
@@ -40,7 +41,10 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
 
   const isAvailable = ordersTable.length === 0;
 
-  const showOrdersTableDrawer = () => NiceModal.show(DrawerOrder, { table });
+  const showOrdersTableDrawer = () => {
+    dispatch(setActiveTable(table));
+    // NiceModal.show(DrawerOrder, { table });
+  }
 
   return (
     <Card
@@ -48,13 +52,13 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
         border: (theme) =>
           isAvailable
             ? `2px solid ${theme.palette.success.light}`
-            : // : `2px solid ${theme.palette.warning.light}`,
-              ``,
+            // : `2px solid ${theme.palette.warning.light}`,
+            : ``,
         boxShadow: (theme) =>
           isAvailable
             ? `0px 0px 4px ${theme.palette.success.light}`
             : // : `0px 0px 4px ${theme.palette.warning.light}`,
-              ``
+            ``
       }}
     >
       <CardActionArea onClick={showOrdersTableDrawer}>
@@ -62,8 +66,8 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
           title={
             <Box display='flex' justifyContent='center' gap={1}>
               <TableBar
-                fontSize='small'
-                // color={isAvailable ? "secondary" : "inherit"}
+                fontSize="small"
+              // color={isAvailable ? "secondary" : "inherit"}
               />
               <Typography variant='h5' textAlign='center'>
                 {table.name}
