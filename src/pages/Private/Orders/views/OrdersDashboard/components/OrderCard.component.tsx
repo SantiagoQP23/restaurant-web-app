@@ -71,7 +71,7 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
   };
 
   const isCloseableOrder =
-    order.status === OrderStatus.DELIVERED && order.isPaid;
+    order.status === OrderStatus.DELIVERED && order.isPaid || order.status === OrderStatus.CANCELLED;
 
   const showModalCloseOrder = () => {
     NiceModal.show(ModalCloseOrder, {
@@ -125,7 +125,7 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
               </Stack>
             </>
           }
-          // avatar={<TableRestaurant />}
+        // avatar={<TableRestaurant />}
         />
         {order.notes && (
           <Box display='flex' flexDirection='column' px={2}>
