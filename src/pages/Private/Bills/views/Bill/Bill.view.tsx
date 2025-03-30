@@ -25,6 +25,8 @@ import { useBill } from '../../hooks/useBills';
 import {
   getPriceWithoutIva
 } from '@/helpers/product.helper';
+import { useRestaurant } from '@/pages/Private/Restaurant/hooks/useRestaurant';
+import { generateInvoicePdf } from '@/pages/Private/Invoices/helpers/generateInvoicePdf.helper';
 // import { generateInvoicePdf } from "../../helpers/generateInvoicePdf.helper";
 
 /**
@@ -34,6 +36,7 @@ import {
  * @version v1.2 20-03-2025 Remove iva from bill
  * @author Steven Rosales
  * @version v1.3 29-03-2025 Delete share button
+ * @version v1.4 30-03-2025 Add restaurant information to bill
  */
 export const Bill = () => {
   const { id } = useParams();
@@ -41,12 +44,13 @@ export const Bill = () => {
   if (!id) return <div>Not found</div>;
 
   const { data: bill, isLoading } = useBill(+id);
+  const { data: restaurant } = useRestaurant();
 
   const handlePrint = async () => {
-    // if (data) {
-    //   const pdf = await generateInvoicePdf(data);
-    //   pdf.open();
-    // }
+    if (bill && restaurant) {
+      const pdf = await generateInvoicePdf(bill, restaurant);
+      pdf.open();
+    }
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -91,7 +95,7 @@ export const Bill = () => {
         <Card>
           <CardHeader
             title={
-              <Typography variant='h4'> Restaurante Doña Yoli </Typography>
+              <Typography variant='h4'> {restaurant?.name} </Typography>
             }
             action={
               <Box>

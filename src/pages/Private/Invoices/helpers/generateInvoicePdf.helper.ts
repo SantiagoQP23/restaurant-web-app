@@ -5,7 +5,6 @@ import {
   Table as TablePdf,
   Img
 } from 'pdfmake-wrapper';
-import { Invoice } from '../../Orders/models/Invoice.model';
 
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -13,11 +12,19 @@ import { formatMoney } from '../../Common/helpers/format-money.helper';
 import { getPaymentMethod } from '../../Common/helpers/get-payment-method';
 import { format } from 'date-fns';
 
-import logo from '../../../../assets/logo3.png';
 import { es } from 'date-fns/locale';
+import { Bill } from '@/models/bill.model';
+import { Restaurant } from '../../Common/models/restaurant.model';
+
+/**
+ * Generate a pdf invoice
+ * @version v1.5 30-03-2025 Add restaurant information to bill
+ * @author Steven Rosales
+ */
 
 export const generateInvoicePdf = async (
-  invoice: Invoice
+  invoice: Bill,
+  restaurant: Restaurant
 ): Promise<ICreatePDF> => {
   PdfMakeWrapper.setFonts(pdfFonts);
 
@@ -29,23 +36,23 @@ export const generateInvoicePdf = async (
   });
 
   pdf.add(
-    await new Img(logo).width(50).height(50).margin([0, 0, 0, 0]).build()
+    await new Img(restaurant.logo).width(50).height(50).margin([0, 0, 0, 0]).build()
   );
 
   // margin: left top right bottom
   pdf.add(
-    new Txt('Restaurante Doña Yoli').bold().fontSize(14).margin([0, 5, 0, 0])
+    new Txt(restaurant.name).bold().fontSize(14).margin([0, 5, 0, 0])
       .end
   );
 
-  pdf.add(new Txt('Teléfono: 0992629516').end);
+  pdf.add(new Txt(restaurant.phone).end);
 
-  pdf.add(new Txt('Email: restaurantedeyoli@gmail.com').end);
+  pdf.add(new Txt(restaurant.email).end);
 
-  pdf.add(new Txt('San Pablo - Santa Elena').end);
+  pdf.add(new Txt(restaurant.address).end);
 
   pdf.add(
-    new Txt(`Comprobante N° ${invoice.transactionNumber}`)
+    new Txt(`Comprobante N° ${invoice.id}`)
       .bold()
       .alignment('right')
       .fontSize(14)
@@ -78,7 +85,7 @@ export const generateInvoicePdf = async (
     );
   }
 
-  pdf.add(new Txt(`Email: ${invoice.client?.person.email}`).end);
+  pdf.add(new Txt(`Email: ${invoice.client?.person.email || ''}`).end);
 
   pdf.add(
     new Txt(`Teléfono: ${invoice.client?.person.numPhone}`).margin([0, 0, 0, 0])
@@ -89,12 +96,12 @@ export const generateInvoicePdf = async (
 
   const productHeaders = ['Producto', 'Cantidad', 'Precio', 'Total'];
   const productData = invoice.details.map((detail) => [
-    detail.product.name,
+    detail.orderDetail.product.name,
     detail.quantity,
-    formatMoney(detail.price),
-    formatMoney(detail.amount)
+    formatMoney(detail.orderDetail.product.price),
+    formatMoney(detail.orderDetail.product.price * detail.quantity)
   ]);
-  const amount = ['', '', 'Subtotal', formatMoney(invoice.amount)];
+  const amount = ['', '', 'Subtotal', formatMoney(invoice.total)];
 
   const discount = ['', '', 'Descuento', formatMoney(invoice.discount || 0)];
 
@@ -107,15 +114,14 @@ export const generateInvoicePdf = async (
 
   // pdf.add(`Forma de pago: ${}`);
 
-  if (invoice.paymentMethod && invoice.amountPaid) {
+  if (invoice.paymentMethod && invoice.total) {
     pdf.add(
       `${getPaymentMethod(invoice.paymentMethod)}: ${formatMoney(
-        invoice.amountPaid
+        invoice.total
       )}`
     );
   }
 
-  pdf.add(`Cambio: ${formatMoney(invoice.difference || 0)}`);
 
   pdf.add(new Txt('Observaciones').bold().margin([0, 10, 0, 5]).end);
 
@@ -126,6 +132,12 @@ export const generateInvoicePdf = async (
       .alignment('center')
       .margin([0, 20, 0, 0]).end
   );
+
+  pdf.info({
+    title: `Comprobante N° ${invoice.id}`,
+    author: restaurant.name,
+    creationDate: new Date().toISOString(),
+  });
 
   return pdf.create();
 };
