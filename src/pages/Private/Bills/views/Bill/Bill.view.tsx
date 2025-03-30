@@ -1,4 +1,4 @@
-import { Delete, Print, Share } from '@mui/icons-material';
+import { Delete, Print } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -32,6 +32,8 @@ import {
  * @version v1.0 24-12-2023
  * @version v1.1 15-03-2025 Add iva to bill
  * @version v1.2 20-03-2025 Remove iva from bill
+ * @author Steven Rosales
+ * @version v1.3 29-03-2025 Delete share button
  */
 export const Bill = () => {
   const { id } = useParams();
@@ -75,10 +77,6 @@ export const Bill = () => {
             <IconButton color='error' size='small'>
               <Delete />
             </IconButton>
-            <IconButton size='small'>
-              <Share />
-            </IconButton>
-
             <Button
               variant='contained'
               startIcon={<Print />}
