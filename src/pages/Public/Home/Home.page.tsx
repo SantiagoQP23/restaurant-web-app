@@ -1,19 +1,28 @@
 import { AppBar } from '../components/AppBar.component';
-import { Container, Typography } from '@mui/material';
-import { useRestaurantStore } from '../../Private/Common/store/restaurantStore';
+import { Box, Container, Typography } from '@mui/material';
+import { Footer } from '../components/Footer.component';
 
 export const Home = () => {
-  const { restaurant } = useRestaurantStore();
-
   return (
     <>
       <AppBar />
 
       <Container maxWidth='lg'>
-        <Typography variant='h3'>Restaurante {restaurant?.name}</Typography>
-        {/* <>
-        {getComponent(view)}
-        </> */}
+        <Box
+          height='70vh'
+          display='flex'
+          flexDirection='column'
+          justifyContent='center'
+          alignItems='center'
+        >
+          <Typography variant='h3'>
+            Your complete system for managing restaurants
+          </Typography>
+          <Typography variant='h6' marginTop={2}>
+            Manage your restaurant with ease and efficiency
+          </Typography>
+        </Box>
+        <Footer />
       </Container>
     </>
   );

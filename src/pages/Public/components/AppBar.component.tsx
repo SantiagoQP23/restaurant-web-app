@@ -39,7 +39,6 @@ const pages = [
     path: '/contact'
   }
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const AppBar = () => {
   const navigate = useNavigate();
@@ -99,8 +98,6 @@ export const AppBar = () => {
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <ButtonTheme />
-
               <Button
                 onClick={() => navigate('/auth/login')}
                 size='small'
@@ -181,7 +178,7 @@ export const AppBar = () => {
                     textDecoration: 'none'
                   }}
                 >
-                  Restaurante {restaurant?.name}
+                  QuiEats
                 </Typography>
               </Stack>
               <Stack
@@ -230,49 +227,22 @@ export const AppBar = () => {
                 flexGrow={1}
                 justifyContent='right'
               >
-                <ButtonTheme />
-
-                <Box>
-                  <Button
-                    onClick={() => navigate('/auth/login')}
-                    variant='contained'
-                    size='small'
-                  >
-                    Iniciar sesión
-                  </Button>
-                </Box>
+                <Button
+                  onClick={() => navigate('/auth/login')}
+                  variant='outlined'
+                  size='small'
+                >
+                  Iniciar sesión
+                </Button>
+                <Button
+                  onClick={() => navigate('/auth/register')}
+                  variant='contained'
+                  size='small'
+                >
+                  Registrarse
+                </Button>
               </Stack>
             </Box>
-
-            {/* <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <MenuIcon />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box> */}
           </Toolbar>
         </Container>
       </MuiAppBar>
