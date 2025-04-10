@@ -26,9 +26,7 @@ import {
   getPriceWithoutIva
 } from '@/helpers/product.helper';
 import { useRestaurant } from '@/pages/Private/Restaurant/hooks/useRestaurant';
-import { generateInvoicePdf } from '@/pages/Private/Invoices/helpers/generateInvoicePdf.helper';
-// import { generateInvoicePdf } from "../../helpers/generateInvoicePdf.helper";
-
+import { generateBillPdf } from './generateBillPdf.helper';
 /**
  * View to display the bill
  * @version v1.0 24-12-2023
@@ -48,7 +46,7 @@ export const Bill = () => {
 
   const handlePrint = async () => {
     if (bill && restaurant) {
-      const pdf = await generateInvoicePdf(bill, restaurant);
+      const pdf = await generateBillPdf(bill, restaurant);
       pdf.open();
     }
   };
