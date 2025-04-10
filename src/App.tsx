@@ -16,10 +16,12 @@ import './styles/global-styles.css';
 import ThemeProvider from './theme/ThemeProvider';
 
 import { SuspenseLoader } from './components/ui/';
-import { useRestaurant } from './pages/Private/Restaurant/hooks/useRestaurant';
-function App() {
-  useRestaurant();
 
+/**
+ * @author Santiago Quirumbay
+ * @version 1.1 05-04-2025 Remove restaurant hook
+ */
+function App() {
   return (
     <ThemeProvider>
       <Suspense fallback={<SuspenseLoader />}>

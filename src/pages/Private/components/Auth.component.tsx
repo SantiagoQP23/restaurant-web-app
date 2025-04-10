@@ -14,7 +14,11 @@ const Auth: FC<Props> = ({ allowedRoles }) => {
   const { user } = useSelector(selectAuth);
   const location = useLocation();
 
-  return allowedRoles.find((role) => user?.role.name.includes(role)) ? (
+  return allowedRoles.find(
+    (role) =>
+      // user?.restaurantRoles[0]?.role.name.includes(role)
+      !!user
+  ) ? (
     <Outlet />
   ) : user?.username ? (
     <Navigate to='/unauthorized' state={{ from: location }} replace />

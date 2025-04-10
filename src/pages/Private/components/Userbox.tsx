@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 
 import {
-  Avatar,
   Box,
   Button,
   Divider,
@@ -13,8 +12,6 @@ import {
   Popover,
   Typography
 } from '@mui/material';
-
-import { grey } from '@mui/material/colors';
 
 import { styled } from '@mui/material';
 
@@ -68,12 +65,19 @@ export const Userbox = () => {
   const { user: userState } = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
 
+  // const user = {
+  //   name: userState?.username,
+  //   avatar: '/static/images/avatars/3.jpg',
+  //   jobtitle: 'TODO'
+  // };
+  //
+  console.log('userState', userState);
+
   const user = {
     name: userState?.username,
     avatar: '/static/images/avatars/3.jpg',
-    jobtitle: userState?.role.name
+    jobtitle: 'TODO'
   };
-
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 

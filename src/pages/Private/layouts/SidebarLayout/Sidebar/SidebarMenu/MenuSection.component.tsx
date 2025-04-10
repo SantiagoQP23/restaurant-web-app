@@ -140,12 +140,14 @@ const SubMenuWrapper = styled(Box)(
 export const MenuSection: FC<Props> = ({ section }) => {
   const { user } = useSelector(selectAuth);
 
-  if (
-    section.allowedRoles &&
-    !section.allowedRoles.includes(user!.role.name as ValidRoles)
-  ) {
-    return null;
-  }
+  // if (
+  //   section.allowedRoles &&
+  //   !section.allowedRoles.includes(
+  //     user!.restaurantRoles[0]?.role.name as ValidRoles
+  //   )
+  // ) {
+  //   return null;
+  // }
 
   return (
     <List

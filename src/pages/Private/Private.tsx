@@ -1,6 +1,6 @@
-import { useRoutes } from 'react-router-dom';
+import { useNavigate, useRoutes } from 'react-router-dom';
 
-import { useMenu } from '../../hooks';
+import { useAppSelector, useMenu } from '../../hooks';
 
 import { PrivateRouter } from './router';
 import { SidebarProvider } from './Common/contexts/SidebarContext';
@@ -25,6 +25,8 @@ import {
 import { useProductionAreas } from './Restaurant/hooks/useProductionArea';
 import { useTables } from './Tables/hooks/useTables';
 import { useOnTableUpdated } from './Tables/hooks/useOnWebSocketsEventsTables';
+import { selectAuth } from '@/redux';
+import { useEffect } from 'react';
 
 /**
  * Component that contains the private routes of the application
@@ -59,11 +61,11 @@ export const Private = () => {
   // listener update table
   useOnTableUpdated();
 
-  const restaurantQuery = useRestaurant();
+  // const restaurantQuery = useRestaurant();
 
   const isLoading =
     activeOrdersQuery.isLoading ||
-    restaurantQuery.isLoading ||
+    // restaurantQuery.isLoading ||
     menuQuery.isLoading ||
     areasQuery.isLoading ||
     tablesQuery.isLoading;

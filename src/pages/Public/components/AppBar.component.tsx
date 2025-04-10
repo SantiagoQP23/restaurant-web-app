@@ -12,16 +12,12 @@ import {
   Menu,
   MenuItem,
   IconButton,
-  Tooltip,
   Stack,
-  ListItemButton,
   ListItemText,
   ListItem
 } from '@mui/material/';
 
-import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
-import { ButtonTheme } from '../../Private/layouts/SidebarLayout/components';
 import { useRestaurantStore } from '../../Private/Common/store/restaurantStore';
 
 const pages = [
@@ -29,7 +25,7 @@ const pages = [
     name: 'Inicio',
     path: '/'
   },
-  { name: 'Productos', path: '/shop' },
+  // { name: 'Productos', path: '/shop' },
   {
     name: 'Acerca de',
     path: '/about'

@@ -66,7 +66,7 @@ export const Userbox = () => {
   const user = {
     name: userState?.username!,
     avatar: '/static/images/avatars/2.jpg',
-    jobtitle: Roles[`${userState?.role.name! as ValidRoles}`]
+    jobtitle: 'lksa'
   };
 
   const ref = useRef<any>(null);
@@ -190,7 +190,7 @@ export const Userbox = () => {
           <ListItem
             button
             to="/dashboards/messenger"
-            component={NavLink}
+            comionent={NavLink}
           >
             <InboxTwoToneIcon fontSize="small" />
             <ListItemText primary="Messenger" />

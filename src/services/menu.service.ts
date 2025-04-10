@@ -13,8 +13,8 @@ export const getMenu = () => {
   };
 };
 
-export const getAllMenu = async (): Promise<Menu> => {
-  const resp = await restauranteApi.get<Menu>('/menu');
+export const getAllMenu = async (restaurantId: string): Promise<Menu> => {
+  const resp = await restauranteApi.get<Menu>(`/menu/${restaurantId}`);
   return resp.data;
 };
 

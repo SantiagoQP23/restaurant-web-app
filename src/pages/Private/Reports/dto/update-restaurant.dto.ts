@@ -1,6 +1,5 @@
 export interface UpdateRestaurantDto {
   id: string;
-
   name?: string;
   address?: string;
   capacity?: number;

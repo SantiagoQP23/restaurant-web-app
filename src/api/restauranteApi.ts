@@ -1,3 +1,4 @@
+import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
 import axios from 'axios';
 
 import { getEnvVariables } from '../helpers';
@@ -15,10 +16,16 @@ const restauranteApi = axios.create({
 // Interceptores
 
 restauranteApi.interceptors.request.use((config) => {
+  const restaurant = useRestaurantStore.getState().restaurant;
+
   config.headers = {
     ...config.headers,
     Authorization: `Bearer ${localStorage.getItem('token') || ''}`
   };
+
+  if (restaurant) {
+    config.headers['x-restaurant-id'] = restaurant.id;
+  }
 
   return config;
 });

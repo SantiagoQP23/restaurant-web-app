@@ -3,9 +3,16 @@ import { UpdateRestaurantDto } from '../../Reports/dto/update-restaurant.dto';
 // import { Restaurant } from "../../Reports/models/restaurant.model";
 
 import { Restaurant } from '../../Common/models/restaurant.model';
+import { CreateRestaurantDto } from '../dto/create-restaurant.dto';
 
 export const getRestaurant = async (): Promise<Restaurant> => {
   const resp = await restauranteApi.get<Restaurant>(`restaurant/`);
+
+  return resp.data;
+};
+
+export const createRestaurant = async (restaurant: CreateRestaurantDto) => {
+  const resp = await restauranteApi.post<Restaurant>(`restaurant`, restaurant);
 
   return resp.data;
 };

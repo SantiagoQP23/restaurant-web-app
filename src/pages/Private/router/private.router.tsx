@@ -17,6 +17,8 @@ import { UnauthorizedPage } from '../../Status/Unauthorized.page';
 import Auth from '../components/Auth.component';
 import { ValidRoles } from '../Common/models/valid-roles.model';
 import { BillsRouter } from '../Bills/routers/Bills.router';
+import BaseLayout from '../layouts/BaseLayout';
+import { NewRestaurant } from '../Restaurant/views/NewRestaurant/NewRestaurant.view';
 
 export const PrivateRouter: RouteObject[] = [
   {
@@ -46,11 +48,6 @@ export const PrivateRouter: RouteObject[] = [
         element: <Auth allowedRoles={[ValidRoles.admin]} />,
         children: [BalanceRouter]
       },
-      {
-        path: 'restaurant',
-        element: <Auth allowedRoles={[ValidRoles.admin]} />,
-        children: [RestaurantRouter]
-      },
       SuppliersRouter,
 
       {
@@ -74,203 +71,35 @@ export const PrivateRouter: RouteObject[] = [
         element: <Navigate to={PrivateRoutes.ORDERS} />
       }
     ]
+  },
+  {
+    path: 'restaurant',
+    element: <Auth allowedRoles={[ValidRoles.admin]} />,
+    children: [RestaurantRouter]
   }
 ];
 
-//   {
-//     path: '/',
-//     element: <SidebarLayout allowedRoles={[ValidRoles.admin, ValidRoles.mesero, ValidRoles.despachador]} />,
-//     children: [
-//       {
-//         path: '',
-//         element: <Navigate to='/menu' />
-//       },
-//     ],
-
-//   },
-//   {
-//     path: '/auth/login',
-//     element: <Navigate to='/menu' />
-//   },
-//   {
-//     path: PrivateRoutes.MENU,
-//     element: <SidebarLayout allowedRoles={[ValidRoles.admin, ValidRoles.mesero, ValidRoles.despachador]} />,
-//     children: [
-//       {
-//         path: '',
-//         element: <Menu />
-//       },
-
-//     ]
-//   },
-//   {
-//     path: PrivateRoutes.MENU_EDIT,
-//     element: <SidebarLayout allowedRoles={[ValidRoles.admin, ValidRoles.mesero, ValidRoles.despachador]} />,
-//     children: [
-//       {
-//         path: '',
-//         element: <EditMenu />,
-//         children: [
-
-//           {
-//             path: '',
-//             element: <EditSections />,
-
-//           },
-//           {
-//             path: 'seccion',
-//             element: <EditSection />,
-
-//           },
-//           {
-//             path: ':nameSection',
-//             element: <EditCategories />,
-
-//           },
-//           {
-//             path: 'category',
-//             element: <EditCategory />,
-
-//           },
-//           {
-//             path: ':nameSection/:nameCategory',
-//             element: <EditProducts />
-//           },
-//           {
-//             path: 'product',
-//             element: <EditProduct />,
-
-//           },
-
-//         ]
-
-//       },
-
-//     ]
-//   },
-
-//   {
-//     path: PrivateRoutes.CLIENTS,
-//     element: <SidebarLayout allowedRoles={[ValidRoles.admin, ValidRoles.mesero, ValidRoles.despachador]} />,
-//     children: [
-//       {
-//         path: '',
-//         element: <Clients />,
-//         children: [
-//           {
-//             path: '',
-//             element: <ClientsList />
-//           },
-
-//           {
-//             path: 'edit',
-//             element: <EditClient />
-//           },
-//           {
-//             path: 'add',
-//             element: <AddClient />
-//           },
-
-//         ]
-//       },
-//     ]
-//   },
-//   {
-//     path: PrivateRoutes.TABLES,
-//     element: <SidebarLayout allowedRoles={[ValidRoles.admin, ValidRoles.mesero, ValidRoles.despachador]} />,
-//     children: [
-//       {
-//         path: '',
-//         element: <Tables />,
-//         children: [
-//           {
-//             path: '',
-//             element: <ListTables />
-//           },
-//           {
-//             path: 'edit',
-//             element: <EditTable />
-//           }
-
-//         ]
-//       },
-//     ]
-//   },
-//   {
-//     path: PrivateRoutes.USERS,
-//     element: <SidebarLayout allowedRoles={[ValidRoles.admin]} />,
-//     children: [
-//       {
-//         path: '',
-//         element: <Users />,
-//         children: [
-//           {
-//             path: '',
-//             element: <UsersList />
-//           },
-//           {
-//             path: 'edit',
-//             element: <EditUser />
-//           },
-//           {
-//             path: 'add',
-//             element: <AddUser />
-//           },
-//         ]
-//       }
-
-//     ]
-//   },
-//   {
-//     path: PrivateRoutes.REPORTS,
-//     element: <SidebarLayout allowedRoles={[ValidRoles.admin]} />,
-//     children: [
-//       {
-//         path: '',
-//         element: <Reports />,
-//         children: [
-//           {
-//             path: '',
-//             element: <DashboardReports />
-//           },
-//           {
-//             path: 'simulation',
-//             element: <AffluenceSimulation />
-
-//           },
-//           {
-//             path: 'simulator',
-//             element: <SimulatorForms />
-
-//           },
-//           {
-//             path: 'prediction',
-//             element: <AffluencePrediction />
-//           },
-//           {
-//             path: 'staff-planning',
-//             element: <StaffPlaning />
-//           },
-//           {
-//             path: 'orders',
-//             element: <OrdersReports />,
-//           },
-//           {
-//             path: 'orders/receipt',
-//             element: <ReceiptOrderReport />
-//           },
-//           {
-//             path: 'incomes',
-//             element: <IncomesReports />
-//           }
-//         ]
-//       },
-
-//     ]
-//   },
-//   {
-//     path: '*',
-//     element: <Status404 />
-
-//   }
-// ]
+export const SetupRestaurantRoutes: RouteObject[] = [
+  {
+    path: '/restaurant',
+    element: <BaseLayout />,
+    children: [
+      {
+        path: '',
+        element: <NewRestaurant />
+      },
+      {
+        path: 'new',
+        element: <NewRestaurant />
+      },
+      {
+        path: '*',
+        element: <Navigate to={'/restaurant/new'} />
+      }
+    ]
+  },
+  {
+    path: '*',
+    element: <Navigate to={'/restaurant'} />
+  }
+];

@@ -1,20 +1,34 @@
-import { useContext } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { SidebarContext } from '../../../Common/contexts/SidebarContext';
 
-import { Box, Divider, Typography, IconButton, Drawer } from '@mui/material';
+import {
+  Box,
+  Divider,
+  Typography,
+  IconButton,
+  Drawer,
+  Popover,
+  Stack,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  List,
+  ListSubheader
+} from '@mui/material';
 
 import MuiDrawer from '@mui/material/Drawer';
 
 import SidebarMenu from './SidebarMenu/SidebarMenu.component';
 import { Scrollbar } from '../../../components';
 
-import { ChevronLeft } from '@mui/icons-material';
+import { ChevronLeft, ExpandMore, Inbox } from '@mui/icons-material';
 
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../../../redux';
 
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import { useRestaurantStore } from '../../../Common/store/restaurantStore';
+import { Restaurant } from '@/pages/Private/Common/models/restaurant.model';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -69,7 +83,24 @@ const DrawerPersistent = styled(MuiDrawer, {
 }));
 
 const Title = ({ open }: { open: boolean }) => {
-  const { restaurant } = useRestaurantStore((state) => state);
+  const { restaurant, setRestaurant } = useRestaurantStore((state) => state);
+  const { user } = useSelector(selectAuth);
+
+  const ref = useRef<any>(null);
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  const handleOpen = (): void => {
+    setOpen(true);
+  };
+
+  const handleClose = (): void => {
+    setOpen(false);
+  };
+
+  const changeRestaurant = (restaurant: Restaurant) => {
+    setRestaurant(restaurant);
+    handleClose();
+  };
 
   return (
     <>
@@ -81,12 +112,14 @@ const Title = ({ open }: { open: boolean }) => {
           ml: open ? 3 : 0.75
         }}
       >
-        <img
-          src={restaurant!.logo}
-          alt='logo'
-          width='60px'
-          style={{ borderRadius: 8 }}
-        />
+        {restaurant?.logo && (
+          <img
+            src={restaurant!.logo}
+            alt='logo'
+            width='60px'
+            style={{ borderRadius: 8 }}
+          />
+        )}
 
         <Box>
           <Typography variant='subtitle1' color='text.primary'>
@@ -96,7 +129,47 @@ const Title = ({ open }: { open: boolean }) => {
             {restaurant?.name}
           </Typography>
         </Box>
+        <IconButton onClick={handleOpen} ref={ref}>
+          <ExpandMore />
+        </IconButton>
       </Box>
+      <Popover
+        anchorEl={ref.current}
+        onClose={handleClose}
+        open={isOpen}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+      >
+        <List
+          sx={{ width: 250, maxWidth: 250 }}
+          subheader={
+            <ListSubheader component='div' id='nested-list-subheader'>
+              Restaurantes
+            </ListSubheader>
+          }
+        >
+          {user?.restaurantRoles.map((restaurantRole) => (
+            <ListItemButton
+              key={restaurantRole.id}
+              onClick={() => changeRestaurant(restaurantRole.restaurant)}
+            >
+              {/* <ListItemIcon> */}
+              {/*   <Inbox /> */}
+              {/* </ListItemIcon> */}
+              <ListItemText
+                primary={restaurantRole.restaurant.name}
+                secondary={restaurantRole.role.name}
+              />
+            </ListItemButton>
+          ))}
+        </List>
+      </Popover>
     </>
   );
 };

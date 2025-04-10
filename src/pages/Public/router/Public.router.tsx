@@ -46,6 +46,6 @@ export const PublicRouter: RouteObject[] = [
   },
   {
     path: '*',
-    element: <Navigate to='/shop' />
+    element: <Navigate to='/' />
   }
 ];

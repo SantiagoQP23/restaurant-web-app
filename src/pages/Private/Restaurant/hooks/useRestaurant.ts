@@ -10,8 +10,10 @@ import { useRestaurantStore } from '../../Common/store/restaurantStore';
 import { Restaurant } from '../../Common/models/restaurant.model';
 import {
   UpdateRestaurantLogoDto,
-  updateRestaurantLogo
+  updateRestaurantLogo,
+  createRestaurant
 } from '../services/restaurant.service';
+import { CreateRestaurantDto } from '../dto/create-restaurant.dto';
 
 export const useRestaurant = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -49,6 +51,28 @@ export const useUpdateRestaurant = () => {
       onError: (error) => {
         console.log(error);
         enqueueSnackbar('Error al actualizar restaurante', {
+          variant: 'error'
+        });
+      }
+    }
+  );
+};
+
+export const useCreateRestaurant = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  // const { setRestaurant } = useRestaurantStore((state) => state);
+
+  return useMutation<Restaurant, unknown, CreateRestaurantDto>(
+    (data) => createRestaurant(data),
+    {
+      onSuccess: (data) => {
+        // setRestaurant(data);
+        enqueueSnackbar('Restaurante creado', { variant: 'success' });
+      },
+      onError: (error) => {
+        console.log(error);
+        enqueueSnackbar('Error al crear el restaurante', {
           variant: 'error'
         });
       }
