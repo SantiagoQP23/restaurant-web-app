@@ -98,7 +98,7 @@ export const generateOrderPdf = async (
   const header = ['Cant.', 'Producto', 'Descripción','Precio'];
   const body = order.details.map(detail => [
     detail.quantity,
-    detail.product.name,
+    detail.product.name.slice(0, 20),
     detail.description || '--',
     formatMoney(detail.price)
   ]);
