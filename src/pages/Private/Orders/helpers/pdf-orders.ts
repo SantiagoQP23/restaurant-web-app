@@ -1,13 +1,25 @@
-import { ICreatePDF, Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { ICreatePDF, Img, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
 import { Order, TypeOrder } from '../../../../models';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { formatMoney } from '../../Common/helpers/format-money.helper';
 
-import logo from '../../../../assets/logo3.png';
+import { Restaurant } from '../../Common/models/restaurant.model';
 
-export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
+/**
+ * Generates a PDF document for an order
+ * @param order - The order to generate the PDF for
+ * @param restaurant - The restaurant associated with the order
+ * @returns A promise that resolves to the generated PDF document
+ * @author Steven Rosales 
+ * @version V1.0 29-03-2025 Add restaurant information to PDF
+ */
+
+export const generateOrderPdf = async (
+  order: Order,
+  restaurant: Restaurant
+): Promise<ICreatePDF> => {
   PdfMakeWrapper.setFonts(pdfFonts);
 
   const pdf = new PdfMakeWrapper();
@@ -19,7 +31,7 @@ export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
   });
 
   pdf.add(
-    await new Img(logo)
+    await new Img(restaurant!.logo)
       .width(35)
       .height(35)
       .alignment('center')
@@ -27,7 +39,7 @@ export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
       .build()
   );
 
-  pdf.add(new Txt('Restaurant Doña Yoli').alignment('center').bold().end);
+  pdf.add(new Txt(restaurant!.name).alignment('center').bold().end);
 
   pdf.add(
     pdf.add(
@@ -80,17 +92,43 @@ export const generateOrderPdf = async (order: Order): Promise<ICreatePDF> => {
     pdf.add(new Txt(`${order.notes}`).margin([0, 0, 0, 10]).end);
   }
 
+// ... existing code ...
   pdf.add(new Txt('Productos').bold().margin([0, 0, 0, 5]).end);
 
-  order.details.forEach((detail) => {
-    pdf.add(new Txt(`${detail.quantity} - ${detail.product.name}`).end);
-    pdf.add(new Txt(`${detail.description}`).margin([0, 0, 0, 5]).end);
-  });
+  const header = ['Cant.', 'Producto', 'Descripción','Precio'];
+  const body = order.details.map(detail => [
+    detail.quantity,
+    detail.product.name.slice(0, 20),
+    detail.description || '--',
+    formatMoney(detail.price)
+  ]);
+
+  pdf.add(
+    new Table([
+      header,
+      ...body
+    ])
+    .widths(['auto', '*', '*','*'])
+    .layout('lightHorizontalLines')
+    .margin([0, 0, 0, 10,])
+    .end
+  );
 
   pdf.add(
     new Txt('Total ' + formatMoney(order.total)).margin([0, 10, 0, 0]).bold()
       .end
   );
+// ... existing code ...
+
+  pdf.info({
+    title: `Pedido #${order.num}`,
+    author: `${restaurant!.name}`,
+    subject: `Pedido #${order.num}`,
+    keywords: `Pedido #${order.num}`,
+    creator: `${restaurant!.name}`,
+    producer: `${restaurant!.name}`,
+    creationDate: new Date().toDateString()
+  });
 
   return pdf.create();
 };

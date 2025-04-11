@@ -8,22 +8,22 @@ import {
 
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
-import { formatMoney } from '../../Common/helpers/format-money.helper';
-import { getPaymentMethod } from '../../Common/helpers/get-payment-method';
 import { format } from 'date-fns';
 
 import { es } from 'date-fns/locale';
-import { Restaurant } from '../../Common/models/restaurant.model';
+import { Restaurant } from '@/pages/Private/Common/models/restaurant.model';
+import { formatMoney } from '@/pages/Private/Common/helpers/format-money.helper';
+import { getPaymentMethod } from '@/pages/Private/Common/helpers/get-payment-method';
+import { Bill } from '@/models/bill.model';
 
-import { Invoice } from '../../Orders/models/Invoice.model';
 /**
  * Generate a pdf invoice
- * @version v1.5 30-03-2025 Add restaurant information to bill
+ * @version v1.0 11-04-2025 Add generate bill pdf
  * @author Steven Rosales
  */
 
-export const generateInvoicePdf = async (
-  invoice: Invoice,
+export const generateBillPdf = async (
+  invoice: Bill,
   restaurant: Restaurant
 ): Promise<ICreatePDF> => {
   PdfMakeWrapper.setFonts(pdfFonts);
@@ -69,15 +69,21 @@ export const generateInvoicePdf = async (
 
   pdf.add(new Txt('Cliente').bold().end);
 
-  pdf.add(
-    new Txt(
-      `${invoice.client?.person.lastName} ${invoice.client?.person.firstName} `
-    ).end
-  );
+  if (invoice.client?.person.lastName && invoice.client?.person.firstName) {
+    pdf.add(
+      new Txt(
+        `${invoice.client?.person.lastName} ${invoice.client?.person.firstName} `
+      ).end
+    );
+  } else {
+    pdf.add(new Txt('Consumidor final').end);
+  }
 
-  pdf.add(new Txt(`Dirección: ${invoice.client?.address}`).end);
+  if (invoice.client?.address) {
+    pdf.add(new Txt(`Dirección: ${invoice.client?.address}`).end);
+  }
 
-  if (invoice.client?.person.identification?.num === '0999999999') {
+  if (invoice.client?.person.identification?.num === '0999999999' || !invoice.client?.person.identification?.num) {
     pdf.add(new Txt(`RUC/C.I.: `).end);
   } else {
     pdf.add(
@@ -87,10 +93,15 @@ export const generateInvoicePdf = async (
 
   pdf.add(new Txt(`Email: ${invoice.client?.person.email || ''}`).end);
 
-  pdf.add(
-    new Txt(`Teléfono: ${invoice.client?.person.numPhone}`).margin([0, 0, 0, 0])
-      .end
-  );
+  if (invoice.client?.person.numPhone) {
+    pdf.add(
+      new Txt(`Teléfono: ${invoice.client?.person.numPhone}`).margin([0, 0, 0, 0])
+        .end
+    );
+  } else {
+    pdf.add(new Txt(`Teléfono: `).end);
+  }
+
 
   pdf.add(new Txt('Productos').bold().fontSize(14).margin([0, 10, 0, 5]).end);
 

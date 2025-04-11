@@ -21,6 +21,7 @@ import { es } from 'date-fns/locale';
 
 import { formatMoney } from '../../../Common/helpers/format-money.helper';
 import { generateInvoicePdf } from '../../helpers/generateInvoicePdf.helper';
+import { useRestaurant } from '@/pages/Private/Restaurant/hooks/useRestaurant';
 
 export const Invoice = () => {
   const { invoiceId } = useParams();
@@ -30,10 +31,11 @@ export const Invoice = () => {
   const { invoiceQuery } = useInvoice(invoiceId);
 
   const { data, isLoading } = invoiceQuery;
+  const { data: restaurant } = useRestaurant();
 
   const handlePrint = async () => {
-    if (data) {
-      const pdf = await generateInvoicePdf(data);
+    if (data && restaurant) {
+      const pdf = await generateInvoicePdf(data, restaurant);
       pdf.open();
     }
   };
@@ -93,7 +95,7 @@ export const Invoice = () => {
           <Stack
             spacing={2}
             direction={{ xs: 'column', sm: 'row' }}
-            // Establecer el tamaño de los elementos
+          // Establecer el tamaño de los elementos
           >
             <Box flexBasis='50%'>
               <Typography variant='h5' mb={1}>

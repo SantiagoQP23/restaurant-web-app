@@ -52,6 +52,8 @@ import {
   usePopupState
 } from 'material-ui-popup-state/hooks';
 import { CreateBillModal } from './components/CreateBillModal.component';
+import { generateOrderPdf } from '../../helpers/pdf-orders';
+import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
 
 /**
  * Componente for edit order
@@ -63,6 +65,9 @@ import { CreateBillModal } from './components/CreateBillModal.component';
  * @version v1.2 18-02-2025 Fix: Validation to close order
  * @author Steven Rosales
  * @version v1.3 17/03/2025 Adds type order
+ * 
+ * @author Steven Rosales
+ * @version V1.0 29-03-2025 Add restaurant information to PDF
  */
 export const EditOrder = () => {
   const navigate = useNavigate();
@@ -75,6 +80,8 @@ export const EditOrder = () => {
   const { open: openDrawer, handleCloseDrawer } = useDrawerInvoiceStore(
     (state) => state
   );
+
+  const { restaurant } = useRestaurantStore((state) => state);
 
   const { orderId } = useParams();
 
@@ -106,12 +113,12 @@ export const EditOrder = () => {
     if (activeOrder) NiceModal.show(CreateBillModal, { order: activeOrder });
   };
 
-  // const openPDF = async () => {
-  //   if (activeOrder) {
-  //     const pdf = await generateOrderPdf(activeOrder);
-  //     pdf.open();
-  //   }
-  // };
+  const openPDF = async () => {
+    if (activeOrder && restaurant) {
+      const pdf = await generateOrderPdf(activeOrder, restaurant);
+      pdf.open();
+    }
+  };
 
   const handleEdit = () => {
     popupState.close();
@@ -288,7 +295,7 @@ export const EditOrder = () => {
           <EditOutlined fontSize='small' sx={{ mr: 2 }} />
           Editar
         </MenuItem>
-        <MenuItem onClick={handleEdit}>
+        <MenuItem onClick={openPDF}>
           <Print fontSize='small' sx={{ mr: 2 }} />
           Imprimir
         </MenuItem>
