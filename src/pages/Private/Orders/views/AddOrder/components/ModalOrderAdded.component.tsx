@@ -21,21 +21,27 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { generateOrderPdf } from '../../../helpers/pdf-orders';
+import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
+interface Props { }
 
-interface Props {}
-
+/**
+ * @author Steven Rosales
+ * @version V1.0 29-03-2025 Add restaurant information to PDF
+ */
 export const ModalOrderAdded: FC<Props> = () => {
   const { handleClose, isOpen, setOpen } = useModal();
 
   const [order, setOrder] = useState<Order>();
+
+  const { restaurant } = useRestaurantStore((state) => state);
 
   const suscription$ = statusModalAddOrder.getSubject();
 
   const navigate = useNavigate();
 
   const openPDF = async () => {
-    if (order) {
-      const pdf = await generateOrderPdf(order);
+    if (order && restaurant) {
+      const pdf = await generateOrderPdf(order, restaurant);
       pdf.open();
     }
   };
@@ -46,7 +52,7 @@ export const ModalOrderAdded: FC<Props> = () => {
       setOrder(resp.order);
     });
 
-    return () => {};
+    return () => { };
   }, []);
 
   return (

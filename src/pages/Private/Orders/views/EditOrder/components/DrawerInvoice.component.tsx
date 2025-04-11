@@ -4,7 +4,6 @@ import {
   Drawer,
   Typography,
   Box,
-  useMediaQuery,
   Card,
   TableContainer,
   TableHead,
@@ -25,12 +24,10 @@ import { format } from 'date-fns';
 import { CardHeader, Divider } from '@mui/material/';
 import {
   CloseOutlined,
-  Delete,
   DeleteOutline,
   Print
 } from '@mui/icons-material';
-import { Invoice, PaymentMethod } from '../../../models/Invoice.model';
-import { ModalDeleteInvoice } from '../../../components/modals/ModalDeleteInvoice.component';
+import { Invoice } from '../../../models/Invoice.model';
 import { Label } from '../../../../../../components/ui';
 import { useSelector } from 'react-redux';
 import { selectOrders } from '../../../../../../redux';
@@ -40,7 +37,7 @@ import { useForm } from 'react-hook-form';
 import { UpdateInvoiceDto } from '../../../dto';
 import { useUpdateInvoiceOrder } from '../../../hooks/useInvocesOrder';
 import { generateInvoicePdf } from '../../../../Invoices/helpers/generateInvoicePdf.helper';
-
+import { useRestaurant } from '@/pages/Private/Restaurant/hooks/useRestaurant';
 interface PropsFormInvoice {
   invoice: Invoice;
   orderId: string;
@@ -49,9 +46,7 @@ interface PropsFormInvoice {
 const FormInvoice: FC<PropsFormInvoice> = ({ invoice, orderId }) => {
   const {
     register,
-    handleSubmit,
-    formState: { errors },
-    control
+    handleSubmit
   } = useForm<UpdateInvoiceDto>({
     defaultValues: {
       id: invoice.id,
@@ -61,7 +56,7 @@ const FormInvoice: FC<PropsFormInvoice> = ({ invoice, orderId }) => {
     }
   });
 
-  const { loading, updateInvoiceOrder } = useUpdateInvoiceOrder();
+  const { updateInvoiceOrder } = useUpdateInvoiceOrder();
 
   const onSubmit = (data: UpdateInvoiceDto) => {
     console.log(data);
@@ -116,10 +111,11 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
 
   const { activeInvoice, handleCloseDrawer, handleOpenModal } =
     useDrawerInvoiceStore((state) => state);
+  const { data: restaurant } = useRestaurant();
 
   const handlePrint = async () => {
-    if (activeInvoice) {
-      const pdf = await generateInvoicePdf(activeInvoice);
+    if (activeInvoice && restaurant) {
+      const pdf = await generateInvoicePdf(activeInvoice, restaurant);
       pdf.open();
     }
   };
