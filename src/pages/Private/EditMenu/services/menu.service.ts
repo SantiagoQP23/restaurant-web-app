@@ -160,7 +160,7 @@ export const updateProductImage = async (
   formData.append('file', data.file);
 
   const resp = await restauranteApi.patch<IProduct>(
-    `/files/product-image/${id}`,
+    `/products/image/${id}`,
     formData
   );
 

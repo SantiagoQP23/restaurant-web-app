@@ -66,8 +66,12 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   const { productionAreas } = useProductionAreasStore();
 
-  const [priceWithoutIva, setPriceWithoutIva] = useState<number>(getPriceWithIva(selectedProduct.price, selectedProduct.iva));
-  const [unitCostWithoutIva, setUnitCostWithoutIva] = useState<number>(getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva));
+  const [priceWithoutIva, setPriceWithoutIva] = useState<number>(
+    getPriceWithIva(selectedProduct.price, selectedProduct.iva)
+  );
+  const [unitCostWithoutIva, setUnitCostWithoutIva] = useState<number>(
+    getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva)
+  );
 
   const { sections } = useSelector(selectMenu);
 
@@ -131,14 +135,22 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   useEffect(() => {
     reset(getUpdateProductDto(selectedProduct));
-    setPriceWithoutIva(getPriceWithIva(selectedProduct.price, selectedProduct.iva));
-    setUnitCostWithoutIva(getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva));
+    setPriceWithoutIva(
+      getPriceWithIva(selectedProduct.price, selectedProduct.iva)
+    );
+    setUnitCostWithoutIva(
+      getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva)
+    );
   }, [selectedProduct, sections]);
 
   useEffect(() => {
     reset(getUpdateProductDto(selectedProduct));
-    setPriceWithoutIva(getPriceWithIva(selectedProduct.price, selectedProduct.iva));
-    setUnitCostWithoutIva(getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva));
+    setPriceWithoutIva(
+      getPriceWithIva(selectedProduct.price, selectedProduct.iva)
+    );
+    setUnitCostWithoutIva(
+      getPriceWithIva(selectedProduct.unitCost, selectedProduct.iva)
+    );
   }, []);
 
   function showModalCreateOption(): void {
@@ -475,13 +487,13 @@ export const FormProduct: FC<Props> = ({ product }) => {
                 }
               />
               <List>
-                {product.options.map((option) => (
-                  <ProductOptionItem
-                    key={option.id}
-                    productOption={option}
-                    productId={selectedProduct.id}
-                  />
-                ))}
+                {/* {product.options?.map((option) => ( */}
+                {/*   <ProductOptionItem */}
+                {/*     key={option.id} */}
+                {/*     productOption={option} */}
+                {/*     productId={selectedProduct.id} */}
+                {/*   /> */}
+                {/* ))} */}
               </List>
             </Card>
           </Grid>
