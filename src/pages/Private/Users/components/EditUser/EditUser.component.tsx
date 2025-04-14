@@ -41,7 +41,7 @@ export const EditUser = () => {
 
   const updateUserMutation = useUpdateUser();
 
-  const { id, person, role, isActive, ...restUser } = activeUser!;
+  const { id, person, restaurantRoles, isActive, ...restUser } = activeUser!;
 
   const { id: idI, ...identification } = person.identification;
 

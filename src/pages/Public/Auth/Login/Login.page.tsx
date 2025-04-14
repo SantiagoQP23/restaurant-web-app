@@ -20,7 +20,9 @@ import { Copyright } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
 
 import { IFormLogin, PublicRoutes } from '../../../../models';
-import { selectAuth, startLogin } from '../../../../redux';
+import { onChecking, selectAuth, startLogin } from '../../../../redux';
+import { useLogin } from '../hooks/useAuth';
+import { useDispatch } from 'react-redux';
 
 const initialForm: IFormLogin = {
   username: '',
@@ -28,9 +30,9 @@ const initialForm: IFormLogin = {
 };
 
 export const LoginPage = () => {
-  const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const loginMutation = useLogin();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -43,9 +45,10 @@ export const LoginPage = () => {
   const { error, status } = useAppSelector(selectAuth);
 
   const handleLogin = (form: IFormLogin) => {
-    dispatch(startLogin(form));
-
-    if (status === 'authenticated') navigate('/', { replace: true });
+    dispatch(onChecking());
+    // dispatch(startLogin(form));
+    loginMutation.mutate(form);
+    // if (status === 'authenticated') navigate('/', { replace: true });
   };
 
   return (

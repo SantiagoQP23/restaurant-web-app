@@ -22,6 +22,8 @@ import HeaderMenu from './components/Menu.component';
 import { Typography } from '@mui/material';
 
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { useAppSelector } from '@/hooks';
+import { selectAuth } from '@/redux';
 
 const drawerWidth = 300;
 
@@ -75,6 +77,7 @@ function Header() {
   const { sidebarToggle, toggleSidebar, open, handleDrawerOpen } =
     useContext(SidebarContext);
 
+  const { user: userState } = useAppSelector(selectAuth);
   return (
     <AppBar position='fixed' open={false}>
       <Box
@@ -94,7 +97,7 @@ function Header() {
 
         <Stack direction='row' spacing={1} alignItems='center'>
           <HeaderButtons />
-          <HeaderUserbox />
+          {userState && <HeaderUserbox />}
           <Box
             component='span'
             sx={{

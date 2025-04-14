@@ -95,17 +95,17 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
       </TableCell>
       <TableCell>
         <Typography variant='body1' color='text.primary' gutterBottom noWrap>
-          <Label
-            color={
-              user?.role.name === 'admin'
-                ? 'info'
-                : user?.role.name === 'mesero'
-                  ? 'primary'
-                  : 'secondary'
-            }
-          >
-            {Roles[`${user?.role.name! as ValidRoles}`]}
-          </Label>
+          {/* <Label */}
+          {/*   color={ */}
+          {/*     user?.role.name === 'admin' */}
+          {/*       ? 'info' */}
+          {/*       : user?.role.name === 'mesero' */}
+          {/*         ? 'primary' */}
+          {/*         : 'secondary' */}
+          {/*   } */}
+          {/* > */}
+          {/*   {Roles[`${user?.role.name! as ValidRoles}`]} */}
+          {/* </Label> */}
         </Typography>
       </TableCell>
 

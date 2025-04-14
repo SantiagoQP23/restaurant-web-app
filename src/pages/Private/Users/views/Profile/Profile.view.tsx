@@ -43,7 +43,7 @@ export const Profile = () => {
               <Typography variant='h4' mt={5}>
                 {user?.person.firstName} {user?.person.lastName}
               </Typography>
-              <Typography variant='subtitle1'>{user?.role.name}</Typography>
+              {/* <Typography variant='subtitle1'>{user}</Typography> */}
             </CardContent>
           </Card>
         </Grid>

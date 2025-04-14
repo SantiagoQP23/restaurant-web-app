@@ -1,40 +1,44 @@
-import { lazy, useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-import { checkAuthToken, selectAuth } from '../redux/slices/auth';
-import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { PublicRoutes } from '../models';
+import { selectAuth } from '../redux/slices/auth';
+import { useAppSelector } from '../hooks/useRedux';
 
 import { Public } from '../pages/Public/Public.page';
-import { NewRestaurant } from '@/pages/Private/Restaurant/views/NewRestaurant/NewRestaurant.view';
 import { SetupRestaurant } from '@/pages/Private/SetupRestaurant';
 import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
+import { useRenewToken } from '@/pages/Public/Auth/hooks/useAuth';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 const Private = lazy(() => import('../pages/Private/Private'));
 
+/**
+ * @author Santiago Quirumbay
+ * @version v1.1 12-04-2025 Implement useRenewToken hook
+ */
 export const AppRouter = () => {
-  const dispatch = useAppDispatch();
-
-  const { status, user } = useAppSelector(selectAuth);
+  const { status } = useAppSelector(selectAuth);
   const { restaurant } = useRestaurantStore((state) => state);
+  useRenewToken();
 
-  useEffect(() => {
-    dispatch(checkAuthToken());
-  }, []);
+  if (status === 'checking') {
+    return (
+      <Box>
+        <CircularProgress />
+        <Typography>checking status</Typography>
+      </Box>
+    );
+  }
 
-  const getRoute = () => {
-    console.log('getRoute', status);
-    if (status === 'not-authenticated') {
-      return <Route path='/*' element={<Public />} />;
-    } else if (
-      status === 'authenticated' &&
-      user?.restaurantRoles.length === 0
-    ) {
-      return <Route path='/*' element={<SetupRestaurant />} />;
-    } else {
-      return <Route path='/*' element={<Private key={restaurant?.id} />} />;
-    }
-  };
-
-  return <Routes>{getRoute()}</Routes>;
+  return (
+    <Routes>
+      {status === 'not-authenticated' ? (
+        <Route path='/*' element={<Public />} />
+      ) : status === 'authenticated' && !restaurant ? (
+        <Route path='/*' element={<SetupRestaurant />} />
+      ) : (
+        <Route path='/*' element={<Private key={restaurant?.id} />} />
+      )}
+    </Routes>
+  );
 };

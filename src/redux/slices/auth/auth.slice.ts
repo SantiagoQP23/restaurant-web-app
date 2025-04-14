@@ -11,17 +11,6 @@ export interface AuthState {
   restaurant: Restaurant | null;
 }
 
-/*
-usuario:  idUsuario: 1,
- nombreUsuario: "Nombre del usuario",
- nombres: "No se ha iniciado sesión",
- 
- cargo: {
-   idCargo: 1,
-   nombre: 'Admin',
-   descripcion: 'alsdjl',
- }} */
-
 const initialState: AuthState = {
   status: 'checking',
   user: null,
@@ -53,23 +42,6 @@ export const authSlice = createSlice({
     loadRestaurant: (state, { payload }: PayloadAction<Restaurant>) => {
       state.restaurant = payload;
     }
-
-    /*  authUsuariosLoad: (state, action: PayloadAction<IUsuario[]>) => {
-       state.usuarios = action.payload;
-     },
-     authUsuarioAdd: (state, action: PayloadAction<IUsuario>) => {
-       state.usuarios.push(action.payload);
-     },
-     authUsuarioDelete: (state, action: PayloadAction<number>) => {
-       state.usuarios = state.usuarios.filter(u => u.idUsuario === action.payload);
-     },
-     authUsuarioUpdate: (state, action: PayloadAction<IUsuario>) => {
-       state.usuarios = state.usuarios.map(
-         u => (u.idUsuario === action.payload.idUsuario)
-         ? action.payload
-         : u
-         );
-     }, */
   }
 });
 
@@ -79,10 +51,6 @@ export const {
   onLogin,
   onLogout,
   loadRestaurant
-  /*  authUsuarioAdd,
-   authUsuarioUpdate,
-   authUsuarioDelete,
-   authUsuariosLoad */
 } = authSlice.actions;
 
 export const selectAuth = (state: RootState) => state.auth;

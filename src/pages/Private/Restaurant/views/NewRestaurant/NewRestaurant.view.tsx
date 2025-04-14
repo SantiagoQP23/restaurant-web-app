@@ -7,11 +7,8 @@ import {
   Grid,
   TextField
 } from '@mui/material';
-import { useRestaurantStore } from '../Common/store/restaurantStore';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
-import { FormRestaurantLogo } from './components/FormRestaurantLogo.component';
-import { ProductionAreasList } from './components/ProductionAreasList.component';
 import { TitlePage } from '@/pages/Private/components';
 import { useCreateRestaurant } from '../../hooks/useRestaurant';
 import { UpdateRestaurantDto } from '@/pages/Private/Reports/dto/update-restaurant.dto';

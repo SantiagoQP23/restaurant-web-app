@@ -32,3 +32,9 @@ export interface IUser {
   restaurantRoles: RestaurantRole[];
   isActive: boolean;
 }
+
+export interface LoginResponseDto {
+  token: string;
+  user: IUser;
+  currentRestaurant: Restaurant | null;
+}
