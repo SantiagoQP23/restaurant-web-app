@@ -84,6 +84,7 @@ export const EditTable = () => {
         .then((resp) => {
           const { data } = resp;
           dispatch(addTable(data));
+          dispatch(setActiveTable(data));
           enqueueSnackbar('Mesa añadida', { variant: 'success' });
         })
         .catch((err) => {

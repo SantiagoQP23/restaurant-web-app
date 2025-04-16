@@ -15,6 +15,21 @@ export const getUser = async (term: string): Promise<IUser> => {
   return resp.data;
 };
 
+export const getUsersSuggestions = async (
+  search: string
+): Promise<{ users: IUser[] }> => {
+  const resp = await restauranteApi.get<{ users: IUser[] }>(
+    `users/suggestions`,
+    {
+      params: {
+        search
+      }
+    }
+  );
+
+  return resp.data;
+};
+
 export const getUsers = async (
   pagination: FilterUsersDto
 ): Promise<{ users: IUser[]; count: number }> => {

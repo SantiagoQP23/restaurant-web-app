@@ -7,7 +7,8 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemSecondaryAction,
-  ListItemText
+  ListItemText,
+  Stack
 } from '@mui/material';
 
 import { NavItemButton } from './';
@@ -40,22 +41,29 @@ export const NavItemCollapsable: FC<Props> = ({ navItem }) => {
     <>
       <List component='div'>
         <ListItem component='div'>
-          <ListItemButton onClick={handleClick}>
-            <ListItemIcon>{navItem.icon}</ListItemIcon>
+          <ListItemButton
+            onClick={handleClick}
+            sx={{ display: 'flex', alignItems: 'center' }}
+          >
+            <Stack display='flex' direction='row' alignItems='center'>
+              <ListItemIcon>{navItem.icon}</ListItemIcon>
 
-            <ListItemText
-              primary={navItem.title}
-              sx={{ opacity: 1, color: 'text.primary' }}
-            />
-            <ListItemSecondaryAction>
-              {open ? (
-                <ExpandMore sx={{ fontSize: 18, color: 'text.primary' }} />
-              ) : (
-                <KeyboardArrowRight
-                  sx={{ fontSize: 18, color: 'text.primary' }}
-                />
-              )}
-            </ListItemSecondaryAction>
+              <ListItemText
+                primary={navItem.title}
+                sx={{ opacity: 1, color: 'text.primary' }}
+              />
+              <ListItemSecondaryAction
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
+                {open ? (
+                  <ExpandMore sx={{}} />
+                ) : (
+                  <KeyboardArrowRight
+                  // sx={{ fontSize: 18, color: 'text.primary' }}
+                  />
+                )}
+              </ListItemSecondaryAction>
+            </Stack>
           </ListItemButton>
         </ListItem>
         <Collapse in={open} timeout='auto' unmountOnExit>

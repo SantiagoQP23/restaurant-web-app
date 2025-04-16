@@ -7,6 +7,7 @@ import {
   createUser,
   getUser,
   getUsers,
+  getUsersSuggestions,
   resetPasswordUser,
   updateUser
 } from '../services/users.service';
@@ -27,7 +28,8 @@ export const useUsers = () => {
   const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
     usePaginationAsync();
 
-  const { search, setSearch, handleChangeSearch } = useSearch();
+  const { search, setSearch, debouncedSearch, handleChangeSearch } =
+    useSearch();
 
   const usersQuery = useQuery<{ users: IUser[]; count: number }>(
     ['users'],
@@ -48,10 +50,33 @@ export const useUsers = () => {
     usersQuery,
     page,
     search,
+    debouncedSearch,
 
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
+    handleChangeSearch
+  };
+};
+
+export const useUsersSuggestions = () => {
+  const dispatch = useDispatch();
+
+  const { search, setSearch, debouncedSearch, handleChangeSearch } =
+    useSearch(1000);
+
+  const usersQuery = useQuery<{ users: IUser[] }>(
+    ['users-suggestions', debouncedSearch],
+    () => getUsersSuggestions(debouncedSearch),
+    {
+      onSuccess: (data) => {}
+    }
+  );
+
+  return {
+    usersQuery,
+    search,
+    debouncedSearch,
     handleChangeSearch
   };
 };
