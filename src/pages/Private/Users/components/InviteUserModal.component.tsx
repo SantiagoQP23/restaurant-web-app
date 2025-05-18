@@ -8,27 +8,35 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
   IconButton,
   InputBase,
+  InputLabel,
   List,
   ListItem,
   ListItemButton,
   ListItemSecondaryAction,
   ListItemText,
+  MenuItem,
   Paper,
+  Select,
+  SelectChangeEvent,
   Stack,
   Typography,
   useMediaQuery,
   useTheme
 } from '@mui/material';
 import { CloseOutlined } from '@mui/icons-material';
-import { useUsers, useUsersSuggestions } from '../hooks/useUsers';
+import { useUsersSuggestions } from '../hooks/useUsers';
 import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from 'react';
 import { IUser } from '@/models';
+import { useRoles } from '../hooks/useRoles';
+import { InviteUserDto } from '../dto/invite-user.dto';
 export const InviteUserModal = NiceModal.create(() => {
   const modal = useModal();
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+  const [roleId, setRoleId] = useState<number>();
 
   const {
     usersQuery,
@@ -37,6 +45,9 @@ export const InviteUserModal = NiceModal.create(() => {
 
     handleChangeSearch
   } = useUsersSuggestions();
+
+  const { rolesQuery } = useRoles();
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -54,6 +65,23 @@ export const InviteUserModal = NiceModal.create(() => {
 
   const selectUser = (user: IUser) => {
     setSelectedUser(user);
+  };
+
+  const handleChangeRole = (event: SelectChangeEvent<number>) => {
+    console.log(event.target.value);
+    setRoleId(event.target.value as number);
+  };
+
+  const onSubmit = async () => {
+    if (!selectedUser || !roleId) {
+      return;
+    }
+    const inviteUserDto: InviteUserDto = {
+      userId: selectedUser?.id,
+      roleId: roleId
+    };
+
+    console.log({ inviteUserDto });
   };
 
   return (
@@ -102,36 +130,66 @@ export const InviteUserModal = NiceModal.create(() => {
             </IconButton>
           </Paper>
         )}
-        <List>
-          {!selectedUser &&
-            usersQuery.data?.users.map((user) => (
-              <ListItemButton key={user.id} onClick={() => selectUser(user)}>
+        {!selectedUser && usersQuery.data?.users?.length > 0 && (
+          <Box height={250} overflow='auto' mt={2} borderRadius='8px'>
+            <List>
+              {usersQuery.data?.users.map((user) => (
+                <ListItemButton key={user.id} onClick={() => selectUser(user)}>
+                  <ListItemText
+                    primary={`${user.person.firstName} ${user.person.lastName}`}
+                    secondary={user.username}
+                  />
+                </ListItemButton>
+              ))}
+            </List>
+          </Box>
+        )}
+
+        {selectedUser && (
+          <Box>
+            <List>
+              <ListItem>
                 <ListItemText
-                  primary={`${user.person.firstName} ${user.person.lastName}`}
-                  secondary={user.username}
+                  primary={`${selectedUser.person.firstName} ${selectedUser.person.lastName} (${selectedUser.username})`}
+                  secondary={selectedUser.person.email}
                 />
-              </ListItemButton>
-            ))}
-          {selectedUser && (
-            <ListItem>
-              <ListItemText
-                primary={`${selectedUser.person.firstName} ${selectedUser.person.lastName}`}
-                secondary={selectedUser.username}
-              />
-              <ListItemSecondaryAction>
-                <IconButton onClick={() => setSelectedUser(null)} size='small'>
-                  <CloseOutlined fontSize='small' />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          )}
-        </List>
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={() => setSelectedUser(null)}
+                    size='small'
+                  >
+                    <CloseOutlined fontSize='small' />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
+            <Box mx={3} mt={2}>
+              <FormControl fullWidth>
+                <InputLabel id='demo-simple-select-label'>Rol</InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  value={roleId || ''}
+                  label='Rol'
+                  onChange={handleChangeRole}
+                  required
+                >
+                  {rolesQuery.data?.map((role) => (
+                    <MenuItem value={role.id} key={role.id}>
+                      {role.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          </Box>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={closeModal} color='inherit'>
           Close
         </Button>
-        <Button onClick={closeModal} variant='contained'>
+        <Button onClick={onSubmit} variant='contained'>
           Invitar usuario
         </Button>
       </DialogActions>

@@ -60,17 +60,12 @@ export const useUsers = () => {
 };
 
 export const useUsersSuggestions = () => {
-  const dispatch = useDispatch();
-
-  const { search, setSearch, debouncedSearch, handleChangeSearch } =
-    useSearch(1000);
+  const { search, debouncedSearch, handleChangeSearch } = useSearch(1000);
 
   const usersQuery = useQuery<{ users: IUser[] }>(
     ['users-suggestions', debouncedSearch],
-    () => getUsersSuggestions(debouncedSearch),
-    {
-      onSuccess: (data) => {}
-    }
+    () =>
+      debouncedSearch ? getUsersSuggestions(debouncedSearch) : { users: [] }
   );
 
   return {
