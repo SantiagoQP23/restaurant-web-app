@@ -26,6 +26,7 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
+
 import { CloseOutlined } from '@mui/icons-material';
 import { useUsersSuggestions } from '../hooks/useUsers';
 import SearchIcon from '@mui/icons-material/Search';
@@ -33,8 +34,12 @@ import { useEffect, useState } from 'react';
 import { IUser } from '@/models';
 import { useRoles } from '../hooks/useRoles';
 import { InviteUserDto } from '../dto/invite-user.dto';
+import { useSendInvitation } from '../hooks/useInvitation';
+import { LoadingButton } from '@mui/lab';
+
 export const InviteUserModal = NiceModal.create(() => {
   const modal = useModal();
+  const useInviteUser = useSendInvitation();
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [roleId, setRoleId] = useState<number>();
 
@@ -49,7 +54,7 @@ export const InviteUserModal = NiceModal.create(() => {
   const { rolesQuery } = useRoles();
 
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const closeModal = () => {
     modal.hide();
@@ -82,6 +87,7 @@ export const InviteUserModal = NiceModal.create(() => {
     };
 
     console.log({ inviteUserDto });
+    useInviteUser.mutate(inviteUserDto);
   };
 
   return (
@@ -189,9 +195,13 @@ export const InviteUserModal = NiceModal.create(() => {
         <Button onClick={closeModal} color='inherit'>
           Close
         </Button>
-        <Button onClick={onSubmit} variant='contained'>
+        <LoadingButton
+          onClick={onSubmit}
+          variant='contained'
+          loading={useInviteUser.isLoading}
+        >
           Invitar usuario
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

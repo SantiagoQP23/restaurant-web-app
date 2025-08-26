@@ -1,16 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import {
   Grid,
   Box,
   TextField,
   Typography,
-  Button,
   Link,
   Paper,
   Avatar,
-  Chip
+  Chip,
+  Stack
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
@@ -93,8 +92,8 @@ export const LoginPage = () => {
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component='h1' variant='h5'>
-                Iniciar sesión
+              <Typography component='h1' variant='h3'>
+                Sign in
               </Typography>
               <Chip
                 label={error}
@@ -142,16 +141,20 @@ export const LoginPage = () => {
                 >
                   Iniciar sesión
                 </LoadingButton>
-                <Grid container>
-                  <Grid item xs>
-                    <Link
-                      href={'/' + PublicRoutes.FORGOT_PASSWORD}
-                      variant='body2'
-                    >
-                      Olvidé mi contraseña
+                <Stack spacing={1}>
+                  <Link
+                    href={'/' + PublicRoutes.FORGOT_PASSWORD}
+                    variant='body2'
+                  >
+                    Olvidé mi contraseña
+                  </Link>
+                  <Stack spacing={1} direction='row' alignItems='center'>
+                    <Typography>Already have an account?</Typography>
+                    <Link href='register' variant='body2'>
+                      Sign up
                     </Link>
-                  </Grid>
-                </Grid>
+                  </Stack>
+                </Stack>
                 <Grid container display='flex'>
                   <Grid item xs>
                     <Typography

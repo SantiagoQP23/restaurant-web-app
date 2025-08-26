@@ -6,8 +6,11 @@ export const registerUser = async ({
   samePassword,
   ...data
 }: RegisterUserDto) => {
+  if (data.numPhone === '') {
+    delete data.numPhone;
+  }
   const response = await restauranteApi.post<LoginResponseDto>(
-    '/auth/signup',
+    '/auth/register',
     data
   );
 
