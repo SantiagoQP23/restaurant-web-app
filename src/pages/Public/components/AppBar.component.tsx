@@ -29,17 +29,16 @@ const pages = [
     name: 'Inicio',
     path: '/'
   },
-  { name: 'Productos', path: '/shop' },
-  {
-    name: 'Acerca de',
-    path: '/about'
-  },
+  // { name: 'Productos', path: '/shop' },
+  // {
+  //   name: 'Acerca de',
+  //   path: '/about'
+  // },
   {
     name: 'Contacto',
     path: '/contact'
   }
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const AppBar = () => {
   const navigate = useNavigate();

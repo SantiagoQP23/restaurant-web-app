@@ -88,9 +88,7 @@ function Header() {
           ml={{ xs: 3, lg: '310px' }}
           variant='h4'
           color='text.primary'
-        >
-          {/* QuiEats */}
-        </Typography>
+        ></Typography>
 
         <Stack direction='row' spacing={1} alignItems='center'>
           <HeaderButtons />
