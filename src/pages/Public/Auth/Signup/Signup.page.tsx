@@ -57,8 +57,8 @@ export const Signup = () => {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component='h1' variant='h5'>
-          Registrarse
+        <Typography component='h1' variant='h3'>
+          Create your account
         </Typography>
         <Box
           component='form'
@@ -118,15 +118,27 @@ export const Signup = () => {
                 error={!!errors.email}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label='Nombre de usuario'
+                fullWidth
+                required
+                {...register('username', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 2, message: 'Minimo 2 caracteres' }
+                })}
+                helperText={errors.username?.message}
+                error={!!errors.username}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
               <TextField
                 id='email'
-                required
                 fullWidth
                 label='Phone Number'
                 type='number'
                 {...register('numPhone', {
-                  required: 'Este campo es requerido',
                   minLength: { value: 10, message: 'Minimo 10 caracteres' }
                 })}
                 error={!!errors.numPhone}
@@ -181,7 +193,7 @@ export const Signup = () => {
             sx={{ mt: 3, mb: 2 }}
             loading={isLoading}
           >
-            Sign Up
+            Create account
           </LoadingButton>
           <Grid container justifyContent='flex-end'>
             <Grid item>

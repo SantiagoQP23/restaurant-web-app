@@ -5,5 +5,5 @@ export interface RegisterUserDto {
   username: string;
   password: string;
   samePassword: string;
-  numPhone: string;
+  numPhone?: string;
 }

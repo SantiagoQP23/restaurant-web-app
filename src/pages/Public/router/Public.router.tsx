@@ -5,6 +5,7 @@ import { Signup } from '../Auth/Signup';
 import { ProductsMenu } from '../Shop/views/ProductsMenu/ProductsMenu.view';
 import { Product } from '../Shop/views/Product/Product.page';
 import { Home } from '../Home/Home.page';
+import { ForgotPassword } from '../Auth/ForgotPassword';
 
 export const PublicRouter: RouteObject[] = [
   {
@@ -41,6 +42,10 @@ export const PublicRouter: RouteObject[] = [
       {
         path: 'register',
         element: <Signup />
+      },
+      {
+        path: 'forgot-password',
+        element: <ForgotPassword />
       }
     ]
   },
