@@ -22,6 +22,9 @@ import { IFormLogin, PublicRoutes } from '../../../../models';
 import { onChecking, selectAuth, startLogin } from '../../../../redux';
 import { useLogin } from '../hooks/useAuth';
 import { useDispatch } from 'react-redux';
+import { getEnvVariables } from '@/helpers';
+
+const { VITE_APP_NAME } = getEnvVariables();
 
 const initialForm: IFormLogin = {
   username: '',
@@ -83,17 +86,17 @@ export const LoginPage = () => {
             <Box
               sx={{
                 my: 8,
-                mx: 4,
+                mx: { xs: 4, sm: 15 },
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
+                flexDirection: 'column'
+                // alignItems: 'center'
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component='h1' variant='h3'>
-                Sign in
+              <Typography component='h5' variant='h4' sx={{ my: 2 }}>
+                {VITE_APP_NAME}
+              </Typography>
+              <Typography component='h4' variant='h3' sx={{ my: 2 }}>
+                Log in to your account
               </Typography>
               <Chip
                 label={error}
@@ -131,6 +134,9 @@ export const LoginPage = () => {
                     minLength: { value: 2, message: 'Contraseña no valida' }
                   })}
                 />
+                <Link href={'/' + PublicRoutes.FORGOT_PASSWORD} variant='body2'>
+                  Olvidé mi contraseña
+                </Link>
 
                 <LoadingButton
                   type='submit'
@@ -141,33 +147,35 @@ export const LoginPage = () => {
                 >
                   Iniciar sesión
                 </LoadingButton>
-                <Stack spacing={1}>
-                  <Link
-                    href={'/' + PublicRoutes.FORGOT_PASSWORD}
-                    variant='body2'
-                  >
-                    Olvidé mi contraseña
+                <Stack
+                  spacing={1}
+                  direction='row'
+                  alignItems='center'
+                  justifyContent='center'
+                  sx={{ my: 2 }}
+                >
+                  <Typography>Don't you have an account?</Typography>
+                  <Link href='register' variant='body2'>
+                    Sign up
                   </Link>
-                  <Stack spacing={1} direction='row' alignItems='center'>
-                    <Typography>Already have an account?</Typography>
-                    <Link href='register' variant='body2'>
-                      Sign up
-                    </Link>
-                  </Stack>
                 </Stack>
-                <Grid container display='flex'>
-                  <Grid item xs>
-                    <Typography
-                      sx={{ mt: 5, display: 'flex', alignItems: 'center' }}
-                      variant='body2'
-                      color='text.secondary'
-                      align='center'
-                    >
-                      <Copyright />
-                      Santiago Quirumbay
-                    </Typography>
-                  </Grid>
-                </Grid>
+                <Stack
+                  spacing={1}
+                  direction='row'
+                  alignItems='center'
+                  justifyContent='center'
+                  sx={{ my: 2 }}
+                >
+                  <Typography
+                    sx={{ mt: 5, display: 'flex', alignItems: 'center' }}
+                    variant='body2'
+                    color='text.secondary'
+                    align='center'
+                  >
+                    <Copyright />
+                    Santiago Quirumbay
+                  </Typography>
+                </Stack>
               </Box>
             </Box>
           </Grid>
