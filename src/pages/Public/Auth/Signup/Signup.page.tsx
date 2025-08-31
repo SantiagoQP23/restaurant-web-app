@@ -6,6 +6,7 @@ import {
   CssBaseline,
   Grid,
   Link,
+  Stack,
   TextField,
   Typography
 } from '@mui/material';
@@ -15,6 +16,10 @@ import { useForm } from 'react-hook-form';
 import { RegisterUserDto } from '../dto/register-user.dto';
 import { useSignup } from '../hooks/useAuth';
 import { LoadingButton } from '@mui/lab';
+
+import { getEnvVariables } from '@/helpers';
+
+const { VITE_APP_NAME } = getEnvVariables();
 
 const initialForm: RegisterUserDto = {
   firstName: '',
@@ -44,20 +49,20 @@ export const Signup = () => {
   };
 
   return (
-    <Container component='main' maxWidth='sm'>
+    <Container component='main' maxWidth='sm' sx={{ px: { xs: 4, sm: 0 } }}>
       <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
+          flexDirection: 'column'
+          // alignItems: 'center'
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component='h1' variant='h3'>
+        <Typography component='h5' variant='h4' sx={{ my: 2 }}>
+          {VITE_APP_NAME}
+        </Typography>
+        <Typography component='h1' variant='h3' sx={{ my: 2 }}>
           Create your account
         </Typography>
         <Box
@@ -195,16 +200,37 @@ export const Signup = () => {
           >
             Create account
           </LoadingButton>
-          <Grid container justifyContent='flex-end'>
-            <Grid item>
-              <Link href='login' variant='body2'>
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
+          <Stack
+            spacing={1}
+            direction='row'
+            alignItems='center'
+            justifyContent='center'
+            sx={{ my: 2 }}
+          >
+            <Typography>Already have an account?</Typography>
+            <Link href='login' variant='body2'>
+              Sign in
+            </Link>
+          </Stack>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+      <Stack
+        spacing={1}
+        direction='row'
+        alignItems='center'
+        justifyContent='center'
+        sx={{ my: 2, mb: 5 }}
+      >
+        <Typography
+          sx={{ mt: 5, display: 'flex', alignItems: 'center' }}
+          variant='body2'
+          color='text.secondary'
+          align='center'
+        >
+          <Copyright />
+          Santiago Quirumbay
+        </Typography>
+      </Stack>
     </Container>
   );
 };
