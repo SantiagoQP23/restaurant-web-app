@@ -9,7 +9,8 @@ import {
   Stack,
   Divider,
   TextField,
-  InputLabel
+  InputLabel,
+  Chip
 } from '@mui/material';
 import { TypeOrder } from '../../../../../../models';
 
@@ -25,6 +26,7 @@ import { PeopleCounter } from './PeopleCounter.component';
 
 import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 import { useNewOrderStore } from '../../../store/newOrderStore';
+import { OrderDetails } from './OrdersDetails.component';
 
 interface Props {
   step: number;
@@ -75,83 +77,110 @@ export const NewOrderSummary: FC<Props> = () => {
   return (
     <Box>
       <Card sx={{ mb: 2 }}>
-        <Stack spacing={1} divider={<Divider />}>
+        <Stack spacing={1}>
           <Box>
-            <CardHeader title='Información del pedido' />
             <CardContent>
-              <Stack direction='column' spacing={2} textAlign='center'>
-                {orderType === TypeOrder.IN_PLACE && (
+              <Stack spacing={3}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Typography variant='h4' fontWeight='bold'>
+                    Nuevo pedido
+                  </Typography>
                   <Box>
-                    <InputLabel>Mesa</InputLabel>
-                    <Typography variant='h3' fontWeight='bold'>
+                    <Typography variant='h6' fontWeight='bold'>
+                      Mesa
+                    </Typography>
+                    <Typography variant='body1'>
                       N° {table?.name || 'Sin mesa'}
                     </Typography>
                   </Box>
-                )}
+                </Box>
+                <Stack direction='row' spacing={1}>
+                  <Chip label='Para servir' />
+                  <Chip label='Para llevar' />
+                </Stack>
 
-                {orderType === TypeOrder.TAKE_AWAY && (
-                  <Box>
-                    <InputLabel>Tipo de orden</InputLabel>
-                    <Typography variant='h3' fontWeight='bold'>
-                      {'Para llevar'}
-                    </Typography>
+                <Stack direction='column' spacing={2} textAlign='center'>
+                  <Box sx={{ mt: 10 }}>
+                    <OrderDetails />
                   </Box>
-                )}
+                  {/* {orderType === TypeOrder.IN_PLACE && ( */}
+                  {/*   <Box> */}
+                  {/*     <InputLabel>Mesa</InputLabel> */}
+                  {/*     <Typography variant='h3' fontWeight='bold'> */}
+                  {/*       N° {table?.name || 'Sin mesa'} */}
+                  {/*     </Typography> */}
+                  {/*   </Box> */}
+                  {/* )} */}
+                  {/**/}
+                  {/* {orderType === TypeOrder.TAKE_AWAY && ( */}
+                  {/*   <Box> */}
+                  {/*     <InputLabel>Tipo de orden</InputLabel> */}
+                  {/*     <Typography variant='h3' fontWeight='bold'> */}
+                  {/*       {'Para llevar'} */}
+                  {/*     </Typography> */}
+                  {/*   </Box> */}
+                  {/* )} */}
 
-                <PeopleCounter />
+                  {/* <PeopleCounter /> */}
 
-                <TextField
-                  id='descripcion-pedido'
-                  label='Notas'
-                  margin='dense'
-                  multiline
-                  rows={4}
-                  // defaultValue={detail?.description}
-                  fullWidth
-                  value={notes}
-                  onChange={handleChangeNotes}
-                />
+                  {/* <TextField */}
+                  {/*   id='descripcion-pedido' */}
+                  {/*   label='Notas' */}
+                  {/*   margin='dense' */}
+                  {/*   multiline */}
+                  {/*   rows={4} */}
+                  {/*   // defaultValue={detail?.description} */}
+                  {/*   fullWidth */}
+                  {/*   value={notes} */}
+                  {/*   onChange={handleChangeNotes} */}
+                  {/* /> */}
+                </Stack>
               </Stack>
-            </CardContent>
-          </Box>
+              <Divider />
 
-          <Box
-            display='flex'
-            justifyContent='space-between'
-            alignItems='center'
-            p={2}
-          >
-            <Typography variant='h4' fontWeight='bold'>
-              Total{' '}
-            </Typography>
-            <Typography variant='h4' fontWeight='bold'>
-              {formatMoney(
-                details.reduce(
-                  (acc, detail) => acc + detail.product.price * detail.quantity,
-                  0
-                )
-              )}
-            </Typography>
+              <Box
+                display='flex'
+                justifyContent='space-between'
+                alignItems='center'
+                p={2}
+              >
+                <Typography variant='h4' fontWeight='bold'>
+                  Total{' '}
+                </Typography>
+                <Typography variant='h4' fontWeight='bold'>
+                  {formatMoney(
+                    details.reduce(
+                      (acc, detail) =>
+                        acc + detail.product.price * detail.quantity,
+                      0
+                    )
+                  )}
+                </Typography>
+              </Box>
+              <LoadingButton
+                variant='contained'
+                disabled={
+                  !isOnline ||
+                  details.length <= 0 ||
+                  (!table && orderType === TypeOrder.IN_PLACE) ||
+                  people <= 0
+                }
+                onClick={submitAddOrder}
+                fullWidth
+                loading={isLoading}
+              >
+                Crear pedido
+              </LoadingButton>
+            </CardContent>
           </Box>
         </Stack>
       </Card>
-
-      {
-        <LoadingButton
-          variant='contained'
-          disabled={
-            !isOnline ||
-            details.length <= 0 ||
-            (!table && orderType === TypeOrder.IN_PLACE) ||
-            people <= 0
-          }
-          onClick={submitAddOrder}
-          fullWidth
-          loading={isLoading}
-        >
-          Crear pedido
-        </LoadingButton>
-      }
     </Box>
   );
 };

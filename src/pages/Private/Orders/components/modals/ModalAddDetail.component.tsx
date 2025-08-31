@@ -71,7 +71,9 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   );
   const { activeOrder } = useSelector(selectOrders);
 
-  const [typeOrder, setTypeOrder] = useState<TypeOrder>(activeOrder ? activeOrder.type : TypeOrder.IN_PLACE);
+  const [typeOrder, setTypeOrder] = useState<TypeOrder>(
+    activeOrder ? activeOrder.type : TypeOrder.IN_PLACE
+  );
 
   const { addDetail, details, updateDetail } = useNewOrderStore(
     (state) => state
@@ -300,10 +302,10 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
               variant='contained'
               loading={isLoading}
               startIcon={<ShoppingCartIcon />}
-              disabled={
-                !isOnline
-                // (detail.product.options.length > 0 && !selectedOption)
-              }
+              // disabled={
+              //   !isOnline
+              //   // (detail.product.options.length > 0 && !selectedOption)
+              // }
             >
               Añadir
             </LoadingButton>

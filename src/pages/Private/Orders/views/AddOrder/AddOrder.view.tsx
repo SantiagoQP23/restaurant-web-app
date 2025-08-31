@@ -8,7 +8,10 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   CardContent,
-  Card
+  Card,
+  Box,
+  Typography,
+  Chip
 } from '@mui/material';
 
 import { useContext, useState } from 'react';
@@ -23,10 +26,13 @@ import { OrderActionType, OrderContext } from '../../context/Order.context';
 import { TitlePage } from '../../../components/TitlePage.component';
 
 import { OrderDetails, NewOrderSummary } from './components';
-import { TypeOrder } from '../../../../../models';
-import { TableOrder } from '../../components';
+import { IProduct, TypeOrder } from '../../../../../models';
+import { ModalAddDetail, TableOrder } from '../../components';
 import { ModalOrderAdded } from './components/ModalOrderAdded.component';
 import { useNewOrderStore } from '../../store/newOrderStore';
+import { AddProductsMenu, AllMenu } from '../Menu/components';
+import { ComboBoxProducts } from '@/pages/Private/EditMenu/components/products/ComboBoxProducts.component';
+import NiceModal from '@ebay/nice-modal-react';
 
 export const AddOrder = () => {
   const navigate = useNavigate();
@@ -55,6 +61,10 @@ export const AddOrder = () => {
     </Button>
   );
 
+  const addProductoToOrder = (product: IProduct) => {
+    NiceModal.show(ModalAddDetail, { detail: { product, quantity: 1 } });
+  };
+
   return (
     <>
       <Container maxWidth='xl' sx={{ pb: 5 }}>
@@ -62,9 +72,54 @@ export const AddOrder = () => {
 
         <Grid container spacing={1}>
           <Grid item xs={12} md={8}>
+            <Card>
+              <Box display='flex' flexDirection='row'>
+                <Stack>
+                  <Box p={2} borderBottom={1} borderColor='divider'>
+                    <Typography variant='caption' component='span'>
+                      Bebidas
+                    </Typography>
+                  </Box>
+                  <Box p={2}>
+                    <Typography variant='caption' component='span'>
+                      Platos a la carta
+                    </Typography>
+                  </Box>
+                  <Box p={2}>
+                    <Typography variant='caption' component='span'>
+                      Desayunos y almuerzos
+                    </Typography>
+                  </Box>
+                  <Box p={2}>
+                    <Typography variant='caption' component='span'>
+                      Bebidas
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Box>
+                  <Box
+                    sx={{
+                      p: 2
+                    }}
+                  >
+                    <ComboBoxProducts selectProduct={addProductoToOrder} />
+                  </Box>
+                  <Box>
+                    <Stack direction='row' spacing={1} p={2}>
+                      <Chip label='Arroces' />
+                      <Chip label='Ceviches' />
+                      <Chip label='Pescados' />
+                    </Stack>
+                  </Box>
+                  <Box>
+                    <AllMenu />
+                  </Box>
+                </Box>
+              </Box>
+            </Card>
             {activeStep === 0 && (
               <>
-                <OrderDetails />
+                {/* <OrderDetails /> */}
 
                 <Stack
                   direction='row'

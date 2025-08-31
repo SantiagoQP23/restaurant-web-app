@@ -22,48 +22,48 @@ export const OrderDetails = () => {
 
   return (
     <>
-      <Card>
-        <CardHeader
-          title='Productos'
-          subheader={`Total: ${details.reduce(
-            (acc, detail) =>
-              acc +
-              Math.floor(detail.quantity) +
-              (Number.isInteger(detail.quantity) ? 0 : 1),
-            0
-          )}`}
-          action={
-            <>
-              <IconButton
-                size='small'
-                onClick={() => navigate('/orders/add/menu')}
-                color='primary'
-              >
-                <AddShoppingCartOutlined />
-              </IconButton>
-            </>
-          }
-        />
+      {/* <Card> */}
+      {/*   <CardHeader */}
+      {/*     title='Productos' */}
+      {/*     subheader={`Total: ${details.reduce( */}
+      {/*       (acc, detail) => */}
+      {/*         acc + */}
+      {/*         Math.floor(detail.quantity) + */}
+      {/*         (Number.isInteger(detail.quantity) ? 0 : 1), */}
+      {/*       0 */}
+      {/*     )}`} */}
+      {/*     action={ */}
+      {/*       <> */}
+      {/*         <IconButton */}
+      {/*           size='small' */}
+      {/*           onClick={() => navigate('/orders/add/menu')} */}
+      {/*           color='primary' */}
+      {/*         > */}
+      {/*           <AddShoppingCartOutlined /> */}
+      {/*         </IconButton> */}
+      {/*       </> */}
+      {/*     } */}
+      {/*   /> */}
+      {/**/}
+      {/*   <Divider /> */}
 
-        <Divider />
-
-        <Stack spacing={1} divider={<Divider />}>
-          {details.length > 0 ? (
-            details.map((detail) => (
-              <NewOrderDetail
-                detalle={detail}
-                key={detail.product.id + detail.productOption?.id}
-              />
-            ))
-          ) : (
-            <Box my={5}>
-              <Typography variant='body1' align='center' my={5}>
-                No se han añadido productos
-              </Typography>
-            </Box>
-          )}
-        </Stack>
-      </Card>
+      <Stack spacing={1} divider={<Divider />}>
+        {details.length > 0 ? (
+          details.map((detail) => (
+            <NewOrderDetail
+              detalle={detail}
+              key={detail.product.id + detail.productOption?.id}
+            />
+          ))
+        ) : (
+          <Box my={5}>
+            <Typography variant='body1' align='center' my={5}>
+              No se han añadido productos
+            </Typography>
+          </Box>
+        )}
+      </Stack>
+      {/* </Card> */}
     </>
   );
 };
