@@ -26,10 +26,10 @@ const pages = [
     path: '/'
   },
   // { name: 'Productos', path: '/shop' },
-  {
-    name: 'Acerca de',
-    path: '/about'
-  },
+  // {
+  //   name: 'Acerca de',
+  //   path: '/about'
+  // },
   {
     name: 'Contacto',
     path: '/contact'
