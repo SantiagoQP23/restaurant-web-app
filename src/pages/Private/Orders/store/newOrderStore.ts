@@ -52,15 +52,6 @@ export const useNewOrderStore = create<NewOrderState & NewOrderActions>()(
 
       addDetail: (detail: ICreateOrderDetail) => {
         const details = get().details;
-        // const index = details.findIndex(
-        //   (d) => d.product.id === detail.product.id
-        // );
-        // if (index === -1) {
-        //   set({ details: [...details, detail] });
-        // } else {
-        //   details[index].quantity += detail.quantity;
-        //   set({ details });
-        // }
 
         set({ details: [...details, detail] });
       },

@@ -68,9 +68,9 @@ export const Product: FC<Props> = ({ product, onClick }) => {
           spacing={1}
           sx={{ p: 2, justifyContent: 'space-between', height: '100%' }}
         >
-          <Typography fontSize={'0.8rem'} color='text.secondary'>
-            {product.quantity} disponibles
-          </Typography>
+          {/* <Typography fontSize={'0.8rem'} color='text.secondary'> */}
+          {/*   {product.quantity} disponibles */}
+          {/* </Typography> */}
           <Link
             color='inherit'
             underline='hover'

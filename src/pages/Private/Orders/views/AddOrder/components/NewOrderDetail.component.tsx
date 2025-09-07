@@ -72,9 +72,11 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
               )} */}
             </Typography>
 
-            <Typography variant='subtitle1' whiteSpace='pre-wrap'>
-              {detalle.description && detalle.description}
-            </Typography>
+            {detalle.description && (
+              <Typography variant='subtitle1' whiteSpace='pre-wrap'>
+                {detalle.description}
+              </Typography>
+            )}
           </Stack>
 
           <Stack direction='row' spacing={1}>

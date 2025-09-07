@@ -37,8 +37,16 @@ interface Props {
  * @version 1.1 28/12/2023 Adds useCreateOrder hook
  */
 export const NewOrderSummary: FC<Props> = () => {
-  const { table, people, details, orderType, notes, setNotes, reset } =
-    useNewOrderStore((state) => state);
+  const {
+    table,
+    people,
+    details,
+    orderType,
+    notes,
+    setNotes,
+    reset,
+    setOrderType
+  } = useNewOrderStore((state) => state);
 
   const { mutate: createOrder, isLoading, isOnline } = useCreateOrder();
 
@@ -101,8 +109,20 @@ export const NewOrderSummary: FC<Props> = () => {
                   </Box>
                 </Box>
                 <Stack direction='row' spacing={1}>
-                  <Chip label='Para servir' />
-                  <Chip label='Para llevar' />
+                  <Chip
+                    label='Para servir'
+                    onClick={() => setOrderType(TypeOrder.IN_PLACE)}
+                    variant={
+                      orderType === TypeOrder.IN_PLACE ? 'filled' : 'outlined'
+                    }
+                  />
+                  <Chip
+                    label='Para llevar'
+                    onClick={() => setOrderType(TypeOrder.TAKE_AWAY)}
+                    variant={
+                      orderType === TypeOrder.TAKE_AWAY ? 'filled' : 'outlined'
+                    }
+                  />
                 </Stack>
 
                 <Stack direction='column' spacing={2} textAlign='center'>

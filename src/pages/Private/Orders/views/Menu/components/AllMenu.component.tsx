@@ -24,7 +24,7 @@ export const AllMenu: FC = () => {
 
   return (
     <>
-      <Grid container item spacing={2}>
+      <Grid container spacing={4}>
         <Grid item xs={12}>
           {activeCategory ? (
             <ListProducts products={productsByCategory} />

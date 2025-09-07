@@ -22,31 +22,6 @@ export const OrderDetails = () => {
 
   return (
     <>
-      {/* <Card> */}
-      {/*   <CardHeader */}
-      {/*     title='Productos' */}
-      {/*     subheader={`Total: ${details.reduce( */}
-      {/*       (acc, detail) => */}
-      {/*         acc + */}
-      {/*         Math.floor(detail.quantity) + */}
-      {/*         (Number.isInteger(detail.quantity) ? 0 : 1), */}
-      {/*       0 */}
-      {/*     )}`} */}
-      {/*     action={ */}
-      {/*       <> */}
-      {/*         <IconButton */}
-      {/*           size='small' */}
-      {/*           onClick={() => navigate('/orders/add/menu')} */}
-      {/*           color='primary' */}
-      {/*         > */}
-      {/*           <AddShoppingCartOutlined /> */}
-      {/*         </IconButton> */}
-      {/*       </> */}
-      {/*     } */}
-      {/*   /> */}
-      {/**/}
-      {/*   <Divider /> */}
-
       <Stack spacing={1} divider={<Divider />}>
         {details.length > 0 ? (
           details.map((detail) => (
@@ -63,7 +38,6 @@ export const OrderDetails = () => {
           </Box>
         )}
       </Stack>
-      {/* </Card> */}
     </>
   );
 };

@@ -11,11 +11,11 @@ interface ProductsListProps {
 export const ListProducts: FC<ProductsListProps> = ({ products }) => {
   return (
     <>
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         {products.map((product) => {
           if (product.isActive)
             return (
-              <Grid key={product.id} item xs={6} sm={4} md={3}>
+              <Grid key={product.id} item xs={6} sm={5} md={2}>
                 <Product product={product} onClick={() => {}} />
               </Grid>
             );

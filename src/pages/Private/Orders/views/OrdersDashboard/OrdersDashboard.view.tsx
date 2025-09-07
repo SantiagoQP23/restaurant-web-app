@@ -76,7 +76,7 @@ export const OrdersDashboard = () => {
   const createOrderTakeAway = () => {
     setOrderType(TypeOrder.TAKE_AWAY);
 
-    navigate('/orders/add/menu');
+    navigate('/orders/add');
   };
 
   const totalOrders = orders.length;
@@ -112,7 +112,7 @@ export const OrdersDashboard = () => {
               onClick={createOrderTakeAway}
               size='small'
             >
-              Crear pedido para llevar
+              Crear Pedido
             </Button>
           </Stack>
         }
