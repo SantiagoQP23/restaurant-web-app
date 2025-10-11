@@ -159,14 +159,14 @@ export const SectionsList = () => {
 
   return (
     <>
-      <Typography variant='subtitle1'>Secciones: {sections.length}</Typography>
+      {/* <Typography variant='subtitle1'>Secciones: {sections.length}</Typography> */}
       <Box
         mb={2}
         display='flex'
         justifyContent='space-between'
         alignItems='center'
       >
-        <Typography variant='h4'>
+        <Typography variant='h6'>
           Secciones activas: {activeSections.length}
         </Typography>
         <Stack spacing={2} direction='row'>
@@ -202,7 +202,7 @@ export const SectionsList = () => {
         <SortableContext items={orderedSections}>
           <Grid container rowSpacing={1} spacing={1}>
             {orderedSections.map((seccion) => (
-              <Grid key={seccion.id} item xs={12} sm={6} lg={4}>
+              <Grid key={seccion.id} item xs={12} sm={4} lg={3}>
                 <Section
                   seccion={seccion}
                   handleOpenMenu={handleOpenMenu}
@@ -214,20 +214,21 @@ export const SectionsList = () => {
         </SortableContext>
       </DndContext>
 
-      {inactiveSections && (
-        <Typography variant='h4' my={2}>
-          Secciones inactivas: {inactiveSections.length}
-        </Typography>
-      )}
+      <Box mt={6}>
+        {inactiveSections.length > 0 && (
+          <Typography variant='h6' my={2}>
+            Secciones inactivas: {inactiveSections.length}
+          </Typography>
+        )}
 
-      <Grid container rowSpacing={1} spacing={1}>
-        {inactiveSections.map((seccion) => (
-          <Grid key={seccion.id} item xs={12} sm={6} lg={4}>
-            <Section seccion={seccion} handleOpenMenu={handleOpenMenu} />
-          </Grid>
-        ))}
-      </Grid>
-
+        <Grid container rowSpacing={1} spacing={1}>
+          {inactiveSections.map((seccion) => (
+            <Grid key={seccion.id} item xs={12} sm={4} lg={3}>
+              <Section seccion={seccion} handleOpenMenu={handleOpenMenu} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
       {activeSection && (
         <>
           <Popover

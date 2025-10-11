@@ -12,10 +12,13 @@ import {
   IconButton,
   TextField,
   Stack,
-  CircularProgress
+  CircularProgress,
+  Button
 } from '@mui/material';
 
 import {
+  ArrowForward,
+  ArrowRight,
   DragIndicator,
   MoreHorizOutlined,
   Visibility,
@@ -119,6 +122,11 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
     }
   };
 
+  const showCategories = () => {
+    navigate(`/menu/categories`);
+    setActiveSection(seccion);
+  };
+
   return (
     <>
       <div ref={setNodeRef} style={style} {...attributes}>
@@ -147,9 +155,9 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
                   </>
                 ) : (
                   <>
-                    <IconButton onClick={toggleVisibility}>
-                      {seccion.isPublic ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
+                    {/* // <IconButton onClick={toggleVisibility}> */}
+                    {/* //   {seccion.isPublic ? <Visibility /> : <VisibilityOff />} */}
+                    {/* // </IconButton> */}
                     <IconButton
                       onClick={(e) => {
                         e.stopPropagation();
@@ -181,15 +189,13 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
                 {seccion.name}
               </Typography>
             )}
-            <Typography
-              variant='subtitle2'
-              mt={1}
-              // sx={{ textDecorationLine: "underline" }}
-            >
-              {/* Categorías:{" "}
-              <Label color="info">{seccion.categories.length}</Label> */}
-              {`Categorías: ${seccion.categories.length}`}
-            </Typography>
+            <Stack direction='row' justifyContent='end'>
+              <Button
+                size='small'
+                endIcon={<ArrowForward />}
+                onClick={() => showCategories()}
+              >{`Categorías: ${seccion.categories.length}`}</Button>
+            </Stack>
           </CardContent>
         </Card>
       </div>
