@@ -94,7 +94,7 @@ export function CategoriesList() {
         <Grid container rowSpacing={1} spacing={1}>
           {filteredCategories.length > 0 &&
             filteredCategories.map((categoria) => (
-              <Grid key={categoria.id} item xs={12} sm={4}>
+              <Grid key={categoria.id} item xs={12} sm={4} lg={3}>
                 <Category categoria={categoria} />
               </Grid>
             ))}

@@ -13,10 +13,12 @@ import {
   Stack,
   CircularProgress,
   Popover,
-  TextField
+  TextField,
+  Button
 } from '@mui/material/';
 
 import {
+  ArrowForward,
   DeleteOutlined,
   EditOutlined,
   MoreHoriz,
@@ -187,14 +189,18 @@ export const Category: FC<Props> = ({ categoria }) => {
               />
             </>
           ) : (
-            <Typography variant='h4' onClick={editNameCategory}>
+            <Typography variant='h6' onClick={editNameCategory}>
               {categoria.name}
             </Typography>
           )}
 
-          <Typography variant='subtitle1' mt={1}>
-            {`Productos: ${categoria.products.length}`}
-          </Typography>
+          <Stack direction='row' justifyContent='end'>
+            <Button
+              size='small'
+              endIcon={<ArrowForward />}
+              onClick={() => showProducts()}
+            >{`Productos: ${categoria.products.length}`}</Button>
+          </Stack>
         </CardContent>
       </Card>
       <Popover

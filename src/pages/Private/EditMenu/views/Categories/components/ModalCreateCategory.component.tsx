@@ -12,7 +12,8 @@ import {
   MenuItem,
   Select,
   Stack,
-  TextField
+  TextField,
+  Typography
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,9 +66,14 @@ export const ModalCreateCategory = NiceModal.create(() => {
   return (
     <Dialog {...muiDialogV5(modal)}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogTitle variant='h5'>Crear categoría</DialogTitle>
+        <Stack sx={{ p: 4 }} gap={3}>
+          <Stack gap={1}>
+            <Typography variant='h4'>Nueva categoría</Typography>
+            <Typography variant='body1'>
+              Organiza tus productos en categorías
+            </Typography>
+          </Stack>
 
-        <DialogContent sx={{ width: 300 }}>
           <Stack spacing={2}>
             <TextField
               autoFocus
@@ -110,19 +116,19 @@ export const ModalCreateCategory = NiceModal.create(() => {
               )}
             />
           </Stack>
-        </DialogContent>
 
-        <DialogActions>
-          <Button onClick={closeModal}>Cancelar</Button>
-          <LoadingButton
-            loading={isLoading}
-            type='submit'
-            variant='contained'
-            disabled={!isDirty}
-          >
-            Guardar
-          </LoadingButton>
-        </DialogActions>
+          <Stack direction='row' justifyContent='end' gap={2}>
+            <Button onClick={closeModal}>Cancelar</Button>
+            <LoadingButton
+              loading={isLoading}
+              type='submit'
+              variant='contained'
+              disabled={!isDirty}
+            >
+              Guardar
+            </LoadingButton>
+          </Stack>
+        </Stack>
       </form>
     </Dialog>
   );

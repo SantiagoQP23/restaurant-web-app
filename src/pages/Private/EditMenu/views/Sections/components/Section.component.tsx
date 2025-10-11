@@ -185,7 +185,7 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
                 />
               </>
             ) : (
-              <Typography variant='h4' onClick={editNameSection}>
+              <Typography variant='h6' onClick={editNameSection}>
                 {seccion.name}
               </Typography>
             )}
