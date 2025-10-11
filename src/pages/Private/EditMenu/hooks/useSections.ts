@@ -25,7 +25,9 @@ export const useCreateSection = () => {
     (data) => createSection(data),
     {
       onSuccess: (data) => {
-        enqueueSnackbar('Se creó correctamente', { variant: 'success' });
+        enqueueSnackbar('The section was created successfully', {
+          variant: 'success'
+        });
       },
       onError: (error) => {
         enqueueSnackbar('No se pudo crear', { variant: 'error' });

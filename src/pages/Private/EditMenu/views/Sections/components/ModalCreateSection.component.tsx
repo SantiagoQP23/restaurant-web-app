@@ -5,7 +5,8 @@ import {
   DialogContent,
   DialogActions,
   Dialog,
-  DialogTitle
+  DialogTitle,
+  Box
 } from '@mui/material/';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -15,6 +16,7 @@ import { LoadingButton } from '@mui/lab';
 import { useCreateSection } from '../../../hooks/useSections';
 import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 import { CreateSectionDto } from '../../../dto';
+import { Stack } from '@mui/system';
 
 export const ModalCreateSection = NiceModal.create(() => {
   const modal = useModal();
@@ -36,8 +38,10 @@ export const ModalCreateSection = NiceModal.create(() => {
   const createSectionMutation = useCreateSection();
 
   async function onSubmit(form: CreateSectionDto) {
+    console.log('Creating section', form);
     createSectionMutation.mutateAsync(form).then((data) => {
       dispatch(addSection({ ...data, categories: [] }));
+      closeModal();
     });
   }
 
@@ -45,8 +49,14 @@ export const ModalCreateSection = NiceModal.create(() => {
     <>
       <Dialog {...muiDialogV5(modal)}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <DialogTitle>Nueva sección</DialogTitle>
-          <DialogContent>
+          <Stack sx={{ p: 4 }} gap={3}>
+            <Stack gap={1}>
+              <Typography variant='h4'>Nueva sección</Typography>
+              <Typography variant='body1'>
+                Organiza tus categorias en secciones
+              </Typography>
+            </Stack>
+
             <TextField
               autoFocus
               margin='dense'
@@ -62,22 +72,20 @@ export const ModalCreateSection = NiceModal.create(() => {
                 <Typography color='red'>{errors.name?.message}</Typography>
               }
             />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeModal} color='inherit'>
-              Cancelar
-            </Button>
-            <LoadingButton
-              loading={createSectionMutation.isLoading}
-              variant='contained'
-              color='primary'
-              onClick={() => {
-                handleSubmit(onSubmit);
-              }}
-            >
-              Crear
-            </LoadingButton>
-          </DialogActions>
+            <Stack direction='row' justifyContent='end' gap={2}>
+              <Button onClick={closeModal} color='inherit'>
+                Cancelar
+              </Button>
+              <LoadingButton
+                loading={createSectionMutation.isLoading}
+                variant='contained'
+                color='primary'
+                type='submit'
+              >
+                Crear
+              </LoadingButton>
+            </Stack>
+          </Stack>
         </form>
       </Dialog>
     </>

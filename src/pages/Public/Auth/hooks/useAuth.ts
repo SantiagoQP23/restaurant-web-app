@@ -36,7 +36,9 @@ export const useLogin = () => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('token-init-date', String(new Date().getTime()));
       },
-      onError: () => {}
+      onError: () => {
+        dispatch(onLogout('Credenciales incorrectas'));
+      }
     }
   );
 };
