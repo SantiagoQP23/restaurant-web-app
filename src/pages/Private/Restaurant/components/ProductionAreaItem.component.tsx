@@ -8,7 +8,9 @@ import {
   TextField,
   ListItemIcon,
   MenuItem,
-  Popover
+  Popover,
+  Card,
+  CardContent
 } from '@mui/material';
 import {
   Close,
@@ -78,73 +80,75 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
   };
 
   return (
-    <ListItem
-      secondaryAction={
-        <>
-          {!isEditing ? (
-            <IconButton {...bindTrigger(popupState)}>
-              <MoreVert />
-            </IconButton>
-          ) : (
-            <IconButton onClick={toggleEdit}>
-              <Close />
-            </IconButton>
-          )}
-        </>
-      }
-    >
-      <ListItemIcon>
-        <DonutSmall />
-      </ListItemIcon>
-
-      {isEditing ? (
-        <TextField
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          size='small'
-          onKeyDown={handleKeyDown}
-          onBlur={updateNameArea}
-        />
-      ) : (
-        <ListItemText
-          primary={name}
-          secondary={area.description}
-          primaryTypographyProps={{
-            variant: 'h5',
-            color: area.isActive ? 'text.primary' : 'text.disabled'
-          }}
-        />
-      )}
-
-      <Popover
-        {...bindPopover(popupState)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        slotProps={{
-          paper: {
-            sx: {
-              width: 170
-            }
-          }
-        }}
+    <Card sx={{ p: 2 }}>
+      <ListItem
+        secondaryAction={
+          <>
+            {!isEditing ? (
+              <IconButton {...bindTrigger(popupState)}>
+                <MoreVert />
+              </IconButton>
+            ) : (
+              <IconButton onClick={toggleEdit}>
+                <Close />
+              </IconButton>
+            )}
+          </>
+        }
       >
-        <MenuItem onClick={handleEdit}>
-          <EditOutlined fontSize='small' sx={{ mr: 2 }} />
-          Renombrar
-        </MenuItem>
+        <ListItemIcon>
+          <DonutSmall />
+        </ListItemIcon>
 
-        {area.isActive ? (
-          <MenuItem sx={{ color: 'error.main' }} onClick={handleChangeStatus}>
-            <DeleteOutlined fontSize='small' sx={{ mr: 2 }} />
-            Desactivar
-          </MenuItem>
+        {isEditing ? (
+          <TextField
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            size='small'
+            onKeyDown={handleKeyDown}
+            onBlur={updateNameArea}
+          />
         ) : (
-          <MenuItem onClick={handleChangeStatus}>
-            <Reply fontSize='small' sx={{ mr: 2 }} />
-            Habilitar
-          </MenuItem>
+          <ListItemText
+            primary={name}
+            secondary={area.description}
+            primaryTypographyProps={{
+              variant: 'h5',
+              color: area.isActive ? 'text.primary' : 'text.disabled'
+            }}
+          />
         )}
-      </Popover>
-    </ListItem>
+
+        <Popover
+          {...bindPopover(popupState)}
+          anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          slotProps={{
+            paper: {
+              sx: {
+                width: 170
+              }
+            }
+          }}
+        >
+          <MenuItem onClick={handleEdit}>
+            <EditOutlined fontSize='small' sx={{ mr: 2 }} />
+            Renombrar
+          </MenuItem>
+
+          {area.isActive ? (
+            <MenuItem sx={{ color: 'error.main' }} onClick={handleChangeStatus}>
+              <DeleteOutlined fontSize='small' sx={{ mr: 2 }} />
+              Desactivar
+            </MenuItem>
+          ) : (
+            <MenuItem onClick={handleChangeStatus}>
+              <Reply fontSize='small' sx={{ mr: 2 }} />
+              Habilitar
+            </MenuItem>
+          )}
+        </Popover>
+      </ListItem>
+    </Card>
   );
 };

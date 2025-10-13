@@ -1,5 +1,14 @@
 import { Add } from '@mui/icons-material';
-import { Card, CardHeader, Button, List } from '@mui/material';
+import {
+  Card,
+  CardHeader,
+  Button,
+  List,
+  Typography,
+  Grid,
+  Stack,
+  Box
+} from '@mui/material';
 import NiceModal from '@ebay/nice-modal-react';
 import { ModalCreateProductionArea } from './ModalCreateProductionArea.component';
 import { ProductionAreaItem } from './ProductionAreaItem.component';
@@ -19,23 +28,24 @@ export const ProductionAreasList = () => {
 
   return (
     <>
-      <Card>
-        <CardHeader
-          title='Areas de producción'
-          action={
-            <Button startIcon={<Add />} onClick={showModalCreateArea}>
-              Crear
-            </Button>
-          }
-        />
-
-        <List>
+      <Stack gap={2} mb={2}>
+        <Typography variant='h6' gutterBottom>
+          Gestión de áreas de producción
+        </Typography>
+        <Grid container spacing={2}>
           {productionAreas &&
             productionAreas.map((area) => (
-              <ProductionAreaItem key={area.id} area={area} />
+              <Grid item xs={12} md={6} key={area.id}>
+                <ProductionAreaItem key={area.id} area={area} />
+              </Grid>
             ))}
-        </List>
-      </Card>
+        </Grid>
+        <Box>
+          <Button startIcon={<Add />} onClick={showModalCreateArea}>
+            Crear nueva área
+          </Button>
+        </Box>
+      </Stack>
     </>
   );
 };
