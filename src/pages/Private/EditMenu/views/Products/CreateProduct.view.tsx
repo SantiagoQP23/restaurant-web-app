@@ -7,6 +7,7 @@ import {
   CardHeader,
   Container,
   FormControl,
+  FormHelperText,
   Grid,
   InputAdornment,
   InputLabel,
@@ -27,13 +28,24 @@ import { useNavigate } from 'react-router-dom';
 import { useEditMenuStore } from '../../hooks/useEditMenuStore';
 import { useProductionAreasStore } from '../../../Common/store/production-areas-store';
 
-const initialForm: CreateProductDto = {
+export interface ProductForm {
+  name: string;
+  price: number;
+  categoryId: string;
+  description?: string;
+  status?: ProductStatus;
+  productionAreaId?: number | '';
+  unitCost?: number;
+  quantity?: number;
+}
+
+const initialForm: ProductForm = {
   name: '',
   description: '',
   price: 0,
   status: ProductStatus.AVAILABLE,
   categoryId: '',
-  productionAreaId: 0,
+  productionAreaId: '',
   unitCost: 0,
   quantity: 0
 };
@@ -89,12 +101,11 @@ export const CreateProduct = () => {
 
   return (
     <>
-      <TitlePage title='Crear producto' />
-
       <Container>
+        <TitlePage title='Crear producto' />
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <Card>
                 <CardHeader title='Información del producto' />
                 <CardContent>
@@ -139,7 +150,13 @@ export const CreateProduct = () => {
                           control={control}
                           render={({ field: { onChange, onBlur, value } }) => (
                             <>
-                              <FormControl fullWidth>
+                              <FormControl
+                                fullWidth
+                                {...register('categoryId', {
+                                  required: 'Este campo es requerido'
+                                })}
+                                error={!!errors.categoryId}
+                              >
                                 <InputLabel htmlFor='grouped-select'>
                                   Categoría
                                 </InputLabel>
@@ -151,7 +168,6 @@ export const CreateProduct = () => {
                                   value={value}
                                   onChange={onChange}
                                   onBlur={onBlur}
-                                  error={!!errors.categoryId}
                                 >
                                   {sections.map((section) => [
                                     <ListSubheader
@@ -174,6 +190,11 @@ export const CreateProduct = () => {
                                     ))
                                   ])}
                                 </Select>
+                                {errors.categoryId && (
+                                  <FormHelperText>
+                                    {errors.categoryId?.message}
+                                  </FormHelperText>
+                                )}
                               </FormControl>
                             </>
                           )}
@@ -183,10 +204,15 @@ export const CreateProduct = () => {
                         <Controller
                           name='productionAreaId'
                           control={control}
-                          rules={{ required: 'Este campo es requerido' }}
                           render={({ field: { onChange, onBlur, value } }) => (
                             <>
-                              <FormControl fullWidth>
+                              <FormControl
+                                fullWidth
+                                {...register('productionAreaId', {
+                                  required: 'Este campo es requerido'
+                                })}
+                                error={!!errors.productionAreaId}
+                              >
                                 <InputLabel id='select-area'>
                                   Área de producción
                                 </InputLabel>
@@ -198,7 +224,6 @@ export const CreateProduct = () => {
                                   value={value}
                                   onChange={onChange}
                                   onBlur={onBlur}
-                                  error={!!errors.productionAreaId}
                                 >
                                   {productionAreas.map((area) => (
                                     <MenuItem key={area.id} value={area.id}>
@@ -206,6 +231,11 @@ export const CreateProduct = () => {
                                     </MenuItem>
                                   ))}
                                 </Select>
+                                {errors.productionAreaId && (
+                                  <FormHelperText>
+                                    {errors.productionAreaId?.message}
+                                  </FormHelperText>
+                                )}
                               </FormControl>
                             </>
                           )}
@@ -218,6 +248,67 @@ export const CreateProduct = () => {
             </Grid>
 
             <Grid item xs={12} md={6}>
+              <Card sx={{ mb: 2 }}>
+                <CardHeader title='Precios' />
+                <CardContent>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        label='Precio'
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              <AttachMoney />
+                            </InputAdornment>
+                          )
+                        }}
+                        fullWidth
+                        type='number'
+                        inputProps={{
+                          step: 0.05
+                        }}
+                        {...register('price', {
+                          required: 'Este campo es requerido',
+                          min: {
+                            value: 0.25,
+                            message: 'El valor debe ser mayor a $0.25'
+                          },
+                          valueAsNumber: true
+                        })}
+                        helperText={errors.price?.message}
+                        error={!!errors.price}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        label='Costo unitario'
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              <AttachMoney />
+                            </InputAdornment>
+                          )
+                        }}
+                        fullWidth
+                        type='number'
+                        inputProps={{
+                          step: 0.05
+                        }}
+                        {...register('unitCost', {
+                          min: {
+                            value: 0,
+                            message: 'El valor debe ser mayor a $0'
+                          },
+                          valueAsNumber: true
+                        })}
+                        helperText={errors.unitCost?.message}
+                        error={!!errors.unitCost}
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
               <Card>
                 <CardHeader title='Inventario' />
                 <CardContent>
@@ -281,69 +372,7 @@ export const CreateProduct = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardHeader title='Precios' />
-                <CardContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        label='Precio'
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position='start'>
-                              <AttachMoney />
-                            </InputAdornment>
-                          )
-                        }}
-                        fullWidth
-                        type='number'
-                        inputProps={{
-                          step: 0.05
-                        }}
-                        {...register('price', {
-                          required: 'Este campo es requerido',
-                          min: {
-                            value: 0.25,
-                            message: 'El valor debe ser mayor a $0.25'
-                          },
-                          valueAsNumber: true
-                        })}
-                        helperText={errors.price?.message}
-                        error={!!errors.price}
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        label='Costo unitario'
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position='start'>
-                              <AttachMoney />
-                            </InputAdornment>
-                          )
-                        }}
-                        fullWidth
-                        type='number'
-                        inputProps={{
-                          step: 0.05
-                        }}
-                        {...register('unitCost', {
-                          min: {
-                            value: 0,
-                            message: 'El valor debe ser mayor a $0'
-                          },
-                          valueAsNumber: true
-                        })}
-                        helperText={errors.unitCost?.message}
-                        error={!!errors.unitCost}
-                      />
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
+            <Grid item xs={12} md={6}></Grid>
           </Grid>
           <Box display='flex' justifyContent='flex-end' mt={2}>
             <LoadingButton

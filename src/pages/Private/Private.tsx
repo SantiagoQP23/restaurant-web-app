@@ -48,10 +48,10 @@ export const Private = () => {
   const areasQuery = useProductionAreas();
 
   // Load active orders
-  const { activeOrdersQuery } = useActiveOrders();
+  // const { activeOrdersQuery } = useActiveOrders();
 
   // Load tables
-  const { tablesQuery } = useTables();
+  // const { tablesQuery } = useTables();
 
   // Load cash register active
   // useCashRegisterActive();
@@ -64,11 +64,10 @@ export const Private = () => {
   // const restaurantQuery = useRestaurant();
 
   const isLoading =
-    activeOrdersQuery.isLoading ||
+    // activeOrdersQuery.isLoading ||
     // restaurantQuery.isLoading ||
-    menuQuery.isLoading ||
-    areasQuery.isLoading ||
-    tablesQuery.isLoading;
+    menuQuery.isLoading || areasQuery.isLoading;
+  // tablesQuery.isLoading;
 
   // listener new order
   useOnOrderCreated();

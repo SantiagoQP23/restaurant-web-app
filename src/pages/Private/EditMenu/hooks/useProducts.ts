@@ -23,6 +23,7 @@ export const useProduct = (id: string) => {
   const dispatch = useDispatch();
   return useQuery<IProduct, unknown>(['product', id], () => getProduct(id), {
     onSuccess: (product) => {
+      console.log('Product fetched:', product);
       dispatch(setActiveProduct(product));
     }
   });

@@ -14,9 +14,9 @@ export const EditProduct = () => {
     return <Navigate to='/menu/products' />;
   }
   // This update activeProduct in redux
-  const { isLoading } = useProduct(params.id);
+  const { isLoading, data: product } = useProduct(params.id);
 
-  const product = useSelector(selectMenu).activeProduct;
+  // const product = useSelector(selectMenu).activeProduct;
 
   if (isLoading) {
     return <>Loading...</>;
@@ -30,7 +30,7 @@ export const EditProduct = () => {
     <>
       <TitlePage title={product.name} />
 
-      <Container maxWidth='md'>
+      <Container maxWidth='md' sx={{ mb: 4 }}>
         {product && <FormProduct product={product} />}
       </Container>
     </>

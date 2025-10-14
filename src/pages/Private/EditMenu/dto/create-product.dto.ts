@@ -12,7 +12,7 @@ export interface CreateProductDto {
   categoryId: string;
   description?: string;
   status?: ProductStatus;
-  productionAreaId: number;
+  productionAreaId?: number;
   unitCost?: number;
   quantity?: number;
 }

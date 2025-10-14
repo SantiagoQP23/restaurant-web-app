@@ -9,7 +9,8 @@ import {
   IconButton,
   Tooltip,
   styled,
-  useTheme
+  useTheme,
+  Container
 } from '@mui/material';
 
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
@@ -80,46 +81,48 @@ function Header() {
   const { user: userState } = useAppSelector(selectAuth);
   return (
     <AppBar position='fixed' open={false}>
-      <Box
-        display='flex'
-        alignItems='center'
-        justifyContent='space-between'
-        mt={1}
-      >
-        {/* <HeaderMenu /> */}
-        <Typography
-          ml={{ xs: 3, lg: '310px' }}
-          variant='h4'
-          color='text.primary'
-        ></Typography>
+      <Container>
+        <Box
+          display='flex'
+          alignItems='center'
+          justifyContent='space-between'
+          mt={1}
+        >
+          {/* <HeaderMenu /> */}
+          <Typography
+            ml={{ xs: 3, lg: '310px' }}
+            variant='h4'
+            color='text.primary'
+          ></Typography>
 
-        <Stack direction='row' spacing={1} alignItems='center'>
-          <HeaderButtons />
-          {userState && <HeaderUserbox />}
-          <Box
-            component='span'
-            sx={{
-              display: { lg: 'none', xs: 'inline-block' }
-            }}
-          >
-            <Tooltip arrow title='Toggle Menu'>
-              <IconButton
-                color='primary'
-                onClick={() => {
-                  toggleSidebar();
-                  handleDrawerOpen();
-                }}
-              >
-                {sidebarToggle ? (
-                  <CloseTwoToneIcon fontSize='small' />
-                ) : (
-                  <MenuTwoToneIcon fontSize='small' />
-                )}
-              </IconButton>
-            </Tooltip>
-          </Box>
-        </Stack>
-      </Box>
+          <Stack direction='row' spacing={1} alignItems='center'>
+            <HeaderButtons />
+            {userState && <HeaderUserbox />}
+            <Box
+              component='span'
+              sx={{
+                display: { lg: 'none', xs: 'inline-block' }
+              }}
+            >
+              <Tooltip arrow title='Toggle Menu'>
+                <IconButton
+                  color='primary'
+                  onClick={() => {
+                    toggleSidebar();
+                    handleDrawerOpen();
+                  }}
+                >
+                  {sidebarToggle ? (
+                    <CloseTwoToneIcon fontSize='small' />
+                  ) : (
+                    <MenuTwoToneIcon fontSize='small' />
+                  )}
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Stack>
+        </Box>
+      </Container>
     </AppBar>
   );
 }

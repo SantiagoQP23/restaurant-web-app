@@ -159,7 +159,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   return (
     <>
-      <Box mb={1}>
+      <Box mb={2}>
         <Card>
           <CardHeader title='Imagenes del producto' />
           <CardContent>
@@ -169,7 +169,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
       </Box>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={1}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title='Información del producto' />
@@ -591,7 +591,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
           <LoadingButton
             variant='contained'
             type='submit'
-            disabled={!isValid || !isDirty}
+            disabled={!isValid}
             loading={isLoading}
             startIcon={<Save />}
           >
