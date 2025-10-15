@@ -38,7 +38,7 @@ export const ModalDeleteProduct = NiceModal.create<Props>(({ product }) => {
   return (
     <>
       <Dialog {...muiDialogV5(modal)}>
-        <DialogTitle id='alert-dialog-title' color='white'>
+        <DialogTitle id='alert-dialog-title'>
           {`¿Esta seguro de eliminar el producto ${product!.name}?`}
         </DialogTitle>
         <Divider />

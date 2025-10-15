@@ -110,7 +110,7 @@ export const ProductsList: FC<Props> = () => {
         </FormControl>
       </Box>
 
-      <Box mt={1}>
+      <Box mt={2} mb={4}>
         <Grid container rowSpacing={1} spacing={1}>
           {filteredProducts.length === 0 && (
             <Typography align='center' variant='subtitle1'>

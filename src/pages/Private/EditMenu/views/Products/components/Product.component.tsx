@@ -13,7 +13,13 @@ import {
   useMediaQuery
 } from '@mui/material/';
 
-import { DeleteOutline, EditOutlined, MoreHoriz } from '@mui/icons-material';
+import {
+  DeleteOutline,
+  DeleteOutlined,
+  EditOutlined,
+  MoreHoriz,
+  Reply
+} from '@mui/icons-material';
 
 import { IProduct } from '../../../../../../models';
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +32,10 @@ import {
 import { bindPopover } from 'material-ui-popup-state';
 import { bindTrigger, usePopupState } from 'material-ui-popup-state/hooks';
 import { LabelProductStatus } from '../../../../../../components/ui/LabelProductStatus.component';
+import { Label } from '@/components/ui';
+import { useUpdateProduct } from '../../../hooks/useProducts';
+import { useAppDispatch } from '@/hooks';
+import { updateProduct } from '@/redux';
 
 /**
  * @author Steven Rosales
@@ -53,13 +63,20 @@ export const Product: FC<Props> = ({ producto }) => {
     NiceModal.show(ModalDeleteProduct, { product: producto } as MDeleteProps);
   };
 
+  const { mutateAsync, isLoading } = useUpdateProduct();
+
+  const dispatch = useAppDispatch();
+
+  const enableProduct = async () => {
+    popupState.close();
+    await mutateAsync({ id: producto.id, isActive: true }).then((product) => {
+      dispatch(updateProduct(product));
+    });
+  };
+
   const navitateToEditProduct = () => {
     navigate(`/menu/products/${producto.id}/edit`);
   };
-
-  // const navigateToViewProduct = () => {
-  //   navigate(`/menu/products/${producto.id}`);
-  // };
 
   const handleDelete = () => {
     popupState.close();
@@ -106,7 +123,14 @@ export const Product: FC<Props> = ({ producto }) => {
                 alignItems: 'center'
               }}
             >
-              <LabelProductStatus status={producto.status} />
+              {producto.isActive && (
+                <LabelProductStatus status={producto.status} />
+              )}
+              {!producto.isActive && (
+                <Label color={producto.isActive ? 'success' : 'error'}>
+                  {producto.isActive ? 'Activo' : 'Eliminado'}
+                </Label>
+              )}
 
               <IconButton {...bindTrigger(popupState)}>
                 <MoreHoriz />
@@ -151,10 +175,17 @@ export const Product: FC<Props> = ({ producto }) => {
           <Visibility fontSize="small" sx={{ mr: 2 }} />
           Ver
         </MenuItem> */}
-        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-          <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
-          Eliminar
-        </MenuItem>
+        {producto.isActive ? (
+          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+            <DeleteOutlined fontSize='small' sx={{ mr: 2 }} />
+            Eliminar
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={enableProduct} sx={{ color: 'success.main' }}>
+            <Reply fontSize='small' sx={{ mr: 2 }} />
+            Habilitar
+          </MenuItem>
+        )}
       </Popover>
     </>
   );

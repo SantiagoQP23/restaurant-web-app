@@ -584,7 +584,8 @@ export const FormProduct: FC<Props> = ({ product }) => {
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
-            mt: 2
+            mt: 2,
+            mb: 4
           }}
         >
           <LoadingButton

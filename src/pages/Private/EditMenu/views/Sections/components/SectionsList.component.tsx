@@ -121,15 +121,14 @@ export const SectionsList = () => {
     if (section.isActive) {
       showModalDelete(section);
     } else {
-      // TODO - Activar sección
-      await updateSectionMutation
-        .mutateAsync({
-          id: section.id,
-          isActive: true
-        })
-        .then(() => {
-          dispatch(loadSections(orderedSections));
-        });
+      //TODO: Activar sección
+      await updateSectionMutation.mutateAsync({
+        id: section.id,
+        isActive: true
+      });
+      // .then(() => {
+      //   dispatch(loadSections(orderedSections));
+      // });
     }
   };
 
