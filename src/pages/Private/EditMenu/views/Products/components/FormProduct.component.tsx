@@ -159,18 +159,17 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   return (
     <>
-      <Box mb={2}>
-        <Card>
-          <CardHeader title='Imagenes del producto' />
-          <CardContent>
-            <FormProductImage product={product} />
-          </CardContent>
-        </Card>
-      </Box>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={6}>
+            <Card>
+              <CardHeader title='Imagenes del producto' />
+              <CardContent>
+                <FormProductImage product={product} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
             <Card>
               <CardHeader title='Información del producto' />
               <CardContent>

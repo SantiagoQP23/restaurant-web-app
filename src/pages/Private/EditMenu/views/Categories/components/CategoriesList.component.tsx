@@ -68,7 +68,7 @@ export function CategoriesList() {
     <>
       <Grid container display='flex' justifyContent='space-between'>
         <Grid item display='flex' alignItems='center'>
-          <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+          <FormControl sx={{ minWidth: 120 }} size='small'>
             <InputLabel id='demo-select-small-label'>Sección</InputLabel>
             <Select
               labelId='demo-select-small-label'
@@ -90,7 +90,7 @@ export function CategoriesList() {
         </Grid>
       </Grid>
 
-      <Box mt={1}>
+      <Box mt={2}>
         <Grid container rowSpacing={1} spacing={1}>
           {filteredCategories.length > 0 &&
             filteredCategories.map((categoria) => (

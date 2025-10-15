@@ -30,9 +30,7 @@ export const EditProduct = () => {
     <>
       <TitlePage title={product.name} />
 
-      <Container maxWidth='md' sx={{ mb: 4 }}>
-        {product && <FormProduct product={product} />}
-      </Container>
+      {product && <FormProduct product={product} />}
     </>
   );
 };
