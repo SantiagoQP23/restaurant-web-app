@@ -196,6 +196,7 @@ export const FormUser: FC<Props> = ({
               label='Email'
               fullWidth
               {...register('email', {
+                required: 'Este campo es requerido',
                 pattern: {
                   value: /\S+@\S+\.\S+/,
                   message: 'Email no válido'

@@ -35,7 +35,7 @@ export const UsersList = () => {
               startIcon={<AddTwoToneIcon fontSize='small' />}
               onClick={openInviteUserModal}
             >
-              Invitar usuario
+              Invitar
             </Button>
             <Button
               sx={{ mt: { xs: 2, md: 0 } }}
@@ -43,7 +43,7 @@ export const UsersList = () => {
               startIcon={<AddTwoToneIcon fontSize='small' />}
               onClick={createUser}
             >
-              Añadir usuario
+              Añadir
             </Button>
           </Stack>
         }

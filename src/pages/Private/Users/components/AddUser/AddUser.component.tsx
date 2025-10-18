@@ -11,7 +11,9 @@ import {
   CardContent,
   Grid,
   Typography,
-  Button
+  Button,
+  Box,
+  Stack
 } from '@mui/material';
 import { FormUser } from '../FormUser.component';
 import { createUser } from '../../services/users.service';
@@ -84,18 +86,19 @@ export const AddUser = () => {
     <>
       <TitlePage title='Agregar usuario' />
 
-      <Container maxWidth='md'>
-        <Card>
-          <CardContent>
-            <FormUser
-              user={user}
-              onSubmit={onSubmit}
-              loading={isLoading}
-              isNew={true}
-            />
-          </CardContent>
+      <Box width={{ xs: '100%', md: '570px' }} mx='auto' mb={4} mt={4}>
+        <Card sx={{ p: 3 }}>
+          <Stack gap={1} mb={3}>
+            <Typography variant='h4'>Informacion del usuario</Typography>
+          </Stack>
+          <FormUser
+            user={user}
+            onSubmit={onSubmit}
+            loading={isLoading}
+            isNew={true}
+          />
         </Card>
-      </Container>
+      </Box>
     </>
   );
 };

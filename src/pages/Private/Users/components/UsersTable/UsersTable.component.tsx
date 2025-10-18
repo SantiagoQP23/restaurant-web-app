@@ -52,7 +52,7 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
     if (currentUser!.id === user.id) {
       navigate('/users/account');
     } else {
-      navigate('edit');
+      navigate(`edit/${user.id}`);
     }
   };
 

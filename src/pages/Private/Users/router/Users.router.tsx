@@ -20,7 +20,7 @@ export const UsersRouter: RouteObject = {
       element: <UsersList />
     },
     {
-      path: 'edit',
+      path: 'edit/:id',
       element: <EditUser />
     },
     {

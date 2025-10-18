@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import {
   selectUsers,
   updateUser
@@ -21,17 +21,29 @@ import { FormUser } from '../FormUser.component';
 import { useSnackbar } from 'notistack';
 import { ResetPasswordUserDto } from '../../dto/update-user.dto';
 import { LoadingButton } from '@mui/lab';
-import { useResetPasswordUser, useUpdateUser } from '../../hooks/useUsers';
+import {
+  useResetPasswordUser,
+  useUpdateUser,
+  useUser
+} from '../../hooks/useUsers';
 import { IUser } from '../../../../../models';
 import { Label } from '../../../../../components/ui';
 import { TitlePage } from '../../../components/TitlePage.component';
+import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
 
 export const EditUser = () => {
   const navigate = useNavigate();
 
-  const { activeUser } = useSelector(selectUsers);
+  const params = useParams();
 
-  if (!activeUser) navigate('/users');
+  if (!params.id) {
+    return <Navigate to='/users' />;
+  }
+  // This update activeProduct in redux
+  const { isLoading, data: userToUpdate, refetch } = useUser(params.id);
+  const { restaurant } = useRestaurantStore((state) => state);
+
+  if (!userToUpdate) navigate('/users');
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -41,19 +53,31 @@ export const EditUser = () => {
 
   const updateUserMutation = useUpdateUser();
 
-  const { id, person, restaurantRoles, isActive, ...restUser } = activeUser!;
+  // const { id, person, restaurantRoles, isActive, ...restUser } = userToUpdate!;
+  //
+  // const { id: idI, ...identification } = person.identification;
+  //
+  // const { id: idP, ...restPerson } = person;
+  //
+  // const { name } = role;
 
-  const { id: idI, ...identification } = person.identification;
-
-  const { id: idP, ...restPerson } = person;
-
-  const { name } = role;
+  const currentRole = userToUpdate?.restaurantRoles.find(
+    (restaurantRole) => restaurantRole.restaurant.id === restaurant!.id
+  );
 
   const user: CreateUser = {
-    ...restPerson,
-    ...restUser,
-    role: { name },
-    identification
+    lastName: userToUpdate?.person.lastName || '',
+    firstName: userToUpdate?.person.firstName || '',
+    email: userToUpdate?.person.email || '',
+    numPhone: userToUpdate?.person.numPhone || '',
+    identification: {
+      type: userToUpdate!.person.identification!.type!,
+      num: userToUpdate!.person.identification.num || ''
+    },
+    username: userToUpdate?.username || '',
+    role: {
+      name: currentRole?.role.name || ''
+    }
   };
 
   async function onSubmit(form: CreateUser) {
@@ -72,9 +96,10 @@ export const EditUser = () => {
     };
 
     updateUserMutation
-      .mutateAsync({ id: activeUser!.id, ...userUpdated })
+      .mutateAsync({ id: userToUpdate!.id, ...userUpdated })
       .then((data) => {
         dispatch(updateUser(data));
+        refetch();
 
         // enqueueSnackbar('Usuario actualizado', { variant: 'success' });
       })
@@ -86,11 +111,10 @@ export const EditUser = () => {
 
   const submitChangeStatus = () => {
     updateUserMutation
-      .mutateAsync({ id: activeUser!.id, isActive: !activeUser!.isActive })
+      .mutateAsync({ id: userToUpdate!.id, isActive: !userToUpdate!.isActive })
       .then((data) => {
         dispatch(updateUser(data));
-
-        enqueueSnackbar('Usuario actualizado', { variant: 'success' });
+        refetch();
       })
       .catch((err) => {
         console.log(err);
@@ -100,34 +124,32 @@ export const EditUser = () => {
 
   async function onReset() {
     const data: ResetPasswordUserDto = {
-      userId: activeUser!.id
+      userId: userToUpdate!.id
     };
 
     resetPasswordMutation
       .mutateAsync(data)
-      .then((resp) => {
-        enqueueSnackbar('Contraseña reseteada', { variant: 'success' });
-      })
+      .then((resp) => {})
       .catch((err) => {
         console.log(err);
         enqueueSnackbar('Error al resetear contraseña', { variant: 'error' });
       });
   }
-
-  if (!activeUser) return <Navigate to='/users' replace />;
+  //
+  if (!userToUpdate) return <Navigate to='/users' replace />;
 
   return (
     <>
       <TitlePage title='Editar usuario' />
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} mb={4}>
         <Grid item xs={12} md={4}>
           <Card>
             <CardHeader
               action={
                 <>
-                  <Label color={activeUser!.isActive ? 'success' : 'error'}>
-                    {activeUser!.isActive ? 'Activo' : 'Inactivo'}
+                  <Label color={userToUpdate!.isActive ? 'success' : 'error'}>
+                    {userToUpdate!.isActive ? 'Activo' : 'Inactivo'}
                   </Label>
                 </>
               }
@@ -135,10 +157,12 @@ export const EditUser = () => {
 
             <CardContent>
               <Typography variant='h4' align='center' mt={5}>
-                {user.firstName + ' ' + user.lastName}
+                {userToUpdate.person.firstName +
+                  ' ' +
+                  userToUpdate.person.lastName}
               </Typography>
 
-              <Typography variant='subtitle2' align='center' mb={5}>
+              <Typography variant='subtitle2' align='center' mb={3}>
                 {user.role.name}
               </Typography>
 
@@ -152,7 +176,7 @@ export const EditUser = () => {
                   </Box>
 
                   <Switch
-                    checked={!activeUser!.isActive}
+                    checked={!userToUpdate!.isActive}
                     color='success'
                     onChange={() => submitChangeStatus()}
                   />
@@ -171,17 +195,15 @@ export const EditUser = () => {
         </Grid>
 
         <Grid item xs={12} md={8}>
-          <Card>
-            <CardContent>
-              <FormUser
-                onSubmit={onSubmit}
-                user={user}
-                loading={updateUserMutation.isLoading}
-                isNew={false}
-              />
+          <Card sx={{ p: { xs: 2, md: 4 } }}>
+            <FormUser
+              onSubmit={onSubmit}
+              user={user}
+              loading={updateUserMutation.isLoading}
+              isNew={false}
+            />
 
-              {/* <FormClient onSubmit={onSubmit} client={client} loading={loading} msg={'Editar'} /> */}
-            </CardContent>
+            {/* <FormClient onSubmit={onSubmit} client={client} loading={loading} msg={'Editar'} /> */}
           </Card>
         </Grid>
       </Grid>
