@@ -2,14 +2,10 @@ import { useContext } from 'react';
 
 import {
   Box,
-  alpha,
   Stack,
-  lighten,
-  Divider,
   IconButton,
   Tooltip,
   styled,
-  useTheme,
   Container
 } from '@mui/material';
 
@@ -19,7 +15,6 @@ import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
 
 import HeaderButtons from './Buttons';
 import HeaderUserbox from './components/Userbox.component';
-import HeaderMenu from './components/Menu.component';
 import { Typography } from '@mui/material';
 
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -27,25 +22,6 @@ import { useAppSelector } from '@/hooks';
 import { selectAuth } from '@/redux';
 
 const drawerWidth = 300;
-
-// background-color: ${alpha(theme.header.background, 0.95)};
-const HeaderWrapper = styled(Box)(
-  ({ theme }) => `
-        height: ${theme.header.height};
-        color: ${theme.header.textColor};
-        padding: ${theme.spacing(0, 2)};
-        right: 0;
-        z-index: 1;
-        backdrop-filter: blur(3px);
-        position: fixed;
-        justify-content: space-between;
-        width: 100%;
-        @media (min-width: ${theme.breakpoints.values.lg}px) {
-            left: ${theme.sidebar.width};
-            width: auto;
-        }
-`
-);
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -81,7 +57,7 @@ function Header() {
   const { user: userState } = useAppSelector(selectAuth);
   return (
     <AppBar position='fixed' open={false}>
-      <Container>
+      <Container maxWidth='lg'>
         <Box
           display='flex'
           alignItems='center'
@@ -90,8 +66,8 @@ function Header() {
         >
           {/* <HeaderMenu /> */}
           <Typography
-            ml={{ xs: 3, lg: '310px' }}
-            variant='h4'
+            // ml={{ xs: 3, lg: '310px' }}
+            variant='h6'
             color='text.primary'
           ></Typography>
 
