@@ -135,7 +135,8 @@ export const ListTables = () => {
         display='flex'
         justifyContent='space-between'
         alignItems='center'
-        my={1}
+        mt={1}
+        mb={4}
       >
         <Grid item>
           <Typography variant='h6'>

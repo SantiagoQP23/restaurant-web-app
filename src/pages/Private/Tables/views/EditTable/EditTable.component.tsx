@@ -94,115 +94,80 @@ export const EditTable = () => {
     }
   };
 
-  const handleCancel = () => {
-    dispatch(setActiveTable(null));
-    navigate(-1);
-  };
-
   return (
     <>
       <TitlePage title={`${activeTable ? 'Editar' : 'Crear'} mesa`} />
 
-      <Container maxWidth='xs'>
-        <Grid container display='flex' justifyContent='space-between'>
-          <Grid item display='flex' justifyContent='left' alignItems='center'>
-            <Button onClick={handleCancel}>
-              <ArrowBack />
-            </Button>
-            <Typography variant='h5'>
-              {activeTable ? `Mesa ${activeTable.name}` : 'Añadir mesa'}{' '}
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Card>
-          <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid
-                container
-                spacing={1}
-                display='flex'
-                justifyContent='center'
-              >
-                <Grid item xs={12}>
-                  <TextField
-                    autoFocus
-                    margin='dense'
-                    label='Nombre de la mesa'
-                    type='text'
-                    fullWidth
-                    {...register('name', {
-                      required: 'Este campo es requerido'
-                    })}
-                    error={!!errors.name}
-                    helperText={
-                      <Typography color='red'>
-                        {errors.name?.message}
-                      </Typography>
-                    }
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    autoFocus
-                    margin='dense'
-                    label='Descripción'
-                    type='text'
-                    fullWidth
-                    {...register('description', {})}
-                    error={!!errors.description}
-                    helperText={
-                      <Typography color='red'>
-                        {errors.description?.message}
-                      </Typography>
-                    }
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    autoFocus
-                    margin='dense'
-                    label='Asientos'
-                    type='number'
-                    fullWidth
-                    {...register('chairs', {
-                      required: 'Este campo es requerido',
-                      maxLength: { value: 2, message: ' ' },
-                      valueAsNumber: true
-                    })}
-                    error={!!errors.chairs}
-                    helperText={
-                      <Typography color='red'>
-                        {errors.chairs?.message}
-                      </Typography>
-                    }
-                  />
-                </Grid>
-
-                <LoadingButton
-                  variant='outlined'
-                  type='submit'
-                  loading={loading}
-                >
-                  {activeTable ? `Editar` : 'Crear'}
-                </LoadingButton>
-
-                {loading && (
-                  <Button
-                    color='error'
-                    variant='outlined'
-                    onClick={() => cancelEndpoint()}
-                  >
-                    Cancelar
-                  </Button>
-                )}
+      <Card sx={{ maxWidth: 350, margin: '0 auto' }}>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={1} display='flex' justifyContent='center'>
+              <Grid item xs={12}>
+                <TextField
+                  autoFocus
+                  margin='dense'
+                  label='Nombre de la mesa'
+                  type='text'
+                  fullWidth
+                  {...register('name', {
+                    required: 'Este campo es requerido'
+                  })}
+                  error={!!errors.name}
+                  helperText={errors.name?.message}
+                />
               </Grid>
-            </form>
-          </CardContent>
-        </Card>
-      </Container>
+
+              <Grid item xs={12}>
+                <TextField
+                  margin='dense'
+                  label='Descripción'
+                  type='text'
+                  fullWidth
+                  {...register('description', {})}
+                  error={!!errors.description}
+                  helperText={errors.description?.message}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  margin='dense'
+                  label='Asientos'
+                  type='number'
+                  fullWidth
+                  {...register('chairs', {
+                    required: 'Este campo es requerido',
+                    maxLength: { value: 2, message: ' ' },
+                    valueAsNumber: true
+                  })}
+                  error={!!errors.chairs}
+                  helperText={errors.chairs?.message}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Stack direction='row' spacing={2} justifyContent='right'>
+                  {loading && (
+                    <Button
+                      color='error'
+                      onClick={() => cancelEndpoint()}
+                      variant='text'
+                    >
+                      Cancelar
+                    </Button>
+                  )}
+                  <LoadingButton
+                    variant='contained'
+                    type='submit'
+                    loading={loading}
+                  >
+                    {activeTable ? `Editar` : 'Crear'}
+                  </LoadingButton>
+                </Stack>
+              </Grid>
+            </Grid>
+          </form>
+        </CardContent>
+      </Card>
     </>
   );
 };
