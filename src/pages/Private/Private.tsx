@@ -51,7 +51,7 @@ export const Private = () => {
   // const { activeOrdersQuery } = useActiveOrders();
 
   // Load tables
-  // const { tablesQuery } = useTables();
+  const { tablesQuery } = useTables();
 
   // Load cash register active
   // useCashRegisterActive();

@@ -43,29 +43,21 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
   const showOrdersTableDrawer = () => NiceModal.show(DrawerOrder, { table });
 
   return (
-    <Card
-      sx={{
-        border: (theme) =>
-          isAvailable
-            ? `2px solid ${theme.palette.success.light}`
-            : // : `2px solid ${theme.palette.warning.light}`,
-              ``,
-        boxShadow: (theme) =>
-          isAvailable
-            ? `0px 0px 4px ${theme.palette.success.light}`
-            : // : `0px 0px 4px ${theme.palette.warning.light}`,
-              ``
-      }}
-    >
+    <Card>
       <CardActionArea onClick={showOrdersTableDrawer}>
         <CardHeader
           title={
-            <Box display='flex' justifyContent='center' gap={1}>
+            <Box
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              gap={1}
+            >
               <TableBar
                 fontSize='small'
                 // color={isAvailable ? "secondary" : "inherit"}
               />
-              <Typography variant='h5' textAlign='center'>
+              <Typography variant='body1' textAlign='center'>
                 {table.name}
               </Typography>
             </Box>
@@ -124,8 +116,12 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
               justifyContent='center'
               gap={1}
             >
-              <Circle fontSize='small' sx={{ fontSize: 10 }} />
-              <Typography fontSize='0.8rem' textAlign='center'>
+              <Circle fontSize='small' sx={{ fontSize: 10 }} color='success' />
+              <Typography
+                fontSize='0.8rem'
+                textAlign='center'
+                color='success.main'
+              >
                 {isAvailable ? 'Disponible' : ''}
               </Typography>
             </Box>
