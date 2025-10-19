@@ -121,26 +121,7 @@ export const OrdersDashboard = () => {
           }
         />
 
-        <Stack sx={{ mb: 2 }} direction='row' spacing={1}>
-          {/* <CardHeader */}
-          {/*   avatar={<Assignment color='primary' />} */}
-          {/*   title='Total de pedidos' */}
-          {/* /> */}
-          {/* <Box */}
-          {/*   sx={{ */}
-          {/*     px: 2, */}
-          {/*     py: 1, */}
-          {/*     border: '1px solid', */}
-          {/*     borderColor: 'divider', */}
-          {/*     borderRadius: 1, */}
-          {/*     display: 'flex', */}
-          {/*     alignItems: 'center', */}
-          {/*     gap: 1 */}
-          {/*   }} */}
-          {/* > */}
-          {/*   <Typography variant='h6'>Pendientes</Typography> */}
-          {/*   <Chip label='2' /> */}
-          {/* </Box> */}
+        <Stack sx={{ mb: 2 }} direction='row' spacing={1} overflow='auto'>
           <HeaderBox title='Total de pedidos' count={totalOrders} />
           <HeaderBox title='Pedidos pagados' count={paidOrders} />
           <HeaderBox title='Pendientes' count={pendingOrders} />

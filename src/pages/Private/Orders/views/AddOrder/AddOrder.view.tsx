@@ -116,6 +116,9 @@ export const AddOrder = () => {
                 >
                   <ComboBoxProducts selectProduct={addProductoToOrder} />
                 </Box>
+                <Typography variant='h6' fontWeight='bold'>
+                  Secciones
+                </Typography>
                 <Stack direction='row' spacing={1} flexWrap='wrap'>
                   {sections.map((section) => (
                     <SectionCard
@@ -128,6 +131,9 @@ export const AddOrder = () => {
                     />
                   ))}
                 </Stack>
+                <Typography variant='h6' fontWeight='bold'>
+                  Categorías
+                </Typography>
                 <Box
                   sx={{
                     overflowX: 'auto',
@@ -171,16 +177,16 @@ export const AddOrder = () => {
                   justifyContent='space-between'
                   my={2}
                 >
-                  <Button
-                    startIcon={<ShoppingCart />}
-                    fullWidth={false}
-                    onClick={() => {
-                      navigate('/orders/add/menu');
-                    }}
-                    color='primary'
-                  >
-                    Añadir productos
-                  </Button>
+                  {/* <Button */}
+                  {/*   startIcon={<ShoppingCart />} */}
+                  {/*   fullWidth={false} */}
+                  {/*   onClick={() => { */}
+                  {/*     navigate('/orders/add/menu'); */}
+                  {/*   }} */}
+                  {/*   color='primary' */}
+                  {/* > */}
+                  {/*   Añadir productos */}
+                  {/* </Button> */}
                   <Button
                     color='error'
                     variant='outlined'

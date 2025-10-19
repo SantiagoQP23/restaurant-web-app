@@ -10,7 +10,11 @@ import {
   Divider,
   TextField,
   InputLabel,
-  Chip
+  Chip,
+  FormControl,
+  Select,
+  SelectChangeEvent,
+  MenuItem
 } from '@mui/material';
 import { TypeOrder } from '../../../../../../models';
 
@@ -27,6 +31,8 @@ import { PeopleCounter } from './PeopleCounter.component';
 import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 import { useNewOrderStore } from '../../../store/newOrderStore';
 import { OrderDetails } from './OrdersDetails.component';
+import { useSelector } from 'react-redux';
+import { selectTables } from '@/redux';
 
 interface Props {
   step: number;
@@ -37,6 +43,7 @@ interface Props {
  * @version 1.1 28/12/2023 Adds useCreateOrder hook
  */
 export const NewOrderSummary: FC<Props> = () => {
+  const { tables } = useSelector(selectTables);
   const {
     table,
     people,
@@ -45,8 +52,16 @@ export const NewOrderSummary: FC<Props> = () => {
     notes,
     setNotes,
     reset,
-    setOrderType
+    setOrderType,
+    setTable
   } = useNewOrderStore((state) => state);
+
+  const onSelectTableChange = (event: SelectChangeEvent) => {
+    const tableId = event.target.value as string;
+    const selectedTable = tables.find((t) => t.id === tableId) || null;
+
+    setTable(selectedTable);
+  };
 
   const { mutate: createOrder, isLoading, isOnline } = useCreateOrder();
 
@@ -99,14 +114,35 @@ export const NewOrderSummary: FC<Props> = () => {
                   <Typography variant='h4' fontWeight='bold'>
                     Nuevo pedido
                   </Typography>
-                  <Box>
-                    <Typography variant='h6' fontWeight='bold'>
-                      Mesa
-                    </Typography>
-                    <Typography variant='body1'>
-                      N° {table?.name || 'Sin mesa'}
-                    </Typography>
-                  </Box>
+                  {orderType === TypeOrder.IN_PLACE && (
+                    <Box>
+                      {orderType === TypeOrder.IN_PLACE && (
+                        <FormControl fullWidth>
+                          <InputLabel id='select-seccion'>Mesa</InputLabel>
+                          <Select
+                            labelId='select-seccion'
+                            label='Seccion'
+                            margin='dense'
+                            value={table?.id || ''}
+                            onChange={onSelectTableChange}
+                            size='small'
+                          >
+                            {tables.map((table) => (
+                              <MenuItem key={table.id} value={table.id}>
+                                Mesa {table.name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      )}
+                      {/* <Typography variant='h6' fontWeight='bold'> */}
+                      {/*   Mesa */}
+                      {/* </Typography> */}
+                      {/* <Typography variant='body1'> */}
+                      {/*   N° {table?.name || 'Sin mesa'} */}
+                      {/* </Typography> */}
+                    </Box>
+                  )}
                 </Box>
                 <Stack direction='row' spacing={1}>
                   <Chip

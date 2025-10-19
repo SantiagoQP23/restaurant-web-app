@@ -59,7 +59,7 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
           alignItems='flex-start'
         >
           <Stack>
-            <Typography variant='h4' whiteSpace={'normal'}>
+            <Typography variant='body1' fontWeight='bold' whiteSpace={'normal'}>
               {detalle.quantity} - {detalle.product.name}
               {/* {detalle.productOption && (
                 <Chip

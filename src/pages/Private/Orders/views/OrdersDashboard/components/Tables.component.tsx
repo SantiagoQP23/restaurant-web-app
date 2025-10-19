@@ -20,6 +20,7 @@ import { Table } from './Table.component';
 import NiceModal from '@ebay/nice-modal-react';
 import { RegisteredModals } from '../../../../modals';
 import { useEffect, useState } from 'react';
+import { NewOrderModal } from '../../../components/modals/NewOrderModal.component';
 
 enum StatusTable {
   FREE = 'FREE',
@@ -49,7 +50,11 @@ export const Tables = () => {
   };
 
   const handleClickTable = (table: ITable) => {
-    handleOpenDrawer(table);
+    if (table.isAvailable) {
+      NiceModal.show(NewOrderModal);
+    } else {
+      handleOpenDrawer(table);
+    }
   };
 
   const handleOpenDrawer = (table: ITable) => {

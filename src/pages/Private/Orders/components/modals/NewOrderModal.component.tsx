@@ -19,12 +19,13 @@ import { useNewOrderStore } from '../../store/newOrderStore';
 import { useNavigate } from 'react-router-dom';
 import { PeopleCounter } from '../../views';
 import { useEffect } from 'react';
+import { ITable } from '@/models';
 
 interface Props {
-  order: Order;
+  defaultTable?: ITable;
 }
 
-export const NewOrderModal = NiceModal.create<Props>(() => {
+export const NewOrderModal = NiceModal.create<Props>(({ defaultTable }) => {
   const modal = useModal();
   const { enqueueSnackbar } = useSnackbar();
   const { tables } = useSelector(selectTables);
@@ -60,12 +61,17 @@ export const NewOrderModal = NiceModal.create<Props>(() => {
   };
 
   useEffect(() => {
-    setTable(null);
+    if (defaultTable) {
+      setTable(defaultTable);
+      setOrderType(TypeOrder.IN_PLACE);
+    } else {
+      setTable(null);
+    }
   }, []);
 
   return (
     <Dialog {...muiDialogV5(modal)}>
-      <Stack sx={{ p: 4 }} gap={3}>
+      <Stack sx={{ px: { xs: 2, md: 4 }, py: 4 }} gap={3}>
         <Stack gap={1} alignItems='center'>
           <Typography variant='h4'>Nuevo pedido</Typography>
           <Typography variant='body1'>

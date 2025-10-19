@@ -13,7 +13,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Checkbox
+  Checkbox,
+  Switch
 } from '@mui/material/';
 
 import {
@@ -74,6 +75,13 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const [typeOrder, setTypeOrder] = useState<TypeOrder>(
     activeOrder ? activeOrder.type : TypeOrder.IN_PLACE
   );
+  const [detailWithNote, setDetailWithNote] = useState(true);
+
+  const handleChangeDetailWithNote = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDetailWithNote(event.target.checked);
+  };
 
   const { addDetail, details, updateDetail } = useNewOrderStore(
     (state) => state
@@ -167,16 +175,16 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
           sx={{
             width: {
               xs: '100%',
-              md: 600
+              md: 370
             }
           }}
         >
           <Stack spacing={2}>
             <Box>
+              <Typography variant='h6'>{detail?.product.name}</Typography>
               <Typography variant='subtitle1'>
                 {detail?.product.category.name}
               </Typography>
-              <Typography variant='h4'>{detail?.product.name}</Typography>
             </Box>
             <Typography variant='h4'>${detail?.product.price}</Typography>
 
@@ -212,8 +220,7 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
               </RadioGroup>
             </FormControl>
 
-            <Box>
-              {/* <Autocomplete
+            {/* <Autocomplete
                 id="checkboxes-tags-demo"
                 options={product.options}
                 disableCloseOnSelect
@@ -238,7 +245,6 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
                   />
                 )}
               /> */}
-            </Box>
 
             {detail?.product.description && (
               <Box sx={{ border: '1px solid #e0e0e0', p: 1, borderRadius: 1 }}>
@@ -248,48 +254,70 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
               </Box>
             )}
 
+            <CounterInput
+              value={detail?.quantity || 1}
+              onChange={handleQuantityChange}
+            />
+            <Stack
+              direction='row'
+              alignItems='center'
+              spacing={1}
+              justifyContent='space-between'
+            >
+              <Typography variant='body1'>Producto entregado</Typography>
+              <Checkbox onChange={handleProductDelivered} />
+            </Stack>
+
             {detail?.product.status !== ProductStatus.AVAILABLE ? (
               <>
                 <Label color='warning'>Producto no disponible</Label>
               </>
             ) : (
               <>
-                <FormControl fullWidth>
-                  <Stack
-                    flexWrap='wrap'
-                    flexDirection='column'
-                    spacing={2}
-                    alignItems='end'
-                    width='100%'
-                  >
-                    <TextField
-                      id='descripcion-pedido'
-                      label='Notas'
-                      margin='dense'
-                      multiline
-                      rows={3}
-                      sx={{
-                        width: '100%'
-                      }}
-                      defaultValue={description}
-                      onBlur={(e) => {
-                        console.log(e.target.value);
-                        setDescription(e.target.value);
-                      }}
-                    />
-                    <CounterInput
-                      value={detail?.quantity || 1}
-                      onChange={handleQuantityChange}
-                    />
-                  </Stack>
-                </FormControl>
+                <Stack
+                  direction='row'
+                  alignItems='center'
+                  spacing={1}
+                  justifyContent='space-between'
+                >
+                  <Typography variant='body1'>
+                    Añadir notas al detalle
+                  </Typography>
+                  <Switch
+                    checked={detailWithNote}
+                    onChange={handleChangeDetailWithNote}
+                  />
+                </Stack>
+
+                {detailWithNote && (
+                  <FormControl fullWidth>
+                    <Stack
+                      flexWrap='wrap'
+                      flexDirection='column'
+                      spacing={2}
+                      alignItems='end'
+                      width='100%'
+                    >
+                      <TextField
+                        id='descripcion-pedido'
+                        label='Notas'
+                        margin='dense'
+                        multiline
+                        rows={3}
+                        sx={{
+                          width: '100%'
+                        }}
+                        defaultValue={description}
+                        onBlur={(e) => {
+                          console.log(e.target.value);
+                          setDescription(e.target.value);
+                        }}
+                      />
+                    </Stack>
+                  </FormControl>
+                )}
               </>
             )}
-
-            <FormControlLabel
-              control={<Checkbox onChange={handleProductDelivered} />}
-              label='Producto ya fue entregado'
-            />
           </Stack>
         </DialogContent>
 

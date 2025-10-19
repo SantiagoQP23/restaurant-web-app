@@ -23,6 +23,7 @@ import {
 import NiceModal from '@ebay/nice-modal-react';
 import { format, formatDistance } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { NewOrderModal } from '../../../components/modals/NewOrderModal.component';
 
 interface Props {
   table: ITable;
@@ -42,9 +43,17 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
 
   const showOrdersTableDrawer = () => NiceModal.show(DrawerOrder, { table });
 
+  const handleClick = () => {
+    if (table.isAvailable) {
+      NiceModal.show(NewOrderModal, { defaultTable: table });
+    } else {
+      showOrdersTableDrawer();
+    }
+  };
+
   return (
     <Card>
-      <CardActionArea onClick={showOrdersTableDrawer}>
+      <CardActionArea onClick={handleClick}>
         <CardHeader
           title={
             <Box

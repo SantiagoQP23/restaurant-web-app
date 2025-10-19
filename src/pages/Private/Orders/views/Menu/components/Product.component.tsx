@@ -81,7 +81,9 @@ export const Product: FC<Props> = ({ product, onClick }) => {
             }}
             onClick={() => onClick(product.id)}
           >
-            <Typography variant='h4'>{product.name}</Typography>
+            <Typography variant='body1' fontWeight='bold'>
+              {product.name}
+            </Typography>
           </Link>
 
           <Stack
