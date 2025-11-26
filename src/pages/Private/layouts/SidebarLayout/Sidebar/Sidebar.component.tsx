@@ -109,26 +109,29 @@ const Title = ({ open }: { open: boolean }) => {
         alignItems='center'
         gap={2}
         sx={{
-          ml: open ? 3 : 0.75
+          mx: open ? 3 : 0.75
         }}
       >
-        {restaurant?.logo && (
-          <img
-            src={restaurant!.logo}
-            alt='logo'
-            width='60px'
-            style={{ borderRadius: 8 }}
-          />
-        )}
-
         <Box>
-          <Typography variant='subtitle1' color='text.primary'>
-            Restaurante
-          </Typography>
-          <Typography variant='h4' color='text.primary'>
-            {restaurant?.name}
-          </Typography>
+          {restaurant?.logo && (
+            <img
+              src={restaurant!.logo}
+              alt='logo'
+              width='60px'
+              style={{ borderRadius: 8 }}
+            />
+          )}
+
+          <Box>
+            <Typography variant='h4' color='text.primary'>
+              {restaurant?.name}
+            </Typography>
+            <Typography variant='subtitle1' color='text.primary'>
+              Restaurante
+            </Typography>
+          </Box>
         </Box>
+        <Box flexGrow={1} />
         <IconButton onClick={handleOpen} ref={ref}>
           <ExpandMore />
         </IconButton>
@@ -145,11 +148,16 @@ const Title = ({ open }: { open: boolean }) => {
           vertical: 'top',
           horizontal: 'right'
         }}
+        sx={{ p: 0 }}
       >
         <List
           sx={{ width: 250, maxWidth: 250 }}
           subheader={
-            <ListSubheader component='div' id='nested-list-subheader'>
+            <ListSubheader
+              component='div'
+              id='nested-list-subheader'
+              sx={{ fontSize: 12 }}
+            >
               Restaurantes
             </ListSubheader>
           }

@@ -153,13 +153,10 @@ export const MenuSection: FC<Props> = ({ section }) => {
     <List
       component='div'
       subheader={
-        <ListSubheader component='div' disableSticky>
-          <Typography color='text.primary'>{section.title}</Typography>
-        </ListSubheader>
+        <Typography color='text.secondary' variant='body1' sx={{ pl: 3 }}>
+          {section.title}
+        </Typography>
       }
-      sx={{
-        mt: 1
-      }}
     >
       <SubMenuWrapper>
         <List component='div'>

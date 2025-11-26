@@ -24,41 +24,33 @@ export const DashboardReports = () => {
 
         </Grid> */}
 
-        <Grid item xs={12} md={3}>
-          <ClientsSummary />
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <FootfallSummary />
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <IncomesSummary />
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <OrdersSummary />
-        </Grid>
-
-        <Grid item xs={12}>
-          <Grid container spacing={2}>
-            {/* <Grid item xs={12} md={6}>
-              <IncomesAndExpensesSummary />
-            </Grid> */}
-
-            {/* <Grid item xs={12} md={6}>
-              <PredictionAffluenceSummary />
-            </Grid> */}
-
-            <Grid item xs={12} md={6}>
-              <BestSellingProductsSummary />
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <UsersSummary />
-            </Grid>
-          </Grid>
-        </Grid>
+        {/* <Grid item xs={12} md={3}> */}
+        {/*   <ClientsSummary /> */}
+        {/* </Grid> */}
+        {/**/}
+        {/* <Grid item xs={12} md={3}> */}
+        {/*   <FootfallSummary /> */}
+        {/* </Grid> */}
+        {/**/}
+        {/* <Grid item xs={12} md={3}> */}
+        {/*   <IncomesSummary /> */}
+        {/* </Grid> */}
+        {/**/}
+        {/* <Grid item xs={12} md={3}> */}
+        {/*   <OrdersSummary /> */}
+        {/* </Grid> */}
+        {/**/}
+        {/* <Grid item xs={12}> */}
+        {/*   <Grid container spacing={2}> */}
+        {/*     <Grid item xs={12} md={6}> */}
+        {/*       <BestSellingProductsSummary /> */}
+        {/*     </Grid> */}
+        {/**/}
+        {/*     <Grid item xs={12} md={6}> */}
+        {/*       <UsersSummary /> */}
+        {/*     </Grid> */}
+        {/*   </Grid> */}
+        {/* </Grid> */}
       </Grid>
     </>
   );

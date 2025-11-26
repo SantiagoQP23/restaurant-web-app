@@ -1186,58 +1186,103 @@ export const NebulaFighterTheme = createTheme({
   typography: {
     fontFamily:
       '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+
     h1: {
       fontWeight: 700,
-      fontSize: 35
+      fontSize: '2.125rem', // 34px base
+      lineHeight: 1.25,
+      letterSpacing: '-0.02em',
+      color: colors.alpha.black[100],
+      '@media (max-width:600px)': {
+        fontSize: '1.75rem' // ~28px
+      }
     },
     h2: {
-      fontWeight: 700,
-      fontSize: 30
+      fontWeight: 600,
+      fontSize: '1.75rem', // 28px
+      lineHeight: 1.3,
+      letterSpacing: '-0.01em',
+      color: colors.alpha.black[90],
+      '@media (max-width:600px)': {
+        fontSize: '1.5rem' // 24px
+      }
     },
     h3: {
-      fontWeight: 700,
-      fontSize: 25,
+      fontWeight: 600,
+      fontSize: '1.375rem', // 22px
       lineHeight: 1.4,
-      color: colors.alpha.black[100]
+      color: colors.alpha.black[90],
+      '@media (max-width:600px)': {
+        fontSize: '1.25rem' // 20px
+      }
     },
     h4: {
-      fontWeight: 700,
-      fontSize: 16
+      fontWeight: 500,
+      fontSize: '1.125rem', // 18px
+      lineHeight: 1.5,
+      '@media (max-width:600px)': {
+        fontSize: '1rem' // 16px
+      }
     },
     h5: {
-      fontWeight: 700,
-      fontSize: 14
+      fontWeight: 500,
+      fontSize: '1rem', // 16px
+      lineHeight: 1.5
     },
     h6: {
-      fontSize: 15
+      fontWeight: 500,
+      fontSize: '0.9375rem', // 15px
+      lineHeight: 1.6
     },
+
     body1: {
-      fontSize: 14
+      fontSize: '1rem', // 16px
+      lineHeight: 1.6,
+      color: colors.alpha.black[70],
+      '@media (max-width:600px)': {
+        fontSize: '0.9375rem' // 15px
+      }
     },
     body2: {
-      fontSize: 14
-    },
-    button: {
-      fontWeight: 600
-    },
-    caption: {
-      fontSize: 13,
-      textTransform: 'uppercase',
+      fontSize: '0.875rem', // 14px
+      lineHeight: 1.6,
       color: colors.alpha.black[50]
     },
+
+    button: {
+      fontWeight: 600,
+      fontSize: '0.9375rem', // 15px
+      lineHeight: 1.4,
+      textTransform: 'none'
+    },
+
+    caption: {
+      fontSize: '0.8125rem', // 13px
+      lineHeight: 1.4,
+      textTransform: 'uppercase',
+      color: colors.alpha.black[50],
+      letterSpacing: '0.05em'
+    },
+
     subtitle1: {
-      fontSize: 14,
+      fontSize: '0.9375rem', // 15px
+      fontWeight: 500,
+      lineHeight: 1.5,
       color: colors.alpha.black[70]
     },
     subtitle2: {
+      fontSize: '0.875rem', // 14px
       fontWeight: 400,
-      fontSize: 15,
+      lineHeight: 1.5,
       color: colors.alpha.black[50]
     },
+
     overline: {
-      fontSize: 13,
+      fontSize: '0.75rem', // 12px
       fontWeight: 700,
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      letterSpacing: '0.08em',
+      color: colors.alpha.black[50]
     }
   },
   shadows: [

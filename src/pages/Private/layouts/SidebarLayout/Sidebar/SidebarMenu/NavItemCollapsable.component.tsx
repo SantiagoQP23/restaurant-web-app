@@ -43,27 +43,25 @@ export const NavItemCollapsable: FC<Props> = ({ navItem }) => {
         <ListItem component='div'>
           <ListItemButton
             onClick={handleClick}
-            sx={{ display: 'flex', alignItems: 'center' }}
+            sx={{ display: 'flex', alignItems: 'center', px: 2.5 }}
           >
-            <Stack display='flex' direction='row' alignItems='center'>
-              <ListItemIcon>{navItem.icon}</ListItemIcon>
+            <ListItemIcon sx={{ mr: 1, pr: 0, minWidth: 'auto' }}>
+              {navItem.icon}
+            </ListItemIcon>
 
-              <ListItemText
-                primary={navItem.title}
-                sx={{ opacity: 1, color: 'text.primary' }}
-              />
-              <ListItemSecondaryAction
-                sx={{ display: 'flex', alignItems: 'center' }}
-              >
-                {open ? (
-                  <ExpandMore sx={{}} />
-                ) : (
-                  <KeyboardArrowRight
-                  // sx={{ fontSize: 18, color: 'text.primary' }}
-                  />
-                )}
-              </ListItemSecondaryAction>
-            </Stack>
+            <ListItemText
+              primary={navItem.title}
+              sx={{ opacity: 1, color: 'text.primary' }}
+            />
+            <ListItemSecondaryAction
+              sx={{ display: 'flex', alignItems: 'center' }}
+            >
+              {open ? (
+                <ExpandMore fontSize='small' />
+              ) : (
+                <KeyboardArrowRight fontSize='small' />
+              )}
+            </ListItemSecondaryAction>
           </ListItemButton>
         </ListItem>
         <Collapse in={open} timeout='auto' unmountOnExit>

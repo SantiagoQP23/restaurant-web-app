@@ -3,11 +3,16 @@ import { MenuSection } from '../../interfaces';
 import {
   AccountBalanceWallet,
   Assignment,
+  AssignmentOutlined,
   FiberManualRecord,
   ListAlt,
+  ListAltOutlined,
   MenuBook,
+  MenuBookOutlined,
   ReceiptLong,
+  ReceiptLongOutlined,
   SoupKitchen,
+  SoupKitchenOutlined,
   Storefront
 } from '@mui/icons-material';
 
@@ -26,37 +31,37 @@ import { ValidRoles } from '../../../Common/models/valid-roles.model';
  * @version 1.2 20-03-2025 Add cash register
  */
 const generalSection: MenuSection = {
-  title: 'GENERAL',
+  title: '',
   allowedRoles: [ValidRoles.admin],
   items: [
     {
       title: 'Dashboard',
-      icon: <DashboardOutlinedIcon />,
+      icon: <DashboardOutlinedIcon fontSize='small' />,
       to: '/reports'
-    },
-    {
-      title: "Finanzas",
-      icon: <AccountBalanceWallet />,
-      to: "/financial",
-      subItems: [
-        {
-          title: "Transacciones",
-          to: "/financial/transactions",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-        },
-        {
-          title: "Caja",
-          to: "/financial/cash-register/actives",
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-        },
-        // {
-        //   title: "Cuentas",
-        //   to: "/financial/accounts",
-        //   icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-        // },
-
-      ],
-    },
+    }
+    // {
+    //   title: "Finanzas",
+    //   icon: <AccountBalanceWallet />,
+    //   to: "/financial",
+    //   subItems: [
+    //     {
+    //       title: "Transacciones",
+    //       to: "/financial/transactions",
+    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+    //     },
+    //     {
+    //       title: "Caja",
+    //       to: "/financial/cash-register/actives",
+    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+    //     },
+    //     {
+    //       title: "Cuentas",
+    //       to: "/financial/accounts",
+    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
+    //     },
+    //
+    //   ],
+    // },
   ]
 };
 
@@ -65,44 +70,44 @@ const generalSection: MenuSection = {
  * @version v1.1 22-12-2023 Change invoices for bills
  */
 const ordersSection = {
-  title: 'PEDIDOS',
+  title: 'Pedidos',
   items: [
     {
       title: 'Pedidos',
-      icon: <Assignment />,
+      icon: <AssignmentOutlined fontSize='small' />,
       to: '/orders/'
     },
     {
       title: 'Preparación de pedidos',
-      icon: <SoupKitchen />,
+      icon: <SoupKitchenOutlined fontSize='small' />,
       to: '/orders/actives'
       // allowedRoles: [ValidRoles.mesero],
     },
     {
       title: 'Lista de pedidos',
-      icon: <ListAlt />,
+      icon: <ListAltOutlined fontSize='small' />,
       to: '/orders/list'
     },
     {
       title: 'Cuentas',
-      icon: <ReceiptLong />,
+      icon: <ReceiptLongOutlined fontSize='small' />,
       to: '/bills'
     }
   ]
 };
 
 const advancedManagementSection = {
-  title: 'ADMINISTRACIÓN AVANZADA',
+  title: 'Administración',
   allowedRoles: [ValidRoles.admin],
   items: [
     {
       title: 'Gestión de usuarios',
-      icon: <PeopleOutlineIcon />,
+      icon: <PeopleOutlineIcon fontSize='small' />,
       to: '/users'
     },
     {
       title: 'Restaurante',
-      icon: <Storefront />,
+      icon: <Storefront fontSize='small' />,
       to: '/restaurant',
       label: 'Nuevo'
     }
@@ -110,11 +115,11 @@ const advancedManagementSection = {
 };
 
 const managementSection = {
-  title: 'ADMINISTRACIÓN',
+  title: 'Restaurante',
   items: [
     {
       title: 'Menú del restaurante',
-      icon: <MenuBook />,
+      icon: <MenuBookOutlined fontSize='small' />,
       to: '/menu/sections',
       subItems: [
         {
@@ -137,14 +142,14 @@ const managementSection = {
     },
     {
       title: 'Gestión de mesas',
-      icon: <TableRestaurantOutlinedIcon />,
+      icon: <TableRestaurantOutlinedIcon fontSize='small' />,
       to: '/tables'
-    },
-    {
-      title: 'Gestión de clientes',
-      icon: <Groups3OutlinedIcon />,
-      to: '/clients'
     }
+    // {
+    //   title: 'Gestión de clientes',
+    //   icon: <Groups3OutlinedIcon />,
+    //   to: '/clients'
+    // }
   ]
 };
 

@@ -52,7 +52,7 @@ export const NavItemButton: FC<Props> = ({ item }) => {
         <ListItemIcon
           sx={{
             minWidth: 0,
-            mr: 3,
+            mr: 1,
             justifyContent: 'center'
           }}
         >
