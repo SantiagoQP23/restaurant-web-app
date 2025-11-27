@@ -134,9 +134,13 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
       <Card>
         <CardHeader
           // avatar={<Typography variant="h6">{detail.quantity}</Typography>}
-          subheader={
+          title={
             <>
-              <Typography variant='h5' component='div' mt={0.5}>
+              <Typography
+                variant='subtitle1'
+                component='div'
+                color='text.primary'
+              >
                 {detail.quantity} {detail.product.name}{' '}
                 {detail.productOption && (
                   <Chip

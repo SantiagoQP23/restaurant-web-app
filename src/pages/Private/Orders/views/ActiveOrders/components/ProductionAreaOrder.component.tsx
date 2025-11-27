@@ -65,7 +65,7 @@ export const ProductionAreaOrder = ({
         defaultExpanded
       >
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography variant='h6'>
+          <Typography variant='body1'>
             <b>{productionArea.name}</b>: {`${totalProducts} productos`}
           </Typography>
         </AccordionSummary>

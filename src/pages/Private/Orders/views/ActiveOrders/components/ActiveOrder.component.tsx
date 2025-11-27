@@ -22,7 +22,12 @@ import {
   People,
   TakeoutDining,
   TimerOutlined,
-  Notes
+  Notes,
+  RestaurantOutlined,
+  TakeoutDiningOutlined,
+  PeopleOutlined,
+  TableRestaurantOutlined,
+  PersonOutlined
 } from '@mui/icons-material';
 
 import { formatDistance } from 'date-fns';
@@ -145,7 +150,7 @@ export const ActiveOrder: FC<Props> = ({
                 variant: 'subtitle2'
               }}
               subheaderTypographyProps={{
-                variant: 'h5',
+                variant: 'body1',
                 color: 'inherith'
               }}
               subheader={`${formatDistance(
@@ -168,9 +173,9 @@ export const ActiveOrder: FC<Props> = ({
               }}
               avatar={
                 order.type === TypeOrder.IN_PLACE ? (
-                  <Restaurant />
+                  <RestaurantOutlined />
                 ) : (
-                  <TakeoutDining />
+                  <TakeoutDiningOutlined />
                 )
               }
               // title='Orden'
@@ -178,7 +183,7 @@ export const ActiveOrder: FC<Props> = ({
                 variant: 'subtitle2'
               }}
               subheaderTypographyProps={{
-                variant: 'h5',
+                variant: 'body1',
                 color: 'inherith'
               }}
               subheader={
@@ -195,18 +200,17 @@ export const ActiveOrder: FC<Props> = ({
                 px: 1,
                 py: 0.5
               }}
-              avatar={<People />}
+              avatar={<PeopleOutlined />}
               // title='Personas'
               titleTypographyProps={{
                 variant: 'subtitle2'
               }}
               subheaderTypographyProps={{
-                variant: 'h5',
+                variant: 'body1',
                 color: 'inherith'
               }}
               subheader={`${order.people}`}
             />
-            <Card></Card>
           </Grid>
 
           {order.type === TypeOrder.IN_PLACE && (
@@ -217,19 +221,17 @@ export const ActiveOrder: FC<Props> = ({
                     px: 1,
                     py: 0.5
                   }}
-                  avatar={<TableRestaurant />}
+                  avatar={<TableRestaurantOutlined />}
                   // title='Mesa'
                   titleTypographyProps={{
                     variant: 'subtitle2'
                   }}
                   subheaderTypographyProps={{
-                    variant: 'h5',
+                    variant: 'body1',
                     color: 'inherith'
                   }}
                   subheader={`Mesa ${order.table?.name}` || 'No seleccionada'}
                 />
-
-                <Card></Card>
               </Grid>
             </>
           )}
@@ -240,13 +242,13 @@ export const ActiveOrder: FC<Props> = ({
                 px: 1,
                 py: 0.5
               }}
-              avatar={<Person />}
+              avatar={<PersonOutlined />}
               // title='Mesero'
               titleTypographyProps={{
                 variant: 'subtitle2'
               }}
               subheaderTypographyProps={{
-                variant: 'h5',
+                variant: 'body1',
                 color: 'inherith'
               }}
               subheader={`${order.user.person.firstName} ${order.user.person.lastName}`}
@@ -267,7 +269,7 @@ export const ActiveOrder: FC<Props> = ({
                     variant: 'subtitle2'
                   }}
                   subheaderTypographyProps={{
-                    variant: 'h5',
+                    variant: 'body1',
                     color: 'inherith'
                   }}
                   subheader={order.notes}
@@ -356,7 +358,7 @@ export const ActiveOrder: FC<Props> = ({
               />
             </Tabs>
           )} */}
-          <Stack spacing={1} direction='column'>
+          <Stack spacing={2} direction='column'>
             {productionAreas.map((area) => (
               <ProductionAreaOrder
                 key={area.id}

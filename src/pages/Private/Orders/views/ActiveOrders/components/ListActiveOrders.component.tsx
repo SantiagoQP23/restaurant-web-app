@@ -148,7 +148,7 @@ export const ListActiveOrders = () => {
           <Tab
             label={
               <>
-                <Typography variant='h5' component='span'>
+                <Typography variant='body1' component='span'>
                   Pendientes
                 </Typography>
                 <Chip
@@ -172,7 +172,7 @@ export const ListActiveOrders = () => {
           <Tab
             label={
               <>
-                <Typography variant='h5' component='span'>
+                <Typography variant='body1' component='span'>
                   En preparación
                 </Typography>
                 <Chip
@@ -196,7 +196,7 @@ export const ListActiveOrders = () => {
           <Tab
             label={
               <>
-                <Typography variant='h5' component='span'>
+                <Typography variant='body1' component='span'>
                   Entregados
                 </Typography>
                 <Chip

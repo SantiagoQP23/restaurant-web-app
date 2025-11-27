@@ -168,7 +168,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                   </Grid>
 
                   <Grid item xs={8}>
-                    <Typography variant='h5' textAlign='right'>
+                    <Typography variant='subtitle1' textAlign='right'>
                       {order.type === TypeOrder.IN_PLACE
                         ? 'Para servir'
                         : 'Para llevar'}
@@ -182,7 +182,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                       </Grid>
 
                       <Grid item xs={8}>
-                        <Typography variant='h5' textAlign='right'>
+                        <Typography variant='subtitle1' textAlign='right'>
                           Mesa {order.table?.name || 'No seleccionada'}
                         </Typography>
                       </Grid>
@@ -194,7 +194,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                   </Grid>
 
                   <Grid item xs={7}>
-                    <Typography variant='h5' textAlign='right'>
+                    <Typography variant='subtitle1' textAlign='right'>
                       {format(new Date(order.deliveryTime), 'dd/MM/yyy HH:mm')}
                     </Typography>
                   </Grid>
@@ -204,7 +204,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                   </Grid>
 
                   <Grid item xs={8}>
-                    <Typography variant='h5' textAlign='right'>
+                    <Typography variant='subtitle1' textAlign='right'>
                       {order.people}
                     </Typography>
                   </Grid>
@@ -213,7 +213,9 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                     <>
                       <Grid item xs={12}>
                         <Typography variant='body1'>Notas</Typography>
-                        <Typography variant='h5'>{order.notes}</Typography>
+                        <Typography variant='subtitle1'>
+                          {order.notes}
+                        </Typography>
                       </Grid>
                     </>
                   )}
@@ -227,7 +229,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                     alignItems='center'
                     justifyContent='flex-end'
                   >
-                    <Typography variant='h3'>
+                    <Typography variant='h5'>
                       {formatMoney(order.total)}
                     </Typography>
                   </Grid>
@@ -251,7 +253,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                     <CardContent>
                       {showUser && order.user ? (
                         <Stack spacing={0.5}>
-                          <Typography variant='h5' fontWeight='bold'>
+                          <Typography variant='subtitle1'>
                             {order.user?.person.firstName +
                               ' ' +
                               order.user?.person.lastName}

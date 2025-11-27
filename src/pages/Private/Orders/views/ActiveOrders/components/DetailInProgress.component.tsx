@@ -109,7 +109,7 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
           <Chip
             label={
               <Typography
-                variant='h4'
+                variant='subtitle1'
                 color={
                   detail.qtyDelivered === detail.quantity
                     ? 'GrayText'
@@ -136,14 +136,16 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
                   size='small'
                 />
               )}
-              {detail.typeOrderDetail !== typeOrder && (
-                detail.typeOrderDetail === TypeOrder.IN_PLACE ? <LocalDiningOutlined /> : <TakeoutDiningOutlined />
-
-              )}
+              {detail.typeOrderDetail !== typeOrder &&
+                (detail.typeOrderDetail === TypeOrder.IN_PLACE ? (
+                  <LocalDiningOutlined />
+                ) : (
+                  <TakeoutDiningOutlined />
+                ))}
             </Stack>
           }
           primaryTypographyProps={{
-            variant: 'h4',
+            variant: 'subtitle1',
             color:
               detail.qtyDelivered === detail.quantity
                 ? 'GrayText'
@@ -152,8 +154,7 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
               textDecoration:
                 detail.qtyDelivered === detail.quantity
                   ? 'line-through'
-                  : 'none'
-              ,
+                  : 'none',
               alignItems: 'center'
             }
           }}
