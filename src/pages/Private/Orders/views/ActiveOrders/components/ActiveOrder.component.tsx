@@ -131,7 +131,10 @@ export const ActiveOrder: FC<Props> = ({
                 variant='outlined'
               />
 
-              <Typography variant='h3'>{`N° ${order.num}`}</Typography>
+              <Typography
+                variant='h3'
+                fontWeight={500}
+              >{`N° ${order.num}`}</Typography>
               <LabelStatusOrder status={order.status} />
             </Stack>
           }

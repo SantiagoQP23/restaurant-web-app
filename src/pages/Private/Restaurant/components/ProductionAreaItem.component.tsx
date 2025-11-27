@@ -16,6 +16,7 @@ import {
   Close,
   DeleteOutlined,
   DonutSmall,
+  DonutSmallOutlined,
   EditOutlined,
   MoreVert,
   Reply
@@ -80,7 +81,7 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
   };
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card sx={{ p: 2 }} variant='outlined'>
       <ListItem
         secondaryAction={
           <>
@@ -97,7 +98,7 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
         }
       >
         <ListItemIcon>
-          <DonutSmall />
+          <DonutSmallOutlined />
         </ListItemIcon>
 
         {isEditing ? (
@@ -113,7 +114,7 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
             primary={name}
             secondary={area.description}
             primaryTypographyProps={{
-              variant: 'h5',
+              variant: 'subtitle1',
               color: area.isActive ? 'text.primary' : 'text.disabled'
             }}
           />
@@ -126,7 +127,8 @@ export const ProductionAreaItem: FC<Props> = ({ area }) => {
           slotProps={{
             paper: {
               sx: {
-                width: 170
+                width: 170,
+                p: 1
               }
             }
           }}

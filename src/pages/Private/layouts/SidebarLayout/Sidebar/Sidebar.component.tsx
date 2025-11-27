@@ -112,7 +112,7 @@ const Title = ({ open }: { open: boolean }) => {
           mx: open ? 3 : 0.75
         }}
       >
-        <Box>
+        <Box display='flex' alignItems='center' gap={2}>
           {restaurant?.logo && (
             <img
               src={restaurant!.logo}

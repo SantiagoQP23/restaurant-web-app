@@ -81,7 +81,9 @@ export const TitlePage: FC<Props> = ({ title, action }) => {
     >
       <Stack direction='row' alignItems='center' justifyContent='flex-start'>
         <Box>
-          <Typography variant='h3'>{title}</Typography>
+          <Typography variant='h3' fontWeight={500}>
+            {title}
+          </Typography>
           <Breadcrumbs
             separator={<CircleRounded sx={{ fontSize: 6, color: '#888' }} />}
           >
