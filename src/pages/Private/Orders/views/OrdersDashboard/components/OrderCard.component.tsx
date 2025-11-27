@@ -8,7 +8,11 @@ import {
   TakeoutDining,
   TableBar,
   EditOutlined,
-  Done
+  Done,
+  TakeoutDiningOutlined,
+  TableBarOutlined,
+  AssignmentOutlined,
+  PeopleOutlined
 } from '@mui/icons-material';
 import {
   Card,
@@ -71,7 +75,8 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
   };
 
   const isCloseableOrder =
-    order.status === OrderStatus.DELIVERED && order.isPaid || order.status === OrderStatus.CANCELLED;
+    (order.status === OrderStatus.DELIVERED && order.isPaid) ||
+    order.status === OrderStatus.CANCELLED;
 
   const showModalCloseOrder = () => {
     NiceModal.show(ModalCloseOrder, {
@@ -103,12 +108,12 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
             <Box display='flex' alignItems='center' gap={1}>
               {order.type === TypeOrder.TAKE_AWAY ? (
                 <>
-                  <TakeoutDining fontSize='small' />
+                  <TakeoutDiningOutlined fontSize='small' />
                   {getTypeOrder(order.type)}
                 </>
               ) : (
                 <>
-                  {<TableBar fontSize='small' />}
+                  {<TableBarOutlined fontSize='small' />}
                   {`Mesa ${order.table?.name}`}
                 </>
               )}
@@ -125,11 +130,11 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
               </Stack>
             </>
           }
-        // avatar={<TableRestaurant />}
+          // avatar={<TableRestaurant />}
         />
         {order.notes && (
           <Box display='flex' flexDirection='column' px={2}>
-            <Typography variant='h5'>Notas</Typography>
+            <Typography variant='subtitle1'>Notas</Typography>
 
             <Typography variant='body1'>{order.notes}</Typography>
           </Box>
@@ -149,16 +154,16 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
             <Stack spacing={1} sx={{}}>
               {order.details.map((detail) => (
                 <Box key={detail.id} display='flex'>
-                  <Typography variant='h5' width='10%'>
+                  <Typography variant='body1' width='10%'>
                     {detail.quantity}
                     {/* {index < order.details.length - 1 ? "," : "."} */}
                   </Typography>
                   <Box display='flex' flexDirection='column'>
-                    <Typography variant='h5'>
+                    <Typography variant='body1'>
                       {detail.product.name}
                       {detail.productOption && `: ${detail.productOption.name}`}
                     </Typography>
-                    <Typography variant='subtitle1'>
+                    <Typography variant='subtitle2'>
                       {detail.description}
                     </Typography>
                   </Box>
@@ -191,7 +196,7 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
               <TimerOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
               <Typography fontSize='0.8rem'>{date}</Typography>
               <Divider orientation='vertical' flexItem sx={{ mx: 1 }} />
-              <People fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
+              <PeopleOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
               <Typography fontSize='0.8rem' fontWeight='bold'>
                 {order.people}
               </Typography>
@@ -202,13 +207,16 @@ export const OrderCard: FC<Props> = ({ order, onClick }) => {
               alignItems='center'
             >
               <Box display='flex' alignItems='center' gap={0.5}>
-                <Assignment fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
+                <AssignmentOutlined
+                  fontSize='small'
+                  sx={{ fontSize: 18, mr: 0.5 }}
+                />
                 <Typography>N° {order.num}</Typography>
               </Box>
               <Box display='flex' alignItems='center' gap={0.5}>
                 <LabelStatusPaid isPaid={order.isPaid} />
                 <Divider orientation='vertical' flexItem />
-                <Typography align='right' variant='h4'>
+                <Typography align='right' variant='h6'>
                   {formatMoney(order.total)}
                 </Typography>
               </Box>

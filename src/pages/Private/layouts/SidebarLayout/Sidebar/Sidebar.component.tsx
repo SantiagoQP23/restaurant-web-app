@@ -123,10 +123,10 @@ const Title = ({ open }: { open: boolean }) => {
           )}
 
           <Box>
-            <Typography variant='h4' color='text.primary'>
+            <Typography variant='h6' color='text.primary'>
               {restaurant?.name}
             </Typography>
-            <Typography variant='subtitle1' color='text.primary'>
+            <Typography variant='subtitle2' color='text.primary'>
               Restaurante
             </Typography>
           </Box>
@@ -167,10 +167,9 @@ const Title = ({ open }: { open: boolean }) => {
               key={restaurantRole.id}
               onClick={() => changeRestaurant(restaurantRole.restaurant)}
             >
-              {/* <ListItemIcon> */}
-              {/*   <Inbox /> */}
-              {/* </ListItemIcon> */}
               <ListItemText
+                primaryTypographyProps={{ variant: 'body1' }}
+                secondaryTypographyProps={{ variant: 'subtitle2' }}
                 primary={restaurantRole.restaurant.name}
                 secondary={restaurantRole.role.name}
               />
@@ -270,8 +269,8 @@ function Sidebar() {
 
         {open && (
           <Box p={2} textAlign='center'>
-            <Typography>Desarrollado por </Typography>
-            <Typography variant='h5'>Santiago Quirumbay</Typography>
+            <Typography variant='subtitle2'>Desarrollado por </Typography>
+            <Typography variant='body1'>Santiago Quirumbay</Typography>
           </Box>
         )}
       </DrawerPersistent>
@@ -300,8 +299,10 @@ function Sidebar() {
 
           <Divider />
           <Box p={1} textAlign='center'>
-            <Typography color='text.primary'>Desarrollado por </Typography>
-            <Typography variant='h5' color='text.primary'>
+            <Typography color='text.primary' variant='subtitle1'>
+              Desarrollado por{' '}
+            </Typography>
+            <Typography variant='body1' color='text.primary'>
               Santiago Quirumbay
             </Typography>
           </Box>

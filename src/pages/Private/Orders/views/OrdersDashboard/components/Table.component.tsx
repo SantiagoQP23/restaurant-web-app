@@ -1,6 +1,12 @@
 import { FC } from 'react';
 
-import { Assignment, Circle, People, TableBar } from '@mui/icons-material';
+import {
+  Assignment,
+  Circle,
+  People,
+  TableBar,
+  TableBarOutlined
+} from '@mui/icons-material';
 import {
   Card,
   CardActionArea,
@@ -52,7 +58,7 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
   };
 
   return (
-    <Card>
+    <Card sx={{ border: 1, borderColor: 'divider' }}>
       <CardActionArea onClick={handleClick}>
         <CardHeader
           title={
@@ -62,12 +68,12 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
               alignItems='center'
               gap={1}
             >
-              <TableBar
+              <TableBarOutlined
                 fontSize='small'
                 // color={isAvailable ? "secondary" : "inherit"}
               />
-              <Typography variant='body1' textAlign='center'>
-                {table.name}
+              <Typography variant='subtitle1' textAlign='center'>
+                Table {table.name}
               </Typography>
             </Box>
           }

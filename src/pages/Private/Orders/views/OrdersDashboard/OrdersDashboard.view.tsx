@@ -48,21 +48,24 @@ interface HeaderBoxProps {
 
 const HeaderBox = ({ title, count }: HeaderBoxProps) => {
   return (
-    <Box
-      sx={{
-        px: 2,
-        py: 1,
-        border: '1px solid',
-        borderColor: 'divider',
-        borderRadius: 1,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 1
-      }}
-    >
-      <Typography variant='body1'>{title}</Typography>
-      <Chip label={count} size='small' />
-    </Box>
+    <Card>
+      <Box
+        sx={{
+          p: 2,
+          border: '1px solid',
+          borderColor: 'divider',
+          borderRadius: 1,
+          boxShadow: '1px solid #0000001A',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1
+        }}
+      >
+        <Typography variant='body1'>{title}</Typography>
+        <Typography variant='h4'>{count}</Typography>
+        {/* <Chip label={count} size='small' /> */}
+      </Box>
+    </Card>
   );
 };
 
@@ -121,12 +124,20 @@ export const OrdersDashboard = () => {
           }
         />
 
-        <Stack sx={{ mb: 2 }} direction='row' spacing={1} overflow='auto'>
-          <HeaderBox title='Total de pedidos' count={totalOrders} />
-          <HeaderBox title='Pedidos pagados' count={paidOrders} />
-          <HeaderBox title='Pendientes' count={pendingOrders} />
-          <HeaderBox title='En proceso' count={inProgressOrders} />
-        </Stack>
+        <Grid container spacing={2} mb={2}>
+          <Grid item xs={12} sm={6} md={3} lg={3}>
+            <HeaderBox title='Total de pedidos' count={totalOrders} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3} lg={3}>
+            <HeaderBox title='Pedidos pagados' count={paidOrders} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3} lg={3}>
+            <HeaderBox title='Pendientes' count={pendingOrders} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3} lg={3}>
+            <HeaderBox title='En proceso' count={inProgressOrders} />
+          </Grid>
+        </Grid>
 
         {/* <Grid container spacing={2} mb={2}> */}
         {/*   <Grid item xs={6} md={6} lg={3}> */}

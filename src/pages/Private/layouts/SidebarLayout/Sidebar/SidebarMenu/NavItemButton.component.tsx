@@ -60,7 +60,7 @@ export const NavItemButton: FC<Props> = ({ item }) => {
         </ListItemIcon>
         <ListItemText
           primary={item.title}
-          sx={{ opacity: 1, color: 'text.primary' }}
+          sx={{ opacity: 1, color: 'text.primary', variant: 'subtitle2' }}
         />
       </ListItemButton>
     </ListItem>

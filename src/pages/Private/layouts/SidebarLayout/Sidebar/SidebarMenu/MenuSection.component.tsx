@@ -153,7 +153,7 @@ export const MenuSection: FC<Props> = ({ section }) => {
     <List
       component='div'
       subheader={
-        <Typography color='text.secondary' variant='body1' sx={{ pl: 3 }}>
+        <Typography color='text.secondary' variant='subtitle2' sx={{ pl: 3 }}>
           {section.title}
         </Typography>
       }
