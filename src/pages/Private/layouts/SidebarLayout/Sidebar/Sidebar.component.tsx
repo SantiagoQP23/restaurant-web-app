@@ -21,7 +21,12 @@ import MuiDrawer from '@mui/material/Drawer';
 import SidebarMenu from './SidebarMenu/SidebarMenu.component';
 import { Scrollbar } from '../../../components';
 
-import { ChevronLeft, ExpandMore, Inbox } from '@mui/icons-material';
+import {
+  ChevronLeft,
+  DoneOutlineRounded,
+  ExpandMore,
+  Inbox
+} from '@mui/icons-material';
 
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../../../redux';
@@ -29,6 +34,7 @@ import { selectAuth } from '../../../../../redux';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import { useRestaurantStore } from '../../../Common/store/restaurantStore';
 import { Restaurant } from '@/pages/Private/Common/models/restaurant.model';
+import { switchRestaurantMutation } from '@/pages/Private/Restaurant/hooks/useRestaurant';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -84,6 +90,7 @@ const DrawerPersistent = styled(MuiDrawer, {
 
 const Title = ({ open }: { open: boolean }) => {
   const { restaurant, setRestaurant } = useRestaurantStore((state) => state);
+  const switchRestaurant = switchRestaurantMutation();
   const { user } = useSelector(selectAuth);
 
   const ref = useRef<any>(null);
@@ -97,8 +104,11 @@ const Title = ({ open }: { open: boolean }) => {
     setOpen(false);
   };
 
-  const changeRestaurant = (restaurant: Restaurant) => {
-    setRestaurant(restaurant);
+  const changeRestaurant = (newRestaurant: Restaurant) => {
+    if (restaurant?.id !== newRestaurant.id) {
+      switchRestaurant.mutate(newRestaurant.id);
+    }
+
     handleClose();
   };
 
@@ -133,7 +143,7 @@ const Title = ({ open }: { open: boolean }) => {
         </Box>
         <Box flexGrow={1} />
         <IconButton onClick={handleOpen} ref={ref}>
-          <ExpandMore />
+          <ExpandMore fontSize='small' />
         </IconButton>
       </Box>
       <Popover
@@ -173,6 +183,11 @@ const Title = ({ open }: { open: boolean }) => {
                 primary={restaurantRole.restaurant.name}
                 secondary={restaurantRole.role.name}
               />
+              {restaurant?.id === restaurantRole.restaurant.id && (
+                <ListItemIcon sx={{ minWidth: '30px' }}>
+                  <DoneOutlineRounded fontSize='small' color='secondary' />
+                </ListItemIcon>
+              )}
             </ListItemButton>
           ))}
         </List>

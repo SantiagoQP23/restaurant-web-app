@@ -14,6 +14,34 @@ import {
   createRestaurant
 } from '../services/restaurant.service';
 import { CreateRestaurantDto } from '../dto/create-restaurant.dto';
+import { LoginResponseDto } from '@/models';
+import { RestaurantService } from '../../Common/services/restaurant.service';
+import { useDispatch } from 'react-redux';
+import { onLogin } from '@/redux';
+
+export const switchRestaurantMutation = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const { setRestaurant } = useRestaurantStore((state) => state);
+  const dispatch = useDispatch();
+  return useMutation<LoginResponseDto, unknown, string>(
+    (restaurantId: string) => RestaurantService.switchRestaurant(restaurantId),
+    {
+      onSuccess: (data) => {
+        setRestaurant(data.currentRestaurant);
+        dispatch(onLogin(data.user));
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('token-init-date', String(new Date().getTime()));
+        setRestaurant(data.currentRestaurant);
+        window.location.reload();
+      },
+      onError: () => {
+        enqueueSnackbar('Error al cambiar de restaurante', {
+          variant: 'error'
+        });
+      }
+    }
+  );
+};
 
 export const useRestaurant = () => {
   const { enqueueSnackbar } = useSnackbar();
