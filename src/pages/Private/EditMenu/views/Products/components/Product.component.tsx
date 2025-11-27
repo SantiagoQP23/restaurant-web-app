@@ -52,7 +52,7 @@ export const Product: FC<Props> = ({ producto }) => {
   const isXs = useMediaQuery(theme.breakpoints.down('xs'));
   const isMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  const ImageWidth = isXs ? 80 : isMd ? 120 : 160;
+  const ImageWidth = isXs ? 80 : isMd ? 120 : 120;
 
   const popupState = usePopupState({
     variant: 'popover',
@@ -109,7 +109,7 @@ export const Product: FC<Props> = ({ producto }) => {
             alt='Product'
             style={{
               width: ImageWidth,
-              height: 280,
+              height: ImageWidth * (9 / 16),
               objectFit: 'cover',
               aspectRatio: 16 / 9,
               borderRadius: 7
@@ -137,7 +137,7 @@ export const Product: FC<Props> = ({ producto }) => {
               </IconButton>
             </Box>
 
-            <Typography variant='h4'>{producto.name}</Typography>
+            <Typography variant='h6'>{producto.name}</Typography>
             <Typography variant='body1'>
               {formatMoney(producto.price)}
             </Typography>

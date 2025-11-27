@@ -70,11 +70,11 @@ export const ActiveOrder: FC<Props> = ({
 }) => {
   // const color= "primary";
 
-  const details = productionArea
-    ? order.details.filter(
-        (detail) => detail.product.productionArea.id === productionArea?.id
-      )
-    : order.details;
+  // const details = productionArea
+  //   ? order.details.filter(
+  //       (detail) => detail.product.productionArea.id === productionArea?.id
+  //     )
+  //   : order.details;
 
   const { getFirstPendingOrder } = useOrderHelper();
 
@@ -105,7 +105,7 @@ export const ActiveOrder: FC<Props> = ({
     updateOrder(data);
   };
 
-  if (details.length === 0) return null;
+  // if (details.length === 0) return null;
 
   return (
     <>

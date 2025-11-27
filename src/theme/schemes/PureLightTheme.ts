@@ -1191,7 +1191,7 @@ export const PureLightTheme = createTheme({
     },
     h6: {
       fontSize: '1rem', // 16px
-      fontWeight: 600,
+      fontWeight: 500,
       lineHeight: 1.45
     },
 

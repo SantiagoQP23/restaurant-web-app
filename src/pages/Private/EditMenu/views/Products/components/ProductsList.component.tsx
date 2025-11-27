@@ -120,7 +120,7 @@ export const ProductsList: FC<Props> = () => {
 
           {filteredProducts.length > 0 &&
             filteredProducts.map((producto) => (
-              <Grid key={producto.id!} item xs={12} sm={6} lg={4}>
+              <Grid key={producto.id!} item xs={12} sm={6} lg={3}>
                 <Product producto={producto} />
               </Grid>
             ))}

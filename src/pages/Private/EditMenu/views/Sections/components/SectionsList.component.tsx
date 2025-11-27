@@ -24,8 +24,10 @@ import {
   DeleteOutlined,
   EditOutlined,
   Reply,
+  ReplyOutlined,
   Save,
-  Visibility
+  Visibility,
+  VisibilityOutlined
 } from '@mui/icons-material';
 
 import {
@@ -249,8 +251,8 @@ export const SectionsList = () => {
             }}
           >
             <MenuItem onClick={() => showCategories(activeSection)}>
-              <Visibility />
-              <Typography variant='h5' ml={2}>
+              <VisibilityOutlined />
+              <Typography variant='subtitle2' ml={2}>
                 Categorías
               </Typography>
             </MenuItem>
@@ -263,15 +265,15 @@ export const SectionsList = () => {
             >
               {!activeSection.isActive ? (
                 <>
-                  <Reply />
-                  <Typography variant='h5' ml={2}>
+                  <ReplyOutlined />
+                  <Typography variant='subtitle2' ml={2}>
                     Activar
                   </Typography>
                 </>
               ) : (
                 <>
                   <DeleteOutlined />
-                  <Typography variant='h5' ml={2}>
+                  <Typography variant='subtitle2' ml={2}>
                     Eliminar
                   </Typography>
                 </>

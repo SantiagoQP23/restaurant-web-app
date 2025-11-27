@@ -56,9 +56,10 @@ export const ListActiveOrders = () => {
     });
   };
 
-  const ordersFilteredByProductionArea = productionAreaActive
-    ? filterOrdersByProductionArea(productionAreaActive)
-    : orders;
+  // const ordersFilteredByProductionArea = productionAreaActive
+  //   ? filterOrdersByProductionArea(productionAreaActive)
+  //   : orders;
+  const ordersFilteredByProductionArea = orders;
 
   const ordersFiltered = ordersFilteredByProductionArea.filter(
     (order) => order.status === statusOrderFilter
@@ -227,31 +228,47 @@ export const ListActiveOrders = () => {
         ) : (
           <Grid container spacing={2}>
             {ordersFiltered.map((order, index) => {
-              const details = productionAreaActive
-                ? order.details.filter(
-                    (detail) =>
-                      detail.product.productionArea.id ===
-                      productionAreaActive?.id
-                  )
-                : order.details;
+              {
+                /* const details = productionAreaActive */
+              }
+              {
+                /*   ? order.details.filter( */
+              }
+              {
+                /*       (detail) => */
+              }
+              {
+                /*         detail.product.productionArea.id === */
+              }
+              {
+                /*         productionAreaActive?.id */
+              }
+              {
+                /*     ) */
+              }
+              {
+                /*   : order.details; */
+              }
 
-              if (details.length >= 1)
-                return (
-                  <Grid item xs={12} sm={6} md={4} key={order.id}>
-                    <ActiveOrder
-                      order={order}
-                      index={index}
-                      color={
-                        order.status === OrderStatus.PENDING
-                          ? 'warning'
-                          : order.status === OrderStatus.IN_PROGRESS
-                            ? 'info'
-                            : 'success'
-                      }
-                      productionArea={productionAreaActive || undefined}
-                    />
-                  </Grid>
-                );
+              {
+                /* if (details.length >= 1) */
+              }
+              return (
+                <Grid item xs={12} sm={6} md={4} key={order.id}>
+                  <ActiveOrder
+                    order={order}
+                    index={index}
+                    color={
+                      order.status === OrderStatus.PENDING
+                        ? 'warning'
+                        : order.status === OrderStatus.IN_PROGRESS
+                          ? 'info'
+                          : 'success'
+                    }
+                    productionArea={productionAreaActive || undefined}
+                  />
+                </Grid>
+              );
             })}
           </Grid>
         )}
