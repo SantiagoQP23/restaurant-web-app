@@ -13,6 +13,7 @@ import { TitlePage } from '@/pages/Private/components';
 import { useCreateRestaurant } from '../../hooks/useRestaurant';
 import { UpdateRestaurantDto } from '@/pages/Private/Reports/dto/update-restaurant.dto';
 import { CreateRestaurantDto } from '../../dto/create-restaurant.dto';
+import { useNavigate } from 'react-router-dom';
 
 const defaultValues: CreateRestaurantDto = {
   name: '',
@@ -24,19 +25,23 @@ const defaultValues: CreateRestaurantDto = {
 };
 
 export const NewRestaurant = () => {
+  const navigate = useNavigate();
   const createRestaurantMutation = useCreateRestaurant();
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<UpdateRestaurantDto>({
     defaultValues
   });
 
   const onSubmit = (data: UpdateRestaurantDto) => {
     console.log(data);
-    createRestaurantMutation.mutate(data);
-
+    createRestaurantMutation.mutate(data as CreateRestaurantDto);
+    reset();
+    //navigate to reports
+    navigate('/reports');
     // updateRestaurantMutation.mutate(data);
   };
   return (

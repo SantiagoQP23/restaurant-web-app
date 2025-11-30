@@ -1202,7 +1202,7 @@ export const NebulaFighterTheme = createTheme({
       fontSize: '1.75rem', // 28px
       lineHeight: 1.3,
       letterSpacing: '-0.01em',
-      color: colors.alpha.black[90],
+      color: colors.alpha.black[70],
       '@media (max-width:600px)': {
         fontSize: '1.5rem' // 24px
       }
@@ -1211,7 +1211,7 @@ export const NebulaFighterTheme = createTheme({
       fontWeight: 600,
       fontSize: '1.375rem', // 22px
       lineHeight: 1.4,
-      color: colors.alpha.black[90],
+      color: colors.alpha.black[70],
       '@media (max-width:600px)': {
         fontSize: '1.25rem' // 20px
       }

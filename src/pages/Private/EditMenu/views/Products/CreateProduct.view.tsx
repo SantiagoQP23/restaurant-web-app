@@ -45,7 +45,7 @@ const initialForm: ProductForm = {
   price: 0,
   status: ProductStatus.AVAILABLE,
   categoryId: '',
-  productionAreaId: '',
+  productionAreaId: '' ,
   unitCost: 0,
   quantity: 0
 };
