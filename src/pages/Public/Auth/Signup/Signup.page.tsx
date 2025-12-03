@@ -22,12 +22,12 @@ import { getEnvVariables } from '@/helpers';
 const { VITE_APP_NAME } = getEnvVariables();
 
 const initialForm: RegisterUserDto = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  samePassword: '',
-  username: '',
+  firstName: 'Carlos',
+  lastName: 'Quirumbay',
+  email: 'cquirumbay@yopmail.com',
+  password: 'SantiagoQP23@',
+  samePassword: 'SantiagoQP23@',
+  username: 'CarlosQP',
   numPhone: ''
 };
 
@@ -36,16 +36,20 @@ export const Signup = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
+    reset
   } = useForm<RegisterUserDto>({
     defaultValues: initialForm
   });
 
-  const { mutate, isLoading } = useSignup();
+  const { mutateAsync, isLoading } = useSignup();
 
   const handleRegister = (form: RegisterUserDto) => {
     console.log('Registering user:', form);
-    mutate(form);
+    mutateAsync(form).then(() => {
+      console.log('User registered successfully');
+      reset();
+    });
   };
 
   return (

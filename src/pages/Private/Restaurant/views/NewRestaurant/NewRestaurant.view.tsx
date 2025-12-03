@@ -5,7 +5,8 @@ import {
   CardActions,
   CardContent,
   Grid,
-  TextField
+  TextField,
+  Button
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
@@ -13,6 +14,8 @@ import { TitlePage } from '@/pages/Private/components';
 import { useCreateRestaurant } from '../../hooks/useRestaurant';
 import { UpdateRestaurantDto } from '@/pages/Private/Reports/dto/update-restaurant.dto';
 import { CreateRestaurantDto } from '../../dto/create-restaurant.dto';
+import { useAppDispatch } from '@/hooks';
+import { startLogout } from '@/redux';
 
 const defaultValues: CreateRestaurantDto = {
   name: '',
@@ -25,6 +28,7 @@ const defaultValues: CreateRestaurantDto = {
 
 export const NewRestaurant = () => {
   const createRestaurantMutation = useCreateRestaurant();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -39,6 +43,11 @@ export const NewRestaurant = () => {
 
     // updateRestaurantMutation.mutate(data);
   };
+
+  const handleLogout = () => {
+    dispatch(startLogout());
+  };
+
   return (
     <Container maxWidth='md'>
       <TitlePage title='Nuevo Restaurante' />
@@ -133,7 +142,15 @@ export const NewRestaurant = () => {
             </Grid>
           </CardContent>
 
-          <CardActions sx={{ justifyContent: 'right' }}>
+          <CardActions sx={{ justifyContent: 'space-between' }}>
+            <Button
+              type='submit'
+              onClick={handleLogout}
+              variant='outlined'
+              color='secondary'
+            >
+              Cerrar sesión
+            </Button>
             <LoadingButton
               type='submit'
               variant='contained'

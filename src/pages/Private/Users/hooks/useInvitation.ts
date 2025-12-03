@@ -11,11 +11,15 @@ export const useSendInvitation = () => {
     InvitationService.inviteUser,
     {
       onSuccess: (data) => {
-        enqueueSnackbar('Usuario creado correctamente', { variant: 'success' });
+        enqueueSnackbar('Invitacion enviada correctament', {
+          variant: 'success'
+        });
       },
       onError: (error) => {
         console.error(error);
-        enqueueSnackbar('No se pudo crear el usuario', { variant: 'error' });
+        enqueueSnackbar('No se pudo enviar la invitacion', {
+          variant: 'error'
+        });
       }
     }
   );

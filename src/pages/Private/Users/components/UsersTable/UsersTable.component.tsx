@@ -80,7 +80,7 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
 
       <TableCell>
         <Typography variant='body1' color='text.primary' gutterBottom noWrap>
-          {user.person.identification.num}
+          {user.person.identification?.num}
         </Typography>
       </TableCell>
       <TableCell>
