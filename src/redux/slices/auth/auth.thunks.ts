@@ -23,7 +23,18 @@ export const startLogin =
       localStorage.setItem('token-init-date', String(new Date().getTime()));
       setRestaurant(data.currentRestaurant);
 
-      dispatch(onLogin(data.user));
+      const currentRole = data.user.restaurantRoles.find(
+        (resRole) => resRole.restaurant.id === data.currentRestaurant?.id
+      )!.role;
+
+      console.log({ currentRole });
+
+      dispatch(
+        onLogin({
+          ...data.user,
+          role: currentRole
+        })
+      );
     } catch (error) {
       dispatch(onLogout('Credenciales incorrectas'));
     }
@@ -52,7 +63,18 @@ export const checkAuthToken = (): AppThunk => async (dispatch, getState) => {
     localStorage.setItem('token-init-date', String(new Date().getTime()));
     // setRestaurant(data.currentRestaurant);
 
-    dispatch(onLogin(data.user));
+    const currentRole = data.user.restaurantRoles.find(
+      (resRole) => resRole.restaurant.id === data.currentRestaurant?.id
+    )!.role;
+
+    console.log({ currentRole });
+
+    dispatch(
+      onLogin({
+        ...data.user,
+        role: currentRole
+      })
+    );
   } catch (error) {
     localStorage.clear();
     dispatch(onLogout(''));

@@ -66,7 +66,7 @@ export const Userbox = () => {
   const user = {
     name: userState?.username!,
     avatar: '/static/images/avatars/2.jpg',
-    jobtitle: 'lksa'
+    jobtitle: userState?.role?.description
   };
 
   const ref = useRef<any>(null);

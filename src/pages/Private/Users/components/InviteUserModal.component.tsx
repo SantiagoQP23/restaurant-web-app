@@ -99,7 +99,7 @@ export const InviteUserModal = NiceModal.create(() => {
           alignItems='center'
         >
           <Box>
-            <Typography variant='h4'>Invitar usuario</Typography>
+            <Typography variant='h5'>Invitar usuario</Typography>
           </Box>
           <Stack direction='row' spacing={2} alignItems='center'>
             <IconButton onClick={modal.hide} size='small'>

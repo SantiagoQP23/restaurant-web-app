@@ -68,9 +68,7 @@ export const ModalCreateSection = NiceModal.create(() => {
                 minLength: { value: 2, message: 'Minimo 2 caracteres' }
               })}
               error={!!errors.name}
-              helperText={
-                <Typography color='red'>{errors.name?.message}</Typography>
-              }
+              helperText={errors.name?.message}
             />
             <Stack direction='row' justifyContent='end' gap={2}>
               <Button onClick={closeModal} color='inherit'>

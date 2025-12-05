@@ -181,7 +181,7 @@ const Title = ({ open }: { open: boolean }) => {
                 primaryTypographyProps={{ variant: 'body1' }}
                 secondaryTypographyProps={{ variant: 'subtitle2' }}
                 primary={restaurantRole.restaurant.name}
-                secondary={restaurantRole.role.name}
+                secondary={restaurantRole.role.description}
               />
               {restaurant?.id === restaurantRole.restaurant.id && (
                 <ListItemIcon sx={{ minWidth: '30px' }}>

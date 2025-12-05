@@ -33,11 +33,11 @@ export const NewRestaurant = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<UpdateRestaurantDto>({
+  } = useForm<CreateRestaurantDto>({
     defaultValues
   });
 
-  const onSubmit = (data: UpdateRestaurantDto) => {
+  const onSubmit = (data: CreateRestaurantDto) => {
     console.log(data);
     createRestaurantMutation.mutate(data);
 

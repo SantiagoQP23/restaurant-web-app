@@ -31,6 +31,7 @@ export interface IUser {
   online: boolean;
   restaurantRoles: RestaurantRole[];
   isActive: boolean;
+  role: IRole;
 }
 
 export interface LoginResponseDto {

@@ -262,11 +262,11 @@ export const UsersTable: FC<Props> = ({}) => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Box p={2} display='flex' justifyContent='space-between'>
-            <FormControlLabel
-              control={<Switch checked={dense} onChange={handleChangeDense} />}
-              label='Dense padding'
-            />
+          <Box p={2} display='flex' justifyContent='right'>
+            {/* <FormControlLabel */}
+            {/*   control={<Switch checked={dense} onChange={handleChangeDense} />} */}
+            {/*   label='Dense padding' */}
+            {/* /> */}
             <TablePagination
               component='div'
               count={usersQuery.data?.count || 0}

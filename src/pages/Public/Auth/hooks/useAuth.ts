@@ -39,7 +39,17 @@ export const useLogin = () => {
     {
       onSuccess: (data) => {
         setRestaurant(data.currentRestaurant);
-        dispatch(onLogin(data.user));
+
+        const currentRole = data.user.restaurantRoles.find(
+          (resRole) => resRole.restaurant.id === data.currentRestaurant?.id
+        )!.role;
+
+        dispatch(
+          onLogin({
+            ...data.user,
+            role: currentRole
+          })
+        );
         localStorage.setItem('token', data.token);
         localStorage.setItem('token-init-date', String(new Date().getTime()));
       },
@@ -61,7 +71,16 @@ export const useRenewToken = () => {
         const data = await renewToken(); // assuming this is an async call
 
         setRestaurant(data.currentRestaurant);
-        dispatch(onLogin(data.user));
+        const currentRole = data.user.restaurantRoles.find(
+          (resRole) => resRole.restaurant.id === data.currentRestaurant?.id
+        )!.role;
+
+        dispatch(
+          onLogin({
+            ...data.user,
+            role: currentRole
+          })
+        );
         localStorage.setItem('token', data.token);
         localStorage.setItem('token-init-date', String(new Date().getTime()));
       } catch (error) {

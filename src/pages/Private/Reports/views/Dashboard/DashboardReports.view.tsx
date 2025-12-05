@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 import { TitlePage } from '../../../components/TitlePage.component';
 import {
@@ -18,6 +18,11 @@ export const DashboardReports = () => {
       <TitlePage title='Dashboard' />
 
       <Grid container spacing={2} my={1}>
+        <Grid item xs={12}>
+          <Typography variant='h5' component='h2' gutterBottom>
+            Comming Soon...
+          </Typography>
+        </Grid>
         {/* 
         <Grid item xs={12} md={3}>
           <Day />

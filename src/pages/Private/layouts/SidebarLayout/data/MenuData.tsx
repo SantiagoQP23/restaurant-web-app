@@ -38,6 +38,12 @@ const generalSection: MenuSection = {
       title: 'Dashboard',
       icon: <DashboardOutlinedIcon fontSize='small' />,
       to: '/reports'
+    },
+    {
+      title: 'Restaurante',
+      icon: <Storefront fontSize='small' />,
+      to: '/restaurant',
+      label: 'Nuevo'
     }
     // {
     //   title: "Finanzas",
@@ -87,35 +93,17 @@ const ordersSection = {
       title: 'Lista de pedidos',
       icon: <ListAltOutlined fontSize='small' />,
       to: '/orders/list'
-    },
-    {
-      title: 'Cuentas',
-      icon: <ReceiptLongOutlined fontSize='small' />,
-      to: '/bills'
     }
-  ]
-};
-
-const advancedManagementSection = {
-  title: 'Administración',
-  allowedRoles: [ValidRoles.admin],
-  items: [
-    {
-      title: 'Gestión de usuarios',
-      icon: <PeopleOutlineIcon fontSize='small' />,
-      to: '/users'
-    },
-    {
-      title: 'Restaurante',
-      icon: <Storefront fontSize='small' />,
-      to: '/restaurant',
-      label: 'Nuevo'
-    }
+    // {
+    //   title: 'Cuentas',
+    //   icon: <ReceiptLongOutlined fontSize='small' />,
+    //   to: '/bills'
+    // }
   ]
 };
 
 const managementSection = {
-  title: 'Restaurante',
+  title: 'Administración',
   items: [
     {
       title: 'Menú del restaurante',
@@ -144,6 +132,11 @@ const managementSection = {
       title: 'Gestión de mesas',
       icon: <TableRestaurantOutlinedIcon fontSize='small' />,
       to: '/tables'
+    },
+    {
+      title: 'Gestión de usuarios',
+      icon: <PeopleOutlineIcon fontSize='small' />,
+      to: '/users'
     }
     // {
     //   title: 'Gestión de clientes',
@@ -156,6 +149,5 @@ const managementSection = {
 export const menuSections: MenuSection[] = [
   generalSection,
   ordersSection,
-  managementSection,
-  advancedManagementSection
+  managementSection
 ];
