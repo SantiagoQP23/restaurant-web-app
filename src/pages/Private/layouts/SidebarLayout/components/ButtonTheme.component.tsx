@@ -1,6 +1,12 @@
 import { useContext } from 'react';
 
-import { LightMode, DarkMode } from '@mui/icons-material';
+import {
+  LightMode,
+  DarkMode,
+  LightModeOutlined,
+  ModeNightOutlined,
+  DarkModeOutlined
+} from '@mui/icons-material';
 import {
   FormControlLabel,
   IconButton,
@@ -77,41 +83,33 @@ export const ButtonTheme = () => {
         justifyContent='space-between'
         pl={2}
       >
-        {/* <Typography>
-          Modo {
-            curThemeName === ThemeName.NebulaFighterTheme ? 'Oscuro' : 'Claro'
-          }
-        </Typography> */}
-        <MaterialUISwitch
-          // size="small"
-
-          sx={{ fontSize: 10 }}
-          checked={curThemeName === ThemeName.NebulaFighterTheme}
-          onChange={(e, value) =>
+        <IconButton
+          onClick={() => {
             setNameTheme(
-              value ? ThemeName.NebulaFighterTheme : ThemeName.PureLightTheme
-            )
-          }
-        />
+              curThemeName === ThemeName.NebulaFighterTheme
+                ? ThemeName.PureLightTheme
+                : ThemeName.NebulaFighterTheme
+            );
+          }}
+        >
+          {curThemeName === ThemeName.NebulaFighterTheme ? (
+            <LightModeOutlined fontSize='small' />
+          ) : (
+            <DarkModeOutlined fontSize='small' />
+          )}
+        </IconButton>
+        {/* <MaterialUISwitch */}
+        {/*   // size="small" */}
+        {/**/}
+        {/*   sx={{ fontSize: 10 }} */}
+        {/*   checked={curThemeName === ThemeName.NebulaFighterTheme} */}
+        {/*   onChange={(e, value) => */}
+        {/*     setNameTheme( */}
+        {/*       value ? ThemeName.NebulaFighterTheme : ThemeName.PureLightTheme */}
+        {/*     ) */}
+        {/*   } */}
+        {/* /> */}
       </Stack>
-
-      {/* <IconButton
-        onClick={() => {
-          setNameTheme(curThemeName === 'PureLightTheme' ? 'NebulaFighterTheme' : 'PureLightTheme')
-        }}
-        size='small'
-        color={
-          curThemeName === 'PureLightTheme' ? 'secondary' : 'inherit'
-        }
-
-
-
-      >
-        {
-          curThemeName === 'PureLightTheme' ? <DarkMode /> : <LightMode />
-        }
-
-      </IconButton> */}
     </>
   );
 };

@@ -25,6 +25,7 @@ import { styled } from '@mui/material/styles';
 import { format, formatDistance, subDays } from 'date-fns';
 import {
   Assignment,
+  AssignmentOutlined,
   Ballot,
   Close,
   CloseRounded,
@@ -161,7 +162,7 @@ function HeaderNotifications() {
             variant='dot'
             // size="small"
           >
-            <Assignment />
+            <AssignmentOutlined />
           </Badge>
         </IconButton>
       </Tooltip>
