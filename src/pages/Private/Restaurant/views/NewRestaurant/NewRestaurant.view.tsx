@@ -6,7 +6,9 @@ import {
   CardContent,
   Grid,
   TextField,
-  Button
+  Button,
+  Typography,
+  Box
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
@@ -16,6 +18,7 @@ import { UpdateRestaurantDto } from '@/pages/Private/Reports/dto/update-restaura
 import { CreateRestaurantDto } from '../../dto/create-restaurant.dto';
 import { useAppDispatch } from '@/hooks';
 import { startLogout } from '@/redux';
+import { ExitToApp, ExitToAppOutlined } from '@mui/icons-material';
 
 const defaultValues: CreateRestaurantDto = {
   name: '',
@@ -50,8 +53,25 @@ export const NewRestaurant = () => {
 
   return (
     <Container maxWidth='md'>
-      <TitlePage title='Nuevo Restaurante' />
-      <Card>
+      <Box mb={4}>
+        <Typography variant='h4' gutterBottom sx={{ mt: 4 }}>
+          Welcome to Fast Serve App
+        </Typography>
+        <Typography variant='h6' gutterBottom>
+          Choose how you want to start
+        </Typography>
+      </Box>
+
+      <Box>
+        <Typography variant='h6' gutterBottom sx={{ mt: 4 }}>
+          Create my restaurant
+        </Typography>
+        <Typography variant='subtitle2' gutterBottom>
+          I want to manage my restaurant
+        </Typography>
+      </Box>
+
+      <Card sx={{ mt: 2 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardHeader title='Información' />
           <CardContent>
@@ -142,15 +162,7 @@ export const NewRestaurant = () => {
             </Grid>
           </CardContent>
 
-          <CardActions sx={{ justifyContent: 'space-between' }}>
-            <Button
-              type='submit'
-              onClick={handleLogout}
-              variant='outlined'
-              color='secondary'
-            >
-              Cerrar sesión
-            </Button>
+          <CardActions sx={{ justifyContent: 'right' }}>
             <LoadingButton
               type='submit'
               variant='contained'
@@ -161,6 +173,31 @@ export const NewRestaurant = () => {
           </CardActions>
         </form>
       </Card>
+
+      <Box
+        alignItems='center'
+        justifyContent='space-between'
+        display='flex'
+        mt={4}
+      >
+        <Box>
+          <Typography variant='h6' gutterBottom>
+            Sign out
+          </Typography>
+          <Typography variant='subtitle2' gutterBottom>
+            Someone else will invite me to their restaurant
+          </Typography>
+        </Box>
+        <Button
+          type='submit'
+          onClick={handleLogout}
+          variant='text'
+          color='secondary'
+        >
+          <ExitToAppOutlined sx={{ mr: 1 }} />
+          Cerrar sesión
+        </Button>
+      </Box>
     </Container>
   );
 };

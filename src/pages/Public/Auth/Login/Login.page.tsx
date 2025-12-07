@@ -28,7 +28,7 @@ const { VITE_APP_NAME } = getEnvVariables();
 
 const initialForm: IFormLogin = {
   username: '',
-  password: ''
+  password: 'SantiagoQP23@'
 };
 
 export const LoginPage = () => {

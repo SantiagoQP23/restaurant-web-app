@@ -8,6 +8,7 @@ import { UpdateRuleDayDto } from '../views/FootfallSimulation/dto/update-rule-da
 import { UpdateRuleWeatherDto } from '../views/FootfallSimulation/dto/update-rule-weather';
 import { UpdateRuleWeekDto } from '../views/FootfallSimulation/dto/update-rule-week.dto';
 import { Restaurant } from '../../Common/models/restaurant.model';
+import { LoginResponse } from '@/models/dto/auth.dto';
 // import { Restaurant } from '../models/restaurant.model';
 
 export const getRulesWeek = () => {
@@ -88,9 +89,9 @@ export const updateRulesWeather = (rulesWeather: UpdateRuleWeatherDto[]) => {
 
 export const getRestaurant = async (
   restaurantId: string
-): Promise<Restaurant> => {
+): Promise<LoginResponse> => {
   console.log({ restaurantId });
-  const resp = await restauranteApi.get<Restaurant>(
+  const resp = await restauranteApi.get<LoginResponse>(
     `restaurant/${restaurantId}`
   );
   return resp.data;

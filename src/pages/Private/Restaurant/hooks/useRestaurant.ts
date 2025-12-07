@@ -18,6 +18,7 @@ import { LoginResponseDto } from '@/models';
 import { RestaurantService } from '../../Common/services/restaurant.service';
 import { useDispatch } from 'react-redux';
 import { onLogin } from '@/redux';
+import { LoginResponse } from '@/models/dto/auth.dto';
 
 export const switchRestaurantMutation = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -88,15 +89,16 @@ export const useUpdateRestaurant = () => {
 
 export const useCreateRestaurant = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const { setRestaurant } = useRestaurantStore((state) => state);
+  const dispatch = useDispatch();
+  const switchRestaurant = switchRestaurantMutation();
 
-  // const { setRestaurant } = useRestaurantStore((state) => state);
-
-  return useMutation<Restaurant, unknown, CreateRestaurantDto>(
+  return useMutation<LoginResponse, unknown, CreateRestaurantDto>(
     (data) => createRestaurant(data),
     {
       onSuccess: (data) => {
-        // setRestaurant(data);
-        enqueueSnackbar('Restaurante creado', { variant: 'success' });
+        if (data.currentRestaurant)
+          switchRestaurant.mutate(data.currentRestaurant.id);
       },
       onError: (error) => {
         console.log(error);
