@@ -1,17 +1,10 @@
 import { MenuSection } from '../../interfaces';
 
 import {
-  AccountBalanceWallet,
-  Assignment,
   AssignmentOutlined,
   FiberManualRecord,
-  ListAlt,
   ListAltOutlined,
-  MenuBook,
   MenuBookOutlined,
-  ReceiptLong,
-  ReceiptLongOutlined,
-  SoupKitchen,
   SoupKitchenOutlined,
   Storefront
 } from '@mui/icons-material';

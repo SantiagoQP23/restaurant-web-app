@@ -127,20 +127,20 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
 
         <ListItemText
           primary={
-            <Stack direction='row' alignItems='center' gap={1}>
+            <Stack direction='row' alignItems='end' gap={1}>
               {detail.product.name}
-              {detail.productOption && (
-                <Chip
-                  sx={{ ml: 1 }}
-                  label={`${detail.productOption?.name} `}
-                  size='small'
-                />
-              )}
+              {/* {detail.productOption && ( */}
+              {/*   <Chip */}
+              {/*     sx={{ ml: 1 }} */}
+              {/*     label={`${detail.productOption?.name} `} */}
+              {/*     size='small' */}
+              {/*   /> */}
+              {/* )} */}
               {detail.typeOrderDetail !== typeOrder &&
                 (detail.typeOrderDetail === TypeOrder.IN_PLACE ? (
-                  <LocalDiningOutlined />
+                  <Typography variant='subtitle2'>(Para servir)</Typography>
                 ) : (
-                  <TakeoutDiningOutlined />
+                  <Typography variant='subtitle2'>(Para llevar)</Typography>
                 ))}
             </Stack>
           }
