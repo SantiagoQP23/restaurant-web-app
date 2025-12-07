@@ -1186,7 +1186,7 @@ export const PureLightTheme = createTheme({
     },
     h5: {
       fontSize: '1.125rem', // 18px
-      fontWeight: 600,
+      fontWeight: 500,
       lineHeight: 1.4
     },
     h6: {
@@ -1204,7 +1204,8 @@ export const PureLightTheme = createTheme({
     body2: {
       fontSize: '0.875rem',
       fontWeight: 400,
-      lineHeight: 1.55
+      lineHeight: 1.55,
+      color: colors.alpha.black[70]
     },
 
     // Subtle text

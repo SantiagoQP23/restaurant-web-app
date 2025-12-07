@@ -36,6 +36,9 @@ import { useUsers } from '../../hooks/useUsers';
 import SearchIcon from '@mui/icons-material/Search';
 import { selectAuth } from '../../../../../redux';
 import { ValidRoles } from '../../../Common/models/valid-roles.model';
+import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
+import NiceModal from '@ebay/nice-modal-react';
+import { EditUserRole } from '../EditUserRole.component';
 
 export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
   const navigate = useNavigate();
@@ -43,18 +46,27 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
   const dispatch = useDispatch();
 
   const { user: currentUser } = useSelector(selectAuth);
+  const restaurant = useRestaurantStore((state) => state.restaurant);
 
   const theme = useTheme();
 
-  const editUser = (user: IUser) => {
-    dispatch(setActiveUser(user));
-
-    if (currentUser!.id === user.id) {
-      navigate('/users/account');
-    } else {
-      navigate(`edit/${user.id}`);
-    }
+  const openEditUserRoleModal = () => {
+    NiceModal.show(EditUserRole, { user });
   };
+
+  // const editUser = (user: IUser) => {
+  //   dispatch(setActiveUser(user));
+  //
+  //   if (currentUser!.id === user.id) {
+  //     navigate('/users/account');
+  //   } else {
+  //     // navigate(`edit/${user.id}`);
+  //   }
+  // };
+
+  const userRole = user.restaurantRoles.find(
+    (resRole) => resRole.restaurant.id === restaurant?.id
+  )?.role;
 
   return (
     <TableRow>
@@ -78,11 +90,11 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
         </Typography>
       </TableCell>
 
-      <TableCell>
-        <Typography variant='body1' color='text.primary' gutterBottom noWrap>
-          {user.person.identification?.num}
-        </Typography>
-      </TableCell>
+      {/* <TableCell> */}
+      {/*   <Typography variant='body1' color='text.primary' gutterBottom noWrap> */}
+      {/*     {user.person.identification?.num} */}
+      {/*   </Typography> */}
+      {/* </TableCell> */}
       <TableCell>
         <Typography variant='body1' color='text.primary' gutterBottom noWrap>
           {user.username}
@@ -95,6 +107,7 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
       </TableCell>
       <TableCell>
         <Typography variant='body1' color='text.primary' gutterBottom noWrap>
+          {userRole ? userRole.description : 'N/A'}
           {/* <Label */}
           {/*   color={ */}
           {/*     user?.role.name === 'admin' */}
@@ -118,21 +131,23 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
       </TableCell>
 
       <TableCell align='right'>
-        <Tooltip title='Edit Order' arrow>
-          <IconButton
-            sx={{
-              '&:hover': {
-                background: theme.colors.primary.lighter
-              },
-              color: theme.palette.primary.main
-            }}
-            color='inherit'
-            size='small'
-            onClick={() => editUser(user)}
-          >
-            <EditTwoToneIcon fontSize='small' />
-          </IconButton>
-        </Tooltip>
+        {user.id !== currentUser?.id && (
+          <Tooltip title='Edit role' arrow>
+            <IconButton
+              sx={{
+                '&:hover': {
+                  background: theme.colors.primary.lighter
+                },
+                color: theme.palette.primary.main
+              }}
+              color='inherit'
+              size='small'
+              onClick={openEditUserRoleModal}
+            >
+              <EditTwoToneIcon fontSize='small' />
+            </IconButton>
+          </Tooltip>
+        )}
         {/*   <Tooltip title="Delete Order" arrow>
           <IconButton
             sx={{
@@ -177,6 +192,9 @@ export const UsersTable: FC<Props> = ({}) => {
     setDense(event.target.checked);
   };
 
+  const openEditUserRoleModal = () => {
+    NiceModal.show(EditUserRole);
+  };
   const editUser = (user: IUser) => {
     dispatch(setActiveUser(user));
     navigate('edit');
@@ -236,7 +254,7 @@ export const UsersTable: FC<Props> = ({}) => {
                   <TableCell>
                     <TableSortLabel>Nombres y apellidos</TableSortLabel>
                   </TableCell>
-                  <TableCell>Número de identificación</TableCell>
+                  {/* <TableCell>Número de identificación</TableCell> */}
                   <TableCell>Nombre de usuario</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>Rol</TableCell>

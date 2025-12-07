@@ -9,7 +9,8 @@ import {
   getUsers,
   getUsersSuggestions,
   resetPasswordUser,
-  updateUser
+  updateUser,
+  updateUserRole
 } from '../services/users.service';
 
 import { IUser } from '../../../../models';
@@ -21,6 +22,7 @@ import { usePaginationAsync } from '../../../../hooks/usePaginationAsync';
 import { ChangePasswordDto } from '../dto/change-password.dto';
 import { useSnackbar } from 'notistack';
 import { useSearch } from '../../../../hooks/useSearch';
+import { UpdateUserRoleDto } from '../dto/update-user-role.dto';
 
 export const useUsers = () => {
   const dispatch = useDispatch();
@@ -101,7 +103,7 @@ export const useCreateUser = () => {
 export const useUpdateUser = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useMutation<IUser, unknown, UpdateUserDto>(
+  const updateUserMutation = useMutation<IUser, unknown, UpdateUserDto>(
     (data) => updateUser(data.id, data),
     {
       onSuccess: (data) => {
@@ -116,6 +118,27 @@ export const useUpdateUser = () => {
       }
     }
   );
+
+  const updateUserRoleMutation = useMutation<IUser, unknown, UpdateUserRoleDto>(
+    (data) => updateUserRole(data),
+    {
+      onSuccess: (data) => {
+        enqueueSnackbar('Usuario actualizado correctamente', {
+          variant: 'success'
+        });
+      },
+      onError: (error) => {
+        enqueueSnackbar('No se pudo actualizar el usuario', {
+          variant: 'error'
+        });
+      }
+    }
+  );
+
+  return {
+    updateUserMutation,
+    updateUserRole: updateUserRoleMutation
+  };
 };
 
 export const useChangePasswordUser = () => {

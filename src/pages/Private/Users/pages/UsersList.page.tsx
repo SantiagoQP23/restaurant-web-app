@@ -31,20 +31,20 @@ export const UsersList = () => {
           <Stack gap={2} direction='row' alignItems='center'>
             <Button
               sx={{ mt: { xs: 2, md: 0 } }}
-              variant='outlined'
+              variant='contained'
               startIcon={<AddTwoToneIcon fontSize='small' />}
               onClick={openInviteUserModal}
             >
-              Invitar
+              Invitar usuario
             </Button>
-            <Button
-              sx={{ mt: { xs: 2, md: 0 } }}
-              variant='contained'
-              startIcon={<AddTwoToneIcon fontSize='small' />}
-              onClick={createUser}
-            >
-              Añadir
-            </Button>
+            {/* <Button */}
+            {/*   sx={{ mt: { xs: 2, md: 0 } }} */}
+            {/*   variant='contained' */}
+            {/*   startIcon={<AddTwoToneIcon fontSize='small' />} */}
+            {/*   onClick={createUser} */}
+            {/* > */}
+            {/*   Añadir */}
+            {/* </Button> */}
           </Stack>
         }
       />

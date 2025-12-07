@@ -6,6 +6,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { SubjectDeleteUser } from '../helpers/subjects-users.helper';
 import { ChangePasswordDto } from '../dto/change-password.dto';
 import { FilterUsersDto } from '../dto/filterUsers.dto';
+import { UpdateUserRoleDto } from '../dto/update-user-role.dto';
 
 export const statusModalDeleteUser = new SubjectDeleteUser();
 
@@ -45,6 +46,14 @@ export const getUsers = async (
       }
     }
   );
+
+  return resp.data;
+};
+
+export const updateUserRole = async (
+  data: UpdateUserRoleDto
+): Promise<IUser> => {
+  const resp = await restauranteApi.patch<IUser>(`users/user-role`, data);
 
   return resp.data;
 };

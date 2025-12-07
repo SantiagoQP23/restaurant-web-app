@@ -104,6 +104,7 @@ const ordersSection = {
 
 const managementSection = {
   title: 'Administración',
+  allowedRoles: [ValidRoles.admin],
   items: [
     {
       title: 'Menú del restaurante',

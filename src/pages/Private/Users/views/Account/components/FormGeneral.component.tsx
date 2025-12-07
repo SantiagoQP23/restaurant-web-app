@@ -22,7 +22,7 @@ import { useUpdateUser } from '../../../hooks/useUsers';
 export const FormGeneral = () => {
   const { user } = useSelector(selectAuth);
 
-  const { mutateAsync, isLoading } = useUpdateUser();
+  const { mutateAsync, isLoading } = useUpdateUser().updateUserMutation;
 
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ export const FormGeneral = () => {
   } = useForm<UpdateUserDto>({
     defaultValues: {
       typeIdentification: TypeIdentification.CEDULA,
-      numberIdentification: String(user!.person.identification.num),
+      numberIdentification: String(user!.person.identification?.num),
       firstName: user?.person.firstName,
       lastName: user?.person.lastName,
       numPhone: user?.person.numPhone,

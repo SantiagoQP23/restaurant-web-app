@@ -270,7 +270,7 @@ function Sidebar() {
           </IconButton>
         </DrawerHeader>
         <Scrollbar height={'100%'}>
-          <Box mt={1}>
+          <Box my={1}>
             <Title open={open} />
           </Box>
 
