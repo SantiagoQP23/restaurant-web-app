@@ -116,9 +116,7 @@ export const AddOrder = () => {
                 >
                   <ComboBoxProducts selectProduct={addProductoToOrder} />
                 </Box>
-                <Typography variant='h6' fontWeight='bold'>
-                  Secciones
-                </Typography>
+                <Typography variant='h6'>Secciones</Typography>
                 <Stack direction='row' spacing={1} flexWrap='wrap'>
                   {sections.map((section) => (
                     <SectionCard
@@ -131,9 +129,7 @@ export const AddOrder = () => {
                     />
                   ))}
                 </Stack>
-                <Typography variant='h6' fontWeight='bold'>
-                  Categorías
-                </Typography>
+                <Typography variant='h6'>Categorías</Typography>
                 <Box
                   sx={{
                     overflowX: 'auto',

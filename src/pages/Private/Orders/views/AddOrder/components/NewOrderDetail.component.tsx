@@ -48,8 +48,8 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
           whiteSpace: 'nowrap',
           display: 'flex',
           flexDirection: 'column',
-          p: 1,
-          px: 2,
+          // p: 1,
+          // px: 2,
           gap: 1
         }}
       >
@@ -59,8 +59,8 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
           alignItems='flex-start'
         >
           <Stack>
-            <Typography variant='body1' fontWeight='bold' whiteSpace={'normal'}>
-              {detalle.quantity} - {detalle.product.name}
+            <Typography variant='body1' whiteSpace={'normal'}>
+              {detalle.quantity} × {detalle.product.name}
               {/* {detalle.productOption && (
                 <Chip
                   sx={{ ml: 1 }}
@@ -114,7 +114,7 @@ export const NewOrderDetail: FC<Props> = ({ detalle }) => {
           </Typography>
         </Stack>
 
-        <Typography variant='h5' textAlign='right'>
+        <Typography variant='h6' textAlign='right'>
           {formatMoney(detalle.product.price * quantity)}
         </Typography>
       </Box>

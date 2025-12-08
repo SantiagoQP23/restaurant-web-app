@@ -81,9 +81,7 @@ export const Product: FC<Props> = ({ product, onClick }) => {
             }}
             onClick={() => onClick(product.id)}
           >
-            <Typography variant='body1' fontWeight='bold'>
-              {product.name}
-            </Typography>
+            <Typography variant='subtitle1'>{product.name}</Typography>
           </Link>
 
           <Stack
@@ -91,11 +89,11 @@ export const Product: FC<Props> = ({ product, onClick }) => {
             justifyContent='space-between'
             alignItems='center'
           >
-            <Typography variant='h5'>$ {product.price}</Typography>
+            <Typography variant='body1'>$ {product.price}</Typography>
 
             {product.status === ProductStatus.AVAILABLE && (
               <IconButton color='primary' onClick={addProductoToOrder}>
-                <AddShoppingCart />
+                <AddShoppingCart fontSize='small' />
               </IconButton>
             )}
           </Stack>

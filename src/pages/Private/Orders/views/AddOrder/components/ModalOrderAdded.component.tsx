@@ -16,13 +16,17 @@ import {
   ArrowBack,
   Close,
   Edit,
+  EditOutlined,
+  HomeOutlined,
   Print,
-  SoupKitchen
+  PrintOutlined,
+  SoupKitchen,
+  SoupKitchenOutlined
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { generateOrderPdf } from '../../../helpers/pdf-orders';
 import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
-interface Props { }
+interface Props {}
 
 /**
  * @author Steven Rosales
@@ -52,7 +56,7 @@ export const ModalOrderAdded: FC<Props> = () => {
       setOrder(resp.order);
     });
 
-    return () => { };
+    return () => {};
   }, []);
 
   return (
@@ -70,32 +74,34 @@ export const ModalOrderAdded: FC<Props> = () => {
         </DialogTitle>
 
         <DialogContent sx={{ textAlign: 'center' }}>
-          <Typography variant='h3' mb={5}>
+          <Typography variant='h5' mb={5}>
             Has añadido un nuevo pedido
           </Typography>
 
-          <Typography variant='h4' mb={3}>
+          <Typography variant='h6' mb={3}>
             Pedido N° {order?.num}
           </Typography>
           <Stack spacing={1} direction='row' justifyContent='center'>
             <Button variant='outlined' onClick={() => navigate('/orders')}>
-              <ArrowBack />
+              <HomeOutlined />
             </Button>
-            <Button variant='outlined' onClick={openPDF}>
-              <Print />
+            <Button variant='outlined' onClick={openPDF} disabled>
+              <PrintOutlined sx={{ mr: 1 }} />
+              Imprimir
             </Button>
-            <Button
-              variant='outlined'
-              onClick={() => navigate('/orders/actives')}
-            >
-              <SoupKitchen />
-            </Button>
+            {/* <Button */}
+            {/*   variant='outlined' */}
+            {/*   onClick={() => navigate('/orders/actives')} */}
+            {/* > */}
+            {/*   <SoupKitchenOutlined /> */}
+            {/* </Button> */}
 
             <Button
               variant='outlined'
               onClick={() => navigate(`/orders/list/edit/${order?.id}`)}
             >
-              <Edit />
+              <EditOutlined sx={{ mr: 1 }} />
+              Editar
             </Button>
           </Stack>
         </DialogContent>

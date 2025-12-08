@@ -111,9 +111,7 @@ export const NewOrderSummary: FC<Props> = () => {
                     alignItems: 'center'
                   }}
                 >
-                  <Typography variant='h4' fontWeight='bold'>
-                    Nuevo pedido
-                  </Typography>
+                  <Typography variant='h5'>Nuevo pedido</Typography>
                   {orderType === TypeOrder.IN_PLACE && (
                     <Box>
                       {orderType === TypeOrder.IN_PLACE && (
@@ -204,12 +202,10 @@ export const NewOrderSummary: FC<Props> = () => {
                 display='flex'
                 justifyContent='space-between'
                 alignItems='center'
-                p={2}
+                py={2}
               >
-                <Typography variant='h4' fontWeight='bold'>
-                  Total{' '}
-                </Typography>
-                <Typography variant='h4' fontWeight='bold'>
+                <Typography variant='h6'>Total </Typography>
+                <Typography variant='h6'>
                   {formatMoney(
                     details.reduce(
                       (acc, detail) =>

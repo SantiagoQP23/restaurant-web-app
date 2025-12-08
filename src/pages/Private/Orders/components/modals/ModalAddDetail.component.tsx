@@ -181,12 +181,12 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
         >
           <Stack spacing={2}>
             <Box>
-              <Typography variant='h6'>{detail?.product.name}</Typography>
-              <Typography variant='subtitle1'>
+              <Typography variant='subtitle2' color='text.secondary'>
                 {detail?.product.category.name}
               </Typography>
+              <Typography variant='h6'>{detail?.product.name}</Typography>
             </Box>
-            <Typography variant='h4'>${detail?.product.price}</Typography>
+            <Typography variant='body1'>${detail?.product.price}</Typography>
 
             {/* <List sx={{ p: 0 }} dense>
               {detail?.product.options.map((option) => (
