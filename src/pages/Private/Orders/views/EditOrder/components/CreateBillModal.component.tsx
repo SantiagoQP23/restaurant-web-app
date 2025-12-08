@@ -52,7 +52,7 @@ export const CreateBillModal = NiceModal.create<Props>(({ order }) => {
             alignItems='center'
           >
             <Box>
-              <Typography variant='h4'>Add bill</Typography>
+              <Typography variant='h5'>Crear cuenta</Typography>
             </Box>
             <Stack direction='row' spacing={2} alignItems='center'>
               <IconButton onClick={modal.hide} size='small'>

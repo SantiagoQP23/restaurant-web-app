@@ -1,5 +1,11 @@
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import { Close, Delete, DeleteOutline } from '@mui/icons-material';
+import {
+  Close,
+  CreditCardOutlined,
+  Delete,
+  DeleteOutline,
+  VisibilityOutlined
+} from '@mui/icons-material';
 import {
   AppBar,
   Box,
@@ -80,18 +86,22 @@ export const DrawerBill = NiceModal.create<Props>(({ bill }) => {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant='h4'>
-              Cuenta N°{bill.num}
-              {bill.isActive && (
-                <Label
-                  sx={{ ml: 1 }}
-                  color={bill.isPaid ? 'success' : 'warning'}
-                >
-                  {bill.isPaid ? 'Pagado' : 'Por pagar'}
-                </Label>
-              )}
-            </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'start',
+              alignItems: 'start',
+              flexGrow: 1,
+              gap: 0.5
+            }}
+          >
+            <Typography variant='h5'>Cuenta N°{bill.num}</Typography>
+            {bill.isActive && (
+              <Label color={bill.isPaid ? 'success' : 'warning'}>
+                {bill.isPaid ? 'Pagado' : 'Por pagar'}
+              </Label>
+            )}
           </Box>
           <Stack direction='row' spacing={2} alignItems='center'>
             {bill.isActive ? (
@@ -136,9 +146,10 @@ export const DrawerBill = NiceModal.create<Props>(({ bill }) => {
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
               <Button
-                variant='contained'
+                variant='outlined'
                 color='primary'
                 onClick={navigateToBill}
+                startIcon={<VisibilityOutlined />}
               >
                 Ver
               </Button>
@@ -149,6 +160,7 @@ export const DrawerBill = NiceModal.create<Props>(({ bill }) => {
                   color='primary'
                   onClick={navitateToEditBill}
                   disabled={bill.isPaid || !bill.isActive}
+                  startIcon={<CreditCardOutlined />}
                 >
                   Cobrar
                 </Button>

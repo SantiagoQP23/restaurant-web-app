@@ -65,7 +65,7 @@ import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore
  * @version v1.2 18-02-2025 Fix: Validation to close order
  * @author Steven Rosales
  * @version v1.3 17/03/2025 Adds type order
- * 
+ *
  * @author Steven Rosales
  * @version V1.0 29-03-2025 Add restaurant information to PDF
  */
@@ -186,7 +186,7 @@ export const EditOrder = () => {
     <>
       <DrawerInvoice open={openDrawer} handleClose={handleCloseDrawer} />
       <ModalDeleteInvoice />
-      <Container maxWidth='md'>
+      <Container maxWidth='md' sx={{ mb: 4 }}>
         <Stack
           spacing={2}
           my={2}
@@ -198,9 +198,9 @@ export const EditOrder = () => {
             <IconButton size='small' onClick={() => navigate('/orders')}>
               <ChevronLeft />
             </IconButton>
-            <Stack direction='column'>
+            <Stack direction='column' spacing={1}>
               <Box display='flex' gap={1} alignItems='end'>
-                <Typography variant='h3'>
+                <Typography variant='h3' fontWeight={500}>
                   {`Pedido #${activeOrder.num}`}
                 </Typography>
               </Box>

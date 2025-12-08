@@ -52,7 +52,7 @@ export const BillsList: FC<Props> = ({ bills }) => {
                 <ListItemText
                   primary={
                     <>
-                      <Typography variant='h5' fontWeight='bold'>
+                      <Typography variant='body1'>
                         Cuenta N° {bill.num}{' '}
                         {bill.isPaid && (
                           <Label color='success' sx={{ ml: 1 }}>
@@ -76,7 +76,7 @@ export const BillsList: FC<Props> = ({ bills }) => {
                 />
 
                 <ListItemSecondaryAction>
-                  <Typography variant='h5'>
+                  <Typography variant='body1'>
                     {formatMoney(bill.total || 0)}
                   </Typography>
                 </ListItemSecondaryAction>

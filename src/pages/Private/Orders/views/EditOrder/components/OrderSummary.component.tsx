@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import {
   CircleRounded,
   Edit,
+  EditOutlined,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   Notes,
@@ -147,14 +148,14 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
             {/* <EditOrderStatus orderId={order.id} status={order.status} /> */}
             <Card>
               <CardHeader
-                titleTypographyProps={{ variant: 'h3' }}
+                titleTypographyProps={{ variant: 'h5' }}
                 title={`Pedido #${order.num}`}
                 subheader={format(new Date(order.createdAt), 'dd/MM/yyy HH:mm')}
                 action={
                   <Button
                     onClick={handleOpen}
                     size='small'
-                    startIcon={<Edit />}
+                    startIcon={<EditOutlined />}
                   >
                     Editar
                   </Button>
@@ -168,7 +169,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                   </Grid>
 
                   <Grid item xs={8}>
-                    <Typography variant='subtitle1' textAlign='right'>
+                    <Typography variant='body2' textAlign='right'>
                       {order.type === TypeOrder.IN_PLACE
                         ? 'Para servir'
                         : 'Para llevar'}
@@ -182,7 +183,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                       </Grid>
 
                       <Grid item xs={8}>
-                        <Typography variant='subtitle1' textAlign='right'>
+                        <Typography variant='body2' textAlign='right'>
                           Mesa {order.table?.name || 'No seleccionada'}
                         </Typography>
                       </Grid>
@@ -194,7 +195,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                   </Grid>
 
                   <Grid item xs={7}>
-                    <Typography variant='subtitle1' textAlign='right'>
+                    <Typography variant='body2' textAlign='right'>
                       {format(new Date(order.deliveryTime), 'dd/MM/yyy HH:mm')}
                     </Typography>
                   </Grid>
@@ -204,7 +205,7 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                   </Grid>
 
                   <Grid item xs={8}>
-                    <Typography variant='subtitle1' textAlign='right'>
+                    <Typography variant='body2' textAlign='right'>
                       {order.people}
                     </Typography>
                   </Grid>
@@ -245,7 +246,11 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                       title='Mesero'
                       action={
                         <IconButton onClick={handleShowUser} size='small'>
-                          {!showUser && order.user ? <Visibility /> : <Edit />}
+                          {!showUser && order.user ? (
+                            <Visibility />
+                          ) : (
+                            <EditOutlined />
+                          )}
                         </IconButton>
                       }
                     />
@@ -253,16 +258,16 @@ export const OrderSummary: FC<PropsOrder> = ({ order }) => {
                     <CardContent>
                       {showUser && order.user ? (
                         <Stack spacing={0.5}>
-                          <Typography variant='subtitle1'>
+                          <Typography variant='body1'>
                             {order.user?.person.firstName +
                               ' ' +
                               order.user?.person.lastName}
                           </Typography>
-                          <Typography variant='body1'>
+                          <Typography variant='body2'>
                             {order.user?.person.numPhone || 'Sin teléfono'}
                           </Typography>
 
-                          <Typography variant='body1'>
+                          <Typography variant='body2'>
                             {order.user?.person.email || 'Sin correo'}
                           </Typography>
                         </Stack>
