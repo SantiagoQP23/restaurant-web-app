@@ -64,14 +64,13 @@ export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
 
   return (
     <Dialog {...muiDialogV5(modal)}>
-      <DialogTitle id='alert-dialog-title' textAlign='center' variant='h4'>
+      <DialogTitle id='alert-dialog-title' textAlign='center' variant='h5'>
         Cerrar pedido
       </DialogTitle>
       <Divider />
       <DialogContent>
         <Stack spacing={2}>
           <Typography variant='h6' textAlign='center'>
-            <b>Mesa: </b>
             {`${
               order?.type === TypeOrder.IN_PLACE
                 ? `Mesa ${order?.table?.name || ''}`
@@ -80,7 +79,7 @@ export const ModalCloseOrder = NiceModal.create<Props>(({ order }) => {
           </Typography>
 
           <Box>
-            <Typography variant='h4' textAlign='center'>
+            <Typography variant='h6' textAlign='center'>
               ¿Desea cerrar el pedido?
             </Typography>
 
