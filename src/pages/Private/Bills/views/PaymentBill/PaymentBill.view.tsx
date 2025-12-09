@@ -24,7 +24,9 @@ import {
   MonetizationOnOutlined,
   CreditCard,
   AttachMoney,
-  PersonAddOutlined
+  PersonAddOutlined,
+  CreditCardOutlined,
+  AccountBalanceWalletOutlined
 } from '@mui/icons-material';
 import { IClient, PaymentMethod } from '../../../../../models';
 import { formatMoney } from '../../../Common/helpers/format-money.helper';
@@ -37,7 +39,15 @@ import { UpdateBillDto } from '../../dto';
 import { AddClientModalProps } from '@/pages/Private/Clients/components/AddClient/AddClientModal.component';
 import NiceModal from '@ebay/nice-modal-react';
 import { AddClientModal } from '@/pages/Private/Clients/components/AddClient/AddClientModal.component';
+import { useSnackbar } from 'notistack';
 // import { useCashRegisterStore } from "../../../Common/store/useCashRegisterStore";
+//
+
+export interface IPaymentMethod {
+  name: string;
+  value: string;
+  icon: React.ReactNode;
+}
 
 /**
  * Component for pay a bill
@@ -50,6 +60,7 @@ import { AddClientModal } from '@/pages/Private/Clients/components/AddClient/Add
  */
 export const PaymentBill = () => {
   const { id } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
 
   if (!id) return <Navigate to='/bills' replace />;
 
@@ -92,25 +103,28 @@ export const PaymentBill = () => {
   const handleChangeClient = (client: IClient | null) => setClient(client);
   const [receivedAmount, setReceivedAmount] = useState<number>(0);
 
-  const [paymentMethod] = useState<PaymentMethod>(PaymentMethod.CASH);
+  const [paymentMethod, setPaymentMethod] = useState<IPaymentMethod | null>(
+    null
+  );
 
   const openCreateClientModal = () => {
     const data: AddClientModalProps = { onClientCreated: handleChangeClient };
     NiceModal.show(AddClientModal, data);
   };
 
-  // const handleChangePaymentMethod = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setPaymentMethod(() => {
-  //     const value = event.target.value as PaymentMethod;
+  const handleChangePaymentMethod = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPaymentMethod(() => {
+      const value = event.target.value as PaymentMethod;
+      const newMethod = paymentMethods.find(
+        (method) => method.value === value
+      )!;
+      setReceivedAmount(0);
 
-  //     if (value === PaymentMethod.TRANSFER) setReceivedAmount(bill?.total || 0);
-  //     else setReceivedAmount(0);
-
-  //     return value;
-  //   });
-  // };
+      return newMethod;
+    });
+  };
 
   const handleChangeAmountPaid = (event: React.ChangeEvent<HTMLInputElement>) =>
     setReceivedAmount(+event.target.value);
@@ -120,32 +134,56 @@ export const PaymentBill = () => {
     navigate(`/bills/${bill.id}`);
   };
 
-  const submitPayment = () => {
-    if (
-      !bill
-      // !paymentMethod ||
-      // (withClient && !client) ||
-      // !activeCashRegister
-    ) {
-      alert('Error al registrar el pago');
+  const paymentMethods: IPaymentMethod[] = [
+    {
+      name: 'Cash',
+      value: 'CASH',
+      icon: <MonetizationOnOutlined fontSize='small' />
+    },
+    {
+      name: 'Credit Card',
+      value: 'CREDIT_CARD',
+      icon: <CreditCardOutlined fontSize='small' />
+    },
+    {
+      name: 'Transfer',
+      value: 'TRANSFER',
+      icon: <AccountBalanceWalletOutlined fontSize='small' />
+    }
+  ];
 
+  const submitPayment = () => {
+    if (!bill) {
+      alert('Error al registrar el pago');
+      return;
+    }
+
+    if (!paymentMethod) {
+      alert('Seleccione una forma de pago');
+      return;
+    }
+
+    if (paymentMethod.value === PaymentMethod.CASH && receivedAmount < total) {
+      enqueueSnackbar('La cantidad recibida es insuficiente', {
+        variant: 'error'
+      });
       return;
     }
 
     const data: UpdateBillDto = {
       id: bill.id,
       discount,
-      paymentMethod,
+      paymentMethod: paymentMethod.value,
       receivedAmount,
       isPaid: true
       // cashRegisterId: activeCashRegister!.id,
     };
 
-    if (!withClient) {
-      data.clientId = '0999999999';
-    } else {
-      data.clientId = client?.id;
-    }
+    // if (!withClient) {
+    //   data.clientId = '0999999999';
+    // } else {
+    //   data.clientId = client?.id;
+    // }
 
     updateBill(data, {
       onSuccess: () => {
@@ -169,8 +207,98 @@ export const PaymentBill = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Stack direction='column' spacing={2}>
+              {/* <Card> */}
+              {/*   <CardHeader */}
+              {/*     avatar={ */}
+              {/*       <Chip */}
+              {/*         label={1} */}
+              {/*         size='small' */}
+              {/*         variant={step === 1 ? 'filled' : 'outlined'} */}
+              {/*       /> */}
+              {/*     } */}
+              {/*     title='Cliente' */}
+              {/*     subheaderTypographyProps={{ */}
+              {/*       variant: 'h5', */}
+              {/*       color: 'text.primary' */}
+              {/*     }} */}
+              {/*     action={ */}
+              {/*       step !== 1 && ( */}
+              {/*         <Button */}
+              {/*           size='small' */}
+              {/*           color='inherit' */}
+              {/*           variant='outlined' */}
+              {/*           onClick={handleChangeStep(1)} */}
+              {/*         > */}
+              {/*           Cambiar */}
+              {/*         </Button> */}
+              {/*       ) */}
+              {/*     } */}
+              {/*     subheader={ */}
+              {/*       step !== 1 */}
+              {/*         ? client */}
+              {/*           ? `${client.person.firstName} ${client.person.lastName}` */}
+              {/*           : 'Consumidor final' */}
+              {/*         : '' */}
+              {/*     } */}
+              {/*   /> */}
+              {/*   {step === 1 && ( */}
+              {/*     <CardContent> */}
+              {/*       <> */}
+              {/*         <RadioGroup */}
+              {/*           name='use-radio-group' */}
+              {/*           value={withClient} */}
+              {/*           onChange={handleChangeWithClient} */}
+              {/*         > */}
+              {/*           <FormControlLabel */}
+              {/*             value={false} */}
+              {/*             label={'Consumidor final'} */}
+              {/*             control={<Radio />} */}
+              {/*           /> */}
+              {/*           <FormControlLabel */}
+              {/*             value={true} */}
+              {/*             label={'Seleccionar cliente'} */}
+              {/*             control={<Radio />} */}
+              {/*           /> */}
+              {/*         </RadioGroup> */}
+              {/*         <Box mt={1}> */}
+              {/*           {withClient && ( */}
+              {/*             <ComboBoxClient */}
+              {/*               handleChangeClient={handleChangeClient} */}
+              {/*               client={client} */}
+              {/*             /> */}
+              {/*           )} */}
+              {/*         </Box> */}
+              {/*       </> */}
+              {/*       <Box */}
+              {/*         sx={{ */}
+              {/*           display: 'flex', */}
+              {/*           justifyContent: 'flex-end', */}
+              {/*           mt: 2 */}
+              {/*         }} */}
+              {/*       > */}
+              {/*         {withClient && ( */}
+              {/*           <Button */}
+              {/*             variant='text' */}
+              {/*             startIcon={<PersonAddOutlined />} */}
+              {/*             onClick={openCreateClientModal} */}
+              {/*           > */}
+              {/*             Nuevo cliente */}
+              {/*           </Button> */}
+              {/*         )} */}
+              {/*         <Button */}
+              {/*           onClick={handleChangeStep(2)} */}
+              {/*           variant='contained' */}
+              {/*           disabled={withClient && !client} */}
+              {/*         > */}
+              {/*           Siguiente */}
+              {/*         </Button> */}
+              {/*       </Box> */}
+              {/*     </CardContent> */}
+              {/*   )} */}
+              {/* </Card> */}
               <Card>
                 <CardHeader
+                  title='Forma de pago'
                   avatar={
                     <Chip
                       label={1}
@@ -178,13 +306,12 @@ export const PaymentBill = () => {
                       variant={step === 1 ? 'filled' : 'outlined'}
                     />
                   }
-                  title='Cliente'
                   subheaderTypographyProps={{
-                    variant: 'h5',
+                    variant: 'subtitle1',
                     color: 'text.primary'
                   }}
                   action={
-                    step !== 1 && (
+                    step != 1 && (
                       <Button
                         size='small'
                         color='inherit'
@@ -196,41 +323,55 @@ export const PaymentBill = () => {
                     )
                   }
                   subheader={
-                    step !== 1
-                      ? client
-                        ? `${client.person.firstName} ${client.person.lastName}`
-                        : 'Consumidor final'
-                      : ''
+                    paymentMethod && step !== 1 ? paymentMethod.name : ''
                   }
                 />
                 {step === 1 && (
                   <CardContent>
-                    <>
-                      <RadioGroup
-                        name='use-radio-group'
-                        value={withClient}
-                        onChange={handleChangeWithClient}
-                      >
-                        <FormControlLabel
-                          value={false}
-                          label={'Consumidor final'}
-                          control={<Radio />}
-                        />
-                        <FormControlLabel
-                          value={true}
-                          label={'Seleccionar cliente'}
-                          control={<Radio />}
-                        />
-                      </RadioGroup>
-                      <Box mt={1}>
-                        {withClient && (
-                          <ComboBoxClient
-                            handleChangeClient={handleChangeClient}
-                            client={client}
+                    <RadioGroup
+                      name='use-radio-group'
+                      value={paymentMethod?.value || ''}
+                      onChange={handleChangePaymentMethod}
+                    >
+                      <Stack spacing={2}>
+                        {paymentMethods.map((method) => (
+                          <FormControlLabel
+                            key={method.value}
+                            value={method.value}
+                            label={
+                              <Stack
+                                direction='row'
+                                alignItems='center'
+                                justifyContent='space-between'
+                                spacing={1}
+                              >
+                                {method.icon}
+                                <Typography variant='body1'>
+                                  {method.name}
+                                </Typography>
+                              </Stack>
+                            }
+                            control={<Radio />}
                           />
-                        )}
-                      </Box>
-                    </>
+                        ))}
+
+                        {
+                          // paymentMethod === PaymentMethod.CASH && (
+                          //   <Grid container spacing={1}>
+                          //     {cashRegisters.length > 0 ? (
+                          //       cashRegisters.map((cashRegister) => (
+                          //         <Grid item xs={6} md={3} key={cashRegister.id}>
+                          //           <CashRegisterItem
+                          //             cashRegister={cashRegister}
+                          //           />
+                          //         </Grid>
+                          //       ))
+                          //     ) }
+                          //   </Grid>
+                          // )
+                        }
+                      </Stack>
+                    </RadioGroup>
                     <Box
                       sx={{
                         display: 'flex',
@@ -238,146 +379,13 @@ export const PaymentBill = () => {
                         mt: 2
                       }}
                     >
-                      {withClient && (
-                        <Button
-                          variant='text'
-                          startIcon={<PersonAddOutlined />}
-                          onClick={openCreateClientModal}
-                        >
-                          Nuevo cliente
-                        </Button>
-                      )}
-                      <Button
-                        onClick={handleChangeStep(2)}
-                        variant='contained'
-                        disabled={withClient && !client}
-                      >
+                      <Button onClick={handleChangeStep(2)} variant='contained'>
                         Siguiente
                       </Button>
                     </Box>
                   </CardContent>
                 )}
               </Card>
-              {/* 
-              <Card>
-                <CardHeader
-                  title="Forma de pago"
-                  avatar={
-                    <Chip
-                      label={2}
-                      size="small"
-                      variant={step === 2 ? "filled" : "outlined"}
-                    />
-                  }
-                  subheaderTypographyProps={{
-                    variant: "h5",
-                    color: "text.primary",
-                  }}
-                  action={
-                    step != 2 && (
-                      <Button
-                        size="small"
-                        color="inherit"
-                        variant="outlined"
-                        onClick={handleChangeStep(2)}
-                      >
-                        Cambiar
-                      </Button>
-                    )
-                  }
-                  subheader={
-                    step !== 2 && paymentMethod
-                      ? paymentMethod === PaymentMethod.CASH
-                        ? "Efectivo en " + `Caja N° ${activeCashRegister?.id}`
-                        : "Transferencia"
-                      : ""
-                  }
-                />
-                {step === 2 && (
-                  <CardContent>
-                    <RadioGroup
-                      name="use-radio-group"
-                      value={paymentMethod}
-                      onChange={handleChangePaymentMethod}
-                    >
-                      <Stack spacing={2}>
-                        <FormControlLabel
-                          value={PaymentMethod.CASH}
-                          label={
-                            <Stack
-                              direction="row"
-                              alignItems="center"
-                              justifyContent="space-between"
-                              spacing={1}
-                            >
-                              <MonetizationOnOutlined color="success" />
-                              <Typography variant="h6">Efectivo</Typography>
-                            </Stack>
-                          }
-                          control={<Radio />}
-                        />
-
-                        {paymentMethod === PaymentMethod.CASH && (
-                          <Grid container spacing={1}>
-                            {cashRegisters.length > 0 ? (
-                              cashRegisters.map((cashRegister) => (
-                                <Grid item xs={6} md={3} key={cashRegister.id}>
-                                  <CashRegisterItem
-                                    cashRegister={cashRegister}
-                                  />
-                                </Grid>
-                              ))
-                            ) : (
-                              <Alert severity="error">
-                                No hay cajas registradas
-                              </Alert>
-                            )}
-                          </Grid>
-                        )}
-                        <Grid item xs={12}>
-                          <FormControlLabel
-                            value={PaymentMethod.TRANSFER}
-                            label={
-                              <Stack
-                                direction="row"
-                                alignItems="center"
-                                justifyContent="space-between"
-                                spacing={1}
-                              >
-                                <CreditCard color="warning" />
-                                <Typography variant="h6">
-                                  Transferencia
-                                </Typography>
-                              </Stack>
-                            }
-                            disabled
-                            control={<Radio />}
-                          />
-                        </Grid>
-                      </Stack>
-                    </RadioGroup>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        mt: 2,
-                      }}
-                    >
-                      <Button
-                        onClick={handleChangeStep(3)}
-                        variant="contained"
-                        disabled={
-                          !paymentMethod ||
-                          (paymentMethod === PaymentMethod.CASH &&
-                            !activeCashRegister)
-                        }
-                      >
-                        Siguiente
-                      </Button>
-                    </Box>
-                  </CardContent>
-                )}
-              </Card> */}
 
               <Card>
                 <CardHeader
@@ -397,7 +405,7 @@ export const PaymentBill = () => {
                       fontSize='0.8rem'
                       textAlign='center'
                     >
-                      Total a pagar
+                      Total
                     </Typography>
                     <Typography
                       variant={receivedAmount >= total ? 'h4' : 'h3'}
@@ -406,46 +414,47 @@ export const PaymentBill = () => {
                       {`${formatMoney(total)}`}
                     </Typography>
 
-                    <Stack
-                      direction='column'
-                      alignItems='center'
-                      mt={3}
-                      spacing={2}
-                    >
-                      <TextField
-                        label='Cantidad recibida'
-                        variant='outlined'
-                        type='number'
-                        value={receivedAmount || ''}
-                        onChange={handleChangeAmountPaid}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position='start'>
-                              <AttachMoney />
-                            </InputAdornment>
-                          )
-                        }}
-                        sx={{
-                          width: 200
-                        }}
-                      />
+                    {paymentMethod?.value === PaymentMethod.CASH && (
+                      <Stack
+                        direction='column'
+                        alignItems='center'
+                        mt={3}
+                        spacing={2}
+                      >
+                        <TextField
+                          label='Cantidad recibida'
+                          variant='outlined'
+                          type='number'
+                          value={receivedAmount || ''}
+                          onChange={handleChangeAmountPaid}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position='start'>
+                                <AttachMoney />
+                              </InputAdornment>
+                            )
+                          }}
+                          sx={{
+                            width: 200
+                          }}
+                        />
 
-                      {receivedAmount >= total && (
-                        <Box>
-                          <Typography
-                            variant='subtitle2'
-                            fontSize='0.8rem'
-                            textAlign='center'
-                          >
-                            Cambio
-                          </Typography>
-                          <Typography variant='h2' textAlign='center'>
-                            {`${formatMoney(receivedAmount - total)}`}
-                          </Typography>
-                        </Box>
-                      )}
-                    </Stack>
-
+                        {receivedAmount >= total && (
+                          <Box>
+                            <Typography
+                              variant='subtitle2'
+                              fontSize='0.8rem'
+                              textAlign='center'
+                            >
+                              Cambio
+                            </Typography>
+                            <Typography variant='h2' textAlign='center'>
+                              {`${formatMoney(receivedAmount - total)}`}
+                            </Typography>
+                          </Box>
+                        )}
+                      </Stack>
+                    )}
                     <Box
                       sx={{
                         display: 'flex',
@@ -457,18 +466,7 @@ export const PaymentBill = () => {
                         variant='contained'
                         onClick={submitPayment}
                         loading={isUpdating}
-                        startIcon={
-                          paymentMethod === PaymentMethod.CASH ? (
-                            <MonetizationOnOutlined />
-                          ) : (
-                            <CreditCard />
-                          )
-                        }
-                        disabled={
-                          receivedAmount < bill.total - discount ||
-                          // !activeCashRegister ||
-                          !isOnline
-                        }
+                        startIcon={paymentMethod?.icon}
                       >
                         Registrar pago
                       </LoadingButton>
@@ -536,30 +534,30 @@ export const PaymentBill = () => {
               <CardContent>
                 <Stack direction='column' spacing={1}>
                   <Box>
-                    <Typography variant='subtitle1' color='textSecondary'>
+                    <Typography variant='body2' color='textSecondary'>
                       Creado por
                     </Typography>
 
-                    <Typography variant='h6'>
+                    <Typography variant='body1'>
                       {bill.createdBy.person.firstName}{' '}
                       {bill.createdBy.person.lastName}
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant='subtitle1' color='textSecondary'>
+                    <Typography variant='body2' color='textSecondary'>
                       Mesero
                     </Typography>
 
-                    <Typography variant='h6'>
+                    <Typography variant='body1'>
                       {bill.owner.person.firstName} {bill.owner.person.lastName}
                     </Typography>
                   </Box>
 
                   <Box>
-                    <Typography variant='subtitle1' color='textSecondary'>
+                    <Typography variant='body2' color='textSecondary'>
                       Fecha de creación
                     </Typography>
-                    <Typography variant='h6'>
+                    <Typography variant='body1'>
                       {format(new Date(bill.createdAt), 'dd/MM/yyyy HH:mm')}
                     </Typography>
                   </Box>

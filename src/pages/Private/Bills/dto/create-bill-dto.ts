@@ -5,7 +5,7 @@ export interface CreateBillDto {
   orderId: string;
   clientId?: string;
   details: CreateBillDetailDto[];
-  paymentMethod?: PaymentMethod;
+  paymentMethod?: string;
   receivedAmount?: number;
   discount?: number;
 }

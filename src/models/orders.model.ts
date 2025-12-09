@@ -25,7 +25,7 @@ export enum TypeOrder {
 
 export enum PaymentMethod {
   CASH = 'CASH',
-  // CARD = 'CARD',
+  CREDIT_CARD = 'CREDIT_CARD',
   TRANSFER = 'TRANSFER'
 }
 
