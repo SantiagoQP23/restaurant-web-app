@@ -23,6 +23,7 @@ import { ChangePasswordDto } from '../dto/change-password.dto';
 import { useSnackbar } from 'notistack';
 import { useSearch } from '../../../../hooks/useSearch';
 import { UpdateUserRoleDto } from '../dto/update-user-role.dto';
+import { queryClient } from '@/api/query-client';
 
 export const useUsers = () => {
   const dispatch = useDispatch();
@@ -123,6 +124,8 @@ export const useUpdateUser = () => {
     (data) => updateUserRole(data),
     {
       onSuccess: (data) => {
+        queryClient.invalidateQueries(['user', data.id]);
+        queryClient.invalidateQueries(['users']);
         enqueueSnackbar('Usuario actualizado correctamente', {
           variant: 'success'
         });
