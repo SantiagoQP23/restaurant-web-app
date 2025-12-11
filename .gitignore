@@ -1,6 +1,10 @@
 
 .env
 
+# Lock files (keep only pnpm)
+package-lock.json
+yarn.lock
+
 # Logs
 logs
 *.log

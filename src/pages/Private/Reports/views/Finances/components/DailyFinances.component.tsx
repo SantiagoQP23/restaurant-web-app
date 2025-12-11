@@ -144,7 +144,7 @@ export const DailyFinances = () => {
           <Stack direction='column' spacing={2}>
             <Card>
               {data && (
-                <Bar data={dataChart} options={options} ref={chartRef} />
+                <Bar data={dataChart} options={options} ref={chartRef as any} />
               )}
             </Card>
 

@@ -142,7 +142,7 @@ export const MonthlyFinances = () => {
             <Card>
               <Box height={300} display='flex' justifyContent='center'>
                 {data && (
-                  <Bar data={dataChart} options={options} ref={chartRef} />
+                  <Bar data={dataChart} options={options} ref={chartRef as any} />
                 )}
               </Box>
             </Card>
