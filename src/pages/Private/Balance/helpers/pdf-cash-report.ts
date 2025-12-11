@@ -10,7 +10,7 @@ import { CashRegister } from '../models/cash-register.model';
 export const generatePdfCashReport = async (
   cash: CashRegister
 ): Promise<ICreatePDF> => {
-  PdfMakeWrapper.setFonts(pdfFonts);
+  PdfMakeWrapper.setFonts(pdfFonts as any);
 
   const pdf = new PdfMakeWrapper();
 

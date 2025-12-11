@@ -27,7 +27,7 @@ import html2canvas from 'html2canvas';
 import { generateFootfallSimulationReport } from '../../../helpers/pdf-footfall-simulation-report.helper';
 
 export const DailyFootfall = () => {
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJS<"line">>(null);
 
   const filters = useSimulatedFootfall(Period.MONTHLY, GroupBy.DAY);
 

@@ -11,7 +11,7 @@ import logo from '../../../../assets/logo3.png';
 export const generatePdfExpense = async (
   expense: Expense
 ): Promise<ICreatePDF> => {
-  PdfMakeWrapper.setFonts(pdfFonts);
+  PdfMakeWrapper.setFonts(pdfFonts as any);
 
   const pdf = new PdfMakeWrapper();
 

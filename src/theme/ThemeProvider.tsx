@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import { ThemeProvider } from '@mui/material';
 import { themeCreator } from './base';
 // import { StylesProvider } from '@mui/styles';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 export const ThemeContext = React.createContext(
   (themeName: string): void => {}
 );
 
 interface Props {
-  children: ReactJSXElement;
+  children: ReactNode;
 }
 
 const ThemeProviderWrapper: React.FC<Props> = (props) => {

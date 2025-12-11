@@ -66,7 +66,7 @@ export const CreateProduct = () => {
     formState: { errors },
     control,
     reset
-  } = useForm<CreateProductDto>({
+  } = useForm<ProductForm>({
     defaultValues: initialForm
   });
 
@@ -78,9 +78,14 @@ export const CreateProduct = () => {
     addProductToCategory(product, category);
   };
 
-  const onSubmit = (data: CreateProductDto) => {
+  const onSubmit = (data: ProductForm) => {
     console.log(data);
-    mutateAsync(data).then((product) => {
+    const productData: CreateProductDto = {
+      ...data,
+      productionAreaId:
+        data.productionAreaId === '' ? undefined : data.productionAreaId
+    };
+    mutateAsync(productData).then((product) => {
       dispatch(addProduct(product));
       updateCategoryProducts(product);
       navigateToEditProduct(product.id);

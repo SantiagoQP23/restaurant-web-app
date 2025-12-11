@@ -38,7 +38,7 @@ import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 import { Label } from '../../../../../../components/ui';
 
 export const MonthlyFinances = () => {
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJS<"bar">>(null);
 
   const filters = useDateFilter(Period.YEARLY);
 

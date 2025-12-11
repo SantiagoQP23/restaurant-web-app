@@ -34,8 +34,8 @@ export const Invoice = () => {
   const { data: restaurant } = useRestaurant();
 
   const handlePrint = async () => {
-    if (data && restaurant) {
-      const pdf = await generateInvoicePdf(data, restaurant);
+    if (data && restaurant?.currentRestaurant) {
+      const pdf = await generateInvoicePdf(data, restaurant.currentRestaurant);
       pdf.open();
     }
   };
@@ -95,7 +95,7 @@ export const Invoice = () => {
           <Stack
             spacing={2}
             direction={{ xs: 'column', sm: 'row' }}
-          // Establecer el tamaño de los elementos
+            // Establecer el tamaño de los elementos
           >
             <Box flexBasis='50%'>
               <Typography variant='h5' mb={1}>

@@ -99,8 +99,8 @@ export const Profile = () => {
                       </ListItemIcon>
 
                       <ListItemText
-                        primary={user?.person.identification.type}
-                        secondary={user?.person.identification.num}
+                        primary={user?.person.identification?.type}
+                        secondary={user?.person.identification?.num}
                       />
                     </ListItem>
                   </List>

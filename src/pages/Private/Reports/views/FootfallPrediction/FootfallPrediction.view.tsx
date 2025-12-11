@@ -63,7 +63,7 @@ import html2canvas from 'html2canvas';
 export const FootfallPrediction = () => {
   const { isLoading, data } = useForecastFootfall();
 
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJS<"line">>(null);
 
   const { refetch, isFetching } = useUpdateFootfallPrediction();
 

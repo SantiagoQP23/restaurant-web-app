@@ -28,7 +28,7 @@ export const generateFinancialsReportPdf = async (
     0
   );
 
-  PdfMakeWrapper.setFonts(pdfFonts);
+  PdfMakeWrapper.setFonts(pdfFonts as any);
 
   const pdf = new PdfMakeWrapper();
 

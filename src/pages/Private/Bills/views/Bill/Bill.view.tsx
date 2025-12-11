@@ -22,9 +22,7 @@ import { es } from 'date-fns/locale';
 
 import { formatMoney } from '../../../Common/helpers/format-money.helper';
 import { useBill } from '../../hooks/useBills';
-import {
-  getPriceWithoutIva
-} from '@/helpers/product.helper';
+import { getPriceWithoutIva } from '@/helpers/product.helper';
 import { useRestaurant } from '@/pages/Private/Restaurant/hooks/useRestaurant';
 import { generateBillPdf } from './generateBillPdf.helper';
 /**
@@ -45,8 +43,8 @@ export const Bill = () => {
   const { data: restaurant } = useRestaurant();
 
   const handlePrint = async () => {
-    if (bill && restaurant) {
-      const pdf = await generateBillPdf(bill, restaurant);
+    if (bill && restaurant?.currentRestaurant) {
+      const pdf = await generateBillPdf(bill, restaurant.currentRestaurant);
       pdf.open();
     }
   };
@@ -93,7 +91,10 @@ export const Bill = () => {
         <Card>
           <CardHeader
             title={
-              <Typography variant='h4'> {restaurant?.name} </Typography>
+              <Typography variant='h4'>
+                {' '}
+                {restaurant?.currentRestaurant?.name}{' '}
+              </Typography>
             }
             action={
               <Box>
@@ -106,7 +107,7 @@ export const Bill = () => {
             <Stack
               spacing={2}
               direction={{ xs: 'column', sm: 'row' }}
-            // Establecer el tamaño de los elementos
+              // Establecer el tamaño de los elementos
             >
               <Box flexBasis='50%'>
                 <Typography variant='h5' mb={1}>

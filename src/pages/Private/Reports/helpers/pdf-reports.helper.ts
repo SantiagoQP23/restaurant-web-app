@@ -52,7 +52,7 @@ export const generateWaiterReportPdf = async (
   filterDto: DateFilterDto,
   urlImage?: string
 ): Promise<ICreatePDF> => {
-  PdfMakeWrapper.setFonts(pdfFonts);
+  PdfMakeWrapper.setFonts(pdfFonts as any);
 
   const { period, startDate, endDate } = filterDto;
 

@@ -49,12 +49,14 @@ export const useRestaurant = () => {
 
   const { setRestaurant } = useRestaurantStore();
 
-  return useQuery<Restaurant, unknown>(
+  return useQuery<LoginResponse, unknown>(
     ['restaurant'],
     () => getRestaurant('1'),
     {
       onSuccess: (data) => {
-        setRestaurant(data);
+        if (data.currentRestaurant) {
+          setRestaurant(data.currentRestaurant);
+        }
       },
       onError: () => {
         enqueueSnackbar('Error al obtener el restaurante', {

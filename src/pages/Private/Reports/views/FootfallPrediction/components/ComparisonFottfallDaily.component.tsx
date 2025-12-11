@@ -28,7 +28,7 @@ import html2canvas from 'html2canvas';
 import { generateFootfallComparisonReport } from '../../../helpers/pdf-footfall-comparison-report.helper';
 
 export const ComparisonFottfallDaily = () => {
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJS<"line">>(null);
 
   const filters = useComparisonFootfall(Period.MONTHLY, GroupBy.DAY);
 

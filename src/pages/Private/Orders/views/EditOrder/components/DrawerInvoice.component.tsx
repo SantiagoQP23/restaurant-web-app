@@ -22,11 +22,7 @@ import { useTheme } from '@mui/material/styles';
 import { useDrawerInvoiceStore } from '../../../store/drawerInvoiceStore';
 import { format } from 'date-fns';
 import { CardHeader, Divider } from '@mui/material/';
-import {
-  CloseOutlined,
-  DeleteOutline,
-  Print
-} from '@mui/icons-material';
+import { CloseOutlined, DeleteOutline, Print } from '@mui/icons-material';
 import { Invoice } from '../../../models/Invoice.model';
 import { Label } from '../../../../../../components/ui';
 import { useSelector } from 'react-redux';
@@ -44,10 +40,7 @@ interface PropsFormInvoice {
 }
 
 const FormInvoice: FC<PropsFormInvoice> = ({ invoice, orderId }) => {
-  const {
-    register,
-    handleSubmit
-  } = useForm<UpdateInvoiceDto>({
+  const { register, handleSubmit } = useForm<UpdateInvoiceDto>({
     defaultValues: {
       id: invoice.id,
       comments: invoice.comments,
@@ -114,8 +107,11 @@ export const DrawerInvoice: FC<Props> = ({ open, handleClose }) => {
   const { data: restaurant } = useRestaurant();
 
   const handlePrint = async () => {
-    if (activeInvoice && restaurant) {
-      const pdf = await generateInvoicePdf(activeInvoice, restaurant);
+    if (activeInvoice && restaurant?.currentRestaurant) {
+      const pdf = await generateInvoicePdf(
+        activeInvoice,
+        restaurant.currentRestaurant
+      );
       pdf.open();
     }
   };

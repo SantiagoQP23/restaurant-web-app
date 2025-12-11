@@ -19,7 +19,7 @@ export const generateProductsReport = async (
 ): Promise<ICreatePDF> => {
   const { period, startDate, endDate } = filters;
 
-  PdfMakeWrapper.setFonts(pdfFonts);
+  PdfMakeWrapper.setFonts(pdfFonts as any);
 
   const pdf = new PdfMakeWrapper();
 

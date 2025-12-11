@@ -38,7 +38,7 @@ import html2canvas from 'html2canvas';
 import { generateFinancialsReportPdf } from '../../../helpers/pdf-financials-report';
 
 export const DailyFinances = () => {
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJS<"bar">>(null);
 
   const filters = useDateFilter(Period.CUSTOM);
 

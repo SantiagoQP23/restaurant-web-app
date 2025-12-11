@@ -60,7 +60,9 @@
   },
   "devDependencies": {
     "@types/pdfmake": "^0.2.2",
+    "@types/prop-types": "^15.7.15",
     "@types/react-dom": "^18.0.6",
+    "@types/react-router": "^5.1.20",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
     "@vitejs/plugin-react": "^2.1.0",

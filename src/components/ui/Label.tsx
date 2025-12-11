@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 
 interface LabelProps {
@@ -67,18 +66,4 @@ export const Label: FC<LabelProps> = ({
       {children}
     </LabelWrapper>
   );
-};
-
-Label.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  sx: PropTypes.object,
-  color: PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'error',
-    'warning',
-    'success',
-    'info'
-  ])
 };

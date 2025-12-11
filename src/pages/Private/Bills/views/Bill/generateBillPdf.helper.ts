@@ -26,7 +26,7 @@ export const generateBillPdf = async (
   invoice: Bill,
   restaurant: Restaurant
 ): Promise<ICreatePDF> => {
-  PdfMakeWrapper.setFonts(pdfFonts);
+  PdfMakeWrapper.setFonts(pdfFonts as any);
 
   const pdf = new PdfMakeWrapper();
 

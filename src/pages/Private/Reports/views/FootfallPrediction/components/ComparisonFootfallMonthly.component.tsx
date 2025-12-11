@@ -26,7 +26,7 @@ import { Chart as ChartJS } from 'chart.js';
 import html2canvas from 'html2canvas';
 
 export const ComparisonFootfallMonthly = () => {
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJS<"line">>(null);
 
   const filters = useComparisonFootfall(Period.YEARLY, GroupBy.MONTH);
   const { startDate, handleChangeStartDate, comparisonFootfallQuery } = filters;

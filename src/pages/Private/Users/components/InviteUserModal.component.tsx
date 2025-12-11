@@ -136,20 +136,25 @@ export const InviteUserModal = NiceModal.create(() => {
             </IconButton>
           </Paper>
         )}
-        {!selectedUser && usersQuery.data?.users?.length > 0 && (
-          <Box height={250} overflow='auto' mt={2} borderRadius='8px'>
-            <List>
-              {usersQuery.data?.users.map((user) => (
-                <ListItemButton key={user.id} onClick={() => selectUser(user)}>
-                  <ListItemText
-                    primary={`${user.person.firstName} ${user.person.lastName}`}
-                    secondary={user.username}
-                  />
-                </ListItemButton>
-              ))}
-            </List>
-          </Box>
-        )}
+        {!selectedUser &&
+          usersQuery.data?.users &&
+          usersQuery.data.users.length > 0 && (
+            <Box height={250} overflow='auto' mt={2} borderRadius='8px'>
+              <List>
+                {usersQuery.data?.users.map((user) => (
+                  <ListItemButton
+                    key={user.id}
+                    onClick={() => selectUser(user)}
+                  >
+                    <ListItemText
+                      primary={`${user.person.firstName} ${user.person.lastName}`}
+                      secondary={user.username}
+                    />
+                  </ListItemButton>
+                ))}
+              </List>
+            </Box>
+          )}
 
         {selectedUser && (
           <Box>

@@ -1,5 +1,4 @@
-import { FC, useState, createContext } from 'react';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { FC, useState, createContext, ReactElement } from 'react';
 type SidebarContext = {
   sidebarToggle: any;
   toggleSidebar: () => void;

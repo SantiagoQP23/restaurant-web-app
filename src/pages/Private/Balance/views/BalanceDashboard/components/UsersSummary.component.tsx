@@ -45,7 +45,7 @@ import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const UsersSummary = () => {
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJS<'pie'>>(null);
 
   const {
     period,

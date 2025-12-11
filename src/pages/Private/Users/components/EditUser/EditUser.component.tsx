@@ -51,7 +51,7 @@ export const EditUser = () => {
 
   const resetPasswordMutation = useResetPasswordUser();
 
-  const updateUserMutation = useUpdateUser();
+  const { updateUserMutation, updateUserRole } = useUpdateUser();
 
   // const { id, person, restaurantRoles, isActive, ...restUser } = userToUpdate!;
   //
@@ -72,7 +72,7 @@ export const EditUser = () => {
     numPhone: userToUpdate?.person.numPhone || '',
     identification: {
       type: userToUpdate!.person.identification!.type!,
-      num: userToUpdate!.person.identification.num || ''
+      num: userToUpdate!.person.identification!.num || ''
     },
     username: userToUpdate?.username || '',
     role: {
@@ -97,13 +97,13 @@ export const EditUser = () => {
 
     updateUserMutation
       .mutateAsync({ id: userToUpdate!.id, ...userUpdated })
-      .then((data) => {
+      .then((data: IUser) => {
         dispatch(updateUser(data));
         refetch();
 
         // enqueueSnackbar('Usuario actualizado', { variant: 'success' });
       })
-      .catch((err) => {
+      .catch((err: any) => {
         // console.log(err);
         // enqueueSnackbar('Error al actualizar usuario', { variant: 'error' });
       });
@@ -112,11 +112,11 @@ export const EditUser = () => {
   const submitChangeStatus = () => {
     updateUserMutation
       .mutateAsync({ id: userToUpdate!.id, isActive: !userToUpdate!.isActive })
-      .then((data) => {
+      .then((data: IUser) => {
         dispatch(updateUser(data));
         refetch();
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(err);
         enqueueSnackbar('Error al actualizar usuario', { variant: 'error' });
       });
