@@ -1,6 +1,5 @@
 import { Copyright } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Container,
   CssBaseline,
@@ -10,7 +9,6 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { useForm } from 'react-hook-form';
 import { RegisterUserDto } from '../dto/register-user.dto';
@@ -22,12 +20,12 @@ import { getEnvVariables } from '@/helpers';
 const { VITE_APP_NAME } = getEnvVariables();
 
 const initialForm: RegisterUserDto = {
-  firstName: 'Carlos',
-  lastName: 'Quirumbay',
-  email: 'cquirumbay@yopmail.com',
-  password: 'SantiagoQP23@',
-  samePassword: 'SantiagoQP23@',
-  username: 'CarlosQP',
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  samePassword: '',
+  username: '',
   numPhone: ''
 };
 
