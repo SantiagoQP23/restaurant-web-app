@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import 'nprogress/nprogress.css';
 
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <App />
         </SocketProvider>
       </Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>
 );

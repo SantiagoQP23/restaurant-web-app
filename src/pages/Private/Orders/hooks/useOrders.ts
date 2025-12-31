@@ -19,13 +19,18 @@ import { usePaginationAsync } from '../../../../hooks/usePaginationAsync';
 import { Period } from '../../Common/dto/period.model';
 import { useFilterOrders } from './useFilterOrders';
 import { useDateFilter } from '../../../../hooks/useDateFilter';
+import { queryKeys } from '@/api/query-keys';
 
+/**
+ * Hook to fetch orders with filtering and pagination
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useOrders = () => {
   const filter = useFilterOrders();
 
-  const ordersQuery = useQuery<OrdersResponse>(
-    ['orders'],
-    () =>
+  const ordersQuery = useQuery<OrdersResponse>({
+    queryKey: queryKeys.orders.lists(),
+    queryFn: () =>
       getOrders({
         offset: filter.page,
         limit: filter.rowsPerPage,
@@ -34,12 +39,8 @@ export const useOrders = () => {
         period: filter.period,
         status: filter.status || undefined,
         userId: filter.user?.id
-      }),
-
-    {
-      onSuccess: () => {}
-    }
-  );
+      })
+  });
 
   useEffect(() => {
     ordersQuery.refetch();
@@ -67,6 +68,10 @@ export const useOrders = () => {
   };
 };
 
+/**
+ * Hook to fetch active orders
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useActiveOrders = () => {
   const pagination = usePaginationAsync();
 
@@ -74,26 +79,25 @@ export const useActiveOrders = () => {
 
   const dispatch = useDispatch();
 
-  const activeOrdersQuery = useQuery<Order[]>(
-    ['orders', 'actives'],
-    () =>
+  const activeOrdersQuery = useQuery<Order[]>({
+    queryKey: queryKeys.orders.actives(),
+    queryFn: () =>
       getActiveOrders({
         offset: pagination.page,
         limit: pagination.rowsPerPage,
         startDate: dateFilter.startDate,
         endDate: dateFilter.endDate,
         period: dateFilter.period
-      }),
-    {
-      onSuccess: (data) => {
-        // console.log(data)
+      })
+  });
 
-        dispatch(loadOrders(data));
-
-        dispatch(setLastUpdatedOrders(new Date().toISOString()));
-      }
+  // Handle Redux integration - dispatch on successful data fetch
+  useEffect(() => {
+    if (activeOrdersQuery.isSuccess && activeOrdersQuery.data) {
+      dispatch(loadOrders(activeOrdersQuery.data));
+      dispatch(setLastUpdatedOrders(new Date().toISOString()));
     }
-  );
+  }, [activeOrdersQuery.data, activeOrdersQuery.isSuccess, dispatch]);
 
   useEffect(() => {
     activeOrdersQuery.refetch();
@@ -105,17 +109,32 @@ export const useActiveOrders = () => {
   };
 };
 
+/**
+ * Hook to fetch a single order by ID
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useOrder = (id: string) => {
   const dispatch = useDispatch();
 
-  return useQuery<Order>(['order', id], () => getOrder(id), {
-    enabled: !!id,
-    onSuccess: (order) => {
-      dispatch(setActiveOrder(order));
-    }
+  const orderQuery = useQuery<Order>({
+    queryKey: queryKeys.orders.detail(id),
+    queryFn: () => getOrder(id),
+    enabled: !!id
   });
+
+  // Handle Redux integration - dispatch on successful data fetch
+  useEffect(() => {
+    if (orderQuery.isSuccess && orderQuery.data) {
+      dispatch(setActiveOrder(orderQuery.data));
+    }
+  }, [orderQuery.data, orderQuery.isSuccess, dispatch]);
+
+  return orderQuery;
 };
 
+/**
+ * Helper functions for working with orders
+ */
 export const useOrderHelper = () => {
   const { orders } = useSelector(selectOrders);
 

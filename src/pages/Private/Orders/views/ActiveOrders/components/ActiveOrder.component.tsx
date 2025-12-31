@@ -46,6 +46,7 @@ import { useOrderHelper } from '../../../hooks/useOrders';
 import { ProductionArea } from '../../../../Common/models/production-area.model';
 import { useProductionAreasStore } from '../../../../Common/store/production-areas-store';
 import { ProductionAreaOrder } from './ProductionAreaOrder.component';
+import { queryKeys } from '@/api/query-keys';
 
 interface Props {
   order: Order;
@@ -60,6 +61,7 @@ interface Props {
  * @author Santiago Quirumbay
  * @version 1.1 16/12/2023 Adds productionArea field.
  * @version 1.2 28/12/2023 Updates useUpdateOrder hook.
+ * @version 1.3 2025-01-01 Migrated to React Query v5
  */
 export const ActiveOrder: FC<Props> = ({
   order,
@@ -82,7 +84,10 @@ export const ActiveOrder: FC<Props> = ({
 
   const queryClient = useQueryClient();
 
-  queryClient.prefetchQuery(['order', order.id], () => order);
+  queryClient.prefetchQuery({
+    queryKey: queryKeys.orders.detail(order.id),
+    queryFn: () => order
+  });
 
   const { mutate: updateOrder } = useUpdateOrder();
 
