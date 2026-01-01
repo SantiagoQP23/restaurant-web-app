@@ -75,7 +75,7 @@ export const ModalCreateSection = NiceModal.create(() => {
                 Cancelar
               </Button>
               <LoadingButton
-                loading={createSectionMutation.isLoading}
+                loading={createSectionMutation.isPending}
                 variant='contained'
                 color='primary'
                 type='submit'

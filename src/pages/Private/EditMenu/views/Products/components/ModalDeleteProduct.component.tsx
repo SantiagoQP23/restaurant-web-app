@@ -21,7 +21,7 @@ export interface Props {
 export const ModalDeleteProduct = NiceModal.create<Props>(({ product }) => {
   const modal = useModal();
 
-  const { mutateAsync, isLoading } = useUpdateProduct();
+  const { mutateAsync, isPending } = useUpdateProduct();
 
   const closeModal = () => {
     modal.hide();
@@ -52,7 +52,7 @@ export const ModalDeleteProduct = NiceModal.create<Props>(({ product }) => {
             Cancelar
           </Button>
           <LoadingButton
-            loading={isLoading}
+            loading={isPending}
             variant='contained'
             color='error'
             onClick={submitDeleteProduct}

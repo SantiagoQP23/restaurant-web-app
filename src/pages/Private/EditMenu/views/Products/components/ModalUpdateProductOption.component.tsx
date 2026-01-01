@@ -34,7 +34,7 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
   ({ productOption, productId }) => {
     const modal = useModal();
 
-    const { mutateAsync, isLoading } = useUpdateProductOption(productId);
+    const { mutateAsync, isPending } = useUpdateProductOption(productId);
 
     const {
       control,
@@ -145,7 +145,7 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
               <LoadingButton
                 variant='contained'
                 color='primary'
-                loading={isLoading}
+                loading={isPending}
                 type='submit'
                 disabled={!isDirty}
               >

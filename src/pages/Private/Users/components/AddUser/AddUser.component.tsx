@@ -41,7 +41,7 @@ export const AddUser = () => {
 
   // const { loading, callEndpoint } = useFetchAndLoad();
 
-  const { isLoading, mutateAsync } = useCreateUser();
+  const { isPending, mutateAsync } = useCreateUser();
 
   const dispatch = useDispatch();
 
@@ -94,7 +94,7 @@ export const AddUser = () => {
           <FormUser
             user={user}
             onSubmit={onSubmit}
-            loading={isLoading}
+            loading={isPending}
             isNew={true}
           />
         </Card>

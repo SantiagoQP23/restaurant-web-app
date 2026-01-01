@@ -37,7 +37,7 @@ export const ComboBoxUser: FC<Props> = ({ user, handleChangeUser }) => {
         }}
         fullWidth
 
-        // loading={clientsQuery.isLoading}
+        // loading={clientsQuery.isPending}
       />
     </>
   );

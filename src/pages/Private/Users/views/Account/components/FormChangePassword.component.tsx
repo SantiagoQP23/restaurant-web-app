@@ -16,7 +16,7 @@ import { useChangePasswordUser } from '../../../hooks/useUsers';
 import { LoadingButton } from '@mui/lab';
 
 export const FormChangePassword = () => {
-  const { isLoading, mutateAsync } = useChangePasswordUser();
+  const { isPending, mutateAsync } = useChangePasswordUser();
 
   const {
     register,
@@ -122,7 +122,7 @@ export const FormChangePassword = () => {
                   variant='contained'
                   color='primary'
                   type='submit'
-                  loading={isLoading}
+                  loading={isPending}
                   disabled={!isSamePassword}
                 >
                   Cambiar contraseña

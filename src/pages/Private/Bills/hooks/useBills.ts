@@ -23,13 +23,18 @@ export const useCreateBill = () => {
 };
 
 export const useBill = (term: number) => {
-  return useQuery(['bill', term], () => getBill(term), {
+  return useQuery({
+    queryKey: ['bill', term],
+    queryFn: () => getBill(term),
     enabled: !!term
   });
 };
 
 export const useBills = () => {
-  return useQuery(['bills'], () => getBills());
+  return useQuery({
+    queryKey: ['bills'],
+    queryFn: () => getBills()
+  });
 };
 
 export const useDeleteBill = () => {

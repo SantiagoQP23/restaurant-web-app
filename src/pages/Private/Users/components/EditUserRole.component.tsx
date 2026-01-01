@@ -159,7 +159,7 @@ export const EditUserRole = NiceModal.create<Props>(({ user }) => {
         <LoadingButton
           onClick={onSubmit}
           variant='contained'
-          loading={updateUserRole.isLoading}
+          loading={updateUserRole.isPending}
         >
           Actualizar
         </LoadingButton>

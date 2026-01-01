@@ -102,7 +102,7 @@ export const EditOrder = () => {
 
   // const orderDelivered = false;
 
-  const { isLoading } = useOrder(orderId!);
+  const { isPending } = useOrder(orderId!);
 
   const handleCloseOrder = () => {
     if (activeOrder) NiceModal.show(ModalCloseOrder, { order: activeOrder });
@@ -178,7 +178,7 @@ export const EditOrder = () => {
     };
   }, []);
 
-  if (isLoading) return <CircularProgress />;
+  if (isPending) return <CircularProgress />;
 
   if (!activeOrder) return <></>;
 
@@ -239,7 +239,7 @@ export const EditOrder = () => {
           </Stack>
         </Stack>
 
-        {isLoading ? (
+        {isPending ? (
           <>
             <CircularProgress />
           </>

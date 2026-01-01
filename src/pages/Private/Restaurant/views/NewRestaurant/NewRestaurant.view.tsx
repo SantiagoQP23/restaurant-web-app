@@ -166,7 +166,7 @@ export const NewRestaurant = () => {
             <LoadingButton
               type='submit'
               variant='contained'
-              loading={createRestaurantMutation.isLoading}
+              loading={createRestaurantMutation.isPending}
             >
               Crear Restaurante
             </LoadingButton>

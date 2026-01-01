@@ -54,7 +54,7 @@ export const ModalEditCategory = NiceModal.create<Props>(({ category }) => {
 
   const modal = useModal();
 
-  const { mutateAsync, isLoading } = useUpdateCategory();
+  const { mutateAsync, isPending } = useUpdateCategory();
 
   const onSubmit = (updateCategoryDto: UpdateCategoryDto) => {
     mutateAsync(updateCategoryDto).then((updatedCategory) => {
@@ -139,7 +139,7 @@ export const ModalEditCategory = NiceModal.create<Props>(({ category }) => {
             <LoadingButton
               variant='contained'
               type='submit'
-              loading={isLoading}
+              loading={isPending}
               startIcon={<SaveIcon />}
             >
               Guardar

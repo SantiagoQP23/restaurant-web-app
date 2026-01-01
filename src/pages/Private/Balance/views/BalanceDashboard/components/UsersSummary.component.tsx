@@ -57,21 +57,22 @@ export const UsersSummary = () => {
     handleChangeStartDate
   } = useDateFilter(Period.DAILY);
 
-  const { data, refetch } = useQuery<ResponseIncomesByUser[]>(
-    ['best-selling-products', { period, startDate, endDate }],
-    () => {
+  const { data, refetch } = useQuery<ResponseIncomesByUser[]>({
+    queryKey: ['best-selling-products', { period, startDate, endDate }],
+    queryFn: () => {
       return getIncomesByUser({
         period,
         startDate,
         endDate: endDateChecked ? endDate : null
       });
-    },
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      }
     }
-  );
+  });
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
 
   const dataChart = {
     labels: data?.map((user) => user.firstName + ' ' + user.lastName),

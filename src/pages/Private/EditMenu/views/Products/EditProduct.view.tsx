@@ -14,11 +14,11 @@ export const EditProduct = () => {
     return <Navigate to='/menu/products' />;
   }
   // This update activeProduct in redux
-  const { isLoading, data: product } = useProduct(params.id);
+  const { isPending, data: product } = useProduct(params.id);
 
   // const product = useSelector(selectMenu).activeProduct;
 
-  if (isLoading) {
+  if (isPending) {
     return <>Loading...</>;
   }
 

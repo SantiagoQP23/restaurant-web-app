@@ -37,7 +37,7 @@ export const AddClient = () => {
 
   const { loading, callEndpoint } = useFetchAndLoad();
 
-  const { mutateAsync, isLoading } = useCreateCliente();
+  const { mutateAsync, isPending } = useCreateCliente();
 
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -86,7 +86,7 @@ export const AddClient = () => {
             <FormClient
               onSubmit={onSubmit}
               client={client}
-              loading={isLoading}
+              loading={isPending}
             />
           </CardContent>
         </Card>

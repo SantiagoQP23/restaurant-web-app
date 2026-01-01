@@ -60,7 +60,7 @@ export const Category: FC<Props> = ({ categoria }) => {
 
   const dispatch = useAppDispatch();
 
-  const { mutateAsync, isLoading } = useUpdateCategory();
+  const { mutateAsync, isPending } = useUpdateCategory();
 
   const [name, setName] = useState(categoria.name);
 
@@ -162,7 +162,7 @@ export const Category: FC<Props> = ({ categoria }) => {
             </Label>
 
             <Stack direction='row' spacing={1} alignItems='center'>
-              {isLoading && <CircularProgress size={18} />}
+              {isPending && <CircularProgress size={18} />}
 
               <IconButton onClick={changeVisibility}>
                 {categoria.isPublic ? <Visibility /> : <VisibilityOff />}

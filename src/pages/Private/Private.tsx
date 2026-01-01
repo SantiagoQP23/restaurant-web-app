@@ -64,10 +64,10 @@ export const Private = () => {
   // const restaurantQuery = useRestaurant();
 
   const isLoading =
-    // activeOrdersQuery.isLoading ||
-    // restaurantQuery.isLoading ||
-    menuQuery.isLoading || areasQuery.isLoading;
-  // tablesQuery.isLoading;
+    // activeOrdersQuery.isPending ||
+    // restaurantQuery.isPending ||
+    menuQuery.isPending || areasQuery.isPending;
+  // tablesQuery.isPending;
 
   // listener new order
   useOnOrderCreated();

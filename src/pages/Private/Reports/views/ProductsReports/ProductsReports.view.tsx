@@ -77,12 +77,12 @@ export const ProductsReports = () => {
     handleChangeRowsPerPage
   } = usePaginationAsync();
 
-  const { data, refetch } = useQuery<ResultBestSellingProducts>(
-    [
+  const { data, refetch } = useQuery<ResultBestSellingProducts>({
+    queryKey: [
       'best-selling-products',
       { period, startDate, endDate, offset: page, limit: rowsPerPage }
     ],
-    () => {
+    queryFn: () => {
       return getBestSellingProducts({
         period,
         startDate,
@@ -92,20 +92,21 @@ export const ProductsReports = () => {
         groupBy,
         customGroupBy
       });
-    },
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      }
     }
-  );
+  });
 
-  const categoriesQuery = useQuery<BestSellingCategoriesResponse>(
-    [
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
+
+  const categoriesQuery = useQuery<BestSellingCategoriesResponse>({
+    queryKey: [
       'best-selling-categories',
       { period, startDate, endDate, offset: page, limit: rowsPerPage }
     ],
-    () => {
+    queryFn: () => {
       return getBestSellingCategories({
         period,
         startDate,
@@ -115,13 +116,14 @@ export const ProductsReports = () => {
         groupBy,
         customGroupBy
       });
-    },
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      }
     }
-  );
+  });
+
+  useEffect(() => {
+    if (categoriesQuery.data) {
+      console.log(categoriesQuery.data);
+    }
+  }, [categoriesQuery.data]);
 
   const handlePrint = async () => {
     if (data && categoriesQuery.data) {

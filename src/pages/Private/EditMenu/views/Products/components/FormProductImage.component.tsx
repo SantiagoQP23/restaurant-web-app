@@ -70,7 +70,7 @@ export const FormProductImage: FC<Props> = ({ product }) => {
 
   const dispatch = useAppDispatch();
 
-  const { mutateAsync, isLoading } = useUpdateImageProduct();
+  const { mutateAsync, isPending } = useUpdateImageProduct();
 
   const convert2base64 = (file: File) => {
     const reader = new FileReader();
@@ -158,7 +158,7 @@ export const FormProductImage: FC<Props> = ({ product }) => {
         </AvatarWrapper>
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <LoadingButton loading={isLoading} type='submit' variant='outlined'>
+          <LoadingButton loading={isPending} type='submit' variant='outlined'>
             Actualizar
           </LoadingButton>
         </Box>

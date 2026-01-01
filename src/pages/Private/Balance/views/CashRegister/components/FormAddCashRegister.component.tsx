@@ -12,7 +12,7 @@ interface Props {
 export const FormAddCashRegister: FC<Props> = ({ onSuccess }) => {
   const [initialAmount, setInitialAmount] = useState<number>(0);
 
-  const { mutateAsync, isLoading } = useCreateCashRegister();
+  const { mutateAsync, isPending } = useCreateCashRegister();
 
   const handleChangeInitialAmount = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -62,7 +62,7 @@ export const FormAddCashRegister: FC<Props> = ({ onSuccess }) => {
           <LoadingButton
             variant='contained'
             fullWidth
-            loading={isLoading}
+            loading={isPending}
             onClick={onSubmitCreate}
           >
             Añadir

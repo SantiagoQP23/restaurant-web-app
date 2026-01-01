@@ -64,7 +64,7 @@ export const PaymentBill = () => {
 
   if (!id) return <Navigate to='/bills' replace />;
 
-  const { isLoading, data: bill } = useBill(+id);
+  const { isPending, data: bill } = useBill(+id);
 
   const navigate = useNavigate();
   // const { cashRegisters } = useCashRegisterStore((state) => state);
@@ -196,7 +196,7 @@ export const PaymentBill = () => {
     if (bill && bill.isPaid) navigateToBill();
   }, [bill]);
 
-  if (isLoading) return <>Loading...</>;
+  if (isPending) return <>Loading...</>;
 
   if (!bill) return <>Not Found</>;
 

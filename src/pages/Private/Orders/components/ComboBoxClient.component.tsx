@@ -40,7 +40,7 @@ export const ComboBoxClient: FC<Props> = ({ client, handleChangeClient }) => {
         }}
         fullWidth
 
-        // loading={clientsQuery.isLoading}
+        // loading={clientsQuery.isPending}
       />
     </>
   );

@@ -73,7 +73,7 @@ export const DrawerIncome: FC<Props> = ({ open, onClose, income }) => {
 
   const theme = useTheme();
 
-  const { mutateAsync, isLoading } = useUpdateIncome();
+  const { mutateAsync, isPending } = useUpdateIncome();
 
   const handleChangeClient = (client: IClient | null) => {
     setClient(client);
@@ -262,7 +262,7 @@ export const DrawerIncome: FC<Props> = ({ open, onClose, income }) => {
                         variant='contained'
                         color='primary'
                         type='submit'
-                        loading={isLoading}
+                        loading={isPending}
                       >
                         Guardar
                       </LoadingButton>
@@ -304,7 +304,7 @@ export const DrawerIncome: FC<Props> = ({ open, onClose, income }) => {
                       variant='contained'
                       color='error'
                       type='submit'
-                      loading={deleteMutation.isLoading}
+                      loading={deleteMutation.isPending}
                       onClick={handleDelete}
                     >
                       Eliminar

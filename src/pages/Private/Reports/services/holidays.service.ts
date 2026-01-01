@@ -2,24 +2,27 @@ import { loadAbort } from '../../../../helpers/load-abort-axios.helper';
 import restauranteApi from '../../../../api/restauranteApi';
 import { Holiday } from '../models/holiday.model';
 import { SubjectHoliday } from '../helpers/subjects-simulation.helper';
-import { CreateHolidayDto } from '../views/FootfallSimulation/dto/create-holiday.dto';
-import { UpdateHolidayDto } from '../views/FootfallSimulation/dto/update-holiday.dto';
-import { UpdateTypeHolidayDto } from '../views/FootfallSimulation/dto/update-type-holiday.dto';
+// import { CreateHolidayDto } from '../views/FootfallSimulation/dto/create-holiday.dto';
+// import { UpdateHolidayDto } from '../views/FootfallSimulation/dto/update-holiday.dto';
+// import { UpdateTypeHolidayDto } from '../views/FootfallSimulation/dto/update-type-holiday.dto';
 import { TypeHoliday } from '../models/type-holiday.model';
+
+// Temporary type until FootfallSimulation DTOs are created
+type CreateHolidayDto = any;
 
 export const statusModalHoliday = new SubjectHoliday();
 export const statusModalDeleteHoliday = new SubjectHoliday();
 
-export const updateTypeHoliday = async (
-  holiday: UpdateTypeHolidayDto
-): Promise<TypeHoliday> => {
-  const { data } = await restauranteApi.patch<TypeHoliday>(
-    `type-holiday/${holiday.id}`,
-    holiday
-  );
-
-  return data;
-};
+// export const updateTypeHoliday = async (
+//   holiday: UpdateTypeHolidayDto
+// ): Promise<TypeHoliday> => {
+//   const { data } = await restauranteApi.patch<TypeHoliday>(
+//     `type-holiday/${holiday.id}`,
+//     holiday
+//   );
+//
+//   return data;
+// };
 
 export const getTypesHolidays = async (): Promise<TypeHoliday[]> => {
   const { data } = await restauranteApi.get<TypeHoliday[]>(`type-holiday`);
@@ -104,17 +107,17 @@ export const createHoliday = async (
 
 // }
 
-export const updateHoliday = async (
-  holidayId: string,
-  holiday: UpdateHolidayDto
-): Promise<Holiday> => {
-  const { data } = await restauranteApi.patch<Holiday>(
-    `holiday/${holidayId}`,
-    holiday
-  );
-
-  return data;
-};
+// export const updateHoliday = async (
+//   holidayId: string,
+//   holiday: UpdateHolidayDto
+// ): Promise<Holiday> => {
+//   const { data } = await restauranteApi.patch<Holiday>(
+//     `holiday/${holidayId}`,
+//     holiday
+//   );
+//
+//   return data;
+// };
 
 // export const updateHoliday = (holidayId: string, holiday: UpdateHolidayDto) => {
 

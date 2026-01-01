@@ -26,7 +26,7 @@ export const DrawerExpense: FC<Props> = ({ open, onClose, expense }) => {
   //   expense.transaction.responsible || null
   // );
 
-  // const { mutateAsync, isLoading } = useUpdateExpense();
+  // const { mutateAsync, isPending } = useUpdateExpense();
 
   // const deleteMutation = useDeleteExpense(expense.id);
 
@@ -234,7 +234,7 @@ export const DrawerExpense: FC<Props> = ({ open, onClose, expense }) => {
                         variant="contained"
                         color="primary"
                         type="submit"
-                        loading={isLoading}
+                        loading={isPending}
                       >
                         Guardar
                       </LoadingButton>
@@ -276,7 +276,7 @@ export const DrawerExpense: FC<Props> = ({ open, onClose, expense }) => {
                       variant="contained"
                       color="error"
                       type="submit"
-                      loading={deleteMutation.isLoading}
+                      loading={deleteMutation.isPending}
                       onClick={handleDelete}
                     >
                       Eliminar

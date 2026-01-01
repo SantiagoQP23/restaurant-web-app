@@ -28,14 +28,10 @@ export const DeleteBillModal = NiceModal.create<Props>(({ bill }) => {
   const modal = useModal();
   const closeModal = () => modal.hide();
   const submitDeleteBill = () => {
-    deleteBill(
-      { id: bill.id },
-      {
-        onSuccess: ({ data: order }) => {
-          if (order) dispatch(setActiveOrder(order));
-        }
-      }
-    );
+    deleteBill({
+      id: bill.id
+    });
+    dispatch(setActiveOrder(null));
     closeModal();
   };
 

@@ -111,7 +111,7 @@ export const FormNewClientBasic: FC<Props> = ({ callback }) => {
         <LoadingButton
           variant='contained'
           type='submit'
-          loading={clientAddMutation.isLoading}
+          loading={clientAddMutation.isPending}
         >
           Crear
         </LoadingButton>

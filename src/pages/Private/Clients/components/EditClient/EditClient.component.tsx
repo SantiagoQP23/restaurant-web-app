@@ -180,7 +180,7 @@ export const EditClient = () => {
                   <FormClient
                     onSubmit={onSubmit}
                     client={client}
-                    loading={updateClientMutation.isLoading}
+                    loading={updateClientMutation.isPending}
                     msg={'Editar'}
                   />
                 </CardContent>

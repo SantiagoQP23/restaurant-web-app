@@ -199,7 +199,7 @@ export const ClientsTable: FC<Props> = ({ clientFound }) => {
           aria-label='search'
           // onClick={updateList}
         >
-          {clientsQuery.isLoading ? (
+          {clientsQuery.isPending ? (
             <CircularProgress size={20} />
           ) : (
             <SearchIcon />

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   createSupplier,
@@ -11,11 +12,16 @@ import { UpdateSupplierDto } from '../models/dto/udpate-supplier.dto';
 import { queryClient } from '../../../../api/query-client';
 
 export const useSuppliers = () => {
-  const suppliersQuery = useQuery(['suppliers'], getSuppliers, {
-    onSuccess: (data) => {
-      console.log(data);
-    }
+  const suppliersQuery = useQuery({
+    queryKey: ['suppliers'],
+    queryFn: getSuppliers
   });
+
+  useEffect(() => {
+    if (suppliersQuery.isSuccess && suppliersQuery.data) {
+      console.log(suppliersQuery.data);
+    }
+  }, [suppliersQuery.data, suppliersQuery.isSuccess]);
 
   return {
     suppliersQuery
@@ -25,10 +31,11 @@ export const useSuppliers = () => {
 export const useCreateSupplier = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useMutation<Supplier, unknown, CreateSupplierDto>(createSupplier, {
+  return useMutation<Supplier, unknown, CreateSupplierDto>({
+    mutationFn: (data: CreateSupplierDto) => createSupplier(data),
     onSuccess: () => {
       enqueueSnackbar('Proveedor creado correctamente', { variant: 'success' });
-      queryClient.invalidateQueries(['suppliers']);
+      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
     },
     onError: () => {
       console.log('onError');
@@ -40,12 +47,13 @@ export const useCreateSupplier = () => {
 export const useUpdateSupplier = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  return useMutation<Supplier, unknown, UpdateSupplierDto>(updateSupplier, {
+  return useMutation<Supplier, unknown, UpdateSupplierDto>({
+    mutationFn: (data: UpdateSupplierDto) => updateSupplier(data),
     onSuccess: () => {
       enqueueSnackbar('Proveedor actualizado correctamente', {
         variant: 'success'
       });
-      queryClient.invalidateQueries(['suppliers']);
+      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
     },
     onError: () => {
       console.log('onError');

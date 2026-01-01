@@ -25,7 +25,7 @@ export const AddSupplier = () => {
     reset
   } = useForm<CreateSupplierDto>();
 
-  const { isLoading, mutateAsync } = useCreateSupplier();
+  const { isPending, mutateAsync } = useCreateSupplier();
 
   const typeIdentification = useWatch({ control, name: 'typeIdentification' });
 
@@ -221,7 +221,7 @@ export const AddSupplier = () => {
                 <LoadingButton
                   variant='contained'
                   type='submit'
-                  loading={isLoading}
+                  loading={isPending}
                 >
                   Guardar
                 </LoadingButton>

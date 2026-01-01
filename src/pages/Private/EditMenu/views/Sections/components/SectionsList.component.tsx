@@ -186,7 +186,7 @@ export const SectionsList = () => {
                 variant='contained'
                 startIcon={<Save />}
                 onClick={saveOrderedSections}
-                loading={updateManySectionsMutation.isLoading}
+                loading={updateManySectionsMutation.isPending}
               >
                 Guardar
               </LoadingButton>

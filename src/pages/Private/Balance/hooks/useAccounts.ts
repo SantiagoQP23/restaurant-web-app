@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createAccount,
   getAccount,
@@ -10,9 +10,14 @@ import { UpdateAccountDto } from '../dto/update-account.dto';
 import { CreateAccountDto } from '../dto/create-account.dto';
 import { Account } from '../../Common/models/account.model';
 
+/**
+ * Hook to fetch all accounts
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useAccounts = () => {
-  const accountsQuery = useQuery(['accounts'], () => getAccounts(), {
-    onSuccess: () => {}
+  const accountsQuery = useQuery({
+    queryKey: ['accounts'],
+    queryFn: () => getAccounts()
   });
 
   return {
@@ -20,9 +25,14 @@ export const useAccounts = () => {
   };
 };
 
+/**
+ * Hook to fetch a single account by ID
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useAccount = (id: number) => {
-  const accountQuery = useQuery(['account', id], () => getAccount(id), {
-    onSuccess: () => {}
+  const accountQuery = useQuery({
+    queryKey: ['account', id],
+    queryFn: () => getAccount(id)
   });
 
   return {
@@ -30,13 +40,21 @@ export const useAccount = (id: number) => {
   };
 };
 
+/**
+ * Hook to create a new account
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useCreateAccount = () => {
   const { enqueueSnackbar } = useSnackbar();
-  return useMutation<Account, unknown, CreateAccountDto>(createAccount, {
+  const queryClient = useQueryClient();
+
+  return useMutation<Account, unknown, CreateAccountDto>({
+    mutationFn: (data: CreateAccountDto) => createAccount(data),
     onSuccess: () => {
       enqueueSnackbar('Cuenta creada', {
         variant: 'success'
       });
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
     },
     onError: () => {
       enqueueSnackbar('Error al crear la cuenta', {
@@ -46,21 +64,28 @@ export const useCreateAccount = () => {
   });
 };
 
+/**
+ * Hook to update an account
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useUpdateAccount = (accountId: number) => {
   const { enqueueSnackbar } = useSnackbar();
-  return useMutation<Account, unknown, UpdateAccountDto>(
-    (account) => updateAccount(accountId, account),
-    {
-      onSuccess: () => {
-        enqueueSnackbar('Cuenta actualizada', {
-          variant: 'success'
-        });
-      },
-      onError: () => {
-        enqueueSnackbar('Error al actualizar la cuenta', {
-          variant: 'error'
-        });
-      }
+  const queryClient = useQueryClient();
+
+  return useMutation<Account, unknown, UpdateAccountDto>({
+    mutationFn: (account: UpdateAccountDto) =>
+      updateAccount(accountId, account),
+    onSuccess: () => {
+      enqueueSnackbar('Cuenta actualizada', {
+        variant: 'success'
+      });
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({ queryKey: ['account', accountId] });
+    },
+    onError: () => {
+      enqueueSnackbar('Error al actualizar la cuenta', {
+        variant: 'error'
+      });
     }
-  );
+  });
 };

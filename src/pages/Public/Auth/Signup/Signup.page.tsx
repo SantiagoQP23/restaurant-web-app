@@ -40,7 +40,7 @@ export const Signup = () => {
     defaultValues: initialForm
   });
 
-  const { mutateAsync, isLoading } = useSignup();
+  const { mutateAsync, isPending } = useSignup();
 
   const handleRegister = (form: RegisterUserDto) => {
     console.log('Registering user:', form);
@@ -198,7 +198,7 @@ export const Signup = () => {
             fullWidth
             variant='contained'
             sx={{ mt: 3, mb: 2 }}
-            loading={isLoading}
+            loading={isPending}
           >
             Create account
           </LoadingButton>

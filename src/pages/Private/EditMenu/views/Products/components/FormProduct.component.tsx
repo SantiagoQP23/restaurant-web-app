@@ -79,7 +79,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, mutateAsync } = useUpdateProduct();
+  const { isPending, mutateAsync } = useUpdateProduct();
 
   const getUpdateProductDto = (product: IProduct) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -592,7 +592,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
             variant='contained'
             type='submit'
             disabled={!isValid}
-            loading={isLoading}
+            loading={isPending}
             startIcon={<Save />}
           >
             Editar

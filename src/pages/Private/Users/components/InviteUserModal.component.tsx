@@ -128,7 +128,7 @@ export const InviteUserModal = NiceModal.create(() => {
               aria-label='search'
               onClick={updateList}
             >
-              {usersQuery.isLoading ? (
+              {usersQuery.isPending ? (
                 <CircularProgress size={20} />
               ) : (
                 <SearchIcon />
@@ -203,7 +203,7 @@ export const InviteUserModal = NiceModal.create(() => {
         <LoadingButton
           onClick={onSubmit}
           variant='contained'
-          loading={useInviteUser.isLoading}
+          loading={useInviteUser.isPending}
         >
           Invitar usuario
         </LoadingButton>

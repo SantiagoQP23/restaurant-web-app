@@ -19,18 +19,19 @@ import { Invoice } from '../models/Invoice.model';
 export const useInvoice = (term: string) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const invoiceQuery = useQuery<Invoice>(
-    ['invoice', term],
-    () => getInvoice(term),
-    {
-      retry: false,
-      onError: (error) => {
-        enqueueSnackbar('Error al obtener el pago', {
-          variant: 'error'
-        });
-      }
+  const invoiceQuery = useQuery<Invoice>({
+    queryKey: ['invoice', term],
+    queryFn: () => getInvoice(term),
+    retry: false
+  });
+
+  useEffect(() => {
+    if (invoiceQuery.isError) {
+      enqueueSnackbar('Error al obtener el pago', {
+        variant: 'error'
+      });
     }
-  );
+  }, [invoiceQuery.isError, enqueueSnackbar]);
 
   return { invoiceQuery };
 };
@@ -38,9 +39,9 @@ export const useInvoice = (term: string) => {
 export const useInvoices = () => {
   const filter = useFilterInvoices();
 
-  const invoicesQuery = useQuery<InvoicesResponse>(
-    ['invoices', filter],
-    () =>
+  const invoicesQuery = useQuery<InvoicesResponse>({
+    queryKey: ['invoices', filter],
+    queryFn: () =>
       getInvoices({
         offset: filter.page,
         limit: filter.rowsPerPage,
@@ -51,9 +52,8 @@ export const useInvoices = () => {
         transactionNumber: filter.transactionNumber || undefined,
         notaDeVenta: filter.notaDeVenta || undefined
         // cashRegisterId: filter.cashRegister ? filter.cashRegister.id : undefined,
-      }),
-    {}
-  );
+      })
+  });
 
   useEffect(() => {
     invoicesQuery.refetch();
@@ -81,9 +81,10 @@ export const useCreateInvoice = () => {
 
   const dispatch = useDispatch();
 
-  return useMutation<Order, unknown, CreateInvoiceDto>(createInvoice, {
+  return useMutation<Order, unknown, CreateInvoiceDto>({
+    mutationFn: (data: CreateInvoiceDto) => createInvoice(data),
     onSuccess: (data) => {
-      enqueueSnackbar('Pago credo correctamente', {
+      enqueueSnackbar('Pago creado correctamente', {
         variant: 'success'
       });
 
@@ -111,7 +112,8 @@ export const useRemoveInvoice = () => {
 
   const dispatch = useDispatch();
 
-  return useMutation<Order, unknown, string>((id) => removeInvoice(id), {
+  return useMutation<Order, unknown, string>({
+    mutationFn: (id: string) => removeInvoice(id),
     onSuccess: (data) => {
       enqueueSnackbar('Pago eliminado', { variant: 'success' });
 

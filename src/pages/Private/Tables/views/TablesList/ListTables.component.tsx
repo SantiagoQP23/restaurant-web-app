@@ -99,7 +99,7 @@ export const ListTables = () => {
                   startIcon={<Save />}
                   disabled={tablesListAreEqual}
                   onClick={saveOrderedTables}
-                  loading={updateManyTablesMutation.isLoading}
+                  loading={updateManyTablesMutation.isPending}
                 >
                   Guardar
                 </LoadingButton>

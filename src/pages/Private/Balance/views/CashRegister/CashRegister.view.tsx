@@ -76,7 +76,7 @@ export const CashRegister = () => {
     }
   };
 
-  // if (isLoading) return <div>Loading...</div>
+  // if (isPending) return <div>Loading...</div>
 
   if (!data) return <div>Not found</div>;
 

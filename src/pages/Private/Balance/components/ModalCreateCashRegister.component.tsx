@@ -45,7 +45,7 @@ export const ModalCreateCashRegister = () => {
             <LoadingButton
               variant='contained'
               fullWidth
-              // loading={isLoading}
+              // loading={isPending}
               // onClick={onSubmitCreate}
             >
               Añadir

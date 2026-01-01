@@ -16,12 +16,16 @@ import {
 import { Line } from 'react-chartjs-2';
 
 import { NavLink as RouterLink } from 'react-router-dom';
-import { useForecastFootfall } from '../../../hooks/useFootfall';
+// TODO: Missing hook - needs to be created
+// import { useForecastFootfall } from '../../../hooks/useFootfall';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 export const PredictionAffluenceSummary = () => {
-  const { isLoading, data } = useForecastFootfall();
+  // TODO: Uncomment when useFootfall hook is created
+  // const { isPending, data } = useForecastFootfall();
+  const isPending = false;
+  const data: any[] = [];
 
   const dataChart = {
     labels: data

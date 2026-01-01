@@ -18,11 +18,11 @@ import { formatMoney } from '../../../Common/helpers/format-money.helper';
 import { LoadingButton } from '@mui/lab';
 
 export const BillsList = () => {
-  const { data: bills, isLoading, refetch, isFetching } = useBills();
+  const { data: bills, isPending, refetch, isFetching } = useBills();
 
   const { usersWithOrders: users } = useBillsToPay(bills || []);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isPending) return <p>Loading...</p>;
 
   return (
     <Container maxWidth='lg'>

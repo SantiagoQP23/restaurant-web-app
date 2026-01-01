@@ -73,7 +73,7 @@ export const FormRestaurantLogo: FC<Props> = ({ restaurant }) => {
 
   const { setRestaurant } = useRestaurantStore((state) => state);
 
-  const { mutateAsync, isLoading } = useUpdateRestaurantLogo();
+  const { mutateAsync, isPending } = useUpdateRestaurantLogo();
 
   const convert2base64 = (file: File) => {
     const reader = new FileReader();
@@ -161,7 +161,7 @@ export const FormRestaurantLogo: FC<Props> = ({ restaurant }) => {
           </AvatarWrapper>
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <LoadingButton loading={isLoading} type='submit' variant='outlined'>
+            <LoadingButton loading={isPending} type='submit' variant='outlined'>
               Actualizar
             </LoadingButton>
           </Box>

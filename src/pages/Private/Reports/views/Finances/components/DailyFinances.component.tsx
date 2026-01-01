@@ -38,28 +38,29 @@ import html2canvas from 'html2canvas';
 import { generateFinancialsReportPdf } from '../../../helpers/pdf-financials-report';
 
 export const DailyFinances = () => {
-  const chartRef = useRef<ChartJS<"bar">>(null);
+  const chartRef = useRef<ChartJS<'bar'>>(null);
 
   const filters = useDateFilter(Period.CUSTOM);
 
   const { startDate, handleChangeStartDate } = filters;
 
-  const { data, isLoading, refetch } = useQuery<FinanceResponse[]>(
-    ['financials'],
-    () => {
+  const { data, isPending, refetch } = useQuery<FinanceResponse[]>({
+    queryKey: ['financials'],
+    queryFn: () => {
       return getFinances({
         period: Period.MONTHLY,
         startDate,
         // endDate: new Date(),
         groupBy: GroupBy.DAY
       });
-    },
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      }
     }
-  );
+  });
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
 
   const dataChart = {
     labels: data && data?.map((finance) => finance.date),

@@ -81,7 +81,7 @@ export const ModalSelectUser: FC<Props> = ({
             aria-label='search'
             // onClick={updateList}
           >
-            {usersQuery.isLoading ? (
+            {usersQuery.isPending ? (
               <CircularProgress size={20} />
             ) : (
               <SearchIcon />

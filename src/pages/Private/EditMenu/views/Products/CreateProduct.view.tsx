@@ -54,7 +54,7 @@ export const CreateProduct = () => {
   const { sections, activeCategory } = useSelector(selectMenu);
   const { productionAreas } = useProductionAreasStore();
 
-  const { mutateAsync, isLoading } = useCreateProduct();
+  const { mutateAsync, isPending } = useCreateProduct();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -384,7 +384,7 @@ export const CreateProduct = () => {
               variant='contained'
               type='submit'
               // disabled={isDirty && !isValid}
-              loading={isLoading}
+              loading={isPending}
             >
               Crear
             </LoadingButton>

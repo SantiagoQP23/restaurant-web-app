@@ -49,7 +49,7 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
 
     const { activeCashRegister } = useCashRegisterStore((state) => state);
     const { data: categories } = useTransactionCategories();
-    const { isLoading, mutateAsync } =
+    const { isPending, mutateAsync } =
       useUpdateCashTransaction(cashTransaction);
 
     const [responsibleUser, setResponsibleUser] = useState<IUser | null>(
@@ -240,7 +240,7 @@ export const EditCashTransactionModal = NiceModal.create<Props>(
                     variant='contained'
                     color='primary'
                     type='submit'
-                    loading={isLoading}
+                    loading={isPending}
                     fullWidth
                     startIcon={<Save />}
                     disabled={!isDirty || !isFormValid}

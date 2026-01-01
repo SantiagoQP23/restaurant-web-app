@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const FormCashIncome: FC<Props> = ({ handleClose }) => {
-  // const { mutateAsync, isLoading } = useCreateCashIncome();
+  // const { mutateAsync, isPending } = useCreateCashIncome();
 
   const [amount, setAmount] = useState<number>(0);
 

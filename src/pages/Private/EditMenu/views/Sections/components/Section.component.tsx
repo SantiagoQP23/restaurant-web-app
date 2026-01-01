@@ -144,7 +144,7 @@ export const Section: FC<Props> = ({ seccion, handleOpenMenu, draggable }) => {
                 {seccion.isActive ? 'Activo' : 'Eliminado'}
               </Label>
               <Stack direction='row' spacing={2} alignItems='center'>
-                {updateSectionMutation.isLoading && (
+                {updateSectionMutation.isPending && (
                   <CircularProgress size={18} />
                 )}
                 {draggable ? (

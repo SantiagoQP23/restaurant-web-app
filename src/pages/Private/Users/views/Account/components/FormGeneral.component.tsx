@@ -22,7 +22,7 @@ import { useUpdateUser } from '../../../hooks/useUsers';
 export const FormGeneral = () => {
   const { user } = useSelector(selectAuth);
 
-  const { mutateAsync, isLoading } = useUpdateUser().updateUserMutation;
+  const { mutateAsync, isPending } = useUpdateUser().updateUserMutation;
 
   const dispatch = useDispatch();
 
@@ -231,7 +231,7 @@ export const FormGeneral = () => {
                   <LoadingButton
                     variant='contained'
                     type='submit'
-                    loading={isLoading}
+                    loading={isPending}
                   >
                     Actualizar
                   </LoadingButton>

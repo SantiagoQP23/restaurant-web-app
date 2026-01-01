@@ -77,7 +77,7 @@ export const AddTransactionModal = NiceModal.create<Props>(({ type }) => {
     }
   });
 
-  const { isLoading, mutateAsync } = useCreateTransaction();
+  const { isPending, mutateAsync } = useCreateTransaction();
 
   const closeDrawer = () => modal.hide();
   const availableCategories = data?.filter(
@@ -297,7 +297,7 @@ export const AddTransactionModal = NiceModal.create<Props>(({ type }) => {
                   variant='contained'
                   color='primary'
                   type='submit'
-                  loading={isLoading}
+                  loading={isPending}
                   fullWidth
                   startIcon={<Add />}
                   disabled={!isDirty || !isFormValid}

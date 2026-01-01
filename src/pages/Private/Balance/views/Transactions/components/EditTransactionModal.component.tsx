@@ -70,7 +70,7 @@ export const EditTransactionModal = NiceModal.create<Props>(
       }
     });
 
-    const { isLoading, mutateAsync } = useUpdateTransaction(transaction.id);
+    const { isPending, mutateAsync } = useUpdateTransaction(transaction.id);
 
     const closeDrawer = () => modal.hide();
 
@@ -267,7 +267,7 @@ export const EditTransactionModal = NiceModal.create<Props>(
                     variant='contained'
                     color='primary'
                     type='submit'
-                    loading={isLoading}
+                    loading={isPending}
                     fullWidth
                     startIcon={<Add />}
                     disabled={!isDirty || !isFormValid}

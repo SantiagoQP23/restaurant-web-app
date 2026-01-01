@@ -54,7 +54,7 @@ export const AddClientModal = NiceModal.create<AddClientModalProps>(
 
     const { loading, callEndpoint } = useFetchAndLoad();
 
-    const { mutateAsync, isLoading } = useCreateCliente();
+    const { mutateAsync, isPending } = useCreateCliente();
 
     const dispatch = useDispatch();
     const { enqueueSnackbar } = useSnackbar();
@@ -123,7 +123,7 @@ export const AddClientModal = NiceModal.create<AddClientModalProps>(
             <FormClient
               onSubmit={onSubmit}
               client={client}
-              loading={isLoading}
+              loading={isPending}
             />
           </DialogContent>
         </Dialog>

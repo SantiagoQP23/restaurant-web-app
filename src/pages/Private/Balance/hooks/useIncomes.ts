@@ -17,17 +17,21 @@ import { useFilterIncomes } from './useFilterIncomes';
 export const useIncomes = () => {
   const filter = useFilterIncomes();
 
-  const incomesQuery = useQuery(['incomes'], () =>
-    getIncomes({
-      offset: filter.page,
-      limit: filter.rowsPerPage,
-      startDate: filter.startDate,
-      endDate: filter.endDate,
-      period: filter.period,
-      cashRegisterId: filter.cashRegister ? filter.cashRegister.id : undefined,
-      userId: filter.user ? filter.user.id : undefined
-    })
-  );
+  const incomesQuery = useQuery({
+    queryKey: ['incomes'],
+    queryFn: () =>
+      getIncomes({
+        offset: filter.page,
+        limit: filter.rowsPerPage,
+        startDate: filter.startDate,
+        endDate: filter.endDate,
+        period: filter.period,
+        cashRegisterId: filter.cashRegister
+          ? filter.cashRegister.id
+          : undefined,
+        userId: filter.user ? filter.user.id : undefined
+      })
+  });
 
   useEffect(() => {
     incomesQuery.refetch();
@@ -55,12 +59,13 @@ export const useCreateIncome = () => {
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
 
-  return useMutation<Income, unknown, CreateIncomeDto>(createIncome, {
+  return useMutation<Income, unknown, CreateIncomeDto>({
+    mutationFn: (data: CreateIncomeDto) => createIncome(data),
     onSuccess: () => {
       enqueueSnackbar('Ingreso creado correctamente', { variant: 'success' });
       queryClient.invalidateQueries({ queryKey: ['cashRegisterActive'] });
 
-      queryClient.invalidateQueries(['incomes']);
+      queryClient.invalidateQueries({ queryKey: ['incomes'] });
     },
     onError: () => {
       enqueueSnackbar('Error al crear el ingreso', { variant: 'error' });
@@ -72,14 +77,15 @@ export const useUpdateIncome = () => {
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
 
-  return useMutation<Income, unknown, UpdateIncomeDto>(updateIncome, {
+  return useMutation<Income, unknown, UpdateIncomeDto>({
+    mutationFn: (data: UpdateIncomeDto) => updateIncome(data),
     onSuccess: () => {
       enqueueSnackbar('Ingreso actualizado correctamente', {
         variant: 'success'
       });
       queryClient.invalidateQueries({ queryKey: ['cashRegisterActive'] });
 
-      queryClient.invalidateQueries(['incomes']);
+      queryClient.invalidateQueries({ queryKey: ['incomes'] });
 
       // queryClient.invalidateQueries(['cashRegisterActive']);
     },
@@ -94,11 +100,12 @@ export const useDeleteIncome = (id: string) => {
 
   const queryClient = useQueryClient();
 
-  return useMutation(() => deleteIncome(id), {
+  return useMutation({
+    mutationFn: () => deleteIncome(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cashRegisterActive'] });
 
-      queryClient.invalidateQueries(['incomes']);
+      queryClient.invalidateQueries({ queryKey: ['incomes'] });
       enqueueSnackbar('Ingreso eliminado correctamente', {
         variant: 'success'
       });

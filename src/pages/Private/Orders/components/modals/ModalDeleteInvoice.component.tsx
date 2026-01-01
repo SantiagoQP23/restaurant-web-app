@@ -24,7 +24,7 @@ export const ModalDeleteInvoice = () => {
   const { activeInvoice, handleCloseModal, openModal, handleCloseDrawer } =
     useDrawerInvoiceStore();
 
-  // const { mutateAsync, isLoading } = useRemoveInvoice();
+  // const { mutateAsync, isPending } = useRemoveInvoice();
 
   const { activeOrder } = useSelector(selectOrders);
 

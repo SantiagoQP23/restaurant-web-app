@@ -3,13 +3,19 @@ import { RuleDay } from '../models/rule-day.model';
 import { RuleWeather } from '../models/rule-weather.model';
 import { restauranteApi } from '../../../../api';
 import { loadAbort } from '../../../../helpers';
-import { UpdateRestaurantDto } from '../views/FootfallSimulation/dto/update-restaurant.dto';
-import { UpdateRuleDayDto } from '../views/FootfallSimulation/dto/update-rule-day.dto';
-import { UpdateRuleWeatherDto } from '../views/FootfallSimulation/dto/update-rule-weather';
-import { UpdateRuleWeekDto } from '../views/FootfallSimulation/dto/update-rule-week.dto';
+// import { UpdateRestaurantDto } from '../views/FootfallSimulation/dto/update-restaurant.dto';
+// import { UpdateRuleDayDto } from '../views/FootfallSimulation/dto/update-rule-day.dto';
+// import { UpdateRuleWeatherDto } from '../views/FootfallSimulation/dto/update-rule-weather';
+// import { UpdateRuleWeekDto } from '../views/FootfallSimulation/dto/update-rule-week.dto';
 import { Restaurant } from '../../Common/models/restaurant.model';
 import { LoginResponse } from '@/models/dto/auth.dto';
 // import { Restaurant } from '../models/restaurant.model';
+
+// Temporary types until FootfallSimulation DTOs are created
+type UpdateRestaurantDto = any;
+type UpdateRuleDayDto = any;
+type UpdateRuleWeatherDto = any;
+type UpdateRuleWeekDto = any;
 
 export const getRulesWeek = () => {
   const controller = loadAbort();

@@ -27,9 +27,9 @@ const StyledProductImg = styled('img')({
 export const Product = () => {
   const { id = '' } = useParams();
 
-  const { data: product, isLoading } = useProduct(id);
+  const { data: product, isPending } = useProduct(id);
 
-  if (isLoading) return <div>Cargando...</div>;
+  if (isPending) return <div>Cargando...</div>;
 
   if (!product) return <div>Producto no encontrado</div>;
 

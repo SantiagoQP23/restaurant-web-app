@@ -30,7 +30,7 @@ export const Invoice = () => {
 
   const { invoiceQuery } = useInvoice(invoiceId);
 
-  const { data, isLoading } = invoiceQuery;
+  const { data, isPending } = invoiceQuery;
   const { data: restaurant } = useRestaurant();
 
   const handlePrint = async () => {
@@ -40,7 +40,7 @@ export const Invoice = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isPending) return <div>Loading...</div>;
 
   if (!data) return <div>Not found</div>;
 

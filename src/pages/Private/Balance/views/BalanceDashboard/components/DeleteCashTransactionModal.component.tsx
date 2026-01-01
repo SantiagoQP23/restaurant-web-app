@@ -24,7 +24,7 @@ export const DeleteCashTransactionModal = NiceModal.create<Props>(
     const modal = NiceModal.useModal();
     const closeModal = () => modal.hide();
 
-    const { mutate, isLoading } = useDeleteCashTransaction(transaction);
+    const { mutate, isPending } = useDeleteCashTransaction(transaction);
 
     const submitDeleteTransaction = () => {
       mutate();
@@ -67,7 +67,7 @@ export const DeleteCashTransactionModal = NiceModal.create<Props>(
             variant='contained'
             color='error'
             onClick={submitDeleteTransaction}
-            loading={isLoading}
+            loading={isPending}
           >
             Eliminar
           </LoadingButton>

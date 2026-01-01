@@ -24,7 +24,7 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
   ({ product }) => {
     const modal = useModal();
 
-    const { mutateAsync, isLoading } = useCreateProductOption(product.id);
+    const { mutateAsync, isPending } = useCreateProductOption(product.id);
 
     const {
       handleSubmit,
@@ -115,7 +115,7 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
               <LoadingButton
                 variant='contained'
                 color='primary'
-                loading={isLoading}
+                loading={isPending}
                 type='submit'
                 disabled={!isDirty}
               >

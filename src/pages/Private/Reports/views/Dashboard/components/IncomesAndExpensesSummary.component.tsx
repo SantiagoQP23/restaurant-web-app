@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Card,
   CardHeader,
@@ -19,22 +20,23 @@ import { startOfWeek } from 'date-fns';
 import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 
 export const IncomesAndExpensesSummary = () => {
-  const { data, isLoading } = useQuery<FinanceResponse[]>(
-    ['financials'],
-    () => {
+  const { data, isPending } = useQuery<FinanceResponse[]>({
+    queryKey: ['financials'],
+    queryFn: () => {
       return getFinances({
         period: Period.CUSTOM,
         startDate: startOfWeek(new Date()),
         endDate: new Date(),
         groupBy: GroupBy.DAY
       });
-    },
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      }
     }
-  );
+  });
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
 
   const dataChart = {
     labels: data?.map((finance) => finance.date),

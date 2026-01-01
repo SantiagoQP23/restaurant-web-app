@@ -63,7 +63,7 @@ export const Product: FC<Props> = ({ producto }) => {
     NiceModal.show(ModalDeleteProduct, { product: producto } as MDeleteProps);
   };
 
-  const { mutateAsync, isLoading } = useUpdateProduct();
+  const { mutateAsync, isPending } = useUpdateProduct();
 
   const dispatch = useAppDispatch();
 

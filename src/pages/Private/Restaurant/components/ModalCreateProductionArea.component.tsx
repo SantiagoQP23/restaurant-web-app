@@ -22,7 +22,7 @@ export const ModalCreateProductionArea = NiceModal.create(() => {
     register
   } = useForm<CreateProductionAreaDto>();
 
-  const { isLoading, mutateAsync } = useCreateProductionArea();
+  const { isPending, mutateAsync } = useCreateProductionArea();
 
   const closeModal = () => {
     modal.hide();
@@ -71,7 +71,7 @@ export const ModalCreateProductionArea = NiceModal.create(() => {
         <DialogActions>
           <Button onClick={closeModal}>Cancelar</Button>
           <LoadingButton
-            loading={isLoading}
+            loading={isPending}
             type='submit'
             variant='contained'
             disabled={!isDirty}

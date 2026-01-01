@@ -38,28 +38,29 @@ import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 import { Label } from '../../../../../../components/ui';
 
 export const MonthlyFinances = () => {
-  const chartRef = useRef<ChartJS<"bar">>(null);
+  const chartRef = useRef<ChartJS<'bar'>>(null);
 
   const filters = useDateFilter(Period.YEARLY);
 
   const { startDate, handleChangeStartDate, endDate } = filters;
 
-  const { data, isLoading, refetch } = useQuery<FinanceResponse[]>(
-    ['financials'],
-    () => {
+  const { data, isPending, refetch } = useQuery<FinanceResponse[]>({
+    queryKey: ['financials'],
+    queryFn: () => {
       return getFinances({
         period: Period.YEARLY,
         startDate,
         endDate: endDate,
         groupBy: GroupBy.MONTH
       });
-    },
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      }
     }
-  );
+  });
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
 
   const dataChart = {
     labels: data?.map((finance) => finance.date),
@@ -142,7 +143,11 @@ export const MonthlyFinances = () => {
             <Card>
               <Box height={300} display='flex' justifyContent='center'>
                 {data && (
-                  <Bar data={dataChart} options={options} ref={chartRef as any} />
+                  <Bar
+                    data={dataChart}
+                    options={options}
+                    ref={chartRef as any}
+                  />
                 )}
               </Box>
             </Card>

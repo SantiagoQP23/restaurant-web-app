@@ -6,9 +6,10 @@ import { ReceiptOrderReport } from '../components/OrdersReports/ReceiptOrderRepo
 import { StaffPlaning } from '../components/StaffPlanning/StaffPlaning.component';
 import { ProductsReports } from '../views/ProductsReports/ProductsReports.view';
 import { DashboardReports } from '../components';
-import { FootFallSimulation } from '../views/FootfallSimulation/FootfallSimulation.view';
-import { SimulatorForms } from '../views/SimulatorForms/SimulatorForms.view';
-import { FootfallPrediction } from '../views/FootfallPrediction/FootfallPrediction.view';
+// TODO: Missing views - need to be created or migrated
+// import { FootFallSimulation } from '../views/FootfallSimulation/FootfallSimulation.view';
+// import { SimulatorForms } from '../views/SimulatorForms/SimulatorForms.view';
+// import { FootfallPrediction } from '../views/FootfallPrediction/FootfallPrediction.view';
 import { Finances } from '../views/Finances/Finances.view';
 
 const Reports = lazy(() => import('../Reports.page'));
@@ -21,18 +22,19 @@ export const ReportsRouter: RouteObject = {
       path: '',
       element: <DashboardReports />
     },
-    {
-      path: 'prediction/simulation/',
-      element: <FootFallSimulation />
-    },
-    {
-      path: 'prediction/simulation/simulator',
-      element: <SimulatorForms />
-    },
-    {
-      path: 'prediction',
-      element: <FootfallPrediction />
-    },
+    // TODO: Uncomment when FootfallSimulation view is created
+    // {
+    //   path: 'prediction/simulation/',
+    //   element: <FootFallSimulation />
+    // },
+    // {
+    //   path: 'prediction/simulation/simulator',
+    //   element: <SimulatorForms />
+    // },
+    // {
+    //   path: 'prediction',
+    //   element: <FootfallPrediction />
+    // },
     {
       path: 'staff-planning',
       element: <StaffPlaning />

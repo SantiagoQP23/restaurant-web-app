@@ -23,9 +23,12 @@ import { formatMoney } from '../../../../Common/helpers/format-money.helper';
 import { GroupBy, Period } from '../../../../Common/dto/period.model';
 
 export const BestSellingProductsSummary = () => {
-  const { data } = useQuery<ResultBestSellingProducts>(
-    ['best-selling-products', { period: Period.DAILY, offset: 0, limit: 5 }],
-    () => {
+  const { data } = useQuery<ResultBestSellingProducts>({
+    queryKey: [
+      'best-selling-products',
+      { period: Period.DAILY, offset: 0, limit: 5 }
+    ],
+    queryFn: () => {
       return getBestSellingProducts({
         period: Period.MONTHLY,
         offset: 0,
@@ -36,7 +39,7 @@ export const BestSellingProductsSummary = () => {
         endDate: new Date()
       });
     }
-  );
+  });
 
   return (
     <Card>

@@ -50,7 +50,7 @@ export const CardIncomesByUser = () => {
 
   //    } = usePaginationAsync();
 
-  // const { data, refetch, isLoading, isFetching } = useQuery<IncomeByUser[]>(['best-selling-products', { period, startDate, endDate, offset: page, limit: rowsPerPage }], () => {
+  // const { data, refetch, isPending, isFetching } = useQuery<IncomeByUser[]>(['best-selling-products', { period, startDate, endDate, offset: page, limit: rowsPerPage }], () => {
   //   return getIncomesByUser({  startDate, endDate: endDateChecked ? endDate : null, offset: page, limit: rowsPerPage })
   // })
 

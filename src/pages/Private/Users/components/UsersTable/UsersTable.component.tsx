@@ -233,7 +233,7 @@ export const UsersTable: FC<Props> = ({}) => {
           aria-label='search'
           onClick={updateList}
         >
-          {usersQuery.isLoading ? (
+          {usersQuery.isPending ? (
             <CircularProgress size={20} />
           ) : (
             <SearchIcon />
@@ -242,7 +242,7 @@ export const UsersTable: FC<Props> = ({}) => {
       </Paper>
 
       <Box sx={{ height: 400, width: '100%', my: 1 }}>
-        {usersQuery.isLoading && <LinearProgress />}
+        {usersQuery.isPending && <LinearProgress />}
         <Card>
           <TableContainer>
             <Table size={dense ? 'small' : 'medium'}>

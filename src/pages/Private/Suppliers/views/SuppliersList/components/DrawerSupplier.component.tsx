@@ -54,7 +54,7 @@ export const DrawerSupplier: FC<Props> = ({ supplier }) => {
     defaultValues: updateSupplierDto
   });
 
-  const { mutateAsync, isLoading } = useUpdateSupplier();
+  const { mutateAsync, isPending } = useUpdateSupplier();
 
   const typeIdentification = useWatch({ control, name: 'typeIdentification' });
 
@@ -313,7 +313,7 @@ export const DrawerSupplier: FC<Props> = ({ supplier }) => {
                       <LoadingButton
                         variant='contained'
                         type='submit'
-                        loading={isLoading}
+                        loading={isPending}
                       >
                         Actualizar
                       </LoadingButton>

@@ -23,7 +23,7 @@ export interface Props {
 export const ModalDeleteCategory = NiceModal.create<Props>(({ category }) => {
   const modal = useModal();
 
-  const { mutateAsync, isLoading } = useUpdateCategory();
+  const { mutateAsync, isPending } = useUpdateCategory();
 
   const dispatch = useAppDispatch();
 
@@ -57,7 +57,7 @@ export const ModalDeleteCategory = NiceModal.create<Props>(({ category }) => {
             Cancelar
           </Button>
           <LoadingButton
-            loading={isLoading}
+            loading={isPending}
             variant='contained'
             color='error'
             onClick={eliminarCategoria}

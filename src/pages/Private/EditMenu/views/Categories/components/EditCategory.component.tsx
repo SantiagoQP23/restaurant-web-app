@@ -164,8 +164,8 @@ export const EditCategory: FC<Props> = () => {
                 variant='outlined'
                 type='submit'
                 loading={
-                  updateCategoryMutation.isLoading ||
-                  createCategoryMutation.isLoading
+                  updateCategoryMutation.isPending ||
+                  createCategoryMutation.isPending
                 }
               >
                 {activeCategory ? 'Editar' : 'Crear'}

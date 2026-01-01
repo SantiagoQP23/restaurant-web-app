@@ -40,7 +40,7 @@ export const EditUser = () => {
     return <Navigate to='/users' />;
   }
   // This update activeProduct in redux
-  const { isLoading, data: userToUpdate, refetch } = useUser(params.id);
+  const { isPending, data: userToUpdate, refetch } = useUser(params.id);
   const { restaurant } = useRestaurantStore((state) => state);
 
   if (!userToUpdate) navigate('/users');
@@ -185,7 +185,7 @@ export const EditUser = () => {
                 <LoadingButton
                   variant='text'
                   onClick={onReset}
-                  loading={resetPasswordMutation.isLoading}
+                  loading={resetPasswordMutation.isPending}
                 >
                   Restablecer contraseña
                 </LoadingButton>
@@ -199,7 +199,7 @@ export const EditUser = () => {
             <FormUser
               onSubmit={onSubmit}
               user={user}
-              loading={updateUserMutation.isLoading}
+              loading={updateUserMutation.isPending}
               isNew={false}
             />
 

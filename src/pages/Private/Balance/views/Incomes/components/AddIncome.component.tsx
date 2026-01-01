@@ -46,7 +46,7 @@ export const AddIncome = () => {
     reset
   } = useForm<CreateIncomeDto>();
 
-  const { mutateAsync, isLoading } = useCreateIncome();
+  const { mutateAsync, isPending } = useCreateIncome();
 
   const handleChangeClient = (client: IClient | null) => {
     setClient(client);
@@ -189,7 +189,7 @@ export const AddIncome = () => {
                   variant="contained"
                   color="success"
                   type="submit"
-                  loading={isLoading}
+                  loading={isPending}
                   fullWidth
                 >
                   Guardar

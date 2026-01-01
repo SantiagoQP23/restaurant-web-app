@@ -30,7 +30,7 @@ export const ModalCreateCategory = NiceModal.create(() => {
 
   const { sections, activeSection } = useSelector(selectMenu);
 
-  const { isLoading, mutateAsync } = useCreateCategory();
+  const { isPending, mutateAsync } = useCreateCategory();
 
   const { addCategoryToSection } = useEditMenuStore();
 
@@ -120,7 +120,7 @@ export const ModalCreateCategory = NiceModal.create(() => {
           <Stack direction='row' justifyContent='end' gap={2}>
             <Button onClick={closeModal}>Cancelar</Button>
             <LoadingButton
-              loading={isLoading}
+              loading={isPending}
               type='submit'
               variant='contained'
               disabled={!isDirty}

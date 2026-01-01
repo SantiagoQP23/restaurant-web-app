@@ -12,15 +12,15 @@ import { Period } from '../../../../Common/dto/period.model';
 export const Users = () => {
   const { period, startDate, endDate } = useDateFilter(Period.MONTHLY);
 
-  const { data } = useQuery<ResponseIncomesByUser[]>(
-    ['best-selling-products', { period, startDate, endDate }],
-    () => {
+  const { data } = useQuery<ResponseIncomesByUser[]>({
+    queryKey: ['best-selling-products', { period, startDate, endDate }],
+    queryFn: () => {
       return getIncomesByUser({
         period,
         startDate
       });
     }
-  );
+  });
 
   return (
     <>

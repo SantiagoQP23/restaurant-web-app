@@ -39,7 +39,7 @@ export const Bill = () => {
 
   if (!id) return <div>Not found</div>;
 
-  const { data: bill, isLoading } = useBill(+id);
+  const { data: bill, isPending } = useBill(+id);
   const { data: restaurant } = useRestaurant();
 
   const handlePrint = async () => {
@@ -49,7 +49,7 @@ export const Bill = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isPending) return <div>Loading...</div>;
 
   if (!bill) return <div>Not found</div>;
 

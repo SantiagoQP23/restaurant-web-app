@@ -138,7 +138,7 @@ export const ModalClientOrder: FC<Props> = () => {
           <FormClient
             client={clientForm}
             onSubmit={onSubmit}
-            loading={clientAddMutation.isLoading}
+            loading={clientAddMutation.isPending}
           />
         </DialogContent>
       </Dialog>

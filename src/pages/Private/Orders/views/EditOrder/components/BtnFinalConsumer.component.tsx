@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const BtnFinalConsumer: FC<Props> = ({ setClient }) => {
-  const { data, isLoading } = useClient('0999999999', true);
+  const { data, isPending } = useClient('0999999999', true);
 
   if (!data) return null;
 
@@ -29,7 +29,7 @@ export const BtnFinalConsumer: FC<Props> = ({ setClient }) => {
           alignItems: 'center'
         }}
       >
-        {isLoading ? (
+        {isPending ? (
           'Cargando...'
         ) : (
           <>

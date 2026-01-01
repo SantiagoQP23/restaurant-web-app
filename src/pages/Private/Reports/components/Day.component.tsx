@@ -38,17 +38,15 @@ export const Day = () => {
   const [checked, setChecked] = useState(day?.holiday || false);
   const [value, setValue] = useState<Date | null>(new Date());
 
-  const { data, isLoading, isFetching } = useQuery<IDay>(
-    ['day', formatDate(value!)],
-    () => getDay(formatDate(value!)),
-    {}
-  );
+  const { data, isPending, isFetching } = useQuery<IDay>({
+    queryKey: ['day', formatDate(value!)],
+    queryFn: () => getDay(formatDate(value!))
+  });
 
-  const {} = useQuery(
-    ['footfall', formatDate(value!)],
-    () => getOneFootfall(formatDate(value!)),
-    {}
-  );
+  const {} = useQuery({
+    queryKey: ['footfall', formatDate(value!)],
+    queryFn: () => getOneFootfall(formatDate(value!))
+  });
 
   const { loading, callEndpoint } = useFetchAndLoad();
   const { enqueueSnackbar } = useSnackbar();

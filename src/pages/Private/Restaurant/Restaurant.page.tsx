@@ -152,7 +152,7 @@ const Restaurant = () => {
                     <LoadingButton
                       type='submit'
                       variant='contained'
-                      loading={updateRestaurantMutation.isLoading}
+                      loading={updateRestaurantMutation.isPending}
                     >
                       Guardar
                     </LoadingButton>

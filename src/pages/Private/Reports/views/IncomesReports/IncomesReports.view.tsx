@@ -65,7 +65,7 @@ export const IncomesReports = () => {
     handleChangeRowsPerPage
   } = usePaginationAsync();
 
-  // const { data, isFetching, refetch, isLoading } = useQuery<DateIncome[]>(['incomes', { period, startDate, endDate, offset: page, limit: rowsPerPage }], () => {
+  // const { data, isFetching, refetch, isPending } = useQuery<DateIncome[]>(['incomes', { period, startDate, endDate, offset: page, limit: rowsPerPage }], () => {
   //   return getIncomesDate({ period, startDate, endDate: endDateChecked ? endDate : null, offset: page, limit: rowsPerPage })
   // })
 

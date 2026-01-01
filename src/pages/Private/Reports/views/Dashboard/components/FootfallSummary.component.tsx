@@ -20,23 +20,25 @@ export const FootfallSummary = () => {
 
   const groupBy = GroupBy.DAY;
 
-  const realFootfallQuery = useQuery(['realFootfall', period, groupBy], () =>
-    getRealFootfall({
-      period,
-      groupBy,
-      startDate: new Date()
-    })
-  );
+  const realFootfallQuery = useQuery({
+    queryKey: ['realFootfall', period, groupBy],
+    queryFn: () =>
+      getRealFootfall({
+        period,
+        groupBy,
+        startDate: new Date()
+      })
+  });
 
-  const forecastFootfallQuery = useQuery(
-    ['forecastFootfall', period, groupBy],
-    () =>
+  const forecastFootfallQuery = useQuery({
+    queryKey: ['forecastFootfall', period, groupBy],
+    queryFn: () =>
       getForecastByDate({
         period,
         groupBy,
         startDate: new Date()
       })
-  );
+  });
 
   return (
     <Card>

@@ -73,7 +73,7 @@ export const ModalSelectClient: FC<Props> = ({ open, onClose, onChange }) => {
             aria-label='search'
             // onClick={updateList}
           >
-            {clientsQuery.isLoading ? (
+            {clientsQuery.isPending ? (
               <CircularProgress size={20} />
             ) : (
               <SearchIcon />
