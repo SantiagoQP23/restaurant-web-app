@@ -5,7 +5,8 @@ import { UpdateSectionDto } from '../dto/update-section.dto';
 import {
   createSection,
   updateManySections,
-  updateSection
+  updateSection,
+  uploadMenuExcel
 } from '../services/menu.service';
 import { CreateSectionDto } from '../dto/create-section.dto';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ import {
   updateSection as updateSectionStore
 } from '../../../../redux';
 import { queryKeys } from '@/api/query-keys';
+import { UploadExcelResponseDto } from '../dto/upload-excel.dto';
 
 export const useSections = () => {};
 
@@ -83,6 +85,30 @@ export const useUpdateManySections = () => {
 
     onError: () => {
       enqueueSnackbar('No se pudo actualizar', { variant: 'error' });
+    }
+  });
+};
+
+/**
+ * Hook to upload menu from Excel file
+ * @version 1.0 - React Query v5
+ */
+export const useUploadMenuExcel = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
+
+  return useMutation<UploadExcelResponseDto, unknown, File>({
+    mutationFn: (file: File) => uploadMenuExcel(file),
+    onSuccess: (data: UploadExcelResponseDto) => {
+      enqueueSnackbar(data.message || 'Menu cargado exitosamente', {
+        variant: 'success'
+      });
+      queryClient.invalidateQueries({ queryKey: queryKeys.menu.all });
+    },
+    onError: (error: any) => {
+      enqueueSnackbar(error?.data?.message || 'Error al cargar el archivo', {
+        variant: 'error'
+      });
     }
   });
 };

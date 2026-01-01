@@ -6,6 +6,7 @@ import { UpdateCategoryDto, CreateCategoryDto } from '../dto/category.dto';
 import { CreateSectionDto } from '../dto/create-section.dto';
 import { CreateProductDto, UpdateProductDto } from '../dto/';
 import { UpdateSectionDto } from '../dto/update-section.dto';
+import { UploadExcelResponseDto } from '../dto/upload-excel.dto';
 
 export const createSection = async (
   data: CreateSectionDto
@@ -194,4 +195,18 @@ export const deleteProduct = (id: string) => {
     }),
     controller
   };
+};
+
+export const uploadMenuExcel = async (
+  file: File
+): Promise<UploadExcelResponseDto> => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const resp = await restauranteApi.post<UploadExcelResponseDto>(
+    '/menu/upload',
+    formData
+  );
+
+  return resp.data;
 };
