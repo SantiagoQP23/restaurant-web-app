@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createClient, getClient, getClients, updateClient } from '../services';
 import { IClient } from '../../../../models';
 import { useSnackbar } from 'notistack';
@@ -9,23 +9,27 @@ import { useEffect } from 'react';
 import { usePaginationAsync } from '../../../../hooks/usePaginationAsync';
 import { useSearch } from '../../../../hooks/useSearch';
 
+/**
+ * Hook to fetch clients with pagination and search
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useClients = () => {
   const pagination = usePaginationAsync();
 
   const { search, handleChangeSearch } = useSearch();
 
-  const clientsQuery = useQuery<{ clients: IClient[]; length: number }>(
-    [
+  const clientsQuery = useQuery<{ clients: IClient[]; length: number }>({
+    queryKey: [
       'clients',
       { limit: pagination.rowsPerPage, offset: pagination.page, search }
     ],
-    () =>
+    queryFn: () =>
       getClients({
         limit: pagination.rowsPerPage,
         offset: pagination.page,
         search
       })
-  );
+  });
 
   useEffect(() => {
     clientsQuery.refetch();
@@ -40,19 +44,32 @@ export const useClients = () => {
   };
 };
 
+/**
+ * Hook to fetch a single client by ID
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useClient = (id: string, enabled = true) => {
-  return useQuery<IClient>(['client', id], () => getClient(id), {
+  return useQuery<IClient>({
+    queryKey: ['client', id],
+    queryFn: () => getClient(id),
     enabled,
     retry: false
   });
 };
 
+/**
+ * Hook to create a new client
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useCreateCliente = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
 
-  return useMutation<IClient, unknown, CreateClientDto>(createClient, {
+  return useMutation<IClient, unknown, CreateClientDto>({
+    mutationFn: (data: CreateClientDto) => createClient(data),
     onSuccess: () => {
       enqueueSnackbar('Cliente creado', { variant: 'success' });
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
     },
 
     onError: () => {
@@ -61,18 +78,23 @@ export const useCreateCliente = () => {
   });
 };
 
+/**
+ * Hook to update a client
+ * @version 2.0 - Migrated to React Query v5
+ */
 export const useUpdateClient = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
 
-  return useMutation<IClient, unknown, UpdateClientDto>(
-    (data) => updateClient(data.id, data),
-    {
-      onSuccess: () => {
-        enqueueSnackbar('Cliente actualizado', { variant: 'success' });
-      },
-      onError: () => {
-        enqueueSnackbar('Error al actualizar cliente', { variant: 'error' });
-      }
+  return useMutation<IClient, unknown, UpdateClientDto>({
+    mutationFn: (data: UpdateClientDto) => updateClient(data.id, data),
+    onSuccess: (data: IClient) => {
+      enqueueSnackbar('Cliente actualizado', { variant: 'success' });
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
+      queryClient.invalidateQueries({ queryKey: ['client', data.id] });
+    },
+    onError: () => {
+      enqueueSnackbar('Error al actualizar cliente', { variant: 'error' });
     }
-  );
+  });
 };
