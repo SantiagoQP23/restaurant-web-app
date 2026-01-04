@@ -58,22 +58,19 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
   };
 
   return (
-    <Card sx={{ border: 1, borderColor: 'divider' }}>
+    <Card
+      sx={{ border: 1, borderColor: isAvailable ? 'divider' : 'primary.main' }}
+    >
       <CardActionArea onClick={handleClick}>
         <CardHeader
           title={
-            <Box
-              display='flex'
-              justifyContent='center'
-              alignItems='center'
-              gap={1}
-            >
+            <Box display='flex' justifyContent='center' gap={1}>
               <TableBarOutlined
                 fontSize='small'
                 // color={isAvailable ? "secondary" : "inherit"}
               />
-              <Typography variant='subtitle1' textAlign='center'>
-                Table {table.name}
+              <Typography variant='subtitle1' textAlign='start'>
+                Mesa {table.name}
               </Typography>
             </Box>
           }
