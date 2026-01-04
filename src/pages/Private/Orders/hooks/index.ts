@@ -9,3 +9,4 @@ export * from './useOnWebSocketsEventsOrders';
 export * from './useOrderDetails';
 export * from './useOrders';
 export * from './useUpdateTable';
+export * from './useTimeUrgency';

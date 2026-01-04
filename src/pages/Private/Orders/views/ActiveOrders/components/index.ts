@@ -6,3 +6,7 @@ export * from './DespachoDetalle';
 export * from './DetailInProgress.component';
 export * from './ListActiveOrders.component';
 export * from './ModalStartOrder.component';
+export * from './OrderActions.component';
+export * from './OrderCardHeader.component';
+export * from './OrderMetadata.component';
+export * from './ProductionAreaOrder.component';
