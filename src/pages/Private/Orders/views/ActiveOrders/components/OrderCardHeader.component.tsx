@@ -75,7 +75,7 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
           {/* Order Title */}
           <Typography
             variant='h3'
-            fontWeight={600}
+            fontWeight={500}
             sx={{
               fontSize: '1.75rem'
             }}

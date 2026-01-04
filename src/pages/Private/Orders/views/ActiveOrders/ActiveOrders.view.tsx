@@ -1,15 +1,20 @@
-import { Container, Button, Stack } from '@mui/material';
+import { Container, Button, Stack, Badge } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { DespachoDetalle, ListActiveOrders } from './components';
-import { Add, Cached } from '@mui/icons-material';
+import { Add, Cached, ListAlt } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
+import { useState } from 'react';
 
 import { Clock } from '../OrdersList/components/Clock.component';
 import { TitlePage } from '../../../components/TitlePage.component';
 import { useActiveOrders } from '../../hooks';
+import { ConsolidatedProductsDrawer } from './components/ConsolidatedProductsDrawer';
+import { useConsolidatedProducts } from './hooks/useConsolidatedProducts';
 
 export const ActiveOrders = () => {
   const navigate = useNavigate();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { statistics } = useConsolidatedProducts();
 
   const { activeOrdersQuery } = useActiveOrders();
 
@@ -20,6 +25,21 @@ export const ActiveOrders = () => {
           title='Pedidos activos'
           action={
             <Stack direction='row' spacing={1}>
+              <Badge
+                badgeContent={statistics.totalProducts}
+                color='primary'
+                max={99}
+              >
+                <Button
+                  variant='outlined'
+                  onClick={() => setDrawerOpen(true)}
+                  size='small'
+                  startIcon={<ListAlt />}
+                >
+                  Ver productos
+                </Button>
+              </Badge>
+
               <LoadingButton
                 variant='text'
                 loading={activeOrdersQuery.isFetching}
@@ -51,6 +71,11 @@ export const ActiveOrders = () => {
       </Container>
 
       <DespachoDetalle />
+
+      <ConsolidatedProductsDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      />
     </>
   );
 };
