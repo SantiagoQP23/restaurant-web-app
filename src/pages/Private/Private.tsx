@@ -48,7 +48,7 @@ export const Private = () => {
   const areasQuery = useProductionAreas();
 
   // Load active orders
-  // const { activeOrdersQuery } = useActiveOrders();
+  const { activeOrdersQuery } = useActiveOrders();
 
   // Load tables
   const { tablesQuery } = useTables();
@@ -64,9 +64,10 @@ export const Private = () => {
   // const restaurantQuery = useRestaurant();
 
   const isLoading =
-    // activeOrdersQuery.isPending ||
+    activeOrdersQuery.isPending ||
     // restaurantQuery.isPending ||
-    menuQuery.isPending || areasQuery.isPending;
+    menuQuery.isPending ||
+    areasQuery.isPending;
   // tablesQuery.isPending;
 
   // listener new order
