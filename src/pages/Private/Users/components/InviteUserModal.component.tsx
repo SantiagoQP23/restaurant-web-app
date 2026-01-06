@@ -36,6 +36,7 @@ import { useRoles } from '../hooks/useRoles';
 import { InviteUserDto } from '../dto/invite-user.dto';
 import { useSendInvitation } from '../hooks/useInvitation';
 import { LoadingButton } from '@mui/lab';
+import { useSnackbar } from 'notistack';
 
 export const InviteUserModal = NiceModal.create(() => {
   const modal = useModal();
@@ -55,6 +56,7 @@ export const InviteUserModal = NiceModal.create(() => {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const { enqueueSnackbar } = useSnackbar();
 
   const closeModal = () => {
     modal.hide();
@@ -79,6 +81,9 @@ export const InviteUserModal = NiceModal.create(() => {
 
   const onSubmit = async () => {
     if (!selectedUser || !roleId) {
+      enqueueSnackbar('Seleccione un usuario y un rol', {
+        variant: 'warning'
+      });
       return;
     }
     const inviteUserDto: InviteUserDto = {
@@ -86,8 +91,11 @@ export const InviteUserModal = NiceModal.create(() => {
       roleId: roleId
     };
 
-    console.log({ inviteUserDto });
-    useInviteUser.mutate(inviteUserDto);
+    useInviteUser.mutateAsync(inviteUserDto, {
+      onSuccess: () => {
+        closeModal();
+      }
+    });
   };
 
   return (
@@ -187,7 +195,7 @@ export const InviteUserModal = NiceModal.create(() => {
                 >
                   {rolesQuery.data?.map((role) => (
                     <MenuItem value={role.id} key={role.id}>
-                      {role.name}
+                      {role.description}
                     </MenuItem>
                   ))}
                 </Select>

@@ -38,6 +38,7 @@ import { useSendInvitation } from '../hooks/useInvitation';
 import { LoadingButton } from '@mui/lab';
 import { EditUser } from './EditUser/EditUser.component';
 import { useRestaurantStore } from '../../Common/store/restaurantStore';
+import { useSnackbar } from 'notistack';
 
 interface Props {
   user: IUser;
@@ -63,6 +64,7 @@ export const EditUserRole = NiceModal.create<Props>(({ user }) => {
   } = useUsersSuggestions();
 
   const { rolesQuery } = useRoles();
+  const { enqueueSnackbar } = useSnackbar();
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -85,6 +87,11 @@ export const EditUserRole = NiceModal.create<Props>(({ user }) => {
   };
 
   const onSubmit = async () => {
+    console.log({ roleId });
+    if (!roleId) {
+      enqueueSnackbar('Seleccione un rol', { variant: 'warning' });
+    }
+
     updateUserRole.mutateAsync(
       {
         userId: user.id,
