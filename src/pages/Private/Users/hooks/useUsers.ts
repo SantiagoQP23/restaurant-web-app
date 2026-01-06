@@ -10,7 +10,8 @@ import {
   getUsersSuggestions,
   resetPasswordUser,
   updateUser,
-  updateUserRole
+  updateUserRole,
+  removeUserFromRestaurant
 } from '../services/users.service';
 
 import { IUser } from '../../../../models';
@@ -224,4 +225,28 @@ export const useDeleteUser = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   return {};
+};
+
+/**
+ * Hook to remove user from restaurant
+ * @version 2.0 - React Query
+ */
+export const useRemoveUserFromRestaurant = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
+
+  return useMutation<void, unknown, string>({
+    mutationFn: (userId: string) => removeUserFromRestaurant(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.users.all });
+      enqueueSnackbar('Usuario removido del restaurante', {
+        variant: 'success'
+      });
+    },
+    onError: (error: unknown) => {
+      enqueueSnackbar('Error al remover usuario del restaurante', {
+        variant: 'error'
+      });
+    }
+  });
 };

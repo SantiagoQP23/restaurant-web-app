@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 import { LoadingButton } from '@mui/lab';
 import {
   Dialog,
@@ -10,98 +9,51 @@ import {
   DialogActions,
   Button
 } from '@mui/material';
-import { FC } from 'react';
-import { useFetchAndLoad } from '../../../../../hooks/useFetchAndLoad';
-import {
-  deleteUser,
-  selectUsers
-} from '../../../../../redux/slices/users/users.slice';
-import { useSelector, useDispatch } from 'react-redux';
 import { IUser } from '../../../../../models/auth.model';
-import {
-  statusModalDeleteUser,
-  removeUserFromRestaurant as removeUserFromRestaurantS
-} from '../../services/users.service';
-import { useSnackbar } from 'notistack';
-import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
-import { useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '@/api/query-keys';
+import { useRemoveUserFromRestaurant } from '../../hooks/useUsers';
 
-export const RemoveUserFromRestaurant: FC = () => {
-  const { loading, callEndpoint } = useFetchAndLoad();
+interface Props {
+  user: IUser;
+}
 
-  const [user, setUser] = useState<IUser>();
-
-  const [open, setOpen] = useState<boolean>(false);
-  const subscription$ = statusModalDeleteUser.getSubject();
-
-  const dispatch = useDispatch();
-
-  const { enqueueSnackbar } = useSnackbar();
-
-  const restaurant = useRestaurantStore((state) => state.restaurant);
-
-  const queryClient = useQueryClient();
-
-  const submitRemoveUser = async () => {
-    if (!restaurant) {
-      enqueueSnackbar('No se encontró el restaurante', { variant: 'error' });
-      return;
-    }
-
-    await callEndpoint(removeUserFromRestaurantS(user!.id))
-      .then(() => {
-        enqueueSnackbar('Usuario removido del restaurante', {
-          variant: 'success'
-        });
-
-        dispatch(deleteUser(user!.id));
-
-        // Invalidate and refetch users list
-        queryClient.invalidateQueries({ queryKey: queryKeys.users.all });
-
-        closeModal();
-      })
-      .catch(() => {
-        enqueueSnackbar('Error al remover usuario del restaurante', {
-          variant: 'error'
-        });
-      });
-  };
+export const RemoveUserFromRestaurant = NiceModal.create<Props>(({ user }) => {
+  const modal = useModal();
+  const removeUserMutation = useRemoveUserFromRestaurant();
 
   const closeModal = () => {
-    setOpen(false);
+    modal.hide();
   };
 
-  useEffect(() => {
-    subscription$.subscribe((data) => {
-      setUser(data.user);
-      setOpen(!!data.value);
+  const handleRemoveUser = async () => {
+    removeUserMutation.mutate(user.id, {
+      onSuccess: () => {
+        closeModal();
+      }
     });
-  }, []);
+  };
 
   return (
-    <Dialog open={open} onClose={closeModal}>
+    <Dialog {...muiDialogV5(modal)} maxWidth='sm'>
       <DialogTitle id='alert-dialog-title' color='white'>
         Remover usuario del restaurante
       </DialogTitle>
       <Divider />
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
-          {`¿Está seguro de remover al usuario ${user?.person.firstName} ${user?.person.lastName} del restaurante?`}
+          {`¿Está seguro de remover al usuario ${user.person.firstName} ${user.person.lastName} del restaurante?`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={closeModal}>Cancelar</Button>
         <LoadingButton
-          loading={loading}
+          loading={removeUserMutation.isPending}
           variant='contained'
           color='error'
-          onClick={submitRemoveUser}
+          onClick={handleRemoveUser}
         >
           Aceptar
         </LoadingButton>
       </DialogActions>
     </Dialog>
   );
-};
+});

@@ -5,7 +5,6 @@ import { resetActiveUser } from '../../../../redux';
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import { UsersTable } from '../components/UsersTable/UsersTable.component';
-import { RemoveUserFromRestaurant } from '../components/RemoveUserFromRestaurant/RemoveUserFromRestaurant.component';
 import { TitlePage } from '../../components/TitlePage.component';
 import NiceModal from '@ebay/nice-modal-react';
 import { InviteUserModal } from '../components/InviteUserModal.component';
@@ -50,8 +49,6 @@ export const UsersList = () => {
       />
 
       <UsersTable />
-
-      <RemoveUserFromRestaurant />
     </>
   );
 };

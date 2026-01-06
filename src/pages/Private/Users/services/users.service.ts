@@ -102,12 +102,8 @@ export const deleteUser = (id: string) => {
   };
 };
 
-export const removeUserFromRestaurant = (userId: string) => {
-  const controller = loadAbort();
-  return {
-    call: restauranteApi.delete<string>(`users/${userId}/restaurant`, {
-      signal: controller.signal
-    }),
-    controller
-  };
+export const removeUserFromRestaurant = async (
+  userId: string
+): Promise<void> => {
+  await restauranteApi.delete(`users/${userId}/restaurant`);
 };

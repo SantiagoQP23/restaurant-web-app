@@ -40,7 +40,7 @@ import { ValidRoles } from '../../../Common/models/valid-roles.model';
 import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
 import NiceModal from '@ebay/nice-modal-react';
 import { EditUserRole } from '../EditUserRole.component';
-import { statusModalDeleteUser } from '../../services/users.service';
+import { RemoveUserFromRestaurant } from '../RemoveUserFromRestaurant/RemoveUserFromRestaurant.component';
 
 export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
   };
 
   const openRemoveUserModal = () => {
-    statusModalDeleteUser.setSubject(true, user);
+    NiceModal.show(RemoveUserFromRestaurant, { user });
   };
 
   // const editUser = (user: IUser) => {
