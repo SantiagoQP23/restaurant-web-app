@@ -166,7 +166,6 @@ export const AppBar = () => {
                   variant='h6'
                   noWrap
                   component='a'
-                  href='#app-bar-with-responsive-menu'
                   sx={{
                     mr: 2,
                     fontWeight: 'bold',
@@ -174,7 +173,7 @@ export const AppBar = () => {
                     textDecoration: 'none'
                   }}
                 >
-                  QuiEats
+                  Fast Serve
                 </Typography>
               </Stack>
               <Stack

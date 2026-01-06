@@ -95,8 +95,13 @@ export const LoginPage = () => {
               <Typography component='h5' variant='h4' sx={{ my: 2 }}>
                 {VITE_APP_NAME}
               </Typography>
-              <Typography component='h4' variant='h3' sx={{ my: 2 }}>
-                Log in to your account
+              <Typography
+                component='h4'
+                fontWeight={500}
+                variant='h3'
+                sx={{ my: 2 }}
+              >
+                Ingrese a su cuenta
               </Typography>
               <Chip
                 label={error}
@@ -154,9 +159,9 @@ export const LoginPage = () => {
                   justifyContent='center'
                   sx={{ my: 2 }}
                 >
-                  <Typography>Don't you have an account?</Typography>
-                  <Link href='register' variant='body2'>
-                    Sign up
+                  <Typography>No tienes una cuenta?</Typography>
+                  <Link href='/auth/register' variant='body2'>
+                    Regístrate
                   </Link>
                 </Stack>
                 <Stack
