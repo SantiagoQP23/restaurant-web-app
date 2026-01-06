@@ -22,6 +22,7 @@ import {
   CircularProgress
 } from '@mui/material';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import {
   resetActiveUser,
   selectUsers,
@@ -39,6 +40,7 @@ import { ValidRoles } from '../../../Common/models/valid-roles.model';
 import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
 import NiceModal from '@ebay/nice-modal-react';
 import { EditUserRole } from '../EditUserRole.component';
+import { statusModalDeleteUser } from '../../services/users.service';
 
 export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
   const navigate = useNavigate();
@@ -52,6 +54,10 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
 
   const openEditUserRoleModal = () => {
     NiceModal.show(EditUserRole, { user });
+  };
+
+  const openRemoveUserModal = () => {
+    statusModalDeleteUser.setSubject(true, user);
   };
 
   // const editUser = (user: IUser) => {
@@ -132,35 +138,37 @@ export const TableRowUser: FC<{ user: IUser }> = ({ user }) => {
 
       <TableCell align='right'>
         {user.id !== currentUser?.id && (
-          <Tooltip title='Edit role' arrow>
-            <IconButton
-              sx={{
-                '&:hover': {
-                  background: theme.colors.primary.lighter
-                },
-                color: theme.palette.primary.main
-              }}
-              color='inherit'
-              size='small'
-              onClick={openEditUserRoleModal}
-            >
-              <EditTwoToneIcon fontSize='small' />
-            </IconButton>
-          </Tooltip>
+          <>
+            <Tooltip title='Edit role' arrow>
+              <IconButton
+                sx={{
+                  '&:hover': {
+                    background: theme.colors.primary.lighter
+                  },
+                  color: theme.palette.primary.main
+                }}
+                color='inherit'
+                size='small'
+                onClick={openEditUserRoleModal}
+              >
+                <EditTwoToneIcon fontSize='small' />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Remover del restaurante' arrow>
+              <IconButton
+                sx={{
+                  '&:hover': { background: theme.colors.error.lighter },
+                  color: theme.palette.error.main
+                }}
+                color='inherit'
+                size='small'
+                onClick={openRemoveUserModal}
+              >
+                <DeleteTwoToneIcon fontSize='small' />
+              </IconButton>
+            </Tooltip>
+          </>
         )}
-        {/*   <Tooltip title="Delete Order" arrow>
-          <IconButton
-            sx={{
-              '&:hover': { background: theme.colors.error.lighter },
-              color: theme.palette.error.main
-            }}
-            color="inherit"
-            size="small"
-            onClick={deleteUser}
-          >
-            <DeleteTwoToneIcon fontSize="small" />
-          </IconButton>
-        </Tooltip> */}
       </TableCell>
     </TableRow>
   );

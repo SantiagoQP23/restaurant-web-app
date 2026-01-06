@@ -101,3 +101,13 @@ export const deleteUser = (id: string) => {
     controller
   };
 };
+
+export const removeUserFromRestaurant = (userId: string) => {
+  const controller = loadAbort();
+  return {
+    call: restauranteApi.delete<string>(`users/${userId}/restaurant`, {
+      signal: controller.signal
+    }),
+    controller
+  };
+};
