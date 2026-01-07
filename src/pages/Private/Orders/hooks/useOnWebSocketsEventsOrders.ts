@@ -12,7 +12,7 @@ import {
 import { EventsOnSocket } from '../interfaces/events-sockets.interface';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { useOnWebSocketsEvent } from '../../../../hooks';
+import { useOnWebSocketsEvent, useNotificationSound } from '../../../../hooks';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/api/query-keys';
 
@@ -60,15 +60,20 @@ export const useOnOrderUpdated = () => {
  * Custom hook to listen to the event of creating an order with websockets
  * @version 1.0 28-12-2023
  * @version 1.1 2026-01-05 Added React Query cache invalidation to sync with Redux
+ * @version 1.2 2026-01-07 Added notification sound when new order is created
  */
 export const useOnOrderCreated = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
+  const { play: playNotificationSound } = useNotificationSound(0.5);
 
   useOnWebSocketsEvent(
     EventsOnSocket.newOrder,
     ({ data, msg }: SocketEvent<Order>) => {
+      // Play notification sound
+      playNotificationSound();
+
       enqueueSnackbar(msg, { variant: 'info' });
 
       // Update Redux store

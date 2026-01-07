@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import HeaderNotifications from './Notifications';
-import { ButtonTheme } from '../../components/';
+import { ButtonTheme, ButtonSound } from '../../components/';
 import { SocketConnectionButton } from './SocketConnectionButton/SocketConnectionButton.component';
 import { selectAuth } from '../../../../../../redux';
 import { useSelector } from 'react-redux';
@@ -13,6 +13,8 @@ function HeaderButtons() {
       {/* <HeaderSearch /> */}
       <Box sx={{ display: 'flex', gap: 1 }} component='span'>
         <ButtonTheme />
+
+        <ButtonSound />
 
         <SocketConnectionButton />
 

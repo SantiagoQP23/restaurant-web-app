@@ -10,3 +10,4 @@ export * from './useRedux';
 export * from './useSearch';
 export * from './useSocket';
 export * from './useEmitWebSocketsEvent';
+export * from './useNotificationSound';
