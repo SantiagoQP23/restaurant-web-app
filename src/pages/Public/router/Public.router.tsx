@@ -6,6 +6,7 @@ import { ProductsMenu } from '../Shop/views/ProductsMenu/ProductsMenu.view';
 import { Product } from '../Shop/views/Product/Product.page';
 import { Home } from '../Home/Home.page';
 import { ForgotPassword } from '../Auth/ForgotPassword';
+import ResetPassword from '../Auth/ResetPassword/ResetPassword.page';
 
 export const PublicRouter: RouteObject[] = [
   {
@@ -46,6 +47,10 @@ export const PublicRouter: RouteObject[] = [
       {
         path: 'forgot-password',
         element: <ForgotPassword />
+      },
+      {
+        path: 'reset-password/:token',
+        element: <ResetPassword />
       }
     ]
   },

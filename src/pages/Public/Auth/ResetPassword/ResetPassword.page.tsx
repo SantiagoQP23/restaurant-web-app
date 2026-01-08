@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   Container,
@@ -26,6 +26,7 @@ import { resetPassword } from '../services/reset-password.service';
 import { PublicRoutes } from '../../../../models';
 import { LoadingButton } from '@mui/lab';
 import { useModal } from '../../../../hooks/useModal';
+import { useSnackbar } from 'notistack';
 
 interface ModalProps {
   open: boolean;
@@ -74,10 +75,11 @@ const ResetPassword = () => {
   const { token } = useParams();
 
   const { isOpen, handleClose, handleOpen } = useModal();
-
   const { loading, callEndpoint } = useFetchAndLoad();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const [checkedPassword, setCheckedPassword] = useState(false);
 
@@ -86,13 +88,10 @@ const ResetPassword = () => {
     status: boolean;
   }>({ status: false });
 
-  console.log({ token });
-
   const passwordMessage =
     'The password must have a Uppercase, lowercase letter and a number';
 
   const [passwordValid, setPasswordValid] = useState<boolean>(true);
-
   const [samePassword, setSamePassword] = useState<boolean>(true);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -121,23 +120,15 @@ const ResetPassword = () => {
   };
 
   const onSubmit = async (token: string, password: string) => {
-    console.log('Haciendo peticion');
     await callEndpoint(resetPassword(token, password))
       .then((resp) => {
-        setStatusResponse({
-          message: 'La contreña ha sido cambiada correctamente',
-          status: true
+        enqueueSnackbar('La contraseña ha sido cambiada correctamente', {
+          variant: 'success'
         });
-        handleOpen();
-        //enqueueSnackbar('Por favor, revise su email');
+        navigate('/' + PublicRoutes.LOGIN);
       })
       .catch((err) => {
-        setStatusResponse({
-          message: 'El token enviado es incorrecto o ha expirado',
-          status: false
-        });
-        handleOpen();
-        //enqueueSnackbar('Por favor, revise su email', {variant: 'error'});
+        enqueueSnackbar('Error al cambiar la contraseña', { variant: 'error' });
       });
   };
 
@@ -175,13 +166,12 @@ const ResetPassword = () => {
 
             <Grid container spacing={1}>
               <Grid item xs={12}>
-                <Typography variant='body1' color='initial'>
+                <Typography variant='subtitle2' color='initial'>
                   Ingrese su nueva contraseña
                 </Typography>
                 <TextField
                   id='password'
                   name='password'
-                  label='Password'
                   margin='normal'
                   type='password'
                   fullWidth
@@ -191,14 +181,13 @@ const ResetPassword = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Typography variant='body1' color='initial'>
+                <Typography variant='subtitle2' color='initial'>
                   Repita su nueva contraseña
                 </Typography>
 
                 <TextField
                   id='password2'
                   name='password2'
-                  label='Password'
                   margin='normal'
                   type='password'
                   fullWidth
@@ -219,9 +208,11 @@ const ResetPassword = () => {
                 >
                   Enviar
                 </LoadingButton>
-                <Link href={'/' + PublicRoutes.LOGIN} variant='body2'>
-                  Ir a login
-                </Link>
+                <Box sx={{ mt: 2, textAlign: 'center' }}>
+                  <Link href={'/' + PublicRoutes.LOGIN} variant='body2'>
+                    Ir a login
+                  </Link>
+                </Box>
               </Grid>
             </Grid>
           </Box>

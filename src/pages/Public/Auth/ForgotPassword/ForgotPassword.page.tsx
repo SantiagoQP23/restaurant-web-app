@@ -15,11 +15,12 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
-  Card
+  Card,
+  Stack
 } from '@mui/material';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useFetchAndLoad, useModal } from '../../../../hooks';
 import { sendRequestResetPassword } from '../services/reset-password.service';
 import { useSnackbar } from 'notistack';
@@ -74,7 +75,9 @@ const Modal: FC<ModalProps> = ({ open, handleClose, status, msg }) => {
 };
 
 const ForgotPassword = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [emailValid, setEmailValid] = useState<boolean>(true);
+  const { enqueueSnackbar } = useSnackbar();
 
   const { isOpen, handleClose, handleOpen } = useModal();
 
@@ -108,19 +111,22 @@ const ForgotPassword = () => {
   const onSubmit = async (email: string) => {
     await callEndpoint(sendRequestResetPassword(email))
       .then((resp) => {
-        setStatusResponse({
-          message: 'Se ha enviado un link a su email',
-          status: true
+        enqueueSnackbar('El correo fue enviado correctamente', {
+          variant: 'success'
         });
-        handleOpen();
-        //enqueueSnackbar('Por favor, revise su email');
+        // Reset form and validation state
+        formRef.current?.reset();
+        setEmailValid(true);
       })
       .catch((err) => {
-        setStatusResponse({
-          message: 'No se encontro un usuario con el email ' + email,
-          status: false
+        // setStatusResponse({
+        //   message: 'No se encontro un usuario con el email ' + email,
+        //   status: false
+        // });
+        enqueueSnackbar('No se encontro un usuario con el email ' + email, {
+          variant: 'error'
         });
-        handleOpen();
+
         //enqueueSnackbar('Por favor, revise su email', {variant: 'error'});
       });
   };
@@ -145,62 +151,61 @@ const ForgotPassword = () => {
           sx={{
             marginTop: 8,
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
+            flexDirection: 'column'
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component='h1' variant='h5'>
+          <Typography component='h1' variant='h4'>
             Olvidé mi contraseña
           </Typography>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant='body1'>
+              Ingrese su correo y le enviaremos instrucciones para restablecer
+              su contraseña.
+            </Typography>
+          </Box>
 
           <Box
             component='form'
+            ref={formRef}
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{
+              mt: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              alignItems: 'center'
+            }}
           >
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Typography variant='body1'>
-                  Ingrese el email de su cuenta
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete='given-name'
-                  name='email'
-                  id='email'
-                  required
-                  fullWidth
-                  label='Email'
-                  autoFocus
-                  error={!emailValid}
-                  helperText={!emailValid ? 'Email no válido' : ''}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Typography variant='body1'>
-                  Recibirá un correo con un link
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <LoadingButton
-                  variant='contained'
-                  fullWidth
-                  type='submit'
-                  loading={loading}
-                >
-                  Enviar
-                </LoadingButton>
-                <Link href={'/' + PublicRoutes.LOGIN} variant='body2'>
-                  Ir a login
-                </Link>
-              </Grid>
-            </Grid>
+            <Stack spacing={1} width='100%'>
+              <Typography variant='body1' fontWeight='500'>
+                Email
+              </Typography>
+              <TextField
+                autoComplete='given-name'
+                name='email'
+                id='email'
+                required
+                fullWidth
+                autoFocus
+                error={!emailValid}
+                helperText={!emailValid ? 'Email no válido' : ''}
+              />
+            </Stack>
+            <LoadingButton
+              variant='contained'
+              fullWidth
+              type='submit'
+              loading={loading}
+            >
+              Enviar instrucciones
+            </LoadingButton>
+            <Link href={'/' + PublicRoutes.LOGIN} variant='body2'>
+              Ir a login
+            </Link>
           </Box>
         </Box>
       </Container>
