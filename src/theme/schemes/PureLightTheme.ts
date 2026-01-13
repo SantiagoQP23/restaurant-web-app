@@ -15,7 +15,8 @@ import '@mui/lab/themeAugmentation';
 
 const themeColors = {
   // primary: '#2C77D7',
-  primary: '#171717',
+  // primary: '#171717',
+  primary: '#0977CA',
   secondary: '#6E759F',
   success: '#57CA22',
   warning: '#FFA319',

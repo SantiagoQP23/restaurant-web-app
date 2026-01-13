@@ -1,4 +1,4 @@
-import { Container, Button, Stack, Badge } from '@mui/material';
+import { Container, Button, Stack, Badge, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { DespachoDetalle, ListActiveOrders } from './components';
 import { Add, Cached, ListAlt } from '@mui/icons-material';
@@ -24,7 +24,13 @@ export const ActiveOrders = () => {
         <TitlePage
           title='Pedidos activos'
           action={
-            <Stack direction='row' spacing={1}>
+            <Stack direction='row' spacing={3}>
+              <IconButton
+                onClick={() => activeOrdersQuery.refetch()}
+                size='small'
+              >
+                <Cached />
+              </IconButton>
               <Badge
                 badgeContent={statistics.totalProducts}
                 color='primary'
@@ -39,33 +45,11 @@ export const ActiveOrders = () => {
                   Ver productos
                 </Button>
               </Badge>
-
-              <LoadingButton
-                variant='text'
-                loading={activeOrdersQuery.isFetching}
-                onClick={() => activeOrdersQuery.refetch()}
-                size='small'
-                startIcon={<Cached />}
-              >
-                Actualizar
-              </LoadingButton>
-
-              <Button
-                onClick={() => {
-                  navigate('/orders/tables');
-                }}
-                color='primary'
-                variant='contained'
-                size='small'
-                startIcon={<Add />}
-              >
-                Nuevo pedido
-              </Button>
             </Stack>
           }
         />
 
-        <Clock />
+        {/* <Clock /> */}
 
         <ListActiveOrders />
       </Container>

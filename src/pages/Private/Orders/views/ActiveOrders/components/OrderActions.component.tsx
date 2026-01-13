@@ -55,12 +55,6 @@ export const OrderActions: FC<Props> = ({
           startIcon={<PlayCircleOutline />}
           onClick={handleStartClick}
           variant='outlined'
-          color='warning'
-          sx={{
-            fontWeight: 600,
-            fontSize: '1rem',
-            py: 1.5
-          }}
         >
           Iniciar Pedido
         </Button>
@@ -80,37 +74,16 @@ export const OrderActions: FC<Props> = ({
           >
             <Button
               onClick={handlePendingClick}
-              color='warning'
               variant='outlined'
               startIcon={<Undo />}
-              sx={{
-                borderWidth: 2,
-                '&:hover': {
-                  borderWidth: 2,
-                  transform: 'translateY(-2px)',
-                  transition: 'all 0.3s ease'
-                }
-              }}
             >
               Pendiente
             </Button>
 
             <Button
-              color='success'
               variant='contained'
               startIcon={<Check />}
               onClick={handleDeliveredClick}
-              sx={{
-                boxShadow: theme.colors.shadows.success,
-                '&:hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: `0 6px 20px ${alpha(
-                    theme.palette.success.main,
-                    0.4
-                  )}`,
-                  transition: 'all 0.3s ease'
-                }
-              }}
             >
               Entregado
             </Button>

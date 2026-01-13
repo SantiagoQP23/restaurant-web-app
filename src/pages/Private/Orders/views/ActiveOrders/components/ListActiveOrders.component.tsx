@@ -122,9 +122,7 @@ export const ListActiveOrders = () => {
             sm: 'none',
             md: 'flex'
           },
-          flexDirection: 'column',
-          gap: '0.5rem',
-          alignItems: 'center'
+          gap: '0.5rem'
         }}
       >
         <Tabs
