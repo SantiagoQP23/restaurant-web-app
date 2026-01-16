@@ -131,7 +131,9 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
 
   return (
     <>
-      <Card>
+      <Card
+        sx={{ boxShadow: 'none', border: 1, borderColor: 'divider', mb: 2 }}
+      >
         <CardHeader
           // avatar={<Typography variant="h6">{detail.quantity}</Typography>}
           title={
@@ -141,7 +143,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
                 component='div'
                 color='text.primary'
               >
-                {detail.quantity} {detail.product.name}{' '}
+                {detail.product.name} x{detail.quantity}
                 {detail.productOption && (
                   <Chip
                     sx={{ ml: 1 }}
@@ -170,7 +172,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
         />
         <Box px={2}>
           {detail.description && (
-            <Typography variant='h6' whiteSpace='pre-wrap'>
+            <Typography variant='subtitle2' whiteSpace='pre-wrap'>
               {detail.description}
             </Typography>
           )}
@@ -179,6 +181,7 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
               display: 'flex',
               alignItems: 'center',
               width: '100%',
+              justifyContent: 'space-between',
               mt: 1
             }}
           >
@@ -186,29 +189,12 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
               <LinearProgress
                 variant='determinate'
                 value={(detail.qtyDelivered * 100) / detail.quantity}
-                color='success'
+                color='primary'
               />
             </Box>
-            <Box sx={{ minWidth: 100, display: 'flex', alignItems: 'center' }}>
-              {detail.quantity === detail.qtyDelivered ? (
-                <Typography
-                  fontSize='0.7rem'
-                  component='div'
-                  color='warning'
-                  variant='h5'
-                  alignItems='center'
-                >
-                  Entregado
-                </Typography>
-              ) : (
-                <>
-                  <Typography fontSize='0.7rem' color='text.secondary'>
-                    {detail.quantity - detail.qtyDelivered} por entregar
-                  </Typography>
-                  <Button size='small'>+1</Button>
-                </>
-              )}
-            </Box>
+            <Typography variant='subtitle1' component='div'>
+              {formatMoney(detail.amount)}
+            </Typography>
           </Box>
         </Box>
         <CardActions
@@ -217,31 +203,28 @@ export const OrderDetailCard: FC<Props> = ({ detail }) => {
             alignItems: 'center'
           }}
         >
-          <Box display='flex'>
-            <CounterInput
-              value={quantity}
-              onChange={handleChangeQuantity}
-              min={0.5}
-            />
-            {quantityChanged && (
-              <IconButton
-                color='primary'
-                onClick={(e) => {
-                  e.stopPropagation();
-                  updateQuantity();
-                }}
-              >
-                <SaveOutlined />
-              </IconButton>
-            )}
-          </Box>
-          <Box display='flex' gap={1}>
-            <Typography variant='subtitle1' component='div'>
-              {formatMoney(detail.price)}
-            </Typography>
-            <Typography variant='h4' component='div'>
-              {formatMoney(detail.amount)}
-            </Typography>
+          {/* <Box display='flex'> */}
+          {/*   <CounterInput */}
+          {/*     value={quantity} */}
+          {/*     onChange={handleChangeQuantity} */}
+          {/*     min={0.5} */}
+          {/*   /> */}
+          {/*   {quantityChanged && ( */}
+          {/*     <IconButton */}
+          {/*       color='primary' */}
+          {/*       onClick={(e) => { */}
+          {/*         e.stopPropagation(); */}
+          {/*         updateQuantity(); */}
+          {/*       }} */}
+          {/*     > */}
+          {/*       <SaveOutlined /> */}
+          {/*     </IconButton> */}
+          {/*   )} */}
+          {/* </Box> */}
+          <Box display='flex' justifyContent='end' textAlign='end' gap={1}>
+            {/* <Typography variant='subtitle1' component='div'> */}
+            {/*   {formatMoney(detail.price)} */}
+            {/* </Typography> */}
           </Box>
         </CardActions>
         <Box px={2}>

@@ -16,26 +16,21 @@ import {
 } from '@mui/material';
 import { TitlePage } from '../../../components';
 import { Tables } from './components/Tables.component';
-import {
-  Add,
-  Assignment,
-  LocalDining,
-  PendingActions,
-  SoupKitchen
-} from '@mui/icons-material';
+import { Add } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { OrderStatus, TypeOrder } from '../../../../../models';
 import { useNewOrderStore } from '../../store/newOrderStore';
-import { Users } from './components/Users.component';
 import { Label } from '../../../../../components/ui';
 import { TakeAwayOrders } from './components/TakeAwayOrders.component';
 import { useSelector } from 'react-redux';
 import { selectOrders } from '../../../../../redux';
-import { LinearProgressWrapper } from '../../components';
 import NiceModal from '@ebay/nice-modal-react';
 import { NewOrderModal } from '../../components/modals/NewOrderModal.component';
+import { OrderList } from './components/OrderList.component';
+import { fontWeight } from '@mui/system';
 
 enum DashboardViews {
+  ALL = 'ALL',
   TABLES = 'TABLES',
   USERS = 'USERS',
   TAKE_AWAY = 'TAKE_AWAY'
@@ -48,29 +43,30 @@ interface HeaderBoxProps {
 
 const HeaderBox = ({ title, count }: HeaderBoxProps) => {
   return (
-    <Card>
-      <Box
-        sx={{
-          p: 2,
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: 1,
-          boxShadow: '1px solid #0000001A',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 1
-        }}
-      >
-        <Typography variant='body1'>{title}</Typography>
-        <Typography variant='h4'>{count}</Typography>
-        {/* <Chip label={count} size='small' /> */}
-      </Box>
-    </Card>
+    <Box
+      sx={{
+        p: 2,
+        border: 1,
+        borderColor: 'divider',
+        borderRadius: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1
+      }}
+    >
+      <Typography variant='body2' sx={{ fontWeight: 'semibold' }}>
+        {title}
+      </Typography>
+      <Typography variant='h4' sx={{ fontWeight: 'normal' }}>
+        {count}
+      </Typography>
+      {/* <Chip label={count} size='small' /> */}
+    </Box>
   );
 };
 
 export const OrdersDashboard = () => {
-  const [view, setView] = useState(DashboardViews.TABLES);
+  const [view, setView] = useState(DashboardViews.ALL);
 
   const { orders } = useSelector(selectOrders);
 
@@ -209,6 +205,7 @@ export const OrdersDashboard = () => {
         {/* </Grid> */}
 
         <Tabs value={view} onChange={(e, value) => setView(value)}>
+          <Tab value={DashboardViews.ALL} label='Todos' />
           <Tab value={DashboardViews.TABLES} label='Mesas' />
           {/* <Tab value={DashboardViews.USERS} label="Usuarios" icon={<Label sx={{ml: 1}} color="info">new</Label>} iconPosition="end" /> */}
           <Tab
@@ -224,6 +221,7 @@ export const OrdersDashboard = () => {
         </Tabs>
 
         <Box mt={2}>
+          {view === DashboardViews.ALL && <OrderList />}
           {view === DashboardViews.TABLES && <Tables />}
           {/* {view === DashboardViews.USERS && <Users />} */}
           {view === DashboardViews.TAKE_AWAY && <TakeAwayOrders />}

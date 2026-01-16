@@ -89,13 +89,15 @@ export const ActiveOrder: FC<Props> = ({
     <Card
       sx={{
         borderTop: `5px solid ${theme.palette[color].main}`,
-        boxShadow:
-          '0px 9px 16px rgba(159, 162, 191, .18), 0px 2px 2px rgba(159, 162, 191, 0.32)',
+        boxShadow: 'none',
+        border: 1,
+        borderColor: 'divider',
+        // boxShadow:
+        //   '0px 9px 16px rgba(159, 162, 191, .18), 0px 2px 2px rgba(159, 162, 191, 0.32)',
         transition: 'all 0.3s ease',
         position: 'relative',
         overflow: 'visible'
       }}
-      variant='elevation'
     >
       {/* Enhanced Header */}
       <OrderCardHeader order={order} index={index} color={color} />

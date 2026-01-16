@@ -1,34 +1,19 @@
 import { FC } from 'react';
 
-import {
-  Assignment,
-  Circle,
-  People,
-  TableBar,
-  TableBarOutlined
-} from '@mui/icons-material';
+import { Circle, TableBarOutlined } from '@mui/icons-material';
 import {
   Card,
   CardActionArea,
   Box,
   Typography,
-  Badge,
-  Stack,
-  CardHeader
+  CardHeader,
+  Chip
 } from '@mui/material';
-import { ITable, OrderStatus } from '../../../../../../models';
+import { ITable } from '../../../../../../models';
 import { useSelector } from 'react-redux';
 import { selectOrders } from '../../../../../../redux';
-import { Label } from '../../../../../../components/ui';
-import {
-  DrawerOrder,
-  LabelStatusOrder,
-  orderStatusIconMap,
-  colorStatusMap
-} from '../../../components';
+import { DrawerOrder } from '../../../components';
 import NiceModal from '@ebay/nice-modal-react';
-import { format, formatDistance } from 'date-fns';
-import { es } from 'date-fns/locale';
 import { NewOrderModal } from '../../../components/modals/NewOrderModal.component';
 
 interface Props {
@@ -58,21 +43,18 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
   };
 
   return (
-    <Card
-      sx={{ border: 1, borderColor: isAvailable ? 'divider' : 'primary.main' }}
-    >
+    <Card sx={{}}>
       <CardActionArea onClick={handleClick}>
         <CardHeader
           title={
-            <Box display='flex' justifyContent='center' gap={1}>
-              <TableBarOutlined
-                fontSize='small'
-                // color={isAvailable ? "secondary" : "inherit"}
-              />
-              <Typography variant='subtitle1' textAlign='start'>
-                Mesa {table.name}
-              </Typography>
-            </Box>
+            <Chip
+              icon={<TableBarOutlined fontSize='small' />}
+              label={`Mesa ${table.name}`}
+              // color={table.isAvailable ? 'default' : 'primary'}
+              color='default'
+              variant={table.isAvailable ? 'outlined' : 'filled'}
+              sx={{ px: 1 }}
+            />
           }
           titleTypographyProps={{
             variant: 'h5',
@@ -81,7 +63,8 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
         />
         <Box
           sx={{
-            p: 1
+            p: 1,
+            textAlign: 'center'
             //   display: "flex",
             //   flexDirection: "column",
             //   gap: 1,
@@ -89,38 +72,41 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
             //   alignItems: "center",
           }}
         >
+          {/* <Box display='flex' gap={1} flexDirection='column'> */}
+          {/*   {ordersTable.map((order) => ( */}
+          {/*     <Box */}
+          {/*       key={order.id} */}
+          {/*       width='100%' */}
+          {/*       display='flex' */}
+          {/*       gap={1} */}
+          {/*       border={`2px solid #eee`} */}
+          {/*       borderRadius='5px' */}
+          {/*       p={0.5} */}
+          {/*       justifyContent='space-between' */}
+          {/*     > */}
+          {/*       <Badge */}
+          {/*         sx={{ */}
+          {/*           border: '1px solid', */}
+          {/*           borderRadius: '5px', */}
+          {/*           borderColor: `${colorStatusMap.get(order.status)}.main` */}
+          {/*         }} */}
+          {/*       > */}
+          {/*         {orderStatusIconMap.get(order.status)} */}
+          {/*       </Badge> */}
+          {/*       <Typography> */}
+          {/*         {format(new Date(order.createdAt), 'HH:mm')} */}
+          {/*       </Typography> */}
+          {/*       <Box display='flex' gap={1} alignItems='center'> */}
+          {/*         <People fontSize='small' /> */}
+          {/*         <Typography fontSize='0.8rem'>{order.people}</Typography> */}
+          {/*       </Box> */}
+          {/*     </Box> */}
+          {/*   ))} */}
+          {/* </Box> */}
           {ordersTable.length > 0 ? (
-            <Box display='flex' gap={1} flexDirection='column'>
-              {ordersTable.map((order) => (
-                <Box
-                  key={order.id}
-                  width='100%'
-                  display='flex'
-                  gap={1}
-                  border={`2px solid #eee`}
-                  borderRadius='5px'
-                  p={0.5}
-                  justifyContent='space-between'
-                >
-                  <Badge
-                    sx={{
-                      border: '1px solid',
-                      borderRadius: '5px',
-                      borderColor: `${colorStatusMap.get(order.status)}.main`
-                    }}
-                  >
-                    {orderStatusIconMap.get(order.status)}
-                  </Badge>
-                  <Typography>
-                    {format(new Date(order.createdAt), 'HH:mm')}
-                  </Typography>
-                  <Box display='flex' gap={1} alignItems='center'>
-                    <People fontSize='small' />
-                    <Typography fontSize='0.8rem'>{order.people}</Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Box>
+            <Typography variant='body1'>
+              {ordersTable.length} Pedidos
+            </Typography>
           ) : (
             <Box
               alignItems='center'

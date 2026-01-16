@@ -19,6 +19,7 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRestaurantStore } from '../../Private/Common/store/restaurantStore';
+import { getEnvVariables } from '@/helpers';
 
 const pages = [
   {
@@ -35,6 +36,8 @@ const pages = [
     path: '/contact'
   }
 ];
+
+const { VITE_APP_NAME } = getEnvVariables();
 
 export const AppBar = () => {
   const navigate = useNavigate();
@@ -173,7 +176,7 @@ export const AppBar = () => {
                     textDecoration: 'none'
                   }}
                 >
-                  Fast Serve
+                  {VITE_APP_NAME}
                 </Typography>
               </Stack>
               <Stack
