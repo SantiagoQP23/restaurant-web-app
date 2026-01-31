@@ -179,7 +179,8 @@ export interface NavItemButtonProps {
   item: NavItem;
 }
 export const NavItemButton: FC<NavItemButtonProps> = ({ item }) => {
-  const { closeSidebar, open, toggleSidebar } = useContext(SidebarContext);
+  const { closeSidebar, sidebarToggle, toggleSidebar } =
+    useContext(SidebarContext);
 
   return (
     <ListItem component='div' key={item.to}>
@@ -217,7 +218,8 @@ export const NavItemButton: FC<NavItemButtonProps> = ({ item }) => {
 };
 
 function SidebarMenuMobile() {
-  const { closeSidebar, open, toggleSidebar } = useContext(SidebarContext);
+  const { closeSidebar, sidebarToggle, toggleSidebar } =
+    useContext(SidebarContext);
 
   const [openOrders, setOpenOrders] = useState(true);
 

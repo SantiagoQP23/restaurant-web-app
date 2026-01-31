@@ -21,12 +21,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import SidebarMenu from './SidebarMenu/SidebarMenu.component';
 import { Scrollbar } from '../../../components';
 
-import {
-  ChevronLeft,
-  DoneOutlineRounded,
-  ExpandMore,
-  Inbox
-} from '@mui/icons-material';
+import { DoneOutlineRounded, ExpandMore, Inbox } from '@mui/icons-material';
 
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../../../redux';
@@ -49,46 +44,34 @@ const SidebarWrapper = styled(Box)(
 `
 );
 
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen
-  }),
-  overflowX: 'hidden'
-});
+const drawerWidth = 300;
 
-const closedMixin = (theme: Theme): CSSObject => ({
+const DrawerPersistent = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open'
+})<{ open?: boolean }>(({ theme, open }) => ({
+  width: open ? drawerWidth : 0,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
   }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`
+  '& .MuiDrawer-paper': {
+    width: open ? drawerWidth : 0,
+    overflowX: 'hidden',
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: open
+        ? theme.transitions.duration.enteringScreen
+        : theme.transitions.duration.leavingScreen
+    }),
+    background: theme.sidebar.background,
+    color: theme.colors.alpha.trueWhite[70],
+    borderRight: 'none'
   }
-});
-
-const DrawerPersistent = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open'
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: 'nowrap',
-  // boxSizing: "border-box",
-  borderRight: `3px dashed #fff !important`,
-  ...(open && {
-    ...openedMixin(theme),
-    '& .MuiDrawer-paper': openedMixin(theme)
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    '& .MuiDrawer-paper': closedMixin(theme)
-  })
 }));
 
-const Title = ({ open }: { open: boolean }) => {
+const Title = () => {
   const { restaurant, setRestaurant } = useRestaurantStore((state) => state);
   const switchRestaurant = switchRestaurantMutation();
   const { user } = useSelector(selectAuth);
@@ -119,7 +102,7 @@ const Title = ({ open }: { open: boolean }) => {
         alignItems='center'
         gap={2}
         sx={{
-          mx: open ? 3 : 0.75
+          mx: 3
         }}
       >
         <Box display='flex' alignItems='center' gap={2}>
@@ -196,104 +179,46 @@ const Title = ({ open }: { open: boolean }) => {
   );
 };
 
-export const BoxUser = ({ onClick }: { onClick: () => void }) => {
-  const theme = useTheme();
-
-  const { user } = useSelector(selectAuth);
-
-  return (
-    <Box
-      color='inherit'
-      onClick={onClick}
-      sx={{
-        mx: 1,
-        borderRadius: 1,
-        border: '1px solid',
-        padding: 1,
-        borderColor: theme.colors.alpha.trueWhite[10],
-        color: theme.colors.alpha.trueWhite[70],
-        '&:hover': {
-          borderColor: theme.colors.alpha.trueWhite[50],
-          color: theme.colors.alpha.trueWhite[50],
-          cursor: 'pointer'
-        }
-      }}
-    >
-      <Typography variant='h6' textAlign='center'>
-        {user!.person.firstName} {user!.person.lastName}
-      </Typography>
-      <Typography variant='body1' textAlign='center'>
-        {user!.role.name}
-      </Typography>
-    </Box>
-  );
-};
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  height: theme.header.height,
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar
-}));
-
-const drawerWidth = 300;
-
 function Sidebar() {
-  const {
-    sidebarToggle,
-
-    closeSidebar,
-    open,
-    handleDrawerClose
-  } = useContext(SidebarContext);
+  const { sidebarToggle, closeSidebar } = useContext(SidebarContext);
 
   const theme = useTheme();
 
   return (
     <>
+      {/* Desktop Permanent Drawer */}
       <DrawerPersistent
         variant='permanent'
+        open={sidebarToggle}
         sx={{
-          display: {
-            xs: 'none',
-            lg: 'inline-block'
-          }
+          display: { xs: 'none', lg: 'block' }
         }}
-        open={open}
       >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose} disabled>
-            <ChevronLeft />
-          </IconButton>
-        </DrawerHeader>
-        <Scrollbar height={'100%'}>
-          <Box my={1}>
-            <Title open={open} />
-          </Box>
+        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Scrollbar height={'100%'}>
+            <Box mx={2} my={1} mt={3}>
+              <Title />
+            </Box>
 
-          <SidebarMenu />
-        </Scrollbar>
-        <Divider
-          sx={{
-            background: theme.colors.alpha.trueWhite[10]
-          }}
-        />
+            <SidebarMenu />
+          </Scrollbar>
 
-        {open && (
-          <Box p={2} textAlign='center'>
-            <Typography variant='subtitle2'>Desarrollado por </Typography>
-            <Typography variant='body1'>Santiago Quirumbay</Typography>
+          <Divider />
+          <Box p={1} textAlign='center'>
+            <Typography color='text.primary' variant='subtitle1'>
+              Desarrollado por{' '}
+            </Typography>
+            <Typography variant='body1' color='text.primary'>
+              Santiago Quirumbay
+            </Typography>
           </Box>
-        )}
+        </Box>
       </DrawerPersistent>
 
-      {/* </SidebarWrapper> */}
+      {/* Mobile/Tablet Temporary Drawer */}
       <Drawer
         sx={{
-          // boxShadow: `${theme.sidebar.boxShadow}`,
+          display: { xs: 'block', lg: 'none' },
           zIndex: theme.zIndex.drawer + 3
         }}
         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
@@ -306,7 +231,7 @@ function Sidebar() {
         <SidebarWrapper>
           <Scrollbar height={'100%'}>
             <Box mx={2} my={1} mt={3}>
-              <Title open={open} />
+              <Title />
             </Box>
 
             <SidebarMenu />

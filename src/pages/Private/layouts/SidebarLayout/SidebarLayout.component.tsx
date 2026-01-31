@@ -30,7 +30,11 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
             display: 'block',
             flex: 1,
             width: '100%',
-            pt: `${theme.header.height}`
+            pt: `${theme.header.height}`,
+            transition: theme.transitions.create(['margin', 'width'], {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.leavingScreen
+            })
           }}
         >
           <Outlet />

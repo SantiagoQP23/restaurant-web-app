@@ -1,11 +1,9 @@
 import { FC, useState, createContext, ReactElement } from 'react';
 type SidebarContext = {
-  sidebarToggle: any;
+  sidebarToggle: boolean;
   toggleSidebar: () => void;
   closeSidebar: () => void;
-  handleDrawerOpen: () => void;
-  handleDrawerClose: () => void;
-  open: boolean;
+  openSidebar: () => void;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -17,23 +15,28 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
+const SIDEBAR_STATE_KEY = 'sidebar-toggle-state';
+
 export const SidebarProvider: FC<Props> = ({ children }) => {
-  const [open, setOpen] = useState(true);
+  const [sidebarToggle, setSidebarToggle] = useState<boolean>(() => {
+    const savedState = localStorage.getItem(SIDEBAR_STATE_KEY);
+    return savedState !== null ? JSON.parse(savedState) : true;
+  });
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const [sidebarToggle, setSidebarToggle] = useState<boolean>(false);
   const toggleSidebar = () => {
-    setSidebarToggle(!sidebarToggle);
+    const newState = !sidebarToggle;
+    setSidebarToggle(newState);
+    localStorage.setItem(SIDEBAR_STATE_KEY, JSON.stringify(newState));
   };
+
   const closeSidebar = () => {
     setSidebarToggle(false);
+    localStorage.setItem(SIDEBAR_STATE_KEY, 'false');
+  };
+
+  const openSidebar = () => {
+    setSidebarToggle(true);
+    localStorage.setItem(SIDEBAR_STATE_KEY, 'true');
   };
 
   return (
@@ -42,9 +45,7 @@ export const SidebarProvider: FC<Props> = ({ children }) => {
         sidebarToggle,
         toggleSidebar,
         closeSidebar,
-        handleDrawerOpen,
-        handleDrawerClose,
-        open
+        openSidebar
       }}
     >
       {children}

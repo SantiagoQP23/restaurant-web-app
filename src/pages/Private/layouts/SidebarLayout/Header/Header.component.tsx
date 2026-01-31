@@ -40,23 +40,25 @@ const AppBar = styled(MuiAppBar, {
   backgroundColor: 'transparent',
   border: 'none',
   height: theme.header.height,
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+  // Desktop only: add margin when sidebar is open
+  [theme.breakpoints.up('lg')]: {
+    marginLeft: open ? drawerWidth : 0,
+    width: open ? `calc(100% - ${drawerWidth}px)` : '100%',
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
+      duration: open
+        ? theme.transitions.duration.enteringScreen
+        : theme.transitions.duration.leavingScreen
     })
-  })
+  }
 }));
 
 function Header() {
-  const { sidebarToggle, toggleSidebar, open, handleDrawerOpen } =
-    useContext(SidebarContext);
+  const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
 
   const { user: userState } = useAppSelector(selectAuth);
   return (
-    <AppBar position='fixed' open={false}>
+    <AppBar position='fixed' open={sidebarToggle}>
       <Container maxWidth='lg'>
         <Box
           display='flex'
@@ -64,38 +66,21 @@ function Header() {
           justifyContent='space-between'
           mt={1}
         >
-          {/* <HeaderMenu /> */}
-          <Typography
-            // ml={{ xs: 3, lg: '310px' }}
-            variant='h6'
-            color='text.primary'
-          ></Typography>
+          {/* LEFT SIDE - Toggle Menu Button */}
+          <Tooltip arrow title='Toggle Menu'>
+            <IconButton color='primary' onClick={toggleSidebar}>
+              {sidebarToggle ? (
+                <CloseTwoToneIcon fontSize='small' />
+              ) : (
+                <MenuTwoToneIcon fontSize='small' />
+              )}
+            </IconButton>
+          </Tooltip>
 
+          {/* RIGHT SIDE - User Actions */}
           <Stack direction='row' spacing={1} alignItems='center'>
             <HeaderButtons />
             {userState && <HeaderUserbox />}
-            <Box
-              component='span'
-              sx={{
-                display: { lg: 'none', xs: 'inline-block' }
-              }}
-            >
-              <Tooltip arrow title='Toggle Menu'>
-                <IconButton
-                  color='primary'
-                  onClick={() => {
-                    toggleSidebar();
-                    handleDrawerOpen();
-                  }}
-                >
-                  {sidebarToggle ? (
-                    <CloseTwoToneIcon fontSize='small' />
-                  ) : (
-                    <MenuTwoToneIcon fontSize='small' />
-                  )}
-                </IconButton>
-              </Tooltip>
-            </Box>
           </Stack>
         </Box>
       </Container>

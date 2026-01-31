@@ -75,7 +75,7 @@ const ListWrapper = styled(Box)(
 function HeaderMenu() {
   const ref = useRef<any>(null);
 
-  const { open, handleDrawerOpen } = useContext(SidebarContext);
+  const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
 
   const { activeCashRegister } = useCashRegisterStore((state) => state);
 
@@ -102,13 +102,13 @@ function HeaderMenu() {
         }}
       >
         <ListItemButton
-          onClick={handleDrawerOpen}
+          onClick={toggleSidebar}
           sx={{
             ml: 1,
             color: 'text.primary',
             backgroundColor: (theme) => theme.header.background,
 
-            ...(open && { display: 'none' })
+            ...(!sidebarToggle && { display: 'none' })
           }}
         >
           <MenuIcon />
