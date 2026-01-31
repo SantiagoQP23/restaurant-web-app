@@ -28,13 +28,23 @@ import {
 import { ModalStartOrder } from './ModalStartOrder.component';
 import { useProductionAreasStore } from '../../../../Common/store/production-areas-store';
 import { ProductionArea } from '../../../../Common/models/production-area.model';
+import { CollapsibleOrdersSections } from './CollapsibleOrdersSections.component';
+
+export type ViewMode = 'tabs' | 'sections';
+
+interface ListActiveOrdersProps {
+  viewMode?: ViewMode;
+}
 
 /**
  * Component to render active order
  * @author Santiago Quirumbay
+ * @version 1.2 Added viewMode prop to support collapsible sections view
  * @version 1.1 16/12/2023 Adds productionArea field.
  */
-export const ListActiveOrders = () => {
+export const ListActiveOrders = ({
+  viewMode = 'tabs'
+}: ListActiveOrdersProps) => {
   const { productionAreaActive, productionAreas, setProductionAreaActive } =
     useProductionAreasStore();
 
@@ -106,172 +116,185 @@ export const ListActiveOrders = () => {
           ))}
         </Tabs>
       </Box> */}
-
-      <Box
-        sx={{
-          py: 0.5,
-          mt: 2,
-
-          // overflowX: "auto",
-          // // flexGrow: 1,
-          // bgcolor: "background.paper",
-          // border: `1px solid ${theme.colors.alpha.black[10]}`,
-          // borderRadius: "10px",
-          display: {
-            xs: 'none',
-            sm: 'none',
-            md: 'flex'
-          },
-          gap: '0.5rem'
-        }}
-      >
-        <Tabs
-          value={statusOrderFilter}
-          variant='scrollable'
-          indicatorColor='primary'
-          sx={{
-            '& .MuiTabs-indicator': {
-              backgroundColor: !statusOrderFilter
-                ? 'primary.main'
-                : statusOrderFilter === OrderStatus.PENDING
-                  ? 'warning.main'
-                  : statusOrderFilter === OrderStatus.IN_PROGRESS
-                    ? 'info.main'
-                    : 'success.main',
-              borderRadius: '10px 10px 0 0',
-              borderColor: 'transparent',
-              borderBottom: 'transparent'
-            }
-          }}
-        >
-          <Tab
-            label={
-              <>
-                <Typography variant='body1' component='span'>
-                  Pendientes
-                </Typography>
-                <Chip
-                  label={
-                    ordersFilteredByProductionArea.filter(
-                      (order) => order.status === OrderStatus.PENDING
-                    ).length
-                  }
-                  color='warning'
-                  size='small'
-                  sx={{ ml: 1 }}
-                />
-              </>
-            }
-            value={OrderStatus.PENDING}
-            onClick={() => setStatusOrderFilter(OrderStatus.PENDING)}
-            icon={<PendingOutlined />}
-            iconPosition='start'
+      {/* Desktop: Show collapsible sections view when viewMode is 'sections' */}
+      {viewMode === 'sections' && (
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+          <CollapsibleOrdersSections
+            orders={ordersFilteredByProductionArea}
+            productionAreaActive={productionAreaActive || undefined}
           />
+        </Box>
+      )}
+      {/* Desktop: Show tabs view when viewMode is 'tabs' */}
+      {viewMode === 'tabs' && (
+        <>
+          <Box
+            sx={{
+              py: 0.5,
+              mt: 2,
 
-          <Tab
-            label={
-              <>
-                <Typography variant='body1' component='span'>
-                  En preparación
-                </Typography>
-                <Chip
-                  label={
-                    ordersFilteredByProductionArea.filter(
-                      (order) => order.status === OrderStatus.IN_PROGRESS
-                    ).length
+              // overflowX: "auto",
+              // // flexGrow: 1,
+              // bgcolor: "background.paper",
+              // border: `1px solid ${theme.colors.alpha.black[10]}`,
+              // borderRadius: "10px",
+              display: {
+                xs: 'none',
+                sm: 'none',
+                md: 'flex'
+              },
+              gap: '0.5rem'
+            }}
+          >
+            <Tabs
+              value={statusOrderFilter}
+              variant='scrollable'
+              indicatorColor='primary'
+              sx={{
+                '& .MuiTabs-indicator': {
+                  backgroundColor: !statusOrderFilter
+                    ? 'primary.main'
+                    : statusOrderFilter === OrderStatus.PENDING
+                      ? 'warning.main'
+                      : statusOrderFilter === OrderStatus.IN_PROGRESS
+                        ? 'info.main'
+                        : 'success.main',
+                  borderRadius: '10px 10px 0 0',
+                  borderColor: 'transparent',
+                  borderBottom: 'transparent'
+                }
+              }}
+            >
+              <Tab
+                label={
+                  <>
+                    <Typography variant='body1' component='span'>
+                      Pendientes
+                    </Typography>
+                    <Chip
+                      label={
+                        ordersFilteredByProductionArea.filter(
+                          (order) => order.status === OrderStatus.PENDING
+                        ).length
+                      }
+                      color='warning'
+                      size='small'
+                      sx={{ ml: 1 }}
+                    />
+                  </>
+                }
+                value={OrderStatus.PENDING}
+                onClick={() => setStatusOrderFilter(OrderStatus.PENDING)}
+                icon={<PendingOutlined />}
+                iconPosition='start'
+              />
+
+              <Tab
+                label={
+                  <>
+                    <Typography variant='body1' component='span'>
+                      En preparación
+                    </Typography>
+                    <Chip
+                      label={
+                        ordersFilteredByProductionArea.filter(
+                          (order) => order.status === OrderStatus.IN_PROGRESS
+                        ).length
+                      }
+                      color='info'
+                      size='small'
+                      sx={{ ml: 1 }}
+                    />
+                  </>
+                }
+                value={OrderStatus.IN_PROGRESS}
+                onClick={() => setStatusOrderFilter(OrderStatus.IN_PROGRESS)}
+                icon={<Restaurant />}
+                iconPosition='start'
+              />
+
+              <Tab
+                label={
+                  <>
+                    <Typography variant='body1' component='span'>
+                      Entregados
+                    </Typography>
+                    <Chip
+                      label={
+                        ordersFilteredByProductionArea.filter(
+                          (order) => order.status === OrderStatus.DELIVERED
+                        ).length
+                      }
+                      color='success'
+                      size='small'
+                      sx={{ ml: 1 }}
+                    />
+                  </>
+                }
+                value={OrderStatus.DELIVERED}
+                onClick={() => setStatusOrderFilter(OrderStatus.DELIVERED)}
+                icon={<DoneAllOutlined />}
+                iconPosition='start'
+              />
+            </Tabs>
+          </Box>
+
+          <Box py={1} px={0.5} minHeight={400}>
+            {ordersFiltered.length === 0 ? (
+              <Typography variant='body1' align='center' mt={5}>
+                No hay pedidos
+              </Typography>
+            ) : (
+              <Grid container spacing={2}>
+                {ordersFiltered.map((order, index) => {
+                  {
+                    /* const details = productionAreaActive */
                   }
-                  color='info'
-                  size='small'
-                  sx={{ ml: 1 }}
-                />
-              </>
-            }
-            value={OrderStatus.IN_PROGRESS}
-            onClick={() => setStatusOrderFilter(OrderStatus.IN_PROGRESS)}
-            icon={<Restaurant />}
-            iconPosition='start'
-          />
-
-          <Tab
-            label={
-              <>
-                <Typography variant='body1' component='span'>
-                  Entregados
-                </Typography>
-                <Chip
-                  label={
-                    ordersFilteredByProductionArea.filter(
-                      (order) => order.status === OrderStatus.DELIVERED
-                    ).length
+                  {
+                    /*   ? order.details.filter( */
                   }
-                  color='success'
-                  size='small'
-                  sx={{ ml: 1 }}
-                />
-              </>
-            }
-            value={OrderStatus.DELIVERED}
-            onClick={() => setStatusOrderFilter(OrderStatus.DELIVERED)}
-            icon={<DoneAllOutlined />}
-            iconPosition='start'
-          />
-        </Tabs>
-      </Box>
+                  {
+                    /*       (detail) => */
+                  }
+                  {
+                    /*         detail.product.productionArea.id === */
+                  }
+                  {
+                    /*         productionAreaActive?.id */
+                  }
+                  {
+                    /*     ) */
+                  }
+                  {
+                    /*   : order.details; */
+                  }
 
-      <Box py={1} px={0.5} minHeight={400}>
-        {ordersFiltered.length === 0 ? (
-          <Typography variant='body1' align='center' mt={5}>
-            No hay pedidos
-          </Typography>
-        ) : (
-          <Grid container spacing={2}>
-            {ordersFiltered.map((order, index) => {
-              {
-                /* const details = productionAreaActive */
-              }
-              {
-                /*   ? order.details.filter( */
-              }
-              {
-                /*       (detail) => */
-              }
-              {
-                /*         detail.product.productionArea.id === */
-              }
-              {
-                /*         productionAreaActive?.id */
-              }
-              {
-                /*     ) */
-              }
-              {
-                /*   : order.details; */
-              }
-
-              {
-                /* if (details.length >= 1) */
-              }
-              return (
-                <Grid item xs={12} sm={6} md={4} key={order.id}>
-                  <ActiveOrder
-                    order={order}
-                    index={index}
-                    color={
-                      order.status === OrderStatus.PENDING
-                        ? 'warning'
-                        : order.status === OrderStatus.IN_PROGRESS
-                          ? 'info'
-                          : 'success'
-                    }
-                    productionArea={productionAreaActive || undefined}
-                  />
-                </Grid>
-              );
-            })}
-          </Grid>
-        )}
-      </Box>
-
+                  {
+                    /* if (details.length >= 1) */
+                  }
+                  return (
+                    <Grid item xs={12} sm={6} md={4} key={order.id}>
+                      <ActiveOrder
+                        order={order}
+                        index={index}
+                        color={
+                          order.status === OrderStatus.PENDING
+                            ? 'warning'
+                            : order.status === OrderStatus.IN_PROGRESS
+                              ? 'info'
+                              : 'success'
+                        }
+                        productionArea={productionAreaActive || undefined}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            )}
+          </Box>
+        </>
+      )}
+      {/* Mobile: Always show bottom navigation (regardless of viewMode) */}{' '}
       <Paper
         sx={{
           position: 'fixed',
