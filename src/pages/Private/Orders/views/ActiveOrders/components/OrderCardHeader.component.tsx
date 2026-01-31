@@ -30,7 +30,7 @@ interface Props {
  */
 export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
   const theme = useTheme();
-  const adjustedDeliveryTime = addMinutes(new Date(order.deliveryTime), 30);
+  const adjustedDeliveryTime = new Date(order.deliveryTime);
   const timeUrgency = useTimeUrgency(adjustedDeliveryTime);
 
   return (

@@ -39,9 +39,9 @@ export const ORDER_STATUS_CONFIG = {
  * Time urgency thresholds (in minutes)
  */
 export const TIME_URGENCY = {
-  OVERDUE: 0,
-  URGENT: 5,
-  WARNING: 30
+  OVERDUE: 40,
+  URGENT: 20,
+  WARNING: 10
 } as const;
 
 /**

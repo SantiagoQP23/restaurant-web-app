@@ -49,8 +49,8 @@ export const ActiveOrder: FC<Props> = ({
   const { productionAreas } = useProductionAreasStore();
   const queryClient = useQueryClient();
   const { mutate: updateOrder } = useUpdateOrder();
-  const adjustedDeliveryTime = addMinutes(new Date(order.deliveryTime), 30);
-  const timeUrgency = useTimeUrgency(adjustedDeliveryTime);
+  // const adjustedDeliveryTime = addMinutes(new Date(order.deliveryTime), 30);
+  const timeUrgency = useTimeUrgency(new Date(order.deliveryTime));
 
   // Prefetch order details for quick access
   useMemo(() => {

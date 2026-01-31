@@ -17,11 +17,11 @@ export interface TimeUrgency {
 export const useTimeUrgency = (deliveryTime: Date): TimeUrgency => {
   return useMemo(() => {
     const minutesRemaining = differenceInMinutes(
-      new Date(deliveryTime),
-      new Date()
+      new Date(),
+      new Date(deliveryTime)
     );
 
-    if (minutesRemaining < TIME_URGENCY.OVERDUE) {
+    if (minutesRemaining >= TIME_URGENCY.OVERDUE) {
       return {
         color: 'error',
         severity: 'overdue',
@@ -30,7 +30,7 @@ export const useTimeUrgency = (deliveryTime: Date): TimeUrgency => {
       };
     }
 
-    if (minutesRemaining < TIME_URGENCY.URGENT) {
+    if (minutesRemaining >= TIME_URGENCY.URGENT) {
       return {
         color: 'warning',
         severity: 'urgent',
@@ -39,7 +39,7 @@ export const useTimeUrgency = (deliveryTime: Date): TimeUrgency => {
       };
     }
 
-    if (minutesRemaining < TIME_URGENCY.WARNING) {
+    if (minutesRemaining >= TIME_URGENCY.WARNING) {
       return {
         color: 'warning',
         severity: 'warning',
