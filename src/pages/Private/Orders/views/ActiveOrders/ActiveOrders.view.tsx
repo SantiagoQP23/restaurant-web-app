@@ -13,7 +13,9 @@ import {
   Cached,
   ListAlt,
   ViewAgenda,
-  ViewList
+  ViewAgendaOutlined,
+  ViewList,
+  ViewListOutlined
 } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { useState, useEffect } from 'react';
@@ -65,7 +67,11 @@ export const ActiveOrders = () => {
                   size='small'
                   sx={{ display: { xs: 'none', md: 'inline-flex' } }}
                 >
-                  {viewMode === 'tabs' ? <ViewAgenda /> : <ViewList />}
+                  {viewMode === 'tabs' ? (
+                    <ViewAgendaOutlined />
+                  ) : (
+                    <ViewListOutlined />
+                  )}
                 </IconButton>
               </Tooltip>
               <IconButton
