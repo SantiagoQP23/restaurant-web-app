@@ -4,7 +4,9 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { NavLink as RouterLink } from 'react-router-dom';
 
@@ -20,8 +22,17 @@ interface Props {
 
 export const NavItemButton: FC<Props> = ({ item }) => {
   const { closeSidebar } = useContext(SidebarContext);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
   const { user } = useSelector(selectAuth);
+
+  // Only close sidebar on mobile/tablet devices
+  const handleClick = () => {
+    if (isMobile) {
+      closeSidebar();
+    }
+  };
 
   if (
     item.allowedRoles &&
@@ -35,7 +46,7 @@ export const NavItemButton: FC<Props> = ({ item }) => {
       <ListItemButton
         disableRipple
         component={RouterLink}
-        onClick={closeSidebar}
+        onClick={handleClick}
         to={item.to!}
         sx={{
           minHeight: 48,

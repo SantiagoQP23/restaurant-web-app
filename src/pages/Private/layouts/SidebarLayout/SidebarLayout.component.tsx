@@ -17,7 +17,9 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
     <>
       <Box
         sx={{
-          display: 'flex'
+          display: 'flex',
+          height: '100vh',
+          overflow: 'hidden'
         }}
       >
         <CssBaseline />
@@ -27,10 +29,13 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
           sx={{
             position: 'relative',
             zIndex: 5,
-            display: 'block',
+            display: 'flex',
+            flexDirection: 'column',
             flex: 1,
             width: '100%',
             pt: `${theme.header.height}`,
+            overflow: 'auto',
+            height: '100vh',
             transition: theme.transitions.create(['margin', 'width'], {
               easing: theme.transitions.easing.sharp,
               duration: theme.transitions.duration.leavingScreen
