@@ -109,15 +109,14 @@ export const CollapsibleOrdersSections = ({
                   alignItems='center'
                   sx={{ flex: 1 }}
                 >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      color: (theme) => theme.palette[section.color].main
-                    }}
-                  >
-                    {section.icon}
-                  </Box>
+                  {/* <Box */}
+                  {/*   sx={{ */}
+                  {/*     display: 'flex', */}
+                  {/*     alignItems: 'center' */}
+                  {/*   }} */}
+                  {/* > */}
+                  {/*   {section.icon} */}
+                  {/* </Box> */}
                   <Typography
                     variant='h6'
                     sx={{
@@ -129,9 +128,10 @@ export const CollapsibleOrdersSections = ({
                   </Typography>
                   <Chip
                     label={orderCount}
+                    variant='outlined'
                     color={section.color}
                     size='small'
-                    sx={{ fontWeight: 600 }}
+                    sx={{ fontWeight: 500 }}
                   />
                 </Stack>
               </AccordionSummary>
