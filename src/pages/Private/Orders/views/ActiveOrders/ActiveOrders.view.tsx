@@ -4,7 +4,8 @@ import {
   Stack,
   Badge,
   IconButton,
-  Tooltip
+  ToggleButton,
+  ToggleButtonGroup
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { DespachoDetalle, ListActiveOrders } from './components';
@@ -46,8 +47,23 @@ export const ActiveOrders = () => {
     localStorage.setItem('active-orders-view-mode', viewMode);
   }, [viewMode]);
 
-  const toggleViewMode = () => {
-    setViewMode((prev) => (prev === 'tabs' ? 'sections' : 'tabs'));
+  // Custom styling for toggle buttons - light gray instead of primary color
+  const toggleButtonSx = {
+    borderColor: 'rgba(0, 0, 0, 0.12)',
+    color: 'rgba(0, 0, 0, 0.6)',
+    '&.Mui-selected': {
+      backgroundColor: 'rgba(0, 0, 0, 0.08)',
+      color: 'rgba(0, 0, 0, 0.87)',
+      borderColor: 'rgba(0, 0, 0, 0.12)',
+      '&:hover': {
+        backgroundColor: 'rgba(0, 0, 0, 0.12)',
+        borderColor: 'rgba(0, 0, 0, 0.12)',
+      }
+    },
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+      borderColor: 'rgba(0, 0, 0, 0.12)',
+    }
   };
 
   return (
@@ -57,29 +73,30 @@ export const ActiveOrders = () => {
           title='Pedidos activos'
           action={
             <Stack direction='row' spacing={3}>
-              <Tooltip
-                title={
-                  viewMode === 'tabs' ? 'Ver por secciones' : 'Ver por pestañas'
-                }
-              >
-                <IconButton
-                  onClick={toggleViewMode}
-                  size='small'
-                  sx={{ display: { xs: 'none', md: 'inline-flex' } }}
-                >
-                  {viewMode === 'tabs' ? (
-                    <ViewAgendaOutlined />
-                  ) : (
-                    <ViewListOutlined />
-                  )}
-                </IconButton>
-              </Tooltip>
               <IconButton
                 onClick={() => activeOrdersQuery.refetch()}
                 size='small'
               >
                 <Cached />
               </IconButton>
+              <ToggleButtonGroup
+                value={viewMode}
+                onChange={(_, newValue) => {
+                  if (newValue !== null) {
+                    setViewMode(newValue);
+                  }
+                }}
+                exclusive
+                size='small'
+                sx={{ display: { xs: 'none', md: 'inline-flex' } }}
+              >
+                <ToggleButton value='tabs' sx={toggleButtonSx}>
+                  <ViewListOutlined />
+                </ToggleButton>
+                <ToggleButton value='sections' sx={toggleButtonSx}>
+                  <ViewAgendaOutlined />
+                </ToggleButton>
+              </ToggleButtonGroup>
               <Badge
                 badgeContent={statistics.totalProducts}
                 color='primary'

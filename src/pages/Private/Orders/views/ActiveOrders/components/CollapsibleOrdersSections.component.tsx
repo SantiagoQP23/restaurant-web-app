@@ -100,13 +100,7 @@ export const CollapsibleOrdersSections = ({
                 sx={{
                   minHeight: 64,
                   backgroundColor: (theme) =>
-                    `${theme.palette[section.color].light}15`,
-                  borderLeft: (theme) =>
-                    `4px solid ${theme.palette[section.color].main}`,
-                  '& .MuiAccordionSummary-content': {
-                    alignItems: 'center',
-                    my: 2
-                  }
+                    `${theme.palette[section.color].light}15`
                 }}
               >
                 <Stack
@@ -128,7 +122,7 @@ export const CollapsibleOrdersSections = ({
                     variant='h6'
                     sx={{
                       color: (theme) => theme.palette[section.color].main,
-                      fontWeight: 600
+                      fontWeight: 500
                     }}
                   >
                     {section.title}
