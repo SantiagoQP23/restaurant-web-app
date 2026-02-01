@@ -3,6 +3,7 @@ export * from './BarActiveOrders.component';
 export * from './BtnAddProduct.component';
 export * from './CardActiveOrder.component';
 export * from './CollapsibleOrdersSections.component';
+export * from './ConsolidatedProductsDrawer/ConsolidatedProductsContent.component';
 export * from './DespachoDetalle';
 export * from './DetailInProgress.component';
 export * from './ListActiveOrders.component';

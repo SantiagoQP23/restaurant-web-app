@@ -81,38 +81,16 @@ export const ConsolidatedProductItem: FC<Props> = ({
           alignItems='center'
           sx={{ width: '100%', pr: 2 }}
         >
-          {/* Product Icon */}
-          <Box
-            sx={{
-              bgcolor: alpha(theme.palette.primary.main, 0.15),
-              color: theme.palette.primary.main,
-              borderRadius: '50%',
-              width: 40,
-              height: 40,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0
-            }}
-          >
-            <Restaurant fontSize='small' />
-          </Box>
-
           {/* Product Name and Count */}
           <Stack spacing={0.5} flexGrow={1}>
             <Typography variant='subtitle1' fontWeight={600}>
-              {product.productName}
+              {product.totalPending} - {product.productName}
             </Typography>
             <Typography variant='caption' color='text.secondary'>
               {product.sources.length}{' '}
               {product.sources.length === 1 ? 'pedido' : 'pedidos'}
             </Typography>
           </Stack>
-
-          {/* Total Pending Badge */}
-          <Typography variant='h6' fontWeight={600}>
-            {product.totalPending}
-          </Typography>
         </Stack>
       </AccordionSummary>
 

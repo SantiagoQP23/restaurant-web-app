@@ -1,38 +1,28 @@
 import {
   Container,
-  Button,
   Stack,
-  Badge,
   IconButton,
   ToggleButton,
-  ToggleButtonGroup
+  ToggleButtonGroup,
+  Tooltip
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { DespachoDetalle, ListActiveOrders } from './components';
 import {
-  Add,
   Cached,
-  ListAlt,
-  ViewAgenda,
+  ListAltOutlined,
   ViewAgendaOutlined,
-  ViewList,
   ViewListOutlined
 } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
 import { useState, useEffect } from 'react';
 
-import { Clock } from '../OrdersList/components/Clock.component';
 import { TitlePage } from '../../../components/TitlePage.component';
 import { useActiveOrders } from '../../hooks';
-import { ConsolidatedProductsDrawer } from './components/ConsolidatedProductsDrawer';
-import { useConsolidatedProducts } from './hooks/useConsolidatedProducts';
 
-export type ViewMode = 'tabs' | 'sections';
+export type ViewMode = 'tabs' | 'sections' | 'products';
 
 export const ActiveOrders = () => {
   const navigate = useNavigate();
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const { statistics } = useConsolidatedProducts();
 
   const { activeOrdersQuery } = useActiveOrders();
 
@@ -73,12 +63,14 @@ export const ActiveOrders = () => {
           title='Pedidos activos'
           action={
             <Stack direction='row' spacing={3}>
-              <IconButton
-                onClick={() => activeOrdersQuery.refetch()}
-                size='small'
-              >
-                <Cached />
-              </IconButton>
+              <Tooltip title='Actualizar pedidos' arrow>
+                <IconButton
+                  onClick={() => activeOrdersQuery.refetch()}
+                  size='small'
+                >
+                  <Cached />
+                </IconButton>
+              </Tooltip>
               <ToggleButtonGroup
                 value={viewMode}
                 onChange={(_, newValue) => {
@@ -90,27 +82,22 @@ export const ActiveOrders = () => {
                 size='small'
                 sx={{ display: { xs: 'none', md: 'inline-flex' } }}
               >
-                <ToggleButton value='tabs' sx={toggleButtonSx}>
-                  <ViewListOutlined />
-                </ToggleButton>
-                <ToggleButton value='sections' sx={toggleButtonSx}>
-                  <ViewAgendaOutlined />
-                </ToggleButton>
+                <Tooltip title='Vista por pestañas' arrow>
+                  <ToggleButton value='tabs' sx={toggleButtonSx}>
+                    <ViewListOutlined />
+                  </ToggleButton>
+                </Tooltip>
+                <Tooltip title='Vista por secciones' arrow>
+                  <ToggleButton value='sections' sx={toggleButtonSx}>
+                    <ViewAgendaOutlined />
+                  </ToggleButton>
+                </Tooltip>
+                <Tooltip title='Vista de productos' arrow>
+                  <ToggleButton value='products' sx={toggleButtonSx}>
+                    <ListAltOutlined />
+                  </ToggleButton>
+                </Tooltip>
               </ToggleButtonGroup>
-              <Badge
-                badgeContent={statistics.totalProducts}
-                color='primary'
-                max={99}
-              >
-                <Button
-                  variant='outlined'
-                  onClick={() => setDrawerOpen(true)}
-                  size='small'
-                  startIcon={<ListAlt />}
-                >
-                  Ver productos
-                </Button>
-              </Badge>
             </Stack>
           }
         />
@@ -121,11 +108,6 @@ export const ActiveOrders = () => {
       </Container>
 
       <DespachoDetalle />
-
-      <ConsolidatedProductsDrawer
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      />
     </>
   );
 };

@@ -29,8 +29,9 @@ import { ModalStartOrder } from './ModalStartOrder.component';
 import { useProductionAreasStore } from '../../../../Common/store/production-areas-store';
 import { ProductionArea } from '../../../../Common/models/production-area.model';
 import { CollapsibleOrdersSections } from './CollapsibleOrdersSections.component';
+import { ConsolidatedProductsContent } from './ConsolidatedProductsDrawer/ConsolidatedProductsContent.component';
 
-export type ViewMode = 'tabs' | 'sections';
+export type ViewMode = 'tabs' | 'sections' | 'products';
 
 interface ListActiveOrdersProps {
   viewMode?: ViewMode;
@@ -123,6 +124,12 @@ export const ListActiveOrders = ({
             orders={ordersFilteredByProductionArea}
             productionAreaActive={productionAreaActive || undefined}
           />
+        </Box>
+      )}
+      {/* Desktop: Show products view when viewMode is 'products' */}
+      {viewMode === 'products' && (
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+          <ConsolidatedProductsContent embedded={true} />
         </Box>
       )}
       {/* Desktop: Show tabs view when viewMode is 'tabs' */}

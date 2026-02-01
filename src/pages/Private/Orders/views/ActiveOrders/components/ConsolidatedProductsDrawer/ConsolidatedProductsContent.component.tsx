@@ -1,57 +1,48 @@
 import { FC } from 'react';
 import {
-  Drawer,
   Box,
   Typography,
-  IconButton,
   Stack,
   Divider,
   Paper,
   Chip,
   alpha,
-  useTheme
+  useTheme,
+  Card
 } from '@mui/material';
-import { Close, ListAlt, ShoppingCart, Assignment } from '@mui/icons-material';
+import { ListAlt, ShoppingCart, Assignment } from '@mui/icons-material';
 import { useConsolidatedProducts } from '../../hooks/useConsolidatedProducts';
 import { ConsolidatedProductItem } from './ConsolidatedProductItem.component';
 
 interface Props {
-  open: boolean;
-  onClose: () => void;
+  embedded?: boolean;
 }
 
 /**
- * Drawer component to display consolidated products across all IN_PROGRESS orders
+ * Shared component to display consolidated products across all IN_PROGRESS orders
+ * Can be used both in a drawer (overlay) or embedded in the page layout
  * Shows all products that need to be delivered, grouped by product and description
  * Read-only view for kitchen/service staff to see what needs to be prepared
  *
  * @author Santiago Quirumbay
- * @version 1.0 2026-01-03 Initial implementation
+ * @version 1.0 2026-02-01 Extracted from ConsolidatedProductsDrawer for reusability
  */
-export const ConsolidatedProductsDrawer: FC<Props> = ({ open, onClose }) => {
+export const ConsolidatedProductsContent: FC<Props> = ({ embedded = false }) => {
   const theme = useTheme();
   const { consolidatedProducts, statistics } = useConsolidatedProducts();
 
-  return (
-    <Drawer
-      anchor='right'
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        sx: {
-          width: {
-            xs: '100%',
-            sm: 450,
-            md: 500
-          },
-          maxWidth: '100vw'
-        }
+  const content = (
+    <Box
+      sx={{
+        height: embedded ? 'auto' : '100%',
+        display: 'flex',
+        flexDirection: 'column'
       }}
     >
       {/* Header */}
       <Box
         sx={{
-          position: 'sticky',
+          position: embedded ? 'relative' : 'sticky',
           top: 0,
           zIndex: 10,
           bgcolor: 'background.paper',
@@ -62,13 +53,13 @@ export const ConsolidatedProductsDrawer: FC<Props> = ({ open, onClose }) => {
           direction='row'
           alignItems='center'
           justifyContent='space-between'
-          sx={{ p: 2, pb: 1.5 }}
+          sx={{ p: 1.5, pb: 1 }}
         >
           <Stack direction='row' spacing={1.5} alignItems='center'>
             <Box
               sx={{
-                bgcolor: alpha(theme.palette.primary.main, 0.1),
-                color: theme.palette.primary.main,
+                bgcolor: 'rgba(0, 0, 0, 0.04)',
+                color: 'rgba(0, 0, 0, 0.6)',
                 borderRadius: '8px',
                 width: 40,
                 height: 40,
@@ -88,27 +79,24 @@ export const ConsolidatedProductsDrawer: FC<Props> = ({ open, onClose }) => {
               </Typography>
             </Stack>
           </Stack>
-          <IconButton onClick={onClose} size='small'>
-            <Close />
-          </IconButton>
         </Stack>
 
         {/* Statistics Cards */}
-        <Stack direction='row' spacing={1} sx={{ px: 2, pb: 2 }}>
+        <Stack direction='row' spacing={1} sx={{ px: 1.5, pb: 1.5 }}>
           <Paper
             elevation={0}
             sx={{
               flex: 1,
-              p: 1.5,
-              bgcolor: alpha(theme.palette.primary.main, 0.05),
-              border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`
+              p: 1,
+              bgcolor: 'rgba(0, 0, 0, 0.02)',
+              border: `1px solid rgba(0, 0, 0, 0.06)`
             }}
           >
             <Stack spacing={0.5} alignItems='center'>
               <ShoppingCart
                 sx={{
-                  fontSize: 20,
-                  color: theme.palette.primary.main
+                  fontSize: 18,
+                  color: 'rgba(0, 0, 0, 0.6)'
                 }}
               />
               <Typography variant='h6' fontWeight={700}>
@@ -124,16 +112,16 @@ export const ConsolidatedProductsDrawer: FC<Props> = ({ open, onClose }) => {
             elevation={0}
             sx={{
               flex: 1,
-              p: 1.5,
-              bgcolor: alpha(theme.palette.info.main, 0.05),
-              border: `1px solid ${alpha(theme.palette.info.main, 0.1)}`
+              p: 1,
+              bgcolor: 'rgba(0, 0, 0, 0.02)',
+              border: `1px solid rgba(0, 0, 0, 0.06)`
             }}
           >
             <Stack spacing={0.5} alignItems='center'>
               <Assignment
                 sx={{
-                  fontSize: 20,
-                  color: theme.palette.info.main
+                  fontSize: 18,
+                  color: 'rgba(0, 0, 0, 0.6)'
                 }}
               />
               <Typography variant='h6' fontWeight={700}>
@@ -150,7 +138,14 @@ export const ConsolidatedProductsDrawer: FC<Props> = ({ open, onClose }) => {
       <Divider />
 
       {/* Products List */}
-      <Box sx={{ p: 2, flexGrow: 1, overflow: 'auto' }}>
+      <Box
+        sx={{
+          p: 1.5,
+          flexGrow: 1,
+          overflow: 'auto',
+          maxHeight: embedded ? '600px' : 'none'
+        }}
+      >
         {consolidatedProducts.length === 0 ? (
           <Stack
             spacing={2}
@@ -206,12 +201,11 @@ export const ConsolidatedProductsDrawer: FC<Props> = ({ open, onClose }) => {
       {consolidatedProducts.length > 0 && (
         <Box
           sx={{
-            position: 'sticky',
+            position: embedded ? 'relative' : 'sticky',
             bottom: 0,
             bgcolor: alpha(theme.palette.background.paper, 0.95),
             borderTop: `1px solid ${theme.palette.divider}`,
-            p: 2,
-            backdropFilter: 'blur(8px)'
+            p: 1.5
           }}
         >
           <Stack
@@ -226,12 +220,24 @@ export const ConsolidatedProductsDrawer: FC<Props> = ({ open, onClose }) => {
             <Chip
               label={`${statistics.totalOrders} ${statistics.totalOrders === 1 ? 'pedido' : 'pedidos'}`}
               size='small'
-              color='info'
+              color='default'
               sx={{ fontWeight: 600 }}
             />
           </Stack>
         </Box>
       )}
-    </Drawer>
+    </Box>
   );
+
+  // If embedded, wrap in Card for visual separation
+  if (embedded) {
+    return (
+      <Card elevation={1} sx={{ mt: 2 }}>
+        {content}
+      </Card>
+    );
+  }
+
+  // If in drawer, return content directly
+  return content;
 };
