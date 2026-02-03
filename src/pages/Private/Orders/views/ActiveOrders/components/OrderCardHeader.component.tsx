@@ -39,7 +39,7 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
         pb: 1.5
       }}
       title={
-        <Stack spacing={1} direction='column' my={0.5} alignItems='center'>
+        <Stack spacing={1} direction='column' my={0.5}>
           {/* Position Badge and Status */}
           <Stack direction='row' spacing={1} alignItems='center'>
             <Chip
@@ -73,13 +73,7 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
           </Stack>
 
           {/* Order Title */}
-          <Typography
-            variant='h3'
-            fontWeight={500}
-            sx={{
-              fontSize: '1.75rem'
-            }}
-          >
+          <Typography variant='h5' fontWeight={500}>
             {order.type === TypeOrder.IN_PLACE
               ? `${ORDER_TYPE_LABELS[TypeOrder.IN_PLACE]} ${order.table?.name}`
               : ORDER_TYPE_LABELS[TypeOrder.TAKE_AWAY]}
