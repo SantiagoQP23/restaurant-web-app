@@ -15,6 +15,9 @@ import {
   useTheme
 } from '@mui/material';
 
+import { format, isSameDay } from 'date-fns';
+import { es } from 'date-fns/locale';
+
 import { IOrderDetail, TypeOrder } from '../../../../../../models';
 import {
   CheckCircle,
@@ -46,6 +49,7 @@ interface Props {
   detail: IOrderDetail;
   orderId: string;
   typeOrder: TypeOrder;
+  orderCreationDate: Date;
 }
 
 /**
@@ -57,7 +61,12 @@ interface Props {
  * @version 1.4 20-01-2025 Adds order detail type icon
  * @version 1.5 03-01-2026 Enhanced UI, performance optimizations, removed commented code
  */
-export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
+export const DetailInProgress: FC<Props> = ({
+  detail,
+  orderId,
+  typeOrder,
+  orderCreationDate
+}) => {
   const theme = useTheme();
   const { mutate: update } = useUpdateOrderDetail();
 
@@ -85,6 +94,20 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
     () => detail.typeOrderDetail !== typeOrder,
     [detail.typeOrderDetail, typeOrder]
   );
+
+  const detailCreatedAt = useMemo(() => {
+    const date = new Date(detail.createdAt);
+
+    return Number.isNaN(date.getTime()) ? null : date;
+  }, [detail.createdAt]);
+
+  const showDetailCreationDate = useMemo(() => {
+    if (!detailCreatedAt) {
+      return false;
+    }
+
+    return !isSameDay(orderCreationDate, detailCreatedAt);
+  }, [detailCreatedAt, orderCreationDate]);
 
   const editDetail = useCallback(() => {
     NiceModal.show(ModalEditOrderDetail, { detail: detail, orderId: orderId });
@@ -127,7 +150,7 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
       sx={{
         display: 'flex',
         alignItems: detail.quantity > 1 ? 'flex-start' : 'center',
-        px: 2,
+        px: 1,
         py: 1.5,
         transition: 'background-color 0.2s ease',
         '&:hover': {
@@ -220,15 +243,34 @@ export const DetailInProgress: FC<Props> = ({ detail, orderId, typeOrder }) => {
                   color='primary'
                   variant='determinate'
                 />
-                <Typography
-                  variant='caption'
-                  color='text.secondary'
-                  fontWeight={500}
-                  sx={{ fontSize: '0.75rem' }}
+                <Box
+                  display='flex'
+                  justifyContent='space-between'
+                  alignItems='center'
+                  gap={1}
                 >
-                  {remainingQuantity}{' '}
-                  {remainingQuantity === 1 ? 'por entregar' : 'por entregar'}
-                </Typography>
+                  <Typography
+                    variant='caption'
+                    color='text.secondary'
+                    fontWeight={500}
+                    sx={{ fontSize: '0.75rem' }}
+                  >
+                    {remainingQuantity}{' '}
+                    {remainingQuantity === 1 ? 'por entregar' : 'por entregar'}
+                  </Typography>
+                  {showDetailCreationDate && detailCreatedAt && (
+                    <Typography
+                      variant='caption'
+                      color='text.secondary'
+                      fontWeight={500}
+                      sx={{ fontSize: '0.75rem' }}
+                    >
+                      {format(detailCreatedAt, 'HH:mm', {
+                        locale: es
+                      })}
+                    </Typography>
+                  )}
+                </Box>
               </Stack>
             )}
           </Stack>

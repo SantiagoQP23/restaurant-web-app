@@ -9,7 +9,7 @@ import {
   useTheme
 } from '@mui/material';
 import { PeopleOutlined, TimerOutlined } from '@mui/icons-material';
-import { formatDistance, addMinutes } from 'date-fns';
+import { formatDistance, format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Order, OrderStatus, TypeOrder } from '../../../../../../models';
 import {
@@ -96,7 +96,12 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
               </Stack>
             </Box>
 
-            <LabelStatusOrder status={order.status} />
+            <Stack alignItems='end' spacing={0.5}>
+              <LabelStatusOrder status={order.status} />
+              <Typography variant='body2' color='text.secondary'>
+                {format(new Date(order.createdAt), 'HH:mm')}
+              </Typography>
+            </Stack>
           </Box>
         </Stack>
       }

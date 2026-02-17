@@ -298,22 +298,15 @@ export const ProductionAreaOrder = ({
           )}
 
           {/* Details List */}
-          <Stack spacing={0} sx={{ bgcolor: alpha(areaColor, 0.01) }}>
+          <Stack spacing={0}>
             {detailsStatus.length > 0 ? (
               detailsStatus.map((detail, index) => (
-                <Box
-                  key={detail.id}
-                  sx={{
-                    borderBottom:
-                      index < detailsStatus.length - 1
-                        ? `1px solid ${alpha(theme.palette.divider, 0.05)}`
-                        : 'none'
-                  }}
-                >
+                <Box key={detail.id}>
                   <DetailInProgress
                     detail={detail}
                     orderId={orderId}
                     typeOrder={order.type}
+                    orderCreationDate={new Date(order.createdAt)}
                   />
                 </Box>
               ))
