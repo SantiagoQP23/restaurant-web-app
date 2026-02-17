@@ -1203,8 +1203,8 @@ export const PureLightTheme = createTheme({
       lineHeight: 1.6
     },
     body2: {
-      fontSize: '0.875rem',
-      fontWeight: 400,
+      fontSize: 12,
+      fontWeight: 500,
       lineHeight: 1.55,
       color: colors.alpha.black[70]
     },

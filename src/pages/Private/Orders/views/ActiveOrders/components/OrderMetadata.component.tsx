@@ -23,25 +23,25 @@ export const OrderMetadata: FC<Props> = ({ order, color }) => {
   const theme = useTheme();
 
   return (
-    <Stack spacing={1.5} px={2} py={1}>
+    <Stack spacing={1.5} px={2} pb={1}>
       {/* People Count */}
-      <Box>
-        <Grid container direction='row' spacing={1} alignItems='center'>
-          <Grid item xs={3} display='flex' alignItems='center' gap={0.5}>
-            <PeopleOutlined
-              sx={{ color: theme.palette.text.secondary, fontSize: 20 }}
-            />
-            <Typography variant='caption' color='text.secondary'>
-              Personas
-            </Typography>
-          </Grid>
-          <Grid item xs={9}>
-            <Typography variant='body1' fontWeight={600}>
-              {order.people}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
+      {/* <Box> */}
+      {/*   <Grid container direction='row' spacing={1} alignItems='center'> */}
+      {/*     <Grid item xs={3} display='flex' alignItems='center' gap={0.5}> */}
+      {/*       <PeopleOutlined */}
+      {/*         sx={{ color: theme.palette.text.secondary, fontSize: 20 }} */}
+      {/*       /> */}
+      {/*       <Typography variant='caption' color='text.secondary'> */}
+      {/*         Personas */}
+      {/*       </Typography> */}
+      {/*     </Grid> */}
+      {/*     <Grid item xs={9}> */}
+      {/*       <Typography variant='body1' fontWeight={600}> */}
+      {/*         {order.people} */}
+      {/*       </Typography> */}
+      {/*     </Grid> */}
+      {/*   </Grid> */}
+      {/* </Box> */}
 
       {/* Waiter Info */}
       <Box>

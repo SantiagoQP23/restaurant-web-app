@@ -103,20 +103,7 @@ export const CollapsibleOrdersSections = ({
                     `${theme.palette[section.color].light}15`
                 }}
               >
-                <Stack
-                  direction='row'
-                  spacing={2}
-                  alignItems='center'
-                  sx={{ flex: 1 }}
-                >
-                  {/* <Box */}
-                  {/*   sx={{ */}
-                  {/*     display: 'flex', */}
-                  {/*     alignItems: 'center' */}
-                  {/*   }} */}
-                  {/* > */}
-                  {/*   {section.icon} */}
-                  {/* </Box> */}
+                <Stack sx={{ flex: 1 }}>
                   <Typography
                     variant='h6'
                     sx={{
@@ -126,13 +113,7 @@ export const CollapsibleOrdersSections = ({
                   >
                     {section.title}
                   </Typography>
-                  <Chip
-                    label={orderCount}
-                    variant='outlined'
-                    color={section.color}
-                    size='small'
-                    sx={{ fontWeight: 500 }}
-                  />
+                  <Typography variant='body2'>Pedidos: {orderCount}</Typography>
                 </Stack>
               </AccordionSummary>
 
