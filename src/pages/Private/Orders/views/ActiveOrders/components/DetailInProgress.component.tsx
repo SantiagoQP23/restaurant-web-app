@@ -23,7 +23,8 @@ import {
   CheckCircle,
   CheckCircleOutline,
   PlusOneOutlined,
-  MoreVertOutlined
+  MoreVertOutlined,
+  EditOutlined
 } from '@mui/icons-material';
 import { UpdateOrderDetailDto } from '../../../dto';
 import { useUpdateOrderDetail } from '../../../hooks';
@@ -313,7 +314,7 @@ export const DetailInProgress: FC<Props> = ({
             }
           }}
         >
-          <MoreVertOutlined fontSize='small' />
+          <EditOutlined fontSize='small' />
         </IconButton>
       </Stack>
     </Box>
