@@ -5,6 +5,7 @@ import { UpdateRestaurantDto } from '../../Reports/dto/update-restaurant.dto';
 import { Restaurant } from '../../Common/models/restaurant.model';
 import { CreateRestaurantDto } from '../dto/create-restaurant.dto';
 import { LoginResponse } from '@/models/dto/auth.dto';
+import { Subscription } from '@/models/subscription.model';
 
 export const getRestaurant = async (): Promise<Restaurant> => {
   const resp = await restauranteApi.get<Restaurant>(`restaurant/`);
@@ -49,5 +50,12 @@ export const updateRestaurantLogo = async (
     formData
   );
 
+  return resp.data;
+};
+
+export const getRestaurantSubscription = async (restaurantId: string) => {
+  const resp = await restauranteApi.get<Subscription>(
+    `subscriptions/restaurant/${restaurantId}`
+  );
   return resp.data;
 };

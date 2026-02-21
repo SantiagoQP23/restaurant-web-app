@@ -30,12 +30,12 @@ export const ProductionAreasList = () => {
     <>
       <Stack gap={2} mb={2}>
         <Typography variant='h6' gutterBottom>
-          Gestión de áreas de producción
+          Áreas de producción
         </Typography>
         <Grid container spacing={2}>
           {productionAreas &&
             productionAreas.map((area) => (
-              <Grid item xs={12} md={6} key={area.id}>
+              <Grid item xs={12} md={3} key={area.id}>
                 <ProductionAreaItem key={area.id} area={area} />
               </Grid>
             ))}

@@ -12,7 +12,8 @@ import { Restaurant } from '../../Common/models/restaurant.model';
 import {
   UpdateRestaurantLogoDto,
   updateRestaurantLogo,
-  createRestaurant
+  createRestaurant,
+  getRestaurantSubscription
 } from '../services/restaurant.service';
 import { CreateRestaurantDto } from '../dto/create-restaurant.dto';
 import { LoginResponseDto } from '@/models';
@@ -147,5 +148,13 @@ export const useUpdateRestaurantLogo = () => {
         variant: 'error'
       });
     }
+  });
+};
+
+export const useRestaurantSubscription = (restaurantId: string) => {
+  const { enqueueSnackbar } = useSnackbar();
+  return useQuery({
+    queryKey: ['restaurant-subscription', restaurantId],
+    queryFn: () => getRestaurantSubscription(restaurantId)
   });
 };
