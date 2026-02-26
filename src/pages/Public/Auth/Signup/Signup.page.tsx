@@ -65,7 +65,7 @@ export const Signup = () => {
           {VITE_APP_NAME}
         </Typography>
         <Typography component='h1' variant='h3' sx={{ my: 2 }}>
-          Create your account
+          Crea tu cuenta
         </Typography>
         <Box
           component='form'
@@ -80,7 +80,7 @@ export const Signup = () => {
                 autoComplete='given-name'
                 required
                 fullWidth
-                label='First Name'
+                label='Nombre'
                 autoFocus
                 {...register('firstName', {
                   required: 'Este campo es requerido',
@@ -95,7 +95,7 @@ export const Signup = () => {
                 required
                 fullWidth
                 id='lastName'
-                label='Last Name'
+                label='Apellido'
                 autoComplete='family-name'
                 {...register('lastName', {
                   required: 'Este campo es requerido',
@@ -110,7 +110,7 @@ export const Signup = () => {
                 id='email'
                 required
                 fullWidth
-                label='Email Address'
+                label='Correo electrónico'
                 autoComplete='email'
                 type='email'
                 {...register('email', {
@@ -143,7 +143,7 @@ export const Signup = () => {
               <TextField
                 id='email'
                 fullWidth
-                label='Phone Number'
+                label='Número de teléfono'
                 type='number'
                 {...register('numPhone', {
                   minLength: { value: 10, message: 'Minimo 10 caracteres' }
@@ -156,7 +156,7 @@ export const Signup = () => {
               <TextField
                 required
                 fullWidth
-                label='Password'
+                label='Contraseña'
                 type='password'
                 id='password'
                 autoComplete='new-password'
@@ -166,7 +166,7 @@ export const Signup = () => {
                     value:
                       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
                     message:
-                      'Password must be at least 8 characters and include uppercase, lowercase, number, and special character'
+                      'La contraseña debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y carácter especial'
                   }
                 })}
                 error={!!errors.password}
@@ -200,7 +200,7 @@ export const Signup = () => {
             sx={{ mt: 3, mb: 2 }}
             loading={isPending}
           >
-            Create account
+            Crear cuenta
           </LoadingButton>
           <Stack
             spacing={1}
@@ -209,9 +209,9 @@ export const Signup = () => {
             justifyContent='center'
             sx={{ my: 2 }}
           >
-            <Typography>Already have an account?</Typography>
+            <Typography>¿Ya tienes una cuenta?</Typography>
             <Link href='login' variant='body2'>
-              Sign in
+              Iniciar sesión
             </Link>
           </Stack>
         </Box>
