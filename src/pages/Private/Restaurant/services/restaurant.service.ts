@@ -55,7 +55,7 @@ export const updateRestaurantLogo = async (
 
 export const getRestaurantSubscription = async (restaurantId: string) => {
   const resp = await restauranteApi.get<Subscription>(
-    `subscriptions/restaurant/${restaurantId}`
+    `/restaurant/subscription`
   );
   return resp.data;
 };
