@@ -43,28 +43,16 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
   };
 
   return (
-    <Card sx={{}}>
+    <Card
+      sx={{
+        border: isAvailable ? 'none' : 1,
+        borderColor: isAvailable ? 'transparent' : 'primary.main'
+      }}
+    >
       <CardActionArea onClick={handleClick}>
-        <CardHeader
-          title={
-            <Chip
-              icon={<TableBarOutlined fontSize='small' />}
-              label={`Mesa ${table.name}`}
-              // color={table.isAvailable ? 'default' : 'primary'}
-              color='default'
-              variant={table.isAvailable ? 'outlined' : 'filled'}
-              sx={{ px: 1 }}
-            />
-          }
-          titleTypographyProps={{
-            variant: 'h5',
-            textAlign: 'center'
-          }}
-        />
         <Box
           sx={{
-            p: 1,
-            textAlign: 'center'
+            p: 2
             //   display: "flex",
             //   flexDirection: "column",
             //   gap: 1,
@@ -103,22 +91,18 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
           {/*     </Box> */}
           {/*   ))} */}
           {/* </Box> */}
+          <Typography variant='h6'>Mesa {table.name}</Typography>
+
           {ordersTable.length > 0 ? (
-            <Typography variant='body1'>
+            <Typography variant='body2'>
               {ordersTable.length} Pedidos
             </Typography>
           ) : (
-            <Box
-              alignItems='center'
-              display='flex'
-              justifyContent='center'
-              gap={1}
-            >
-              <Circle fontSize='small' sx={{ fontSize: 10 }} color='success' />
+            <Box alignItems='center' display='flex' gap={1}>
               <Typography
-                fontSize='0.8rem'
                 textAlign='center'
                 color='success.main'
+                variant='body2'
               >
                 {isAvailable ? 'Disponible' : ''}
               </Typography>
