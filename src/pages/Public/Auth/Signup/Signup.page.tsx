@@ -141,12 +141,13 @@ export const Signup = () => {
 
             <Grid item xs={12} sm={6}>
               <TextField
-                id='email'
+                id='phone'
                 fullWidth
                 label='Número de teléfono'
                 type='number'
                 {...register('numPhone', {
-                  minLength: { value: 10, message: 'Minimo 10 caracteres' }
+                  minLength: { value: 10, message: 'Minimo 10 caracteres' },
+                  maxLength: { value: 10, message: 'Maximo 10 caracteres' }
                 })}
                 error={!!errors.numPhone}
                 helperText={errors.numPhone?.message}

@@ -8,17 +8,19 @@ import {
   TextField,
   Button,
   Typography,
-  Box
+  Box,
+  Divider,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
-import { TitlePage } from '@/pages/Private/components';
 import { useCreateRestaurant } from '../../hooks/useRestaurant';
-import { UpdateRestaurantDto } from '@/pages/Private/Reports/dto/update-restaurant.dto';
 import { CreateRestaurantDto } from '../../dto/create-restaurant.dto';
 import { useAppDispatch } from '@/hooks';
 import { startLogout } from '@/redux';
-import { ExitToApp, ExitToAppOutlined } from '@mui/icons-material';
+import { ExitToAppOutlined } from '@mui/icons-material';
+import { useState } from 'react';
 
 const defaultValues: CreateRestaurantDto = {
   name: '',
@@ -32,6 +34,12 @@ const defaultValues: CreateRestaurantDto = {
 export const NewRestaurant = () => {
   const createRestaurantMutation = useCreateRestaurant();
   const dispatch = useAppDispatch();
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    severity: 'success' | 'error';
+    message: string;
+  }>({ open: false, severity: 'success', message: '' });
+
   const {
     register,
     handleSubmit,
@@ -41,10 +49,26 @@ export const NewRestaurant = () => {
   });
 
   const onSubmit = (data: CreateRestaurantDto) => {
-    console.log(data);
-    createRestaurantMutation.mutate(data);
+    createRestaurantMutation.mutate(data, {
+      onSuccess: () => {
+        setSnackbar({
+          open: true,
+          severity: 'success',
+          message: 'Restaurante creado exitosamente'
+        });
+      },
+      onError: () => {
+        setSnackbar({
+          open: true,
+          severity: 'error',
+          message: 'Error al crear el restaurante. Intente de nuevo.'
+        });
+      }
+    });
+  };
 
-    // updateRestaurantMutation.mutate(data);
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   const handleLogout = () => {
@@ -55,19 +79,21 @@ export const NewRestaurant = () => {
     <Container maxWidth='md'>
       <Box mb={4}>
         <Typography variant='h4' gutterBottom sx={{ mt: 4 }}>
-          Welcome to Fast Serve App
+          Bienvenido a Teikio
         </Typography>
         <Typography variant='h6' gutterBottom>
-          Choose how you want to start
+          Elige cómo quieres empezar
         </Typography>
       </Box>
 
+      <Divider />
+
       <Box>
         <Typography variant='h6' gutterBottom sx={{ mt: 4 }}>
-          Create my restaurant
+          Crear mi restaurante
         </Typography>
-        <Typography variant='subtitle2' gutterBottom>
-          I want to manage my restaurant
+        <Typography variant='body1' gutterBottom>
+          Quiero gestionar mi restaurante
         </Typography>
       </Box>
 
@@ -82,6 +108,7 @@ export const NewRestaurant = () => {
                   type='text'
                   fullWidth
                   required
+                  disabled={createRestaurantMutation.isPending}
                   {...register('name', {
                     required: 'Este es un campo requerido'
                   })}
@@ -94,9 +121,9 @@ export const NewRestaurant = () => {
                   label='RUC / NIT / CIF'
                   type='text'
                   fullWidth
-                  required
+                  disabled={createRestaurantMutation.isPending}
                   {...register('identification', {
-                    required: 'Este es un campo requerido'
+                    minLength: { value: 5, message: 'Mínimo 5 caracteres' }
                   })}
                   helperText={errors.identification?.message}
                   error={!!errors.identification}
@@ -105,11 +132,13 @@ export const NewRestaurant = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   label='Teléfono de contacto'
-                  type='number'
+                  type='tel'
                   fullWidth
                   required
+                  disabled={createRestaurantMutation.isPending}
                   {...register('phone', {
-                    required: 'Este es un campo requerido'
+                    required: 'Este es un campo requerido',
+                    minLength: { value: 7, message: 'Mínimo 7 dígitos' }
                   })}
                   helperText={errors.phone?.message}
                   error={!!errors.phone}
@@ -121,8 +150,13 @@ export const NewRestaurant = () => {
                   type='email'
                   fullWidth
                   required
+                  disabled={createRestaurantMutation.isPending}
                   {...register('email', {
-                    required: 'Este es un campo requerido'
+                    required: 'Este es un campo requerido',
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: 'Correo electrónico no válido'
+                    }
                   })}
                   helperText={errors.email?.message}
                   error={!!errors.email}
@@ -134,6 +168,7 @@ export const NewRestaurant = () => {
                   type='text'
                   fullWidth
                   required
+                  disabled={createRestaurantMutation.isPending}
                   {...register('address', {
                     required: 'Este es un campo requerido'
                   })}
@@ -147,6 +182,8 @@ export const NewRestaurant = () => {
                   type='number'
                   fullWidth
                   required
+                  disabled={createRestaurantMutation.isPending}
+                  inputProps={{ min: 1 }}
                   {...register('capacity', {
                     required: 'Este es un campo requerido',
                     min: {
@@ -174,30 +211,39 @@ export const NewRestaurant = () => {
         </form>
       </Card>
 
+      <Divider sx={{ mt: 4 }} />
+
       <Box
         alignItems='center'
         justifyContent='space-between'
         display='flex'
-        mt={4}
+        mt={2}
       >
         <Box>
-          <Typography variant='h6' gutterBottom>
-            Sign out
-          </Typography>
-          <Typography variant='subtitle2' gutterBottom>
-            Someone else will invite me to their restaurant
+          <Typography variant='body1' gutterBottom>
+            Alguien más me invitará a su restaurante
           </Typography>
         </Box>
-        <Button
-          type='submit'
-          onClick={handleLogout}
-          variant='text'
-          color='secondary'
-        >
+        <Button type='button' onClick={handleLogout} variant='text'>
           <ExitToAppOutlined sx={{ mr: 1 }} />
           Cerrar sesión
         </Button>
       </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant='filled'
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
