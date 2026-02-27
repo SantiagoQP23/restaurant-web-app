@@ -61,17 +61,17 @@ export const Signup = () => {
           // alignItems: 'center'
         }}
       >
-        <Typography component='h5' variant='h4' sx={{ my: 2 }}>
-          {VITE_APP_NAME}
+        <Typography component='h5' variant='h4' sx={{}}>
+          Bienvenido a {VITE_APP_NAME}
         </Typography>
-        <Typography component='h1' variant='h3' sx={{ my: 2 }}>
-          Crea tu cuenta
+        <Typography component='h1' variant='h6' sx={{ my: 1 }}>
+          Crea tu cuenta y empieza tu prueba gratuita de 15 días
         </Typography>
         <Box
           component='form'
           noValidate
           onSubmit={handleSubmit(handleRegister)}
-          sx={{ mt: 3 }}
+          sx={{ mt: 2 }}
         >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
