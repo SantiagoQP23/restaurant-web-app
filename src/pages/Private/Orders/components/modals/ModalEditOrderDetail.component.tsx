@@ -2,8 +2,6 @@ import { useState, useMemo } from 'react';
 
 import { IOrderDetail, ProductOption, TypeOrder } from '../../../../../models';
 
-// import { statusModalDeleteOrderDetail } from "../../services/orders.service";
-
 import {
   Box,
   Dialog,
@@ -22,7 +20,10 @@ import {
   Radio,
   FormControlLabel,
   Divider,
-  Tooltip
+  Tooltip,
+  LinearProgress,
+  alpha,
+  useTheme
 } from '@mui/material';
 
 import { useUpdateOrderDetail } from '../../hooks';
@@ -30,7 +31,8 @@ import {
   Close,
   AttachMoney,
   Save,
-  AccessTimeOutlined
+  AccessTimeOutlined,
+  EditOutlined
 } from '@mui/icons-material';
 import { format, formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -49,25 +51,40 @@ interface Props {
  * @version 1.1 20/12/2023 Adds product options chip and NiceModal
  * @version 1.3 28/12/2023 Adds useUpdateOrderDetail hook
  * @version 1.4 03-02-2026 Shows createdAt and updatedAt in dialog
+ * @version 1.5 03-02-2026 UX improvements: sections, dirty state, progress hint, layout
  */
 export const ModalEditOrderDetail = NiceModal.create<Props>(
   ({ detail, orderId }) => {
-    // const [detail, setDetail] = useState<IOrderDetail>();
     const modal = useModal();
+    const theme = useTheme();
 
     const [quantity, setQuantity] = useState(detail.quantity);
     const [qtyDelivered, setQtyDelivered] = useState(detail.qtyDelivered);
     const [typeOrder, setTypeOrder] = useState(detail.typeOrderDetail);
-
-    // form
     const [description, setDescription] = useState(detail.description);
     const [price, setPrice] = useState(detail.price);
 
     const [selectedOption] = useState<ProductOption | undefined>(
-      detail.productOption ? detail.productOption : undefined
+      detail.productOption ?? undefined
     );
 
     const { mutate: update, isLoading, isOnline } = useUpdateOrderDetail();
+
+    // Dirty state — true when at least one field differs from original
+    const isDirty = useMemo(
+      () =>
+        quantity !== detail.quantity ||
+        qtyDelivered !== detail.qtyDelivered ||
+        typeOrder !== detail.typeOrderDetail ||
+        description !== detail.description ||
+        price !== detail.price,
+      [quantity, qtyDelivered, typeOrder, description, price, detail]
+    );
+
+    const deliveryProgress = useMemo(
+      () => (quantity > 0 ? (qtyDelivered / quantity) * 100 : 0),
+      [qtyDelivered, quantity]
+    );
 
     const createdAt = useMemo(
       () => new Date(detail.createdAt),
@@ -98,18 +115,12 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
       }
 
       update(data);
-
       closeModal();
     };
 
     const closeModal = () => {
       modal.hide();
     };
-
-    // const showModalDeleteDetail = () => {
-    //   statusModalDeleteOrderDetail.setSubject(true, detail!, orderId!);
-    //   closeModal();
-    // };
 
     const handleChangeQuantity = (value: number) => {
       setQuantity(value);
@@ -120,94 +131,80 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
     };
 
     return (
-      <Dialog {...muiDialogV5(modal)} maxWidth='xs'>
+      <Dialog {...muiDialogV5(modal)} maxWidth='xs' fullWidth>
+        {/* ── Title ─────────────────────────────────────────── */}
         <DialogTitle
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            pb: 1
           }}
         >
           <Box>
-            <b>{detail?.product.name}</b>
-
-            {/* {detail?.productOption && (
-              <Chip
-                sx={{ ml: 1 }}
-                label={`${detail?.productOption?.name} `}
-                size="small"
-              />
-            )} */}
-          </Box>
-
-          <IconButton onClick={closeModal}>
-            <Close />
-          </IconButton>
-        </DialogTitle>
-
-        <DialogContent>
-          <Grid container spacing={1} alignItems='center'>
-            {/* <Grid item xs={12}>
-              {availableOptions.length > 0 && (
-                <Scrollbar autoHeight height="auto">
-                  <Box
-                    sx={{
-                      // overflowX: "auto",
-                      display: "flex",
-                      gap: 1,
-                    }}
-                  >
-                    {availableOptions.map((option) => (
-                      <Chip
-                        key={option.id}
-                        label={`${option?.name} ${formatMoney(option?.price)}`}
-                        variant="filled"
-                        onClick={() => setSelectedOption(option)}
-                        color={
-                          option.id === selectedOption?.id
-                            ? "primary"
-                            : "default"
-                        }
-                      />
-                    ))}
-                  </Box>
-                </Scrollbar>
-              )}
-            </Grid> */}
-            <Grid item xs={12}>
+            <Typography variant='h6' component='span' fontWeight={600}>
+              {detail?.product.name}
+            </Typography>
+            {detail?.product.description && (
               <Typography
                 variant='body2'
                 color='text.secondary'
-                whiteSpace='break-spaces'
+                whiteSpace='pre-wrap'
+                mt={0.25}
               >
-                {detail?.product.description}
+                {detail.product.description}
               </Typography>
+            )}
+          </Box>
+          <IconButton onClick={closeModal} size='small' sx={{ ml: 1 }}>
+            <Close fontSize='small' />
+          </IconButton>
+        </DialogTitle>
+
+        <DialogContent sx={{ pt: 0 }}>
+          <Grid container spacing={1.5}>
+            {/* ── Section: Pedido ───────────────────────────── */}
+            <Grid item xs={12}>
+              <Stack direction='row' alignItems='center' spacing={1} mb={0.5}>
+                <Typography
+                  variant='overline'
+                  color='text.secondary'
+                  lineHeight={1}
+                >
+                  Pedido
+                </Typography>
+              </Stack>
             </Grid>
-            <FormControl>
-              <RadioGroup
-                aria-labelledby='demo-radio-buttons-group-label'
-                defaultValue={TypeOrder.IN_PLACE}
-                name='radio-buttons-group'
-                onChange={(e) => {
-                  handleTypeChange(e.target.value as TypeOrder);
-                }}
-                value={typeOrder}
-              >
-                <Stack direction='row' spacing={2}>
-                  <FormControlLabel
-                    value={TypeOrder.IN_PLACE}
-                    control={<Radio />}
-                    label={'Para servir'}
-                  />
-                  <FormControlLabel
-                    value={TypeOrder.TAKE_AWAY}
-                    control={<Radio />}
-                    label={'Para llevar'}
-                  />
-                </Stack>
-              </RadioGroup>
-            </FormControl>
-            <Grid item xs={12} display='flex' justifyContent='right'>
+
+            {/* Type selector */}
+            <Grid item xs={12}>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby='type-order-group-label'
+                  name='radio-buttons-group'
+                  onChange={(e) =>
+                    handleTypeChange(e.target.value as TypeOrder)
+                  }
+                  value={typeOrder}
+                >
+                  <Stack direction='row' spacing={2}>
+                    <FormControlLabel
+                      value={TypeOrder.IN_PLACE}
+                      control={<Radio size='small' />}
+                      label='Para servir'
+                    />
+                    <FormControlLabel
+                      value={TypeOrder.TAKE_AWAY}
+                      control={<Radio size='small' />}
+                      label='Para llevar'
+                    />
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+
+            {/* Quantity + Price in one row */}
+            <Grid item xs={7} display='flex' alignItems='center'>
               <CounterInput
                 value={quantity}
                 onChange={handleChangeQuantity}
@@ -215,22 +212,7 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
               />
             </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                id='descripcion-pedido'
-                label='Notas'
-                margin='dense'
-                multiline
-                rows={4}
-                defaultValue={detail?.description}
-                fullWidth
-                onBlur={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
+            <Grid item xs={5}>
               <TextField
                 id='precio-producto'
                 label='Precio'
@@ -241,33 +223,67 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      <AttachMoney />
+                      <AttachMoney fontSize='small' />
                     </InputAdornment>
                   )
                 }}
-                onBlur={(e) => {
-                  setPrice(Number(e.target.value));
-                }}
+                onBlur={(e) => setPrice(Number(e.target.value))}
                 size='small'
-                inputProps={{
-                  min: 0,
-
-                  step: 0.25
-                }}
+                inputProps={{ min: 0, step: 0.25 }}
               />
             </Grid>
 
+            {/* ── Section: Notas ────────────────────────────── */}
             <Grid item xs={12}>
-              <Typography variant='h5' mt={2}>
-                Cantidad entregada
-              </Typography>
+              <Stack direction='row' alignItems='center' spacing={1} mb={0.5}>
+                <Typography
+                  variant='overline'
+                  color='text.secondary'
+                  lineHeight={1}
+                >
+                  Notas
+                </Typography>
+              </Stack>
+              <TextField
+                id='descripcion-pedido'
+                margin='dense'
+                multiline
+                rows={3}
+                defaultValue={detail?.description}
+                fullWidth
+                onBlur={(e) => setDescription(e.target.value)}
+              />
+            </Grid>
 
-              <Box
-                display='flex'
-                alignItems='center'
-                justifyContent='right'
-                mt={1}
-              >
+            {/* ── Section: Entrega ──────────────────────────── */}
+            <Grid item xs={12}>
+              <Stack direction='row' alignItems='center' spacing={1} mb={0.5}>
+                <Typography
+                  variant='overline'
+                  color='text.secondary'
+                  lineHeight={1}
+                >
+                  Entrega
+                </Typography>
+                <Typography variant='caption' color='text.secondary'>
+                  {qtyDelivered} / {quantity}
+                </Typography>
+              </Stack>
+
+              {/* Progress bar */}
+              <LinearProgress
+                variant='determinate'
+                value={Math.min(deliveryProgress, 100)}
+                color={deliveryProgress >= 100 ? 'success' : 'primary'}
+                sx={{
+                  height: 5,
+                  borderRadius: 4,
+                  mb: 1.5,
+                  bgcolor: alpha(theme.palette.primary.main, 0.08)
+                }}
+              />
+
+              <Box display='flex' justifyContent='flex-end'>
                 <CounterInput
                   value={qtyDelivered}
                   onChange={setQtyDelivered}
@@ -277,16 +293,9 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
               </Box>
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              display='flex'
-              justifyContent='right'
-              mt={1}
-            ></Grid>
-
+            {/* ── Timestamps ────────────────────────────────── */}
             <Grid item xs={12}>
-              <Divider sx={{ mt: 1 }} />
+              <Divider sx={{ mt: 0.5 }} />
               <Stack spacing={0.5} mt={1.5}>
                 <Tooltip
                   title={format(createdAt, 'PPPp', { locale: es })}
@@ -313,7 +322,7 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
                     placement='left'
                   >
                     <Stack direction='row' alignItems='center' spacing={0.75}>
-                      <AccessTimeOutlined
+                      <EditOutlined
                         sx={{ fontSize: '0.85rem', color: 'text.disabled' }}
                       />
                       <Typography variant='caption' color='text.disabled'>
@@ -331,26 +340,27 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
             </Grid>
           </Grid>
         </DialogContent>
+
         <DialogActions
-          sx={{
-            justifyContent: 'right',
-            gap: 1,
-            px: 2
-          }}
+          sx={{ justifyContent: 'flex-end', gap: 1, px: 2, pb: 2 }}
         >
           <Button onClick={closeModal} color='secondary'>
             Cancelar
           </Button>
 
-          <LoadingButton
-            variant='contained'
-            onClick={updateDetail}
-            loading={isLoading}
-            startIcon={<Save />}
-            disabled={!isOnline}
-          >
-            Actualizar
-          </LoadingButton>
+          <Tooltip title={!isDirty ? 'Sin cambios' : ''} placement='top'>
+            <span>
+              <LoadingButton
+                variant='contained'
+                onClick={updateDetail}
+                loading={isLoading}
+                startIcon={<Save />}
+                disabled={!isOnline || !isDirty}
+              >
+                Actualizar
+              </LoadingButton>
+            </span>
+          </Tooltip>
         </DialogActions>
       </Dialog>
     );
