@@ -173,41 +173,29 @@ export const ProductionAreaOrder = ({
                 <Typography variant='subtitle1' fontWeight={600}>
                   {productionArea.name}
                 </Typography>
-                <Chip
-                  label={`${statistics.totalProducts} items`}
-                  size='small'
-                  sx={{
-                    bgcolor: alpha(areaColor, 0.15),
-                    color: areaColor,
-                    fontWeight: 600,
-                    fontSize: '0.75rem',
-                    height: 24
-                  }}
-                />
               </Stack>
 
               {/* Progress Bar */}
               <Stack direction='row' spacing={1} alignItems='center'>
-                <LinearProgress
-                  variant='determinate'
-                  value={statistics.completionPercentage}
-                  sx={{
-                    flexGrow: 1,
-                    height: 6,
-                    borderRadius: 3,
-                    bgcolor: alpha(areaColor, 0.1),
-                    '& .MuiLinearProgress-bar': {
-                      bgcolor: areaColor,
-                      borderRadius: 3
-                    }
-                  }}
-                />
+                {/* <LinearProgress */}
+                {/*   variant='determinate' */}
+                {/*   value={statistics.completionPercentage} */}
+                {/*   sx={{ */}
+                {/*     flexGrow: 1, */}
+                {/*     height: 6, */}
+                {/*     borderRadius: 3, */}
+                {/*     bgcolor: alpha(areaColor, 0.1), */}
+                {/*     '& .MuiLinearProgress-bar': { */}
+                {/*       bgcolor: areaColor, */}
+                {/*       borderRadius: 3 */}
+                {/*     } */}
+                {/*   }} */}
+                {/* /> */}
                 <Typography
                   variant='caption'
                   fontWeight={600}
                   sx={{
                     color: areaColor,
-                    minWidth: 40,
                     textAlign: 'right'
                   }}
                 >

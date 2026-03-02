@@ -1,4 +1,4 @@
-import { FC, useState, useCallback, useMemo } from 'react';
+import { FC, useState, useCallback, useMemo, useEffect, useRef } from 'react';
 
 import {
   Box,
@@ -12,7 +12,8 @@ import {
   Chip,
   Checkbox,
   alpha,
-  useTheme
+  useTheme,
+  keyframes
 } from '@mui/material';
 
 import { format, isSameDay } from 'date-fns';
@@ -46,6 +47,12 @@ const LinearProgressWrapper = styled(LinearProgress)(
         }`
 );
 
+const highlightPulse = keyframes`
+  0%   { background-color: transparent; }
+  25%  { background-color: rgba(33, 150, 243, 0.10); }
+  100% { background-color: transparent; }
+`;
+
 interface Props {
   detail: IOrderDetail;
   orderId: string;
@@ -61,6 +68,7 @@ interface Props {
  * @version 1.3 01/03/2025 Fix: Buttons to increase quantity delivered
  * @version 1.4 20-01-2025 Adds order detail type icon
  * @version 1.5 03-01-2026 Enhanced UI, performance optimizations, removed commented code
+ * @version 1.6 03-02-2026 Adds real-time update highlight animation
  */
 export const DetailInProgress: FC<Props> = ({
   detail,
@@ -74,6 +82,19 @@ export const DetailInProgress: FC<Props> = ({
   const [checked, setChecked] = useState(
     detail.qtyDelivered === detail.quantity
   );
+
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    setIsHighlighted(true);
+    const timer = setTimeout(() => setIsHighlighted(false), 7500);
+    return () => clearTimeout(timer);
+  }, [detail.updatedAt]);
 
   // Memoized calculations
   const isCompleted = useMemo(
@@ -153,10 +174,14 @@ export const DetailInProgress: FC<Props> = ({
         alignItems: detail.quantity > 1 ? 'flex-start' : 'center',
         px: 1,
         py: 1.5,
+        borderRadius: 1,
         transition: 'background-color 0.2s ease',
         '&:hover': {
-          bgcolor: alpha(theme.palette.action.hover, 0.02)
-        }
+          bgcolor: alpha(theme.palette.action.hover, 0.05)
+        },
+        ...(isHighlighted && {
+          animation: `${highlightPulse} 2.5s ease-out 3`
+        })
       }}
     >
       <ListItemIcon sx={{ minWidth: 48 }}>
@@ -195,7 +220,8 @@ export const DetailInProgress: FC<Props> = ({
                 textDecoration: isCompleted ? 'line-through' : 'none'
               }}
             >
-              {detail.quantity} x {detail.product.name}
+              {detail.quantity} x {detail.product.name}{' '}
+              {detail.price !== detail.product.price && `($${detail.price})`}
             </Typography>
 
             {/* Type Indicator */}

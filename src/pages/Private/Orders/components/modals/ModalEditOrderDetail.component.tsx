@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import { IOrderDetail, ProductOption, TypeOrder } from '../../../../../models';
 
@@ -20,11 +20,20 @@ import {
   RadioGroup,
   Stack,
   Radio,
-  FormControlLabel
+  FormControlLabel,
+  Divider,
+  Tooltip
 } from '@mui/material';
 
 import { useUpdateOrderDetail } from '../../hooks';
-import { Close, AttachMoney, Save } from '@mui/icons-material';
+import {
+  Close,
+  AttachMoney,
+  Save,
+  AccessTimeOutlined
+} from '@mui/icons-material';
+import { format, formatDistanceToNow } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { UpdateOrderDetailDto } from '../../dto/update-order-detail.dto';
 import { LoadingButton } from '@mui/lab';
 import { CounterInput } from '../CounterInput.component';
@@ -39,6 +48,7 @@ interface Props {
  * Modal to edit a product to the active order
  * @version 1.1 20/12/2023 Adds product options chip and NiceModal
  * @version 1.3 28/12/2023 Adds useUpdateOrderDetail hook
+ * @version 1.4 03-02-2026 Shows createdAt and updatedAt in dialog
  */
 export const ModalEditOrderDetail = NiceModal.create<Props>(
   ({ detail, orderId }) => {
@@ -58,6 +68,19 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
     );
 
     const { mutate: update, isLoading, isOnline } = useUpdateOrderDetail();
+
+    const createdAt = useMemo(
+      () => new Date(detail.createdAt),
+      [detail.createdAt]
+    );
+    const updatedAt = useMemo(
+      () => new Date(detail.updatedAt),
+      [detail.updatedAt]
+    );
+    const wasUpdated = useMemo(
+      () => createdAt.getTime() !== updatedAt.getTime(),
+      [createdAt, updatedAt]
+    );
 
     const updateDetail = () => {
       const data: UpdateOrderDetailDto = {
@@ -261,6 +284,51 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
               justifyContent='right'
               mt={1}
             ></Grid>
+
+            <Grid item xs={12}>
+              <Divider sx={{ mt: 1 }} />
+              <Stack spacing={0.5} mt={1.5}>
+                <Tooltip
+                  title={format(createdAt, 'PPPp', { locale: es })}
+                  placement='left'
+                >
+                  <Stack direction='row' alignItems='center' spacing={0.75}>
+                    <AccessTimeOutlined
+                      sx={{ fontSize: '0.85rem', color: 'text.disabled' }}
+                    />
+                    <Typography variant='caption' color='text.disabled'>
+                      Creado{' '}
+                      {formatDistanceToNow(createdAt, {
+                        addSuffix: true,
+                        locale: es
+                      })}{' '}
+                      · {format(createdAt, 'd MMM HH:mm', { locale: es })}
+                    </Typography>
+                  </Stack>
+                </Tooltip>
+
+                {wasUpdated && (
+                  <Tooltip
+                    title={format(updatedAt, 'PPPp', { locale: es })}
+                    placement='left'
+                  >
+                    <Stack direction='row' alignItems='center' spacing={0.75}>
+                      <AccessTimeOutlined
+                        sx={{ fontSize: '0.85rem', color: 'text.disabled' }}
+                      />
+                      <Typography variant='caption' color='text.disabled'>
+                        Actualizado{' '}
+                        {formatDistanceToNow(updatedAt, {
+                          addSuffix: true,
+                          locale: es
+                        })}{' '}
+                        · {format(updatedAt, 'd MMM HH:mm', { locale: es })}
+                      </Typography>
+                    </Stack>
+                  </Tooltip>
+                )}
+              </Stack>
+            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions
