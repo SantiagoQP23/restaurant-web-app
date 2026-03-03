@@ -6,9 +6,14 @@ import {
   Typography,
   Box,
   alpha,
-  useTheme
+  useTheme,
+  IconButton
 } from '@mui/material';
-import { PeopleOutlined, TimerOutlined } from '@mui/icons-material';
+import {
+  PeopleOutlined,
+  TimerOutlined,
+  OpenInNewOutlined
+} from '@mui/icons-material';
 import { formatDistance, format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Order, OrderStatus, TypeOrder } from '../../../../../../models';
@@ -18,6 +23,7 @@ import {
 } from '../../../constants/order.constants';
 import { LabelStatusOrder } from '../../../components/LabelStatusOrder.component';
 import { useTimeUrgency } from '../../../hooks/useTimeUrgency';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   order: Order;
@@ -27,9 +33,11 @@ interface Props {
 
 /**
  * Enhanced order card header with status, urgency, and order info
+ * @version 1.1 03-02-2026 Adds navigate-to-order-view button
  */
 export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const adjustedDeliveryTime = new Date(order.deliveryTime);
   const timeUrgency = useTimeUrgency(adjustedDeliveryTime);
 
@@ -44,7 +52,7 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
           <Stack
             direction='row'
             spacing={2}
-            justifyContent='center'
+            justifyContent='space-between'
             alignItems='center'
           >
             {/* <Typography variant='h5'>{index + 1}</Typography> */}
@@ -66,6 +74,14 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
                 fontWeight: 600
               }}
             />
+
+            <IconButton
+              size='small'
+              onClick={() => navigate(`/orders/list/edit/${order.id}`)}
+              sx={{ color: 'text.secondary', p: 0.5 }}
+            >
+              <OpenInNewOutlined fontSize='small' />
+            </IconButton>
           </Stack>
 
           {/* Order Title */}
