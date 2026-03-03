@@ -1,10 +1,17 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  TextField,
+  InputAdornment,
+  IconButton
+} from '@mui/material';
 
 import NiceModal from '@ebay/nice-modal-react';
 
-import { ComboBoxProducts } from '../../../../Private/EditMenu/components/products/ComboBoxProducts.component';
 import { TitlePage } from '../../../../Private/components';
-import { FilterList } from '@mui/icons-material';
+import { FilterList, SearchOutlined, ClearOutlined } from '@mui/icons-material';
 import { Product } from '../../../../Private/Orders/views';
 import { useSelector } from 'react-redux';
 import { IProduct } from '../../../../../models';
@@ -12,10 +19,11 @@ import { selectMenu } from '../../../../../redux';
 import { useMenu } from '../../../../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { RegisteredModals } from '../../../../Private/modals';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 export const ProductsMenu = () => {
   const { activeCategory, products } = useSelector(selectMenu);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const navigate = useNavigate();
 
@@ -31,12 +39,20 @@ export const ProductsMenu = () => {
   };
 
   const availableProducts = useMemo(() => {
+    const publicProducts = findPublicProducts();
+
+    if (searchQuery.trim()) {
+      return publicProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
     if (activeCategory) {
       return findPublicProductsByCategory(activeCategory.id);
     }
 
-    return findPublicProducts();
-  }, [products, activeCategory]);
+    return publicProducts.slice(0, 10);
+  }, [products, activeCategory, searchQuery]);
 
   const showProduct = (productId: string) => {
     navigate(`/shop/product/${productId}`);
@@ -56,21 +72,34 @@ export const ProductsMenu = () => {
 
       <Box
         sx={{
-          width: '250px'
-        }}
-      >
-        <ComboBoxProducts selectProduct={navigateToProduct} />
-      </Box>
-
-      <Box
-        sx={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          gap: 1,
           my: 2
         }}
       >
-        <Typography variant='h4'>{activeCategory?.name}</Typography>
+        <TextField
+          size='small'
+          placeholder='Buscar productos...'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{ flex: 1, maxWidth: 340 }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchOutlined fontSize='small' />
+              </InputAdornment>
+            ),
+            endAdornment: searchQuery ? (
+              <InputAdornment position='end'>
+                <IconButton size='small' onClick={() => setSearchQuery('')}>
+                  <ClearOutlined fontSize='small' />
+                </IconButton>
+              </InputAdornment>
+            ) : null
+          }}
+        />
 
         <Button
           variant='text'
@@ -82,21 +111,19 @@ export const ProductsMenu = () => {
         </Button>
       </Box>
 
-      <Grid container spacing={2}>
-        {activeCategory
-          ? availableProducts.map((product) => (
-              <Grid item key={product.id} xs={6} sm={3} lg={3} xl={2}>
-                <Product product={product} onClick={showProduct} />
-              </Grid>
-            ))
-          : availableProducts.slice(0, 10).map((product) => (
-              <Grid item key={product.id} xs={6} sm={3} lg={3} xl={2}>
-                <Product product={product} onClick={showProduct} />
-              </Grid>
-            ))}
-      </Grid>
+      {!searchQuery && activeCategory && (
+        <Typography variant='h4' mb={2}>
+          {activeCategory.name}
+        </Typography>
+      )}
 
-      {/* <CartWidget badge={1} /> */}
+      <Grid container spacing={2}>
+        {availableProducts.map((product) => (
+          <Grid item key={product.id} xs={6} sm={3} lg={3} xl={2}>
+            <Product product={product} onClick={showProduct} />
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, FC, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Material UI
@@ -11,8 +11,12 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  ListSubheader
+  ListSubheader,
+  TextField,
+  InputAdornment,
+  IconButton
 } from '@mui/material/';
+import { SearchOutlined, ClearOutlined } from '@mui/icons-material';
 
 import { IProduct } from '../../../../../../models';
 import { Product } from './Product.component';
@@ -29,6 +33,7 @@ export const ProductsList: FC<Props> = () => {
 
   const [filteredProducts, setFilteredProducts] =
     useState<IProduct[]>(products);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const changeCategory = (e: SelectChangeEvent) => {
     const categoryId = e.target.value;
@@ -66,9 +71,44 @@ export const ProductsList: FC<Props> = () => {
     setProducts();
   }, []);
 
+  const displayedProducts = useMemo(() => {
+    if (!searchQuery.trim()) return filteredProducts;
+    return filteredProducts.filter((p) =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [filteredProducts, searchQuery]);
+
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 1
+        }}
+      >
+        <TextField
+          size='small'
+          placeholder='Buscar productos...'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{ flex: 1, maxWidth: 300 }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchOutlined fontSize='small' />
+              </InputAdornment>
+            ),
+            endAdornment: searchQuery ? (
+              <InputAdornment position='end'>
+                <IconButton size='small' onClick={() => setSearchQuery('')}>
+                  <ClearOutlined fontSize='small' />
+                </IconButton>
+              </InputAdornment>
+            ) : null
+          }}
+        />
         {/* {activeCategory && (
           <Button variant="text" sx={{ mr: 1 }}>
             Reordenar
@@ -112,14 +152,14 @@ export const ProductsList: FC<Props> = () => {
 
       <Box mt={2} mb={4}>
         <Grid container rowSpacing={1} spacing={1}>
-          {filteredProducts.length === 0 && (
+          {displayedProducts.length === 0 && (
             <Typography align='center' variant='subtitle1'>
               No se han registrado productos
             </Typography>
           )}
 
-          {filteredProducts.length > 0 &&
-            filteredProducts.map((producto) => (
+          {displayedProducts.length > 0 &&
+            displayedProducts.map((producto) => (
               <Grid key={producto.id!} item xs={12} sm={6} lg={3}>
                 <Product producto={producto} />
               </Grid>

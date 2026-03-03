@@ -49,15 +49,35 @@ export const OrderActions: FC<Props> = ({
       }}
     >
       {order.status === OrderStatus.PENDING ? (
-        <Button
-          fullWidth
-          size='large'
-          startIcon={<PlayCircleOutline />}
-          onClick={handleStartClick}
-          variant='outlined'
+        <Stack
+          direction='row'
+          spacing={1}
+          width='100%'
+          sx={{
+            '& .MuiButton-root': {
+              flex: 1,
+              py: 1.25,
+              fontWeight: 600
+            }
+          }}
         >
-          Iniciar Pedido
-        </Button>
+          <Button
+            fullWidth
+            size='large'
+            startIcon={<PlayCircleOutline />}
+            onClick={handleStartClick}
+            variant='contained'
+          >
+            Iniciar
+          </Button>
+          <Button
+            variant='outlined'
+            startIcon={<Check />}
+            onClick={handleDeliveredClick}
+          >
+            Entregado
+          </Button>
+        </Stack>
       ) : (
         order.status === OrderStatus.IN_PROGRESS && (
           <Stack
