@@ -4,6 +4,7 @@ import {
   TextField,
   Button,
   Dialog,
+  DialogTitle,
   DialogActions,
   DialogContent,
   FormControl,
@@ -13,8 +14,13 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Checkbox,
-  Switch
+  Switch,
+  Grid,
+  Divider,
+  LinearProgress,
+  IconButton,
+  alpha,
+  useTheme
 } from '@mui/material/';
 
 import {
@@ -29,7 +35,7 @@ import { selectOrders } from '../../../../../redux/slices/orders/orders.slice';
 import { CreateOrderDetailDto } from '../../dto/create-order-detail.dto';
 import { LoadingButton } from '@mui/lab';
 
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { AttachMoney, Close, ShoppingCart } from '@mui/icons-material';
 import { CounterInput } from '../CounterInput.component';
 import { ProductOption, ProductStatus } from '../../../../../models';
 import { Label } from '../../../../../components/ui';
@@ -55,33 +61,27 @@ interface Props {
  *
  * @author Santiago Quirumbay
  * @version 1.7 20-03-2025 Default order detail type
+ * @version 1.8 03-02-2026 Align UI with ModalEditOrderDetail
  */
 export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
   const modal = useModal();
-  console.log('detail', detail);
-  // const product = detail?.product;
-  // const availableOptions = product?.options
-  //   ? product?.options.filter((option) => option.isAvailable)
-  //   : [];
+  const theme = useTheme();
 
   const [description, setDescription] = useState('');
-  const [detailDelivered, setDetailDelivered] = useState(false);
+  const [detailWithNote, setDetailWithNote] = useState(false);
   const [quantity, setQuantity] = useState(detail?.quantity || 1);
+  const [price, setPrice] = useState(detail?.product.price);
+  const [qtyDelivered, setQtyDelivered] = useState(0);
+
   const [selectedOption] = useState<ProductOption | undefined>(
-    detail.productOption ? detail.productOption : undefined
+    detail.productOption ?? undefined
   );
+
   const { activeOrder } = useSelector(selectOrders);
 
   const [typeOrder, setTypeOrder] = useState<TypeOrder>(
     activeOrder ? activeOrder.type : TypeOrder.IN_PLACE
   );
-  const [detailWithNote, setDetailWithNote] = useState(true);
-
-  const handleChangeDetailWithNote = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDetailWithNote(event.target.checked);
-  };
 
   const { addDetail, details, updateDetail } = useNewOrderStore(
     (state) => state
@@ -95,12 +95,19 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
     isOnline
   } = useCreateOrderDetail();
 
+  const isAvailable = detail?.product.status === ProductStatus.AVAILABLE;
+
+  const deliveryProgress =
+    quantity > 0 ? Math.min((qtyDelivered / quantity) * 100, 100) : 0;
+
   const handleQuantityChange = (value: number) => {
     setQuantity(value);
+    // Cap qtyDelivered if quantity is reduced below it
+    if (qtyDelivered > value) setQtyDelivered(value);
   };
 
-  const handleProductDelivered = () => {
-    setDetailDelivered(!detailDelivered);
+  const handleTypeChange = (type: TypeOrder) => {
+    setTypeOrder(type);
   };
 
   const closeModal = () => {
@@ -115,18 +122,15 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
     const data: CreateOrderDetailDto = {
       orderId: order.id,
       productId: detail!.product.id,
-      price: detail!.product.price,
+      price,
       quantity,
-      qtyDelivered: detailDelivered ? quantity : 0,
+      qtyDelivered,
       typeOrderDetail: typeOrder
     };
 
-    if (description) {
-      data.description = description;
-    }
-    if (selectedOption) {
-      data.productOptionId = selectedOption.id;
-    }
+    if (description) data.description = description;
+    if (selectedOption) data.productOptionId = selectedOption.id;
+
     createOrderDetail(data);
   };
 
@@ -164,182 +168,198 @@ export const ModalAddDetail = NiceModal.create<Props>(({ detail }) => {
     closeModal();
   };
 
-  const handleTypeChange = (type: TypeOrder) => {
-    setTypeOrder(type);
-  };
-
   return (
-    <>
-      <Dialog {...muiDialogV5(modal)}>
-        <DialogContent
-          sx={{
-            width: {
-              xs: '100%',
-              md: 370
-            }
-          }}
-        >
-          <Stack spacing={2}>
-            <Box>
-              <Typography variant='subtitle2' color='text.secondary'>
-                {detail?.product.category.name}
-              </Typography>
-              <Typography variant='h6'>{detail?.product.name}</Typography>
-            </Box>
-            <Typography variant='body1'>${detail?.product.price}</Typography>
+    <Dialog {...muiDialogV5(modal)} maxWidth='xs' fullWidth>
+      {/* ── Title ─────────────────────────────────────────── */}
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          pb: 1
+        }}
+      >
+        <Box>
+          <Typography variant='caption' color='text.secondary'>
+            {detail?.product.category.name}
+          </Typography>
+          <Typography variant='h6' component='div' fontWeight={600}>
+            {detail?.product.name}
+          </Typography>
+          {detail?.product.description && (
+            <Typography
+              variant='body2'
+              color='text.secondary'
+              whiteSpace='pre-wrap'
+              mt={0.25}
+            >
+              {detail.product.description}
+            </Typography>
+          )}
+        </Box>
+        <IconButton onClick={closeModal} size='small' sx={{ ml: 1, mt: 0.5 }}>
+          <Close fontSize='small' />
+        </IconButton>
+      </DialogTitle>
 
-            {/* <List sx={{ p: 0 }} dense>
-              {detail?.product.options.map((option) => (
-                <ListItem key={option.id}>
-                  <Checkbox icon={icon} checkedIcon={checkedIcon} />
-                  <ListItemText primary={option.name} />
-                </ListItem>
-              ))}
-            </List> */}
+      <DialogContent sx={{ pt: 0 }}>
+        <Grid container spacing={1.5}>
+          {/* ── Section: Pedido ───────────────────────────── */}
+
+          {/* Type selector */}
+          <Grid item xs={12}>
             <FormControl>
               <RadioGroup
-                aria-labelledby='demo-radio-buttons-group-label'
-                value={typeOrder}
+                aria-labelledby='type-order-group-label'
                 name='radio-buttons-group'
-                onChange={(e) => {
-                  handleTypeChange(e.target.value as TypeOrder);
-                }}
+                value={typeOrder}
+                onChange={(e) => handleTypeChange(e.target.value as TypeOrder)}
               >
                 <Stack direction='row' spacing={2}>
                   <FormControlLabel
                     value={TypeOrder.IN_PLACE}
-                    control={<Radio />}
-                    label={'Para servir'}
+                    control={<Radio size='small' />}
+                    label='Para servir'
                   />
                   <FormControlLabel
                     value={TypeOrder.TAKE_AWAY}
-                    control={<Radio />}
-                    label={'Para llevar'}
+                    control={<Radio size='small' />}
+                    label='Para llevar'
                   />
                 </Stack>
               </RadioGroup>
             </FormControl>
+          </Grid>
 
-            {/* <Autocomplete
-                id="checkboxes-tags-demo"
-                options={product.options}
-                disableCloseOnSelect
-                getOptionLabel={(option) => option.name}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.name}
-                  </li>
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Opciones"
-                    placeholder="Opción"
-                    variant="standard"
-                  />
-                )}
-              /> */}
-
-            {detail?.product.description && (
-              <Box sx={{ border: '1px solid #e0e0e0', p: 1, borderRadius: 1 }}>
-                <Typography variant='body1' style={{ whiteSpace: 'pre-wrap' }}>
-                  {detail?.product.description}
-                </Typography>
-              </Box>
-            )}
-
+          {/* Quantity + Price in one row */}
+          <Grid item xs={7} display='flex' alignItems='center'>
             <CounterInput
               value={detail?.quantity || 1}
               onChange={handleQuantityChange}
             />
-            <Stack
-              direction='row'
-              alignItems='center'
-              spacing={1}
-              justifyContent='space-between'
-            >
-              <Typography variant='body1'>Producto entregado</Typography>
-              <Checkbox onChange={handleProductDelivered} />
-            </Stack>
+          </Grid>
 
-            {detail?.product.status !== ProductStatus.AVAILABLE ? (
-              <>
-                <Label color='warning'>Producto no disponible</Label>
-              </>
-            ) : (
-              <>
-                <Stack
-                  direction='row'
-                  alignItems='center'
-                  spacing={1}
-                  justifyContent='space-between'
-                >
-                  <Typography variant='body1'>
-                    Añadir notas al detalle
+          <Grid item xs={5}>
+            <TextField
+              id='precio-producto'
+              label='Precio'
+              margin='dense'
+              type='number'
+              defaultValue={detail?.product.price}
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <AttachMoney
+                    fontSize='small'
+                    sx={{ mr: 0.5, color: 'text.secondary' }}
+                  />
+                )
+              }}
+              onBlur={(e) => setPrice(Number(e.target.value))}
+              size='small'
+              inputProps={{ min: 0, step: 0.25 }}
+            />
+          </Grid>
+
+          {/* ── Section: Notas ────────────────────────────── */}
+          {isAvailable && (
+            <>
+              <Grid item xs={12}>
+                <Stack direction='row' alignItems='center' spacing={1}>
+                  <Typography
+                    variant='overline'
+                    color='text.secondary'
+                    lineHeight={1}
+                  >
+                    Notas
                   </Typography>
+                  <Box sx={{ flex: 1 }} />
                   <Switch
                     checked={detailWithNote}
-                    onChange={handleChangeDetailWithNote}
+                    onChange={(e) => setDetailWithNote(e.target.checked)}
                   />
                 </Stack>
+              </Grid>
 
-                {detailWithNote && (
-                  <FormControl fullWidth>
-                    <Stack
-                      flexWrap='wrap'
-                      flexDirection='column'
-                      spacing={2}
-                      alignItems='end'
-                      width='100%'
-                    >
-                      <TextField
-                        id='descripcion-pedido'
-                        label='Notas'
-                        margin='dense'
-                        multiline
-                        rows={3}
-                        sx={{
-                          width: '100%'
-                        }}
-                        defaultValue={description}
-                        onBlur={(e) => {
-                          console.log(e.target.value);
-                          setDescription(e.target.value);
-                        }}
-                      />
-                    </Stack>
-                  </FormControl>
-                )}
-              </>
-            )}
-          </Stack>
-        </DialogContent>
-
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button onClick={closeModal}>Cancelar</Button>
-
-          {detail?.product.status === ProductStatus.AVAILABLE && (
-            <LoadingButton
-              onClick={handleCreateDetail}
-              variant='contained'
-              loading={isLoading}
-              startIcon={<ShoppingCartIcon />}
-              // disabled={
-              //   !isOnline
-              //   // (detail.product.options.length > 0 && !selectedOption)
-              // }
-            >
-              Añadir
-            </LoadingButton>
+              {detailWithNote && (
+                <Grid item xs={12}>
+                  <TextField
+                    id='descripcion-pedido'
+                    margin='dense'
+                    multiline
+                    rows={3}
+                    fullWidth
+                    defaultValue={description}
+                    onBlur={(e) => setDescription(e.target.value)}
+                  />
+                </Grid>
+              )}
+            </>
           )}
-        </DialogActions>
-      </Dialog>
-    </>
+
+          {/* ── Section: Entrega ──────────────────────────── */}
+          <Grid item xs={12}>
+            <Stack direction='row' alignItems='center' spacing={1} mb={0.5}>
+              <Typography
+                variant='overline'
+                color='text.secondary'
+                lineHeight={1}
+              >
+                Entrega
+              </Typography>
+              <Box sx={{ flex: 1 }} />
+              <Typography variant='caption' color='text.secondary'>
+                {qtyDelivered} / {quantity}
+              </Typography>
+            </Stack>
+
+            {isAvailable ? (
+              <>
+                <LinearProgress
+                  variant='determinate'
+                  value={deliveryProgress}
+                  color={deliveryProgress >= 100 ? 'success' : 'primary'}
+                  sx={{
+                    mt: 1,
+                    height: 5,
+                    borderRadius: 4,
+                    mb: 1.5,
+                    bgcolor: alpha(theme.palette.primary.main, 0.08)
+                  }}
+                />
+                <Box display='flex' justifyContent='flex-end'>
+                  <CounterInput
+                    value={qtyDelivered}
+                    onChange={setQtyDelivered}
+                    min={0}
+                    max={quantity}
+                  />
+                </Box>
+              </>
+            ) : (
+              <Label color='warning'>Producto no disponible</Label>
+            )}
+          </Grid>
+        </Grid>
+      </DialogContent>
+
+      <DialogActions sx={{ justifyContent: 'flex-end', gap: 1, px: 2, pb: 2 }}>
+        <Button onClick={closeModal} color='secondary'>
+          Cancelar
+        </Button>
+
+        {isAvailable && (
+          <LoadingButton
+            onClick={handleCreateDetail}
+            variant='contained'
+            loading={isLoading}
+            startIcon={<ShoppingCart />}
+            disabled={!isOnline}
+          >
+            Añadir
+          </LoadingButton>
+        )}
+      </DialogActions>
+    </Dialog>
   );
 });
