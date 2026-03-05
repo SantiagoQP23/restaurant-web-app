@@ -186,6 +186,29 @@ export const updateProductImage = async (
 
 // }
 
+export const addTagToProduct = async (
+  productId: string,
+  name: string
+): Promise<IProduct> => {
+  const resp = await restauranteApi.post<IProduct>(
+    `/tags/product/${productId}`,
+    { name }
+  );
+
+  return resp.data;
+};
+
+export const removeTagFromProduct = async (
+  tagId: string,
+  productId: string
+): Promise<IProduct> => {
+  const resp = await restauranteApi.delete<IProduct>(
+    `/tags/product/${productId}/${tagId}`
+  );
+
+  return resp.data;
+};
+
 export const deleteProduct = (id: string) => {
   const controller = loadAbort();
 

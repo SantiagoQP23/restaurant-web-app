@@ -1,4 +1,5 @@
 import { ProductionArea } from '../pages/Private/Common/models/production-area.model';
+import { Tag } from './tag.model';
 
 export interface Menu {
   sections: ISection[];
@@ -75,6 +76,7 @@ export interface IProduct {
   quantity: number;
   options: ProductOption[];
   iva: number;
+  tags: Tag[];
 }
 
 /**

@@ -5,8 +5,10 @@ import { IProduct } from '../../../../models';
 import { CreateProductDto, UpdateProductDto } from '../dto/';
 import {
   UpdateProductImageDto,
+  addTagToProduct,
   createProduct,
   getProduct,
+  removeTagFromProduct,
   updateProduct,
   updateProductImage
 } from '../services/menu.service';
@@ -104,6 +106,59 @@ export const useUpdateImageProduct = () => {
       enqueueSnackbar('No se pudo actualizar la imagen', {
         variant: 'error'
       });
+    }
+  });
+};
+
+interface AddTagToProductVars {
+  productId: string;
+  name: string;
+}
+
+/**
+ * Hook to add a tag to a product by name (backend creates it if it doesn't exist)
+ */
+export const useAddTagToProduct = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
+
+  return useMutation<IProduct, unknown, AddTagToProductVars>({
+    mutationFn: ({ productId, name }) => addTagToProduct(productId, name),
+    onSuccess: (data: IProduct) => {
+      enqueueSnackbar('Etiqueta añadida', { variant: 'success' });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.products.detail(data.id)
+      });
+    },
+    onError: () => {
+      enqueueSnackbar('No se pudo añadir la etiqueta', { variant: 'error' });
+    }
+  });
+};
+
+interface RemoveTagFromProductVars {
+  tagId: string;
+  productId: string;
+}
+
+/**
+ * Hook to remove a tag from a product
+ */
+export const useRemoveTagFromProduct = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
+
+  return useMutation<IProduct, unknown, RemoveTagFromProductVars>({
+    mutationFn: ({ tagId, productId }) =>
+      removeTagFromProduct(tagId, productId),
+    onSuccess: (data: IProduct) => {
+      enqueueSnackbar('Etiqueta eliminada', { variant: 'success' });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.products.detail(data.id)
+      });
+    },
+    onError: () => {
+      enqueueSnackbar('No se pudo eliminar la etiqueta', { variant: 'error' });
     }
   });
 };

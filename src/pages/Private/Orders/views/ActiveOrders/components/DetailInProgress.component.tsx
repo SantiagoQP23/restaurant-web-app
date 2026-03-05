@@ -262,6 +262,25 @@ export const DetailInProgress: FC<Props> = ({
               </Typography>
             )}
 
+            {/* Tags */}
+            {detail.tags && detail.tags.length > 0 && (
+              <Stack direction='row' flexWrap='wrap' gap={0.5}>
+                {detail.tags.map((tag) => (
+                  <Chip
+                    key={tag.id}
+                    label={tag.name}
+                    size='small'
+                    variant='outlined'
+                    sx={{
+                      height: 20,
+                      fontSize: '0.7rem',
+                      opacity: isCompleted ? 0.6 : 1
+                    }}
+                  />
+                ))}
+              </Stack>
+            )}
+
             {/* Progress Bar */}
             {!isCompleted && (
               <Stack spacing={0.5} mt={0.5}>

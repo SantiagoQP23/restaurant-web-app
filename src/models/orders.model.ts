@@ -2,6 +2,7 @@ import { IUser, IProduct, ProductOption } from '.';
 import { ITable } from './table.model';
 // import { Invoice } from "../pages/Private/Orders/models/Invoice.model";
 import { Bill } from './bill.model';
+import { Tag } from './tag.model';
 
 export enum OrderStatus {
   PENDING = 'PENDING',
@@ -90,6 +91,7 @@ export interface IOrderDetail {
 
   typeOrderDetail: TypeOrder;
   productOption?: ProductOption;
+  tags: Tag[];
 }
 
 export interface ICreateOrderDetail {

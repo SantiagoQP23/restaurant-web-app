@@ -173,6 +173,18 @@ export const OrderDetail: FC<Props> = ({ detail }) => {
           <Typography variant='body2' whiteSpace='pre-wrap'>
             {detail.description && detail.description}
           </Typography>
+          {detail.tags && detail.tags.length > 0 && (
+            <Stack direction='row' flexWrap='wrap' gap={0.5} mt={0.5}>
+              {detail.tags.map((tag) => (
+                <Chip
+                  key={tag.id}
+                  label={tag.name}
+                  size='small'
+                  variant='outlined'
+                />
+              ))}
+            </Stack>
+          )}
         </TableCell>
 
         <TableCell>
