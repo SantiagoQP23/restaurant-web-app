@@ -22,6 +22,7 @@ import { SubscriptionStatus } from '@/models/subscription.model';
 import { LoadingButton } from '@mui/lab';
 import { FormRestaurantLogo } from './components/FormRestaurantLogo.component';
 import { ProductionAreasList } from './components/ProductionAreasList.component';
+import { AccountsList } from './components/AccountsList.component';
 import { Label } from '@/components/ui';
 
 const Restaurant = () => {
@@ -280,6 +281,12 @@ const Restaurant = () => {
         <Grid container spacing={2} mt={2}>
           <Grid item xs={12}>
             <ProductionAreasList />
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={2} mt={2}>
+          <Grid item xs={12}>
+            <AccountsList />
           </Grid>
         </Grid>
       </Container>
