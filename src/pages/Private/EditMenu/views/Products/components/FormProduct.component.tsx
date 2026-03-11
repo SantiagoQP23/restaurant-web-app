@@ -83,7 +83,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   const getUpdateProductDto = (product: IProduct) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { options, images, productionArea, category, ...restProduct } =
+    const { options, images, productionArea, category, tags, ...restProduct } =
       product;
     const updateProductDto: UpdateProductDto = {
       ...restProduct,
