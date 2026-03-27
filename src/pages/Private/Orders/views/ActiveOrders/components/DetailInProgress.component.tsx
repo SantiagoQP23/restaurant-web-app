@@ -49,7 +49,7 @@ const LinearProgressWrapper = styled(LinearProgress)(
 
 const highlightPulse = keyframes`
   0%   { background-color: transparent; }
-  25%  { background-color: rgba(33, 150, 243, 0.10); }
+  25%  { background-color: rgba(21, 86, 133, 0.50); }
   100% { background-color: transparent; }
 `;
 
