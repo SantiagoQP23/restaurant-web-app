@@ -75,7 +75,11 @@ export const BestSellingProductsSummary = () => {
               data.products?.map((product) => (
                 <TableRow key={product.id}>
                   <TableCell>
-                    <Typography variant='h6' whiteSpace='nowrap'>
+                    <Typography
+                      variant='body1'
+                      whiteSpace='nowrap'
+                      fontWeight={500}
+                    >
                       {product.productName}
                     </Typography>
                   </TableCell>
@@ -83,10 +87,10 @@ export const BestSellingProductsSummary = () => {
                     <Chip label={product.categoryName} size='small' />
                   </TableCell>
                   <TableCell align='center'>
-                    <Typography variant='h6'>{product.totalSold}</Typography>
+                    <Typography variant='body1'>{product.totalSold}</Typography>
                   </TableCell>
                   <TableCell align='right'>
-                    <Typography variant='h6' color='success'>
+                    <Typography variant='body1' color='success'>
                       {formatMoney(product.totalSold * product.productPrice)}
                     </Typography>
                   </TableCell>

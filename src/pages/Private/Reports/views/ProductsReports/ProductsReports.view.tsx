@@ -320,18 +320,7 @@ export const ProductsReports = () => {
       <Grid container spacing={2} my={1}>
         <Grid item xs={12} md={6}>
           <Card>
-            <CardHeader
-              title='Productos más vendidos'
-              // action={
-              //   <Button
-              //     size='small'
-              //     variant='contained'
-              //     startIcon={<Print />}
-              //   >
-              //     Imprimir
-              //   </Button>
-              // }
-            />
+            <CardHeader title='Productos más vendidos' />
             <TableContainer>
               <Table>
                 <TableHead>
@@ -348,7 +337,11 @@ export const ProductsReports = () => {
                     data.products?.map((product) => (
                       <TableRow key={product.id}>
                         <TableCell>
-                          <Typography variant='h6' whiteSpace='nowrap'>
+                          <Typography
+                            variant='body1'
+                            whiteSpace='nowrap'
+                            fontWeight={500}
+                          >
                             {product.productName}
                           </Typography>
                         </TableCell>
@@ -356,12 +349,12 @@ export const ProductsReports = () => {
                           <Chip label={product.categoryName} size='small' />
                         </TableCell>
                         <TableCell align='center'>
-                          <Typography variant='h6'>
+                          <Typography variant='body1'>
                             {product.totalSold}
                           </Typography>
                         </TableCell>
                         <TableCell align='right'>
-                          <Typography variant='h6' color='success'>
+                          <Typography variant='body1' color='success'>
                             {formatMoney(
                               product.totalSold * product.productPrice
                             )}

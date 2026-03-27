@@ -6,13 +6,16 @@ import {
   List,
   ListItem,
   ListItemText,
-  Box
+  Box,
+  Stack,
+  Typography
 } from '@mui/material';
 import { QueryObserverResult, UseQueryResult } from '@tanstack/react-query';
 import { Bar, Pie } from 'react-chartjs-2';
 import { BestSellingCategoriesResponse } from '../../../services/dashboard.service';
 import { FC } from 'react';
 import { generateRandomColor } from '../../../../Common/helpers/randomColor.helpert';
+import { formatMoney } from '@/pages/Private/Common/helpers/format-money.helper';
 
 interface Props {
   categoriesQuery: UseQueryResult<BestSellingCategoriesResponse, unknown>;
@@ -85,23 +88,33 @@ export const CategoriesBestSelling: FC<Props> = ({ categoriesQuery }) => {
         </Box>
       )}
 
-      <List>
+      <Stack>
         {categoriesQuery.data?.categories.map((category) => (
-          <ListItem>
-            <ListItemText
-              primary={category.categoryName}
-              secondary={`Cantidad: ${category.totalSold}`}
-            />
-          </ListItem>
+          <Box
+            key={category.categoryId}
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
+            px={2}
+            pb={1}
+          >
+            <Box>
+              <Typography>{category.categoryName}</Typography>
+              <Typography variant='body2' color='textSecondary'>
+                Cantidad: {category.totalSold}
+              </Typography>
+            </Box>
+            <Typography>${formatMoney(category.totalAmountSold)}</Typography>
+          </Box>
         ))}
+      </Stack>
 
-        {/* <ListItem>
+      {/* <ListItem>
           <ListItemText primary='Categoria 2' secondary='Cantidad: 10' />
         </ListItem>
         <ListItem>
           <ListItemText primary='Categoria 3' secondary='Cantidad: 10' />
         </ListItem> */}
-      </List>
     </Card>
   );
 };

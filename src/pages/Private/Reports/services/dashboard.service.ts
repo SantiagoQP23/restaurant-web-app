@@ -32,6 +32,7 @@ export interface BestSellingCategoriesResponse {
     categoryId: string;
     categoryName: string;
     totalSold: string;
+    totalAmountSold: number;
   }[];
   count: number;
 }

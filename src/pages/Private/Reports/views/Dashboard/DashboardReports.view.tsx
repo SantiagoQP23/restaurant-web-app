@@ -18,11 +18,6 @@ export const DashboardReports = () => {
       <TitlePage title='Dashboard' />
 
       <Grid container spacing={2} my={1}>
-        <Grid item xs={12}>
-          <Typography variant='h5' component='h2' gutterBottom>
-            Comming Soon...
-          </Typography>
-        </Grid>
         {/* 
         <Grid item xs={12} md={3}>
           <Day />
@@ -47,9 +42,9 @@ export const DashboardReports = () => {
         {/**/}
         {/* <Grid item xs={12}> */}
         {/*   <Grid container spacing={2}> */}
-        {/*     <Grid item xs={12} md={6}> */}
-        {/*       <BestSellingProductsSummary /> */}
-        {/*     </Grid> */}
+        <Grid item xs={12} md={6}>
+          <BestSellingProductsSummary />
+        </Grid>
         {/**/}
         {/*     <Grid item xs={12} md={6}> */}
         {/*       <UsersSummary /> */}
