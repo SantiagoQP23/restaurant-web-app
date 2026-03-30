@@ -167,11 +167,19 @@ export const DetailInProgress: FC<Props> = ({
     updateQtyDelivered(detail.qtyDelivered + 1);
   }, [detail.qtyDelivered, updateQtyDelivered]);
 
+  const showSecondaryInfo = useMemo(() => {
+    return (
+      detail.description ||
+      (detail.tags && detail.tags.length > 0) ||
+      detail.qtyDelivered > 0
+    );
+  }, [detail.description, detail.tags, detail.qtyDelivered]);
+
   return (
     <Box
       sx={{
         display: 'flex',
-        alignItems: detail.quantity > 1 ? 'flex-start' : 'center',
+        alignItems: 'center',
         px: 1,
         py: 1.5,
         borderRadius: 1,
@@ -184,33 +192,21 @@ export const DetailInProgress: FC<Props> = ({
         })
       }}
     >
-      <ListItemIcon sx={{ minWidth: 48 }}>
+      <Stack direction='row' spacing={1} alignItems='items-center' flexGrow={1}>
         <Checkbox
           icon={<CheckCircleOutline />}
           checkedIcon={<CheckCircle />}
           checked={checked}
           onChange={handleChangeChecked}
         />
-      </ListItemIcon>
-      {/* Quantity Badge */}
-      {/*   <Chip */}
-      {/*     label={detail.quantity} */}
-      {/*     size='small' */}
-      {/*     variant={!isCompleted ? 'filled' : 'outlined'} */}
-      {/*     color={!isCompleted ? 'primary' : 'default'} */}
-      {/*     sx={{ */}
-      {/*       fontWeight: 600, */}
-      {/*       fontSize: '0.875rem', */}
-      {/*       minWidth: 32, */}
-      {/*       height: 28, */}
-      {/*       opacity: isCompleted ? 0.5 : 1 */}
-      {/*     }} */}
-      {/*   /> */}
-      {/* </ListItemIcon> */}
 
-      {/* Product Info */}
-      <ListItemText
-        primary={
+        {/* Product Info */}
+        <Stack
+          direction='column'
+          spacing={0.5}
+          flexGrow={1}
+          justifyContent='center'
+        >
           <Stack direction='row' alignItems='center' spacing={1}>
             <Typography
               variant='subtitle1'
@@ -223,105 +219,107 @@ export const DetailInProgress: FC<Props> = ({
               {detail.quantity} x {detail.product.name}{' '}
               {detail.price !== detail.product.price && `($${detail.price})`}
             </Typography>
-
-            {/* Type Indicator */}
-            {/* {isDifferentType && ( */}
-            {/*   <Chip */}
-            {/*     label={ */}
-            {/*       detail.typeOrderDetail === TypeOrder.IN_PLACE */}
-            {/*         ? 'Para servir' */}
-            {/*         : 'Para llevar' */}
-            {/*     } */}
-            {/*     size='small' */}
-            {/*     variant='outlined' */}
-            {/*     sx={{ */}
-            {/*       height: 20, */}
-            {/*       fontSize: '0.7rem', */}
-            {/*       fontWeight: 500, */}
-            {/*       borderColor: alpha(theme.palette.divider, 0.5), */}
-            {/*       color: theme.palette.text.secondary */}
-            {/*     }} */}
-            {/*   /> */}
-            {/* )} */}
           </Stack>
-        }
-        secondary={
-          <Stack spacing={0.5} mt={0.5}>
-            {/* Description */}
-            {detail.description && (
-              <Typography
-                variant='body2'
-                color='text.secondary'
-                sx={{
-                  whiteSpace: 'pre-wrap',
-                  fontSize: '0.813rem',
-                  opacity: isCompleted ? 0.7 : 1
-                }}
-              >
-                {detail.description}
-              </Typography>
-            )}
 
-            {/* Tags */}
-            {detail.tags && detail.tags.length > 0 && (
-              <Stack direction='row' flexWrap='wrap' gap={0.5}>
-                {detail.tags.map((tag) => (
-                  <Chip
-                    key={tag.id}
-                    label={tag.name}
-                    size='small'
-                    variant='outlined'
-                    sx={{
-                      height: 20,
-                      fontSize: '0.7rem',
-                      opacity: isCompleted ? 0.6 : 1
-                    }}
-                  />
-                ))}
-              </Stack>
-            )}
-
-            {/* Progress Bar */}
-            {!isCompleted && (
-              <Stack spacing={0.5} mt={0.5}>
-                <LinearProgressWrapper
-                  value={progressPercentage}
-                  color='primary'
-                  variant='determinate'
-                />
-                <Box
-                  display='flex'
-                  justifyContent='space-between'
-                  alignItems='center'
-                  gap={1}
+          {/* Type Indicator */}
+          {/* {isDifferentType && ( */}
+          {/*   <Chip */}
+          {/*     label={ */}
+          {/*       detail.typeOrderDetail === TypeOrder.IN_PLACE */}
+          {/*         ? 'Para servir' */}
+          {/*         : 'Para llevar' */}
+          {/*     } */}
+          {/*     size='small' */}
+          {/*     variant='outlined' */}
+          {/*     sx={{ */}
+          {/*       height: 20, */}
+          {/*       fontSize: '0.7rem', */}
+          {/*       fontWeight: 500, */}
+          {/*       borderColor: alpha(theme.palette.divider, 0.5), */}
+          {/*       color: theme.palette.text.secondary */}
+          {/*     }} */}
+          {/*   /> */}
+          {/* )} */}
+          {showSecondaryInfo && (
+            <Stack spacing={0.5} mt={0.5}>
+              {/* Description */}
+              {detail.description && (
+                <Typography
+                  variant='body2'
+                  color='text.secondary'
+                  sx={{
+                    whiteSpace: 'pre-wrap',
+                    fontSize: '0.813rem',
+                    opacity: isCompleted ? 0.7 : 1
+                  }}
                 >
-                  <Typography
-                    variant='caption'
-                    color='text.secondary'
-                    fontWeight={500}
-                    sx={{ fontSize: '0.75rem' }}
+                  {detail.description}
+                </Typography>
+              )}
+
+              {/* Tags */}
+              {detail.tags && detail.tags.length > 0 && (
+                <Stack direction='row' flexWrap='wrap' gap={0.5}>
+                  {detail.tags.map((tag) => (
+                    <Chip
+                      key={tag.id}
+                      label={tag.name}
+                      size='small'
+                      variant='outlined'
+                      sx={{
+                        height: 20,
+                        fontSize: '0.7rem',
+                        opacity: isCompleted ? 0.6 : 1
+                      }}
+                    />
+                  ))}
+                </Stack>
+              )}
+
+              {/* Progress Bar */}
+              {!isCompleted && detail.qtyDelivered > 0 && (
+                <Stack spacing={0.5} mt={0.5}>
+                  <LinearProgressWrapper
+                    value={progressPercentage}
+                    color='primary'
+                    variant='determinate'
+                  />
+                  <Box
+                    display='flex'
+                    justifyContent='space-between'
+                    alignItems='center'
+                    gap={1}
                   >
-                    {remainingQuantity}{' '}
-                    {remainingQuantity === 1 ? 'por entregar' : 'por entregar'}
-                  </Typography>
-                  {showDetailCreationDate && detailCreatedAt && (
                     <Typography
                       variant='caption'
                       color='text.secondary'
                       fontWeight={500}
                       sx={{ fontSize: '0.75rem' }}
                     >
-                      {format(detailCreatedAt, 'HH:mm', {
-                        locale: es
-                      })}
+                      {remainingQuantity}{' '}
+                      {remainingQuantity === 1
+                        ? 'por entregar'
+                        : 'por entregar'}
                     </Typography>
-                  )}
-                </Box>
-              </Stack>
-            )}
-          </Stack>
-        }
-      />
+                    {showDetailCreationDate && detailCreatedAt && (
+                      <Typography
+                        variant='caption'
+                        color='text.secondary'
+                        fontWeight={500}
+                        sx={{ fontSize: '0.75rem' }}
+                      >
+                        {format(detailCreatedAt, 'HH:mm', {
+                          locale: es
+                        })}
+                      </Typography>
+                    )}
+                  </Box>
+                </Stack>
+              )}
+            </Stack>
+          )}
+        </Stack>
+      </Stack>
 
       {/* Action Buttons */}
       <Stack direction='row' spacing={0.5} alignItems='center'>

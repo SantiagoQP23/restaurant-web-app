@@ -135,14 +135,6 @@ export const ProductionAreaOrder = ({
               }}
             />
           }
-          sx={{
-            px: 2,
-            py: 0.5,
-            background: alpha(areaColor, 0.05),
-            '&:hover': {
-              background: alpha(areaColor, 0.08)
-            }
-          }}
         >
           <Stack
             direction='row'
@@ -173,24 +165,6 @@ export const ProductionAreaOrder = ({
                 <Typography variant='subtitle1' fontWeight={600}>
                   {productionArea.name}
                 </Typography>
-              </Stack>
-
-              {/* Progress Bar */}
-              <Stack direction='row' spacing={1} alignItems='center'>
-                {/* <LinearProgress */}
-                {/*   variant='determinate' */}
-                {/*   value={statistics.completionPercentage} */}
-                {/*   sx={{ */}
-                {/*     flexGrow: 1, */}
-                {/*     height: 6, */}
-                {/*     borderRadius: 3, */}
-                {/*     bgcolor: alpha(areaColor, 0.1), */}
-                {/*     '& .MuiLinearProgress-bar': { */}
-                {/*       bgcolor: areaColor, */}
-                {/*       borderRadius: 3 */}
-                {/*     } */}
-                {/*   }} */}
-                {/* /> */}
                 <Typography
                   variant='caption'
                   fontWeight={600}
