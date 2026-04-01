@@ -61,19 +61,21 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
             {/* <LabelStatusOrder status={order.status} /> */}
 
             {/* Urgency Time Badge */}
-            <Chip
-              icon={<TimerOutlined />}
-              label={formatDistance(adjustedDeliveryTime, new Date(), {
-                addSuffix: true,
-                includeSeconds: false,
-                locale: es
-              })}
-              color={timeUrgency.color}
-              size='small'
-              sx={{
-                fontWeight: 600
-              }}
-            />
+            {order.status !== OrderStatus.DELIVERED && (
+              <Chip
+                icon={<TimerOutlined />}
+                label={formatDistance(adjustedDeliveryTime, new Date(), {
+                  addSuffix: true,
+                  includeSeconds: false,
+                  locale: es
+                })}
+                color={timeUrgency.color}
+                size='small'
+                sx={{
+                  fontWeight: 600
+                }}
+              />
+            )}
 
             <IconButton
               size='small'
