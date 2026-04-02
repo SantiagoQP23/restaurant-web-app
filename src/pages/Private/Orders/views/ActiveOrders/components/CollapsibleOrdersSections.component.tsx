@@ -19,6 +19,7 @@ import {
 import { Order, OrderStatus } from '@/models/orders.model';
 import { ProductionArea } from '@/pages/Private/Common/models/production-area.model';
 import { ActiveOrder } from './ActiveOrder.component';
+import { useOrdersStore } from '@/pages/Private/Common/store/useOrdersStore';
 
 interface CollapsibleOrdersSectionsProps {
   orders: Order[];
@@ -37,6 +38,7 @@ export const CollapsibleOrdersSections = ({
   orders,
   productionAreaActive
 }: CollapsibleOrdersSectionsProps) => {
+  const activeOrder = useOrdersStore((state) => state.activeOrder);
   const sections: OrderSection[] = [
     {
       status: OrderStatus.PENDING,
@@ -132,7 +134,13 @@ export const CollapsibleOrdersSections = ({
                 ) : (
                   <Grid container spacing={2}>
                     {filteredOrders.map((order, index) => (
-                      <Grid item xs={12} sm={6} md={4} key={order.id}>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        md={activeOrder ? 6 : 4}
+                        key={order.id}
+                      >
                         <ActiveOrder
                           order={order}
                           index={index}

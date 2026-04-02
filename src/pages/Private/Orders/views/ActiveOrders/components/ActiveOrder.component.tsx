@@ -20,6 +20,7 @@ import { OrderCardHeader } from './OrderCardHeader.component';
 import { OrderMetadata } from './OrderMetadata.component';
 import { OrderActions } from './OrderActions.component';
 import { useTimeUrgency } from '../../../hooks/useTimeUrgency';
+import { useOrdersStore } from '@/pages/Private/Common/store/useOrdersStore';
 
 interface Props {
   order: Order;
@@ -27,6 +28,7 @@ interface Props {
   color: 'success' | 'error' | 'warning' | 'info' | 'primary' | 'secondary';
   index: number;
   productionArea?: ProductionArea;
+  onClick?: () => void;
 }
 
 /**
@@ -42,6 +44,7 @@ export const ActiveOrder: FC<Props> = ({
   setStatusFilter,
   color,
   index,
+  onClick,
   productionArea
 }) => {
   const theme = useTheme();
@@ -49,6 +52,8 @@ export const ActiveOrder: FC<Props> = ({
   const { productionAreas } = useProductionAreasStore();
   const queryClient = useQueryClient();
   const { mutate: updateOrder } = useUpdateOrder();
+  const setActiveOrder = useOrdersStore((state) => state.setActiveOrder);
+  const activeOrder = useOrdersStore((state) => state.activeOrder);
   // const adjustedDeliveryTime = addMinutes(new Date(order.deliveryTime), 30);
   const timeUrgency = useTimeUrgency(new Date(order.deliveryTime));
 
@@ -98,6 +103,11 @@ export const ActiveOrder: FC<Props> = ({
         position: 'relative',
         overflow: 'visible'
       }}
+      onClick={() =>
+        order.id === activeOrder?.id
+          ? setActiveOrder(null)
+          : setActiveOrder(order)
+      }
     >
       {/* Enhanced Header */}
       <OrderCardHeader order={order} index={index} color={color} />

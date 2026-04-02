@@ -4,7 +4,9 @@ import {
   IconButton,
   ToggleButton,
   ToggleButtonGroup,
-  Tooltip
+  Tooltip,
+  Box,
+  Grid
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { DespachoDetalle, ListActiveOrders } from './components';
@@ -18,6 +20,9 @@ import { useState, useEffect } from 'react';
 
 import { TitlePage } from '../../../components/TitlePage.component';
 import { useActiveOrders } from '../../hooks';
+import { Order } from '@/models';
+import { OrderCard } from '../OrdersDashboard/components/OrderCard.component';
+import { useOrdersStore } from '@/pages/Private/Common/store/useOrdersStore';
 
 export type ViewMode = 'tabs' | 'sections' | 'products';
 
@@ -25,6 +30,8 @@ export const ActiveOrders = () => {
   const navigate = useNavigate();
 
   const { activeOrdersQuery } = useActiveOrders();
+  const setActiveOrder = useOrdersStore((state) => state.setActiveOrder);
+  const activeOrder = useOrdersStore((state) => state.activeOrder);
 
   // View mode state with localStorage persistence
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
@@ -47,64 +54,78 @@ export const ActiveOrders = () => {
       borderColor: 'rgba(0, 0, 0, 0.12)',
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.12)',
-        borderColor: 'rgba(0, 0, 0, 0.12)',
+        borderColor: 'rgba(0, 0, 0, 0.12)'
       }
     },
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.04)',
-      borderColor: 'rgba(0, 0, 0, 0.12)',
+      borderColor: 'rgba(0, 0, 0, 0.12)'
     }
   };
 
   return (
     <>
       <Container maxWidth='xl' sx={{ mb: 4 }}>
-        <TitlePage
-          title='Pedidos activos'
-          action={
-            <Stack direction='row' spacing={3}>
-              <Tooltip title='Actualizar pedidos' arrow>
-                <IconButton
-                  onClick={() => activeOrdersQuery.refetch()}
-                  size='small'
-                >
-                  <Cached />
-                </IconButton>
-              </Tooltip>
-              <ToggleButtonGroup
-                value={viewMode}
-                onChange={(_, newValue) => {
-                  if (newValue !== null) {
-                    setViewMode(newValue);
-                  }
-                }}
-                exclusive
-                size='small'
-                sx={{ display: { xs: 'none', md: 'inline-flex' } }}
-              >
-                <Tooltip title='Vista por pestañas' arrow>
-                  <ToggleButton value='tabs' sx={toggleButtonSx}>
-                    <ViewListOutlined />
-                  </ToggleButton>
-                </Tooltip>
-                <Tooltip title='Vista por secciones' arrow>
-                  <ToggleButton value='sections' sx={toggleButtonSx}>
-                    <ViewAgendaOutlined />
-                  </ToggleButton>
-                </Tooltip>
-                <Tooltip title='Vista de productos' arrow>
-                  <ToggleButton value='products' sx={toggleButtonSx}>
-                    <ListAltOutlined />
-                  </ToggleButton>
-                </Tooltip>
-              </ToggleButtonGroup>
-            </Stack>
-          }
-        />
+        <Grid container spacing={3}>
+          <Grid
+            item
+            xs={12}
+            md={activeOrder ? 6 : 12}
+            lg={activeOrder ? 8 : 12}
+          >
+            <TitlePage
+              title='Pedidos activos'
+              action={
+                <Stack direction='row' spacing={3}>
+                  <Tooltip title='Actualizar pedidos' arrow>
+                    <IconButton
+                      onClick={() => activeOrdersQuery.refetch()}
+                      size='small'
+                    >
+                      <Cached />
+                    </IconButton>
+                  </Tooltip>
+                  <ToggleButtonGroup
+                    value={viewMode}
+                    onChange={(_, newValue) => {
+                      if (newValue !== null) {
+                        setViewMode(newValue);
+                      }
+                    }}
+                    exclusive
+                    size='small'
+                    sx={{ display: { xs: 'none', md: 'inline-flex' } }}
+                  >
+                    <Tooltip title='Vista por pestañas' arrow>
+                      <ToggleButton value='tabs' sx={toggleButtonSx}>
+                        <ViewListOutlined />
+                      </ToggleButton>
+                    </Tooltip>
+                    <Tooltip title='Vista por secciones' arrow>
+                      <ToggleButton value='sections' sx={toggleButtonSx}>
+                        <ViewAgendaOutlined />
+                      </ToggleButton>
+                    </Tooltip>
+                    <Tooltip title='Vista de productos' arrow>
+                      <ToggleButton value='products' sx={toggleButtonSx}>
+                        <ListAltOutlined />
+                      </ToggleButton>
+                    </Tooltip>
+                  </ToggleButtonGroup>
+                </Stack>
+              }
+            />
 
-        {/* <Clock /> */}
+            {/* <Clock /> */}
 
-        <ListActiveOrders viewMode={viewMode} />
+            <ListActiveOrders viewMode={viewMode} />
+          </Grid>
+          {activeOrder && (
+            <Grid item xs={12} md={6} lg={4}>
+              <OrderCard order={activeOrder} />
+            </Grid>
+          )}
+        </Grid>
       </Container>
 
       <DespachoDetalle />

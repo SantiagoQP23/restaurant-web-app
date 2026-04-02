@@ -77,6 +77,11 @@ const ordersSection = {
       to: '/orders/'
     },
     {
+      title: 'Mesas',
+      icon: <AssignmentOutlined fontSize='small' />,
+      to: '/orders/tables'
+    },
+    {
       title: 'Preparación de pedidos',
       icon: <SoupKitchenOutlined fontSize='small' />,
       to: '/orders/actives'

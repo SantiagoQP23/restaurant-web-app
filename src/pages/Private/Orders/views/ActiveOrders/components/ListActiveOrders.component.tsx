@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 
 import { selectOrders } from '../../../../../../redux/slices/orders/orders.slice';
-import { OrderStatus } from '../../../../../../models/orders.model';
+import { Order, OrderStatus } from '../../../../../../models/orders.model';
 
 import { ActiveOrder } from './ActiveOrder.component';
 
@@ -30,11 +30,13 @@ import { useProductionAreasStore } from '../../../../Common/store/production-are
 import { ProductionArea } from '../../../../Common/models/production-area.model';
 import { CollapsibleOrdersSections } from './CollapsibleOrdersSections.component';
 import { ConsolidatedProductsContent } from './ConsolidatedProductsDrawer/ConsolidatedProductsContent.component';
+import { useOrdersStore } from '@/pages/Private/Common/store/useOrdersStore';
 
 export type ViewMode = 'tabs' | 'sections' | 'products';
 
 interface ListActiveOrdersProps {
   viewMode?: ViewMode;
+  onOrderClick?: (order: Order) => void;
 }
 
 /**
@@ -44,12 +46,14 @@ interface ListActiveOrdersProps {
  * @version 1.1 16/12/2023 Adds productionArea field.
  */
 export const ListActiveOrders = ({
-  viewMode = 'tabs'
+  viewMode = 'tabs',
+  onOrderClick
 }: ListActiveOrdersProps) => {
   const { productionAreaActive, productionAreas, setProductionAreaActive } =
     useProductionAreasStore();
 
   const { orders } = useSelector(selectOrders);
+  const activeOrder = useOrdersStore((state) => state.activeOrder);
 
   const [statusOrderFilter, setStatusOrderFilter] = useState<OrderStatus>(
     OrderStatus.PENDING
@@ -280,7 +284,13 @@ export const ListActiveOrders = ({
                     /* if (details.length >= 1) */
                   }
                   return (
-                    <Grid item xs={12} sm={6} md={4} key={order.id}>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={activeOrder ? 6 : 4}
+                      key={order.id}
+                    >
                       <ActiveOrder
                         order={order}
                         index={index}
