@@ -18,7 +18,7 @@ export const ButtonSound = () => {
           : 'Silenciar notificaciones'
       }
     >
-      <IconButton onClick={toggleMute} size='small'>
+      <IconButton onClick={toggleMute}>
         {isMuted ? (
           <VolumeOff fontSize='small' />
         ) : (

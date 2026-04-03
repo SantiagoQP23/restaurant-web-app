@@ -77,39 +77,21 @@ export const ButtonTheme = () => {
 
   return (
     <>
-      <Stack
-        direction='row'
-        alignItems='center'
-        justifyContent='space-between'
-        pl={2}
+      <IconButton
+        onClick={() => {
+          setNameTheme(
+            curThemeName === ThemeName.NebulaFighterTheme
+              ? ThemeName.PureLightTheme
+              : ThemeName.NebulaFighterTheme
+          );
+        }}
       >
-        <IconButton
-          onClick={() => {
-            setNameTheme(
-              curThemeName === ThemeName.NebulaFighterTheme
-                ? ThemeName.PureLightTheme
-                : ThemeName.NebulaFighterTheme
-            );
-          }}
-        >
-          {curThemeName === ThemeName.NebulaFighterTheme ? (
-            <LightModeOutlined fontSize='small' />
-          ) : (
-            <DarkModeOutlined fontSize='small' />
-          )}
-        </IconButton>
-        {/* <MaterialUISwitch */}
-        {/*   // size="small" */}
-        {/**/}
-        {/*   sx={{ fontSize: 10 }} */}
-        {/*   checked={curThemeName === ThemeName.NebulaFighterTheme} */}
-        {/*   onChange={(e, value) => */}
-        {/*     setNameTheme( */}
-        {/*       value ? ThemeName.NebulaFighterTheme : ThemeName.PureLightTheme */}
-        {/*     ) */}
-        {/*   } */}
-        {/* /> */}
-      </Stack>
+        {curThemeName === ThemeName.NebulaFighterTheme ? (
+          <LightModeOutlined fontSize='small' />
+        ) : (
+          <DarkModeOutlined fontSize='small' />
+        )}
+      </IconButton>
     </>
   );
 };

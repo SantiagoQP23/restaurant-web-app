@@ -118,7 +118,7 @@ export const Tables = () => {
 
   return (
     <>
-      <Container maxWidth='lg' sx={{ minHeight: '100vh' }}>
+      <Container maxWidth='xl' sx={{ minHeight: '100vh' }}>
         <Box height='100%' minHeight='100%' flex={1}>
           <Grid container spacing={2} sx={{ height: '100%' }}>
             <Grid item spacing={1} xs={12} md={6} lg={8}>

@@ -73,7 +73,7 @@ function Header() {
 
           {/* RIGHT SIDE - User Actions */}
           <Stack direction='row' spacing={1} alignItems='center'>
-            <HeaderButtons />
+            {/* <HeaderButtons /> */}
             {userState && <HeaderUserbox />}
           </Stack>
         </Box>

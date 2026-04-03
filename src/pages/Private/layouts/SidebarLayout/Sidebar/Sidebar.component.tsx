@@ -30,6 +30,9 @@ import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import { useRestaurantStore } from '../../../Common/store/restaurantStore';
 import { Restaurant } from '@/pages/Private/Common/models/restaurant.model';
 import { switchRestaurantMutation } from '@/pages/Private/Restaurant/hooks/useRestaurant';
+import { ButtonSound, ButtonTheme } from '../components';
+import { Userbox } from '../Header/components';
+import { useAppSelector } from '@/hooks';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -183,6 +186,7 @@ const Title = () => {
 function Sidebar() {
   const { sidebarToggle, closeSidebar } = useContext(SidebarContext);
 
+  const { user: userState } = useAppSelector(selectAuth);
   const theme = useTheme();
 
   return (
@@ -195,14 +199,36 @@ function Sidebar() {
           display: { xs: 'none', lg: 'block' }
         }}
       >
-        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <Box
+          sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mb: 2
+          }}
+        >
           <Scrollbar height={'100%'}>
             {/* <Box mx={2} my={1} mt={3}> */}
             {/*   <Title /> */}
             {/* </Box> */}
 
+            <Box
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+              mt={2}
+            >
+              {userState && <Userbox />}
+            </Box>
+
             <SidebarMenu />
           </Scrollbar>
+
+          <Stack spacing={1} alignItems='center' justifyContent='center' mt={2}>
+            <ButtonTheme />
+            <ButtonSound />
+          </Stack>
 
           {/* <Divider /> */}
           {/* <Box p={1} textAlign='center'> */}

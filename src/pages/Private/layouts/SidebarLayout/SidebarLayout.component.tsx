@@ -23,7 +23,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
         }}
       >
         <CssBaseline />
-        <Header />
+        {/* <Header /> */}
         <Sidebar />
         <Box
           sx={{
@@ -33,7 +33,6 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
             flexDirection: 'column',
             flex: 1,
             width: '100%',
-            pt: `${theme.header.height}`,
             overflow: 'auto',
             height: '100vh',
             transition: theme.transitions.create(['margin', 'width'], {
