@@ -60,22 +60,16 @@ function Header() {
   return (
     <AppBar position='fixed' open={sidebarToggle}>
       <Container maxWidth='lg'>
-        <Box
-          display='flex'
-          alignItems='center'
-          justifyContent='space-between'
-          mt={1}
-        >
-          {/* LEFT SIDE - Toggle Menu Button */}
-          <Tooltip arrow title='Toggle Menu'>
-            <IconButton color='primary' onClick={toggleSidebar}>
-              {sidebarToggle ? (
-                <ChevronLeftIcon fontSize='small' />
-              ) : (
-                <MenuTwoToneIcon fontSize='small' />
-              )}
-            </IconButton>
-          </Tooltip>
+        <Box display='flex' alignItems='center' justifyContent='end' mt={1}>
+          {/* <Tooltip arrow title='Toggle Menu'> */}
+          {/*   <IconButton color='primary' onClick={toggleSidebar}> */}
+          {/*     {sidebarToggle ? ( */}
+          {/*       <ChevronLeftIcon fontSize='small' /> */}
+          {/*     ) : ( */}
+          {/*       <MenuTwoToneIcon fontSize='small' /> */}
+          {/*     )} */}
+          {/*   </IconButton> */}
+          {/* </Tooltip> */}
 
           {/* RIGHT SIDE - User Actions */}
           <Stack direction='row' spacing={1} alignItems='center'>

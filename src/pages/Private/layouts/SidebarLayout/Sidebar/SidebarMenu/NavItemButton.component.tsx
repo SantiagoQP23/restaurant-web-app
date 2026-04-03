@@ -6,9 +6,11 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  IconButton,
+  Tooltip
 } from '@mui/material';
-import { NavLink as RouterLink } from 'react-router-dom';
+import { NavLink as RouterLink, useMatch, useNavigate } from 'react-router-dom';
 
 import { SidebarContext } from '../../../../Common/contexts/SidebarContext';
 import { NavItem } from '../../../interfaces';
@@ -26,12 +28,15 @@ export const NavItemButton: FC<Props> = ({ item }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
   const { user } = useSelector(selectAuth);
+  const navigate = useNavigate();
+  const match = useMatch(item.to);
 
   // Only close sidebar on mobile/tablet devices
   const handleClick = () => {
     if (isMobile) {
       closeSidebar();
     }
+    navigate(item.to);
   };
 
   if (
@@ -43,37 +48,25 @@ export const NavItemButton: FC<Props> = ({ item }) => {
 
   return (
     <ListItem component='div' key={item.to}>
-      <ListItemButton
-        disableRipple
-        component={RouterLink}
-        onClick={handleClick}
-        to={item.to!}
-        sx={{
-          minHeight: 48,
-          justifyContent: 'initial',
-          px: 2.5,
-          '&.active': {
-            color: 'primary.main',
-            bgcolor: 'action.selected',
-            fontWeight: 'bold'
-          }
-        }}
-        end
-      >
-        <ListItemIcon
+      <Tooltip title={item.title} placement='right' arrow>
+        <IconButton
+          onClick={handleClick}
+          // color={match ? 'primary' : 'primary'}
           sx={{
-            minWidth: 0,
-            mr: 1,
-            justifyContent: 'center'
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            color: match
+              ? theme.colors.alpha.trueWhite[70]
+              : theme.palette.primary.main,
+            backgroundColor: match
+              ? 'primary.main'
+              : theme.colors.alpha.trueWhite[10]
           }}
         >
           {item.icon}
-        </ListItemIcon>
-        <ListItemText
-          primary={item.title}
-          sx={{ opacity: 1, color: 'text.primary', variant: 'subtitle2' }}
-        />
-      </ListItemButton>
+        </IconButton>
+      </Tooltip>
     </ListItem>
   );
 };

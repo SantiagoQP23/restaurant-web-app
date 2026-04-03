@@ -149,23 +149,12 @@ export const MenuSection: FC<Props> = ({ section }) => {
   }
 
   return (
-    <List
-      component='div'
-      subheader={
-        <Typography color='text.secondary' variant='subtitle2' sx={{ pl: 3 }}>
-          {section.title}
-        </Typography>
-      }
-    >
+    <List component='div'>
       <SubMenuWrapper>
         <List component='div'>
-          {section.items.map((item, index) =>
-            item.subItems ? (
-              <NavItemCollapsable key={index} navItem={item} />
-            ) : (
-              <NavItemButton key={index} item={item} />
-            )
-          )}
+          {section.items.map((item, index) => (
+            <NavItemButton key={index} item={item} />
+          ))}
         </List>
       </SubMenuWrapper>
     </List>

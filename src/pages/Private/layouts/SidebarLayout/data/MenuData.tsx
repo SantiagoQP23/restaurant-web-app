@@ -37,30 +37,43 @@ const generalSection: MenuSection = {
       icon: <Storefront fontSize='small' />,
       to: '/restaurant',
       label: 'Nuevo'
+    },
+    {
+      title: 'Pedidos',
+      icon: <AssignmentOutlined fontSize='small' />,
+      to: '/orders/'
+    },
+    {
+      title: 'Mesas',
+      icon: <TableRestaurantOutlinedIcon fontSize='small' />,
+      to: '/orders/tables'
+    },
+    {
+      title: 'Preparación de pedidos',
+      icon: <SoupKitchenOutlined fontSize='small' />,
+      to: '/orders/actives'
+      // allowedRoles: [ValidRoles.mesero],
+    },
+    {
+      title: 'Lista de pedidos',
+      icon: <ListAltOutlined fontSize='small' />,
+      to: '/orders/list'
+    },
+    {
+      title: 'Menú del restaurante',
+      icon: <MenuBookOutlined fontSize='small' />,
+      to: '/menu/sections'
+    },
+    {
+      title: 'Gestión de mesas',
+      icon: <TableRestaurantOutlinedIcon fontSize='small' />,
+      to: '/tables'
+    },
+    {
+      title: 'Gestión de usuarios',
+      icon: <PeopleOutlineIcon fontSize='small' />,
+      to: '/users'
     }
-    // {
-    //   title: "Finanzas",
-    //   icon: <AccountBalanceWallet />,
-    //   to: "/financial",
-    //   subItems: [
-    //     {
-    //       title: "Transacciones",
-    //       to: "/financial/transactions",
-    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-    //     },
-    //     {
-    //       title: "Caja",
-    //       to: "/financial/cash-register/actives",
-    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-    //     },
-    //     {
-    //       title: "Cuentas",
-    //       to: "/financial/accounts",
-    //       icon: <FiberManualRecord sx={{ fontSize: 8 }} />,
-    //     },
-    //
-    //   ],
-    // },
   ]
 };
 
@@ -107,25 +120,25 @@ const managementSection = {
     {
       title: 'Menú del restaurante',
       icon: <MenuBookOutlined fontSize='small' />,
-      to: '/menu/sections',
-      subItems: [
-        {
-          title: 'Secciones',
-          to: '/menu/sections',
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />
-        },
-        {
-          title: 'Categorías',
-          to: '/menu/categories',
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />
-          // allowedRoles: [ValidRoles.mesero],
-        },
-        {
-          title: 'Productos',
-          to: '/menu/products',
-          icon: <FiberManualRecord sx={{ fontSize: 8 }} />
-        }
-      ]
+      to: '/menu/sections'
+      // subItems: [
+      //   {
+      //     title: 'Secciones',
+      //     to: '/menu/sections',
+      //     icon: <FiberManualRecord sx={{ fontSize: 8 }} />
+      //   },
+      //   {
+      //     title: 'Categorías',
+      //     to: '/menu/categories',
+      //     icon: <FiberManualRecord sx={{ fontSize: 8 }} />
+      //     // allowedRoles: [ValidRoles.mesero],
+      //   },
+      //   {
+      //     title: 'Productos',
+      //     to: '/menu/products',
+      //     icon: <FiberManualRecord sx={{ fontSize: 8 }} />
+      //   }
+      // ]
     },
     {
       title: 'Gestión de mesas',
@@ -146,7 +159,7 @@ const managementSection = {
 };
 
 export const menuSections: MenuSection[] = [
-  generalSection,
-  ordersSection,
-  managementSection
+  generalSection
+  // ordersSection,
+  // managementSection
 ];

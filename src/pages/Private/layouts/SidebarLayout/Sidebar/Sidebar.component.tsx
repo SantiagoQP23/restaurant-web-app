@@ -33,10 +33,11 @@ import { switchRestaurantMutation } from '@/pages/Private/Restaurant/hooks/useRe
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
-        width: ${theme.sidebar.width};
+        width: ${70};
         min-width: ${theme.sidebar.width};
         color: ${theme.colors.alpha.trueWhite[70]};
         background: ${theme.sidebar.background};
+        border-right: 1px solid ${theme.sidebar.dividerBg};
         position: relative;
         z-index: 700;
         height: 100%;
@@ -44,7 +45,7 @@ const SidebarWrapper = styled(Box)(
 `
 );
 
-const drawerWidth = 300;
+const drawerWidth = 70;
 
 const DrawerPersistent = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open'
@@ -196,22 +197,22 @@ function Sidebar() {
       >
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <Scrollbar height={'100%'}>
-            <Box mx={2} my={1} mt={3}>
-              <Title />
-            </Box>
+            {/* <Box mx={2} my={1} mt={3}> */}
+            {/*   <Title /> */}
+            {/* </Box> */}
 
             <SidebarMenu />
           </Scrollbar>
 
-          <Divider />
-          <Box p={1} textAlign='center'>
-            <Typography color='text.primary' variant='subtitle1'>
-              Desarrollado por{' '}
-            </Typography>
-            <Typography variant='body1' color='text.primary'>
-              Santiago Quirumbay
-            </Typography>
-          </Box>
+          {/* <Divider /> */}
+          {/* <Box p={1} textAlign='center'> */}
+          {/*   <Typography color='text.primary' variant='subtitle1'> */}
+          {/*     Desarrollado por{' '} */}
+          {/*   </Typography> */}
+          {/*   <Typography variant='body1' color='text.primary'> */}
+          {/*     Santiago Quirumbay */}
+          {/*   </Typography> */}
+          {/* </Box> */}
         </Box>
       </DrawerPersistent>
 
@@ -224,7 +225,7 @@ function Sidebar() {
         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
         open={sidebarToggle}
         onClose={closeSidebar}
-        variant='temporary'
+        variant='persistent'
         elevation={10}
         color='inherit'
       >
@@ -237,15 +238,15 @@ function Sidebar() {
             <SidebarMenu />
           </Scrollbar>
 
-          <Divider />
-          <Box p={1} textAlign='center'>
-            <Typography color='text.primary' variant='subtitle1'>
-              Desarrollado por{' '}
-            </Typography>
-            <Typography variant='body1' color='text.primary'>
-              Santiago Quirumbay
-            </Typography>
-          </Box>
+          {/* <Divider /> */}
+          {/* <Box p={1} textAlign='center'> */}
+          {/*   <Typography color='text.primary' variant='subtitle1'> */}
+          {/*     Desarrollado por{' '} */}
+          {/*   </Typography> */}
+          {/*   <Typography variant='body1' color='text.primary'> */}
+          {/*     Santiago Quirumbay */}
+          {/*   </Typography> */}
+          {/* </Box> */}
         </SidebarWrapper>
       </Drawer>
     </>

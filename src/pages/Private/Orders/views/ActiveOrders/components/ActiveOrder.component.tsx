@@ -103,12 +103,12 @@ export const ActiveOrder: FC<Props> = ({
         position: 'relative',
         overflow: 'visible'
       }}
-      onClick={() =>
-        order.id === activeOrder?.id
-          ? setActiveOrder(null)
-          : setActiveOrder(order)
-      }
     >
+      {/* onClick={() => */}
+      {/*   order.id === activeOrder?.id */}
+      {/*     ? setActiveOrder(null) */}
+      {/*     : setActiveOrder(order) */}
+      {/* } */}
       {/* Enhanced Header */}
       <OrderCardHeader order={order} index={index} color={color} />
 
