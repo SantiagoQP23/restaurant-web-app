@@ -143,7 +143,8 @@ export const DetailInProgress: FC<Props> = ({
   const editDetail = useCallback(() => {
     NiceModal.show(EditOrderDetailKitchenModal, {
       detail: detail,
-      orderId: orderId
+      orderId: orderId,
+      orderUserId: orderUserId
     });
   }, [detail, orderId]);
 
