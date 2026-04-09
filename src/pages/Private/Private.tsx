@@ -1,4 +1,4 @@
-import { useNavigate, useRoutes } from 'react-router-dom';
+import { Navigate, useNavigate, useRoutes } from 'react-router-dom';
 
 import { useAppSelector, useMenu } from '../../hooks';
 
@@ -27,6 +27,7 @@ import { useTables } from './Tables/hooks/useTables';
 import { useOnTableUpdated } from './Tables/hooks/useOnWebSocketsEventsTables';
 import { selectAuth } from '@/redux';
 import { useEffect } from 'react';
+import { Roles } from '@/models/roles';
 
 /**
  * Component that contains the private routes of the application
@@ -40,6 +41,9 @@ import { useEffect } from 'react';
  */
 export const Private = () => {
   const content = useRoutes(PrivateRouter);
+  const { user } = useAppSelector(selectAuth);
+
+  const navigate = useNavigate();
 
   // Load all menu
   const menuQuery = useMenu();
@@ -80,6 +84,10 @@ export const Private = () => {
   useOnOrderDeleted();
 
   if (isLoading) return <CircularProgress />;
+
+  // if (user?.role.name === Roles.COOK) {
+  //   return <Navigate to='/orders/actives' replace />;
+  // }
 
   return (
     <>

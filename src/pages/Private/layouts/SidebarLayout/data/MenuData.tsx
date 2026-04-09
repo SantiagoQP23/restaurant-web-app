@@ -15,8 +15,7 @@ import TableRestaurantOutlinedIcon from '@mui/icons-material/TableRestaurantOutl
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
-
-import { ValidRoles } from '../../../Common/models/valid-roles.model';
+import { Roles } from '@/models/roles';
 
 /**
  * @version 1.1 31-01-2025 Remove finance
@@ -31,54 +30,56 @@ const generalSection: MenuSection = {
       title: 'Dashboard',
       icon: <DashboardOutlinedIcon fontSize='small' />,
       to: '/reports',
-      allowedRoles: [ValidRoles.admin]
+      allowedRoles: [Roles.ADMIN]
     },
     {
       title: 'Restaurante',
       icon: <Storefront fontSize='small' />,
       to: '/restaurant',
       label: 'Nuevo',
-      allowedRoles: [ValidRoles.admin]
+      allowedRoles: [Roles.ADMIN]
     },
     {
       title: 'Pedidos',
       icon: <AssignmentOutlined fontSize='small' />,
-      to: '/orders/'
+      to: '/orders/',
+      allowedRoles: [Roles.ADMIN, Roles.WAITER]
     },
     {
       title: 'Mesas',
       icon: <TableRestaurantOutlinedIcon fontSize='small' />,
-      to: '/orders/tables'
+      to: '/orders/tables',
+      allowedRoles: [Roles.ADMIN, Roles.WAITER]
     },
     {
       title: 'Preparación de pedidos',
       icon: <SoupKitchenOutlined fontSize='small' />,
-      to: '/orders/actives'
-      // allowedRoles: [ValidRoles.mesero],
+      to: '/orders/actives',
+      allowedRoles: [Roles.ADMIN, Roles.COOK]
     },
     {
       title: 'Lista de pedidos',
       icon: <ListAltOutlined fontSize='small' />,
       to: '/orders/list',
-      allowedRoles: [ValidRoles.admin]
+      allowedRoles: [Roles.ADMIN, Roles.WAITER]
     },
     {
       title: 'Menú del restaurante',
       icon: <MenuBookOutlined fontSize='small' />,
       to: '/menu/sections',
-      allowedRoles: [ValidRoles.admin]
+      allowedRoles: [Roles.ADMIN]
     },
     {
       title: 'Gestión de mesas',
       icon: <TableRestaurantOutlinedIcon fontSize='small' />,
       to: '/tables',
-      allowedRoles: [ValidRoles.admin]
+      allowedRoles: [Roles.ADMIN]
     },
     {
       title: 'Gestión de usuarios',
       icon: <PeopleOutlineIcon fontSize='small' />,
       to: '/users',
-      allowedRoles: [ValidRoles.admin]
+      allowedRoles: [Roles.ADMIN]
     }
   ]
 };
@@ -121,7 +122,7 @@ const ordersSection = {
 
 const managementSection = {
   title: 'Administración',
-  allowedRoles: [ValidRoles.admin],
+  allowedRoles: [Roles.ADMIN],
   items: [
     {
       title: 'Menú del restaurante',

@@ -15,10 +15,10 @@ import { InvoiceRouter } from '../Invoices/router/Invoice.router';
 import { RestaurantRouter } from '../Restaurant/router';
 import { UnauthorizedPage } from '../../Status/Unauthorized.page';
 import Auth from '../components/Auth.component';
-import { ValidRoles } from '../Common/models/valid-roles.model';
 import { BillsRouter } from '../Bills/routers/Bills.router';
 import BaseLayout from '../layouts/BaseLayout';
 import { NewRestaurant } from '../Restaurant/views/NewRestaurant/NewRestaurant.view';
+import { Roles } from '@/models/roles';
 
 export const PrivateRouter: RouteObject[] = [
   {
@@ -35,17 +35,17 @@ export const PrivateRouter: RouteObject[] = [
       BillsRouter,
       {
         path: PrivateRoutes.USERS,
-        element: <Auth allowedRoles={[ValidRoles.admin]} />,
+        element: <Auth allowedRoles={[Roles.ADMIN]} />,
         children: [UsersRouter]
       },
       {
         path: PrivateRoutes.REPORTS,
-        element: <Auth allowedRoles={[ValidRoles.admin]} />,
+        element: <Auth allowedRoles={[Roles.ADMIN]} />,
         children: [ReportsRouter]
       },
       {
         path: '/financial',
-        element: <Auth allowedRoles={[ValidRoles.admin]} />,
+        element: <Auth allowedRoles={[Roles.ADMIN]} />,
         children: [BalanceRouter]
       },
       SuppliersRouter,
@@ -74,7 +74,7 @@ export const PrivateRouter: RouteObject[] = [
   },
   {
     path: 'restaurant',
-    element: <Auth allowedRoles={[ValidRoles.admin]} />,
+    element: <Auth allowedRoles={[Roles.ADMIN]} />,
     children: [RestaurantRouter]
   }
 ];

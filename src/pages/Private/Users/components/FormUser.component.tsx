@@ -13,7 +13,7 @@ import {
   FormControl,
   InputLabel
 } from '@mui/material';
-import { ValidRoles } from '../../Common/models/valid-roles.model';
+import { Roles } from '@/models/roles';
 
 interface Props {
   user: CreateUser;
@@ -163,13 +163,10 @@ export const FormUser: FC<Props> = ({
                       onBlur={onBlur}
                       error={!!errors.role?.name?.message}
                     >
-                      <MenuItem value={ValidRoles.admin}>
-                        Administrador
-                      </MenuItem>
-                      <MenuItem value={ValidRoles.mesero}>Mesero</MenuItem>
-                      <MenuItem value={ValidRoles.despachador}>
-                        Despachador
-                      </MenuItem>
+                      <MenuItem value={Roles.ADMIN}>Administrador</MenuItem>
+                      <MenuItem value={Roles.WAITER}>Mesero</MenuItem>
+                      <MenuItem value={Roles.COOK}>Despachador</MenuItem>
+                      <MenuItem value={Roles.CASHIER}>Cajero</MenuItem>
                     </Select>
                   </>
                 )}

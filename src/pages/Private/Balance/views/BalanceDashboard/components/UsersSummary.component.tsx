@@ -35,12 +35,11 @@ import {
   getIncomesByUser
 } from '../../../../Reports/services/dashboard.service';
 import { useQuery } from '@tanstack/react-query';
-import { Roles } from '../../../../../../models';
 import { generateRandomColor } from '../../../../Common/helpers/randomColor.helpert';
 import { generateWaiterReportPdf } from '../../../../Reports/helpers/pdf-reports.helper';
 import html2canvas from 'html2canvas';
-import { ValidRoles } from '../../../../Common/models/valid-roles.model';
 import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { Roles } from '@/models/roles';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -230,10 +229,7 @@ export const UsersSummary = () => {
                 primaryTypographyProps={{ variant: 'h5' }}
                 secondary={
                   <Stack spacing={1} direction='row'>
-                    <Chip
-                      label={Roles[`${user.roleName as ValidRoles}`]}
-                      size='small'
-                    />
+                    <Chip label={user.roleName} size='small' />
                     <Chip label={`${user.orderCount} pedidos`} size='small' />
                   </Stack>
                 }

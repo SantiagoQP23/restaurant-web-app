@@ -12,12 +12,6 @@ export interface IRole {
   description: string;
 }
 
-export enum Roles {
-  admin = 'Administrador',
-  mesero = 'Mesero',
-  despachador = 'Despachador'
-}
-
 export interface RestaurantRole {
   id: number;
   restaurant: Restaurant;

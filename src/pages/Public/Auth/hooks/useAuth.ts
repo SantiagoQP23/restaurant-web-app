@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { RegisterUserDto } from '../dto/register-user.dto';
 import { login, registerUser, renewToken } from '../services/auth.service';
+import { useNavigate } from 'react-router';
+import { Roles } from '@/models/roles';
 
 /**
  * Hook for user registration (signup)
@@ -43,6 +45,7 @@ export const useSignup = () => {
 export const useLogin = () => {
   const { setRestaurant } = useRestaurantStore((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return useMutation<LoginResponseDto, unknown, IFormLogin>({
     mutationFn: (data: IFormLogin) => login(data),
     onSuccess: (data: LoginResponseDto) => {
@@ -70,6 +73,7 @@ export const useLogin = () => {
 export const useRenewToken = () => {
   const dispatch = useDispatch();
   const { setRestaurant } = useRestaurantStore((state) => state);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const renew = async () => {
@@ -88,6 +92,9 @@ export const useRenewToken = () => {
             role: currentRole
           })
         );
+        // if (data.user.role.name === Roles.COOK) {
+        //   navigate('/orders/actives');
+        // }
         localStorage.setItem('token', data.token);
         localStorage.setItem('token-init-date', String(new Date().getTime()));
       } catch (error) {
