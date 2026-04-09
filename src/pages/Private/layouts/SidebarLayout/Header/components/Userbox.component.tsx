@@ -24,7 +24,6 @@ import { NavLink } from 'react-router-dom';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import { startLogout, selectAuth } from '../../../../../../redux/slices/auth';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks';
-import { Roles } from '../../../../../../models/auth.model';
 import {
   Circle,
   Done,
@@ -33,7 +32,6 @@ import {
 } from '@mui/icons-material';
 import { SocketContext } from '../../../../../../context/SocketContext';
 import { Label } from '../../../../../../components/ui';
-import { ValidRoles } from '../../../../Common/models/valid-roles.model';
 import { Restaurant } from '@/pages/Private/Common/models/restaurant.model';
 import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
 import { switchRestaurantMutation } from '@/pages/Private/Restaurant/hooks/useRestaurant';

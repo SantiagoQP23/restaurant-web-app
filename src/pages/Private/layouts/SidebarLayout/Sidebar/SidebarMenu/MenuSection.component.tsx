@@ -8,11 +8,11 @@ import {
   alpha
 } from '@mui/material';
 import { NavItemButton } from './';
-import { ValidRoles } from '../../../../Common/models/valid-roles.model';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../../../../redux';
 import { NavItemCollapsable } from './NavItemCollapsable.component';
 import { MenuSection as IMenuSection } from '../../../interfaces';
+import { Roles } from '@/models/roles';
 
 interface Props {
   section: IMenuSection;
@@ -143,7 +143,7 @@ export const MenuSection: FC<Props> = ({ section }) => {
   if (
     section.allowedRoles &&
     user?.role.name &&
-    !section.allowedRoles.includes(user.role.name as ValidRoles)
+    !section.allowedRoles.includes(user.role.name as Roles)
   ) {
     return null;
   }

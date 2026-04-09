@@ -29,14 +29,13 @@ import {
   setActiveUser
 } from '../../../../../redux/slices/users/users.slice';
 import { useSelector, useDispatch } from 'react-redux';
-import { IUser, Roles } from '../../../../../models/auth.model';
+import { IUser } from '../../../../../models/auth.model';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/';
 import { Label } from '../../../../../components/ui';
 import { useUsers } from '../../hooks/useUsers';
 import SearchIcon from '@mui/icons-material/Search';
 import { selectAuth } from '../../../../../redux';
-import { ValidRoles } from '../../../Common/models/valid-roles.model';
 import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
 import NiceModal from '@ebay/nice-modal-react';
 import { EditUserRole } from '../EditUserRole.component';

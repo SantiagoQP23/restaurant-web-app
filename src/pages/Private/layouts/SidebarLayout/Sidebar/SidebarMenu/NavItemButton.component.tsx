@@ -16,7 +16,7 @@ import { SidebarContext } from '../../../../Common/contexts/SidebarContext';
 import { NavItem } from '../../../interfaces';
 import { selectAuth } from '../../../../../../redux';
 import { useSelector } from 'react-redux';
-import { ValidRoles } from '../../../../Common/models/valid-roles.model';
+import { Roles } from '@/models/roles';
 
 interface Props {
   item: NavItem;
@@ -41,7 +41,7 @@ export const NavItemButton: FC<Props> = ({ item }) => {
 
   if (
     item.allowedRoles &&
-    !item.allowedRoles.includes(user?.role.name as ValidRoles)
+    !item.allowedRoles.includes(user?.role.name as Roles)
   ) {
     return null;
   }

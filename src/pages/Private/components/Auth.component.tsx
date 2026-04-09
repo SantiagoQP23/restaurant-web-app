@@ -2,12 +2,12 @@ import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import { FC } from 'react';
 
 import React from 'react';
-import { ValidRoles } from '../Common/models/valid-roles.model';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../redux';
+import { Roles } from '@/models/roles';
 
 interface Props {
-  allowedRoles: ValidRoles[];
+  allowedRoles: Roles[];
 }
 
 const Auth: FC<Props> = ({ allowedRoles }) => {

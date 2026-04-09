@@ -15,7 +15,7 @@ import { NavItemButton } from './';
 import { NavItem } from '../../../interfaces';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../../../../redux';
-import { ValidRoles } from '../../../../Common/models/valid-roles.model';
+import { Roles } from '@/models/roles';
 
 interface Props {
   navItem: NavItem;
@@ -32,7 +32,7 @@ export const NavItemCollapsable: FC<Props> = ({ navItem }) => {
 
   if (
     navItem.allowedRoles &&
-    !navItem.allowedRoles.includes(user?.role.name as ValidRoles)
+    !navItem.allowedRoles.includes(user?.role.name as Roles)
   ) {
     return null;
   }

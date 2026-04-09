@@ -1,8 +1,8 @@
-import { ValidRoles } from '../../Common/models/valid-roles.model';
+import { Roles } from '@/models/roles';
 import { NavItem } from './nav-item.interface';
 
 export interface MenuSection {
   title: string;
   items: NavItem[];
-  allowedRoles?: ValidRoles[];
+  allowedRoles?: Roles[];
 }
