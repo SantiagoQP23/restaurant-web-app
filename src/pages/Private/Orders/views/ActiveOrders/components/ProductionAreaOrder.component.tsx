@@ -269,6 +269,7 @@ export const ProductionAreaOrder = ({
                     orderId={orderId}
                     typeOrder={order.type}
                     orderCreationDate={new Date(order.createdAt)}
+                    orderUserId={order.user.id}
                   />
                 </Box>
               ))

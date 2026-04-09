@@ -92,6 +92,8 @@ export interface IOrderDetail {
   typeOrderDetail: TypeOrder;
   productOption?: ProductOption;
   tags: Tag[];
+  createdBy?: IUser;
+  updatedBy?: IUser;
 }
 
 export interface ICreateOrderDetail {

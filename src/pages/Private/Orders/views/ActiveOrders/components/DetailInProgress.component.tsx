@@ -58,6 +58,7 @@ interface Props {
   orderId: string;
   typeOrder: TypeOrder;
   orderCreationDate: Date;
+  orderUserId: string;
 }
 
 /**
@@ -74,7 +75,8 @@ export const DetailInProgress: FC<Props> = ({
   detail,
   orderId,
   typeOrder,
-  orderCreationDate
+  orderCreationDate,
+  orderUserId
 }) => {
   const theme = useTheme();
   const { mutate: update } = useUpdateOrderDetail();
@@ -82,6 +84,12 @@ export const DetailInProgress: FC<Props> = ({
   const [checked, setChecked] = useState(
     detail.qtyDelivered === detail.quantity
   );
+
+  const createdBy = detail.createdBy;
+  const updatedBy = detail.updatedBy;
+
+  const showCreatedBy = createdBy && createdBy.id !== orderUserId;
+  const showUpdatedBy = updatedBy && updatedBy.id !== orderUserId;
 
   const [isHighlighted, setIsHighlighted] = useState(false);
   const isFirstRender = useRef(true);
@@ -179,7 +187,8 @@ export const DetailInProgress: FC<Props> = ({
     <Box
       sx={{
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
+        gap: 1,
         px: 1,
         py: 1.5,
         borderRadius: 1,
@@ -192,174 +201,186 @@ export const DetailInProgress: FC<Props> = ({
         })
       }}
     >
-      <Stack direction='row' spacing={1} alignItems='items-center' flexGrow={1}>
-        <Checkbox
-          icon={<CheckCircleOutline />}
-          checkedIcon={<CheckCircle />}
-          checked={checked}
-          onChange={handleChangeChecked}
-        />
-
-        {/* Product Info */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center'
+        }}
+      >
         <Stack
-          direction='column'
-          spacing={0.5}
+          direction='row'
+          spacing={1}
+          alignItems='items-center'
           flexGrow={1}
-          justifyContent='center'
         >
-          <Stack direction='row' alignItems='center' spacing={1}>
-            <Typography
-              variant='subtitle1'
-              fontWeight={isCompleted ? 400 : 500}
-              color={isCompleted ? 'text.secondary' : 'text.primary'}
-              sx={{
-                textDecoration: isCompleted ? 'line-through' : 'none'
-              }}
-            >
-              {detail.quantity} x {detail.product.name}{' '}
-              {detail.price !== detail.product.price && `($${detail.price})`}
-            </Typography>
-          </Stack>
+          <Checkbox
+            icon={<CheckCircleOutline />}
+            checkedIcon={<CheckCircle />}
+            checked={checked}
+            onChange={handleChangeChecked}
+          />
 
-          {/* Type Indicator */}
-          {/* {isDifferentType && ( */}
-          {/*   <Chip */}
-          {/*     label={ */}
-          {/*       detail.typeOrderDetail === TypeOrder.IN_PLACE */}
-          {/*         ? 'Para servir' */}
-          {/*         : 'Para llevar' */}
-          {/*     } */}
-          {/*     size='small' */}
-          {/*     variant='outlined' */}
-          {/*     sx={{ */}
-          {/*       height: 20, */}
-          {/*       fontSize: '0.7rem', */}
-          {/*       fontWeight: 500, */}
-          {/*       borderColor: alpha(theme.palette.divider, 0.5), */}
-          {/*       color: theme.palette.text.secondary */}
-          {/*     }} */}
-          {/*   /> */}
-          {/* )} */}
-          {showSecondaryInfo && (
-            <Stack spacing={0.5} mt={0.5}>
-              {/* Description */}
-              {detail.description && (
-                <Typography
-                  variant='body2'
-                  color='text.secondary'
-                  sx={{
-                    whiteSpace: 'pre-wrap',
-                    fontSize: '0.813rem',
-                    opacity: isCompleted ? 0.7 : 1
-                  }}
-                >
-                  {detail.description}
-                </Typography>
-              )}
+          {/* Product Info */}
+          <Stack
+            direction='column'
+            spacing={0.5}
+            flexGrow={1}
+            justifyContent='center'
+          >
+            <Stack direction='row' alignItems='center' spacing={1}>
+              <Typography
+                variant='subtitle1'
+                fontWeight={isCompleted ? 400 : 500}
+                color={isCompleted ? 'text.secondary' : 'text.primary'}
+                sx={{
+                  textDecoration: isCompleted ? 'line-through' : 'none'
+                }}
+              >
+                {detail.quantity} x {detail.product.name}{' '}
+                {detail.price !== detail.product.price && `($${detail.price})`}
+              </Typography>
+            </Stack>
 
-              {/* Tags */}
-              {detail.tags && detail.tags.length > 0 && (
-                <Stack direction='row' flexWrap='wrap' gap={0.5}>
-                  {detail.tags.map((tag) => (
-                    <Chip
-                      key={tag.id}
-                      label={tag.name}
-                      size='small'
-                      variant='outlined'
-                      sx={{
-                        height: 20,
-                        fontSize: '0.7rem',
-                        opacity: isCompleted ? 0.6 : 1
-                      }}
-                    />
-                  ))}
-                </Stack>
-              )}
-
-              {/* Progress Bar */}
-              {!isCompleted && detail.qtyDelivered > 0 && (
-                <Stack spacing={0.5} mt={0.5}>
-                  <LinearProgressWrapper
-                    value={progressPercentage}
-                    color='primary'
-                    variant='determinate'
-                  />
-                  <Box
-                    display='flex'
-                    justifyContent='space-between'
-                    alignItems='center'
-                    gap={1}
+            {/* Type Indicator */}
+            {/* {isDifferentType && ( */}
+            {/*   <Chip */}
+            {/*     label={ */}
+            {/*       detail.typeOrderDetail === TypeOrder.IN_PLACE */}
+            {/*         ? 'Para servir' */}
+            {/*         : 'Para llevar' */}
+            {/*     } */}
+            {/*     size='small' */}
+            {/*     variant='outlined' */}
+            {/*     sx={{ */}
+            {/*       height: 20, */}
+            {/*       fontSize: '0.7rem', */}
+            {/*       fontWeight: 500, */}
+            {/*       borderColor: alpha(theme.palette.divider, 0.5), */}
+            {/*       color: theme.palette.text.secondary */}
+            {/*     }} */}
+            {/*   /> */}
+            {/* )} */}
+            {showSecondaryInfo && (
+              <Stack spacing={0.5} mt={0.5}>
+                {/* Description */}
+                {detail.description && (
+                  <Typography
+                    variant='body2'
+                    color='text.secondary'
+                    sx={{
+                      whiteSpace: 'pre-wrap',
+                      fontSize: '0.813rem',
+                      opacity: isCompleted ? 0.7 : 1
+                    }}
                   >
-                    <Typography
-                      variant='caption'
-                      color='text.secondary'
-                      fontWeight={500}
-                      sx={{ fontSize: '0.75rem' }}
+                    {detail.description}
+                  </Typography>
+                )}
+
+                {/* Tags */}
+                {detail.tags && detail.tags.length > 0 && (
+                  <Stack direction='row' flexWrap='wrap' gap={0.5}>
+                    {detail.tags.map((tag) => (
+                      <Chip
+                        key={tag.id}
+                        label={tag.name}
+                        size='small'
+                        variant='outlined'
+                        sx={{
+                          height: 20,
+                          fontSize: '0.7rem',
+                          opacity: isCompleted ? 0.6 : 1
+                        }}
+                      />
+                    ))}
+                  </Stack>
+                )}
+
+                {/* Progress Bar */}
+                {!isCompleted && detail.qtyDelivered > 0 && (
+                  <Stack spacing={0.5} mt={0.5}>
+                    <LinearProgressWrapper
+                      value={progressPercentage}
+                      color='primary'
+                      variant='determinate'
+                    />
+                    <Box
+                      display='flex'
+                      justifyContent='space-between'
+                      alignItems='center'
+                      gap={1}
                     >
-                      {remainingQuantity}{' '}
-                      {remainingQuantity === 1
-                        ? 'por entregar'
-                        : 'por entregar'}
-                    </Typography>
-                    {showDetailCreationDate && detailCreatedAt && (
                       <Typography
                         variant='caption'
                         color='text.secondary'
                         fontWeight={500}
                         sx={{ fontSize: '0.75rem' }}
                       >
-                        {format(detailCreatedAt, 'HH:mm', {
-                          locale: es
-                        })}
+                        {remainingQuantity}{' '}
+                        {remainingQuantity === 1
+                          ? 'por entregar'
+                          : 'por entregar'}
                       </Typography>
-                    )}
-                  </Box>
-                </Stack>
-              )}
-            </Stack>
-          )}
-        </Stack>
-      </Stack>
-
-      {/* Action Buttons */}
-      <Stack direction='row' spacing={0.5} alignItems='center'>
-        {!isCompleted && (
-          <>
-            {/* Add One Button (only if quantity > 1) */}
-            {detail.quantity > 1 && (
-              <IconButton
-                size='small'
-                onClick={handleAddOne}
-                disabled={detail.qtyDelivered >= detail.quantity}
-                sx={{
-                  color: theme.palette.primary.main,
-                  '&:hover': {
-                    bgcolor: alpha(theme.palette.primary.main, 0.08)
-                  }
-                }}
-              >
-                <PlusOneOutlined fontSize='small' />
-              </IconButton>
+                      {showDetailCreationDate && detailCreatedAt && (
+                        <Typography
+                          variant='caption'
+                          color='text.secondary'
+                          fontWeight={500}
+                          sx={{ fontSize: '0.75rem' }}
+                        >
+                          {format(detailCreatedAt, 'HH:mm', {
+                            locale: es
+                          })}
+                        </Typography>
+                      )}
+                    </Box>
+                  </Stack>
+                )}
+              </Stack>
             )}
+          </Stack>
+        </Stack>
 
-            {/* Complete Checkbox */}
-          </>
-        )}
+        {/* Action Buttons */}
+        <Stack direction='row' spacing={0.5} alignItems='center'>
+          {!isCompleted && (
+            <>
+              {/* Add One Button (only if quantity > 1) */}
+              {detail.quantity > 1 && (
+                <IconButton
+                  size='small'
+                  onClick={handleAddOne}
+                  disabled={detail.qtyDelivered >= detail.quantity}
+                  sx={{
+                    color: theme.palette.primary.main,
+                    '&:hover': {
+                      bgcolor: alpha(theme.palette.primary.main, 0.08)
+                    }
+                  }}
+                >
+                  <PlusOneOutlined fontSize='small' />
+                </IconButton>
+              )}
 
-        {/* Edit Button */}
-        <IconButton
-          onClick={editDetail}
-          size='small'
-          sx={{
-            color: theme.palette.text.secondary,
-            '&:hover': {
-              bgcolor: alpha(theme.palette.action.hover, 0.1)
-            }
-          }}
-        >
-          <EditOutlined fontSize='small' />
-        </IconButton>
-      </Stack>
+              {/* Complete Checkbox */}
+            </>
+          )}
+
+          {/* Edit Button */}
+          <IconButton
+            onClick={editDetail}
+            size='small'
+            sx={{
+              color: theme.palette.text.secondary,
+              '&:hover': {
+                bgcolor: alpha(theme.palette.action.hover, 0.1)
+              }
+            }}
+          >
+            <EditOutlined fontSize='small' />
+          </IconButton>
+        </Stack>
+      </Box>
     </Box>
   );
 };

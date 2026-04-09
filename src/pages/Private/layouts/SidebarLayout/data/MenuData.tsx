@@ -25,18 +25,20 @@ import { ValidRoles } from '../../../Common/models/valid-roles.model';
  */
 const generalSection: MenuSection = {
   title: '',
-  allowedRoles: [ValidRoles.admin],
+  // allowedRoles: [ValidRoles.admin],
   items: [
     {
       title: 'Dashboard',
       icon: <DashboardOutlinedIcon fontSize='small' />,
-      to: '/reports'
+      to: '/reports',
+      allowedRoles: [ValidRoles.admin]
     },
     {
       title: 'Restaurante',
       icon: <Storefront fontSize='small' />,
       to: '/restaurant',
-      label: 'Nuevo'
+      label: 'Nuevo',
+      allowedRoles: [ValidRoles.admin]
     },
     {
       title: 'Pedidos',
@@ -57,22 +59,26 @@ const generalSection: MenuSection = {
     {
       title: 'Lista de pedidos',
       icon: <ListAltOutlined fontSize='small' />,
-      to: '/orders/list'
+      to: '/orders/list',
+      allowedRoles: [ValidRoles.admin]
     },
     {
       title: 'Menú del restaurante',
       icon: <MenuBookOutlined fontSize='small' />,
-      to: '/menu/sections'
+      to: '/menu/sections',
+      allowedRoles: [ValidRoles.admin]
     },
     {
       title: 'Gestión de mesas',
       icon: <TableRestaurantOutlinedIcon fontSize='small' />,
-      to: '/tables'
+      to: '/tables',
+      allowedRoles: [ValidRoles.admin]
     },
     {
       title: 'Gestión de usuarios',
       icon: <PeopleOutlineIcon fontSize='small' />,
-      to: '/users'
+      to: '/users',
+      allowedRoles: [ValidRoles.admin]
     }
   ]
 };
