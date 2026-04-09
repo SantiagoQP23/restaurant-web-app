@@ -44,6 +44,7 @@ import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 interface Props {
   detail: IOrderDetail;
   orderId: string;
+  orderUserId: string;
 }
 
 /**
@@ -54,7 +55,7 @@ interface Props {
  * @version 1.5 03-02-2026 UX improvements: sections, dirty state, progress hint, layout
  */
 export const ModalEditOrderDetail = NiceModal.create<Props>(
-  ({ detail, orderId }) => {
+  ({ detail, orderId, orderUserId }) => {
     const modal = useModal();
     const theme = useTheme();
 
@@ -69,6 +70,11 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
     );
 
     const { mutate: update, isLoading, isOnline } = useUpdateOrderDetail();
+    const showCreatedBy =
+      detail.createdBy?.person.firstName && detail.createdBy.id !== orderUserId;
+
+    const showUpdatedBy =
+      detail.updatedBy?.person.firstName && detail.updatedBy.id !== orderUserId;
 
     // Dirty state — true when at least one field differs from original
     const isDirty = useMemo(
@@ -297,16 +303,17 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
             <Grid item xs={12}>
               <Divider sx={{ mt: 0.5 }} />
               <Stack spacing={0.5} mt={1.5}>
-                <Tooltip
-                  title={format(createdAt, 'PPPp', { locale: es })}
-                  placement='left'
-                >
+                <Tooltip title='Creación' placement='left'>
                   <Stack direction='row' alignItems='center' spacing={0.75}>
                     <AccessTimeOutlined
                       sx={{ fontSize: '0.85rem', color: 'text.disabled' }}
                     />
+                    {showCreatedBy && (
+                      <Typography variant='caption' color='text.disabled'>
+                        {detail.createdBy?.person.firstName} ·
+                      </Typography>
+                    )}
                     <Typography variant='caption' color='text.disabled'>
-                      Creado{' '}
                       {formatDistanceToNow(createdAt, {
                         addSuffix: true,
                         locale: es
@@ -317,16 +324,17 @@ export const ModalEditOrderDetail = NiceModal.create<Props>(
                 </Tooltip>
 
                 {wasUpdated && (
-                  <Tooltip
-                    title={format(updatedAt, 'PPPp', { locale: es })}
-                    placement='left'
-                  >
+                  <Tooltip title='Actualización' placement='left'>
                     <Stack direction='row' alignItems='center' spacing={0.75}>
                       <EditOutlined
                         sx={{ fontSize: '0.85rem', color: 'text.disabled' }}
                       />
+                      {showUpdatedBy && (
+                        <Typography variant='caption' color='text.disabled'>
+                          {detail.updatedBy?.person.firstName} ·
+                        </Typography>
+                      )}
                       <Typography variant='caption' color='text.disabled'>
-                        Actualizado{' '}
                         {formatDistanceToNow(updatedAt, {
                           addSuffix: true,
                           locale: es
