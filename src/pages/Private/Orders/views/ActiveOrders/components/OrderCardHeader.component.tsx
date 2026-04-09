@@ -76,14 +76,15 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
                 }}
               />
             )}
+            <Box></Box>
 
-            <IconButton
-              size='small'
-              onClick={() => navigate(`/orders/list/edit/${order.id}`)}
-              sx={{ color: 'text.secondary', p: 0.5 }}
-            >
-              <OpenInNewOutlined fontSize='small' />
-            </IconButton>
+            {/* <IconButton */}
+            {/*   size='small' */}
+            {/*   onClick={() => navigate(`/orders/list/edit/${order.id}`)} */}
+            {/*   sx={{ color: 'text.secondary', p: 0.5 }} */}
+            {/* > */}
+            {/*   <OpenInNewOutlined fontSize='small' /> */}
+            {/* </IconButton> */}
           </Stack>
 
           {/* Order Title */}

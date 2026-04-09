@@ -31,6 +31,7 @@ import { UpdateOrderDetailDto } from '../../../dto';
 import { useUpdateOrderDetail } from '../../../hooks';
 import NiceModal from '@ebay/nice-modal-react';
 import { ModalEditOrderDetail } from '../../../components';
+import { EditOrderDetailKitchenModal } from '../../../components/modals/EditOrderDetailKitchenModal.component';
 
 const LinearProgressWrapper = styled(LinearProgress)(
   ({ theme }) => `
@@ -140,7 +141,10 @@ export const DetailInProgress: FC<Props> = ({
   }, [detailCreatedAt, orderCreationDate]);
 
   const editDetail = useCallback(() => {
-    NiceModal.show(ModalEditOrderDetail, { detail: detail, orderId: orderId });
+    NiceModal.show(EditOrderDetailKitchenModal, {
+      detail: detail,
+      orderId: orderId
+    });
   }, [detail, orderId]);
 
   const updateQtyDelivered = useCallback(
