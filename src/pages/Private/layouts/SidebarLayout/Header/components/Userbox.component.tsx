@@ -12,7 +12,9 @@ import {
   Typography,
   ListItemButton,
   ListItemSecondaryAction,
-  Badge
+  Badge,
+  ListItemIcon,
+  ListSubheader
 } from '@mui/material';
 
 import { styled } from '@mui/material';
@@ -23,10 +25,18 @@ import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import { startLogout, selectAuth } from '../../../../../../redux/slices/auth';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks';
 import { Roles } from '../../../../../../models/auth.model';
-import { Circle } from '@mui/icons-material';
+import {
+  Circle,
+  Done,
+  DoneOutline,
+  DoneOutlineRounded
+} from '@mui/icons-material';
 import { SocketContext } from '../../../../../../context/SocketContext';
 import { Label } from '../../../../../../components/ui';
 import { ValidRoles } from '../../../../Common/models/valid-roles.model';
+import { Restaurant } from '@/pages/Private/Common/models/restaurant.model';
+import { useRestaurantStore } from '@/pages/Private/Common/store/restaurantStore';
+import { switchRestaurantMutation } from '@/pages/Private/Restaurant/hooks/useRestaurant';
 
 // background: ${grey[900]};
 
@@ -60,13 +70,24 @@ const UserBoxDescription = styled(Typography)(
 export const Userbox = () => {
   const { user: userState } = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
+  const { restaurant, setRestaurant } = useRestaurantStore((state) => state);
+  const switchRestaurant = switchRestaurantMutation();
 
   const { online } = useContext(SocketContext);
 
   const user = {
     name: userState?.username!,
     avatar: '/static/images/avatars/2.jpg',
-    jobtitle: userState?.role?.description
+    jobtitle: userState?.role?.description,
+    restaurantRoles: userState?.restaurantRoles || []
+  };
+
+  const changeRestaurant = (newRestaurant: Restaurant) => {
+    if (restaurant?.id !== newRestaurant.id) {
+      switchRestaurant.mutate(newRestaurant.id);
+    }
+
+    handleClose();
   };
 
   const ref = useRef<any>(null);
@@ -152,6 +173,39 @@ export const Userbox = () => {
           </UserBoxText>
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
+        <List
+          sx={{ p: 1 }}
+          component='nav'
+          subheader={
+            <ListSubheader
+              component='div'
+              id='nested-list-subheader'
+              sx={{ fontSize: 12 }}
+            >
+              Restaurantes
+            </ListSubheader>
+          }
+        >
+          {user?.restaurantRoles.map((restaurantRole) => (
+            <ListItemButton
+              key={restaurantRole.id}
+              onClick={() => changeRestaurant(restaurantRole.restaurant)}
+            >
+              <ListItemText
+                primaryTypographyProps={{ variant: 'body1' }}
+                secondaryTypographyProps={{ variant: 'subtitle2' }}
+                primary={restaurantRole.restaurant.name}
+              />
+              {restaurant?.id === restaurantRole.restaurant.id && (
+                <ListItemIcon sx={{ minWidth: '30px' }}>
+                  <Done fontSize='small' color='secondary' />
+                </ListItemIcon>
+              )}
+            </ListItemButton>
+          ))}
+        </List>
+        <Divider sx={{ mb: 0 }} />
+
         <List sx={{ p: 1 }} component='nav'>
           <ListItemButton
             to='/users/profile'
