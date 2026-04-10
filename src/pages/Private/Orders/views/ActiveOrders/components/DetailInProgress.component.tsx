@@ -194,8 +194,8 @@ export const DetailInProgress: FC<Props> = ({
         display: 'flex',
         flexDirection: 'column',
         gap: 1,
-        px: 1,
-        py: 1.5,
+        // px: 1,
+        py: 0.5,
         borderRadius: 1,
         transition: 'background-color 0.2s ease',
         '&:hover': {
@@ -241,7 +241,7 @@ export const DetailInProgress: FC<Props> = ({
                   textDecoration: isCompleted ? 'line-through' : 'none'
                 }}
               >
-                {detail.quantity} x {detail.product.name}{' '}
+                {detail.quantity} {detail.product.name}{' '}
                 {detail.price !== detail.product.price && `($${detail.price})`}
               </Typography>
             </Stack>

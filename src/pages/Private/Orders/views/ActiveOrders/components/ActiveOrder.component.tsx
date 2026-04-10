@@ -130,11 +130,11 @@ export const ActiveOrder: FC<Props> = ({
         </Stack>
 
         {/* Add Product Button */}
-        <BtnAddProduct order={order} />
+        {/* <BtnAddProduct order={order} /> */}
       </Stack>
 
       {/* Divider before actions */}
-      {order.status !== OrderStatus.DELIVERED && <Divider sx={{ mt: 0.5 }} />}
+      {/* {order.status !== OrderStatus.DELIVERED && <Divider sx={{ mt: 0.5 }} />} */}
 
       {/* Enhanced Actions */}
       <OrderActions

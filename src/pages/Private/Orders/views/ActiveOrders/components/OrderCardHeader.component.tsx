@@ -102,9 +102,9 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
 
               {/* Order Number */}
               <Stack direction='row' spacing={2} alignItems='center' mt={0.5}>
-                <Typography variant='body2' color='text.secondary'>
-                  Pedido N° {order.num}
-                </Typography>
+                {/* <Typography variant='body2' color='text.secondary'> */}
+                {/*   Pedido N° {order.num} */}
+                {/* </Typography> */}
 
                 <Box display='flex' alignItems='center' gap={0.5}>
                   <PeopleOutlined
@@ -117,9 +117,9 @@ export const OrderCardHeader: FC<Props> = ({ order, index, color }) => {
 
             <Stack alignItems='end' spacing={0.5}>
               <LabelStatusOrder status={order.status} />
-              <Typography variant='body2' color='text.secondary'>
-                {format(new Date(order.createdAt), 'HH:mm')}
-              </Typography>
+              {/* <Typography variant='body2' color='text.secondary'> */}
+              {/*   {format(new Date(order.createdAt), 'HH:mm')} */}
+              {/* </Typography> */}
             </Stack>
           </Box>
         </Stack>
