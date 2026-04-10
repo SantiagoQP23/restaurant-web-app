@@ -41,8 +41,9 @@ export const Table: FC<Props> = ({ table, handleClickTable }) => {
   return (
     <Card
       sx={{
-        border: isAvailable ? 'none' : 1,
-        borderColor: isAvailable ? 'divider' : 'primary.main'
+        border: 1,
+        borderColor: isAvailable ? 'divider' : 'primary.main',
+        boxShadow: 'none'
       }}
     >
       <CardActionArea

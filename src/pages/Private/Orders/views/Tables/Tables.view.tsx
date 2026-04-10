@@ -1,42 +1,19 @@
 import { useEffect, useState } from 'react';
 import {
-  Tabs,
-  Tab,
   Box,
-  Button,
-  Stack,
   Container,
   Grid,
-  Card,
-  CardHeader,
-  CardContent,
   Typography,
-  Tooltip,
-  Chip,
   SelectChangeEvent
 } from '@mui/material';
 import { TitlePage } from '../../../components';
-import { Add } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import { ITable, OrderStatus, TypeOrder } from '../../../../../models';
-import { useNewOrderStore } from '../../store/newOrderStore';
-import { Label } from '../../../../../components/ui';
-import { TakeAwayOrders } from './components/TakeAwayOrders.component';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectOrders, selectTables } from '../../../../../redux';
+import { ITable } from '../../../../../models';
+import { useSelector } from 'react-redux';
+import { selectTables } from '../../../../../redux';
 import NiceModal from '@ebay/nice-modal-react';
 import { NewOrderModal } from '../../components/modals/NewOrderModal.component';
-import { OrderList } from './components/OrderList.component';
-import { fontWeight } from '@mui/system';
 import { Table } from './components/Table.component';
 import { TableInfo } from './components/TableInfo.component';
-
-enum DashboardViews {
-  ALL = 'ALL',
-  TABLES = 'TABLES',
-  USERS = 'USERS',
-  TAKE_AWAY = 'TAKE_AWAY'
-}
 
 interface HeaderBoxProps {
   title: string;
