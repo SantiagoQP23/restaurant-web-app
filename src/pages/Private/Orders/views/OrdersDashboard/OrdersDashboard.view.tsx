@@ -18,7 +18,7 @@ import { TitlePage } from '../../../components';
 import { Tables } from './components/Tables.component';
 import { Add } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { OrderStatus, TypeOrder } from '../../../../../models';
+import { Order, OrderStatus, TypeOrder } from '../../../../../models';
 import { useNewOrderStore } from '../../store/newOrderStore';
 import { Label } from '../../../../../components/ui';
 import { TakeAwayOrders } from './components/TakeAwayOrders.component';
@@ -28,6 +28,8 @@ import NiceModal from '@ebay/nice-modal-react';
 import { NewOrderModal } from '../../components/modals/NewOrderModal.component';
 import { OrderList } from './components/OrderList.component';
 import { fontWeight } from '@mui/system';
+import { EditOrderCard } from '../../components/EditOrderCard.component';
+import { OrderCard } from './components/OrderCard.component';
 
 enum DashboardViews {
   ALL = 'ALL',
@@ -69,6 +71,7 @@ export const OrdersDashboard = () => {
   const [view, setView] = useState(DashboardViews.ALL);
 
   const { orders } = useSelector(selectOrders);
+  const [activeOrder, setActiveOrder] = useState<Order | null>(null);
 
   const navigate = useNavigate();
 
@@ -104,128 +107,96 @@ export const OrdersDashboard = () => {
   return (
     <>
       <Container maxWidth='lg'>
-        <TitlePage
-          title='Pedidos'
-          action={
-            <Stack direction='row' spacing={1}>
-              <Button
-                variant='contained'
-                startIcon={<Add />}
-                onClick={openNewOrderModal}
-                size='small'
-              >
-                Crear Pedido
-              </Button>
-            </Stack>
-          }
-        />
+        <Grid container spacing={2} sx={{ height: '100%' }}>
+          <Grid
+            item
+            spacing={1}
+            xs={12}
+            md={activeOrder ? 6 : 12}
+            lg={activeOrder ? 8 : 12}
+          >
+            <TitlePage
+              title='Pedidos'
+              action={
+                <Stack direction='row' spacing={1}>
+                  <Button
+                    variant='contained'
+                    startIcon={<Add />}
+                    onClick={openNewOrderModal}
+                    size='small'
+                  >
+                    Crear Pedido
+                  </Button>
+                </Stack>
+              }
+            />
 
-        <Grid container spacing={2} mb={2}>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            <HeaderBox title='Total de pedidos' count={totalOrders} />
+            <Grid container spacing={2} mb={2}>
+              <Grid item xs={12} sm={6} md={3} lg={3}>
+                <HeaderBox title='Total de pedidos' count={totalOrders} />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} lg={3}>
+                <HeaderBox title='Pedidos pagados' count={paidOrders} />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} lg={3}>
+                <HeaderBox title='Pendientes' count={pendingOrders} />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} lg={3}>
+                <HeaderBox title='En proceso' count={inProgressOrders} />
+              </Grid>
+            </Grid>
+
+            <Tabs value={view} onChange={(e, value) => setView(value)}>
+              <Tab value={DashboardViews.ALL} label='Todos' />
+              {/* <Tab value={DashboardViews.USERS} label="Usuarios" icon={<Label sx={{ml: 1}} color="info">new</Label>} iconPosition="end" /> */}
+              <Tab
+                value={DashboardViews.TAKE_AWAY}
+                label='Para llevar'
+                icon={
+                  <Label sx={{ ml: 1 }} color='secondary'>
+                    {ordersTakeAway}
+                  </Label>
+                }
+                iconPosition='end'
+              />
+            </Tabs>
+
+            <Box mt={2}>
+              {orders.length >= 1 ? (
+                <>
+                  <Grid container my={2} spacing={1}>
+                    {orders.map((order) => (
+                      <Grid
+                        key={order.id}
+                        item
+                        xs={12}
+                        md={6}
+                        lg={activeOrder ? 6 : 4}
+                      >
+                        <OrderCard
+                          order={order}
+                          onClick={() =>
+                            activeOrder?.id === order.id
+                              ? setActiveOrder(null)
+                              : setActiveOrder(order)
+                          }
+                          selected={activeOrder?.id === order.id}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </>
+              ) : (
+                <Typography variant='h4'>No hay pedidos </Typography>
+              )}
+            </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            <HeaderBox title='Pedidos pagados' count={paidOrders} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            <HeaderBox title='Pendientes' count={pendingOrders} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            <HeaderBox title='En proceso' count={inProgressOrders} />
-          </Grid>
+          {activeOrder && (
+            <Grid item xs={12} md={6} lg={4}>
+              <EditOrderCard order={activeOrder} />
+            </Grid>
+          )}
         </Grid>
-
-        {/* <Grid container spacing={2} mb={2}> */}
-        {/*   <Grid item xs={6} md={6} lg={3}> */}
-        {/*     <Card> */}
-        {/*       <CardHeader */}
-        {/*         avatar={<Assignment color='primary' />} */}
-        {/*         title='Total de pedidos' */}
-        {/*       /> */}
-        {/*       <CardContent> */}
-        {/*         <Typography variant='h1'>{orders.length}</Typography> */}
-        {/*         <Tooltip title='Pedidos pagados'> */}
-        {/*           <LinearProgressWrapper */}
-        {/*             value={(paidOrders * 100) / totalOrders} */}
-        {/*             variant='determinate' */}
-        {/*             color='primary' */}
-        {/*           /> */}
-        {/*         </Tooltip> */}
-        {/*       </CardContent> */}
-        {/*     </Card> */}
-        {/*   </Grid> */}
-        {/*   <Grid item xs={6} md={6} lg={3}> */}
-        {/*     <Card> */}
-        {/*       <CardHeader */}
-        {/*         avatar={<PendingActions color='warning' />} */}
-        {/*         title='Pendientes' */}
-        {/*       /> */}
-        {/*       <CardContent> */}
-        {/*         <Typography variant='h1'>{pendingOrders}</Typography> */}
-        {/*         <LinearProgressWrapper */}
-        {/*           value={(pendingOrders * 100) / totalOrders} */}
-        {/*           variant='determinate' */}
-        {/*           color='warning' */}
-        {/*         /> */}
-        {/*       </CardContent> */}
-        {/*     </Card> */}
-        {/*   </Grid> */}
-        {/*   <Grid item xs={6} md={6} lg={3}> */}
-        {/*     <Card> */}
-        {/*       <CardHeader */}
-        {/*         avatar={<SoupKitchen color='info' />} */}
-        {/*         title='En proceso' */}
-        {/*       /> */}
-        {/*       <CardContent> */}
-        {/*         <Typography variant='h1'>{inProgressOrders}</Typography> */}
-        {/*         <LinearProgressWrapper */}
-        {/*           value={(inProgressOrders * 100) / totalOrders} */}
-        {/*           variant='determinate' */}
-        {/*           color='info' */}
-        {/*         /> */}
-        {/*       </CardContent> */}
-        {/*     </Card> */}
-        {/*   </Grid> */}
-        {/*   <Grid item xs={6} md={6} lg={3}> */}
-        {/*     <Card> */}
-        {/*       <CardHeader */}
-        {/*         avatar={<LocalDining color='success' />} */}
-        {/*         title='Entregados' */}
-        {/*       /> */}
-        {/*       <CardContent> */}
-        {/*         <Typography variant='h1'>{deliveredOrders}</Typography> */}
-        {/*         <LinearProgressWrapper */}
-        {/*           value={(deliveredOrders * 100) / totalOrders} */}
-        {/*           variant='determinate' */}
-        {/*           color='success' */}
-        {/*         /> */}
-        {/*       </CardContent> */}
-        {/*     </Card> */}
-        {/*   </Grid> */}
-        {/* </Grid> */}
-
-        <Tabs value={view} onChange={(e, value) => setView(value)}>
-          <Tab value={DashboardViews.ALL} label='Todos' />
-          <Tab value={DashboardViews.TABLES} label='Mesas' />
-          {/* <Tab value={DashboardViews.USERS} label="Usuarios" icon={<Label sx={{ml: 1}} color="info">new</Label>} iconPosition="end" /> */}
-          <Tab
-            value={DashboardViews.TAKE_AWAY}
-            label='Para llevar'
-            icon={
-              <Label sx={{ ml: 1 }} color='info'>
-                {ordersTakeAway}
-              </Label>
-            }
-            iconPosition='end'
-          />
-        </Tabs>
-
-        <Box mt={2}>
-          {view === DashboardViews.ALL && <OrderList />}
-          {view === DashboardViews.TABLES && <Tables />}
-          {/* {view === DashboardViews.USERS && <Users />} */}
-          {view === DashboardViews.TAKE_AWAY && <TakeAwayOrders />}
-        </Box>
       </Container>
     </>
   );

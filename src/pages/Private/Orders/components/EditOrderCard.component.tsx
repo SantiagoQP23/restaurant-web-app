@@ -32,13 +32,8 @@ import {
   Alert
 } from '@mui/material';
 import { format, formatDistance, formatRelative } from 'date-fns';
-import { Order, OrderStatus, TypeOrder } from '../../../../../../models';
 import { FC } from 'react';
-import { LabelStatusOrder } from '../../../components/LabelStatusOrder.component';
 import { useNavigate } from 'react-router-dom';
-import { formatMoney } from '../../../../Common/helpers/format-money.helper';
-import { getTypeOrder } from '../../../../Common/helpers/get-type-order.helper';
-import { LabelStatusPaid, ModalCloseOrder } from '../../../components';
 import { es } from 'date-fns/locale';
 import { GridExpandMoreIcon } from '@mui/x-data-grid';
 import {
@@ -47,14 +42,19 @@ import {
   bindPopover
 } from 'material-ui-popup-state/hooks';
 import NiceModal from '@ebay/nice-modal-react';
+import { Order, OrderStatus, TypeOrder } from '@/models';
+import { ModalCloseOrder } from './modals';
+import { getTypeOrder } from '../../Common/helpers/get-type-order.helper';
+import { LabelStatusOrder } from './LabelStatusOrder.component';
+import { LabelStatusPaid } from './LabelStatusPaid.component';
+import { formatMoney } from '../../Common/helpers/format-money.helper';
 
 interface Props {
   order: Order;
-  selected?: boolean;
   onClick?: () => void;
 }
 
-export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
+export const EditOrderCard: FC<Props> = ({ order, onClick }) => {
   const popupState = usePopupState({
     variant: 'popover',
     popupId: 'popoverOrder1'
@@ -95,11 +95,10 @@ export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
     <>
       <Card
         sx={{
-          border: 1,
-          borderColor: selected ? 'primary.main' : 'divider',
-          boxShadow: 'none'
+          border: '1px solid #e0e0e0',
+          boxShadow: 'none',
+          my: 1
         }}
-        onClick={handleClick}
       >
         {/* <CardActionArea
         onClick={() => {
@@ -128,9 +127,9 @@ export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
             <>
               <Stack direction='row' spacing={1} alignItems='center'>
                 <LabelStatusOrder status={order.status} simple />
-                {/* <IconButton {...bindTrigger(popupState)}> */}
-                {/*   <MoreVert /> */}
-                {/* </IconButton> */}
+                <IconButton {...bindTrigger(popupState)}>
+                  <MoreVert />
+                </IconButton>
               </Stack>
             </>
           }
@@ -144,38 +143,38 @@ export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
           </Box>
         )}
 
-        {/* <Accordion defaultExpanded> */}
-        {/*   <AccordionSummary */}
-        {/*     expandIcon={<GridExpandMoreIcon />} */}
-        {/*     aria-controls='panel1-content' */}
-        {/*     id='panel1-header' */}
-        {/*   > */}
-        {/*     <Typography variant='body1'> */}
-        {/*       {order.details.length} productos */}
-        {/*     </Typography> */}
-        {/*   </AccordionSummary> */}
-        {/*   <AccordionDetails> */}
-        <Stack spacing={1} sx={{ px: 2, py: 0 }}>
-          {order.details.map((detail) => (
-            <Box key={detail.id} display='flex'>
-              <Typography variant='body1' width='10%'>
-                {detail.quantity}
-                {/* {index < order.details.length - 1 ? "," : "."} */}
-              </Typography>
-              <Box display='flex' flexDirection='column'>
-                <Typography variant='body1'>
-                  {detail.product.name}
-                  {detail.productOption && `: ${detail.productOption.name}`}
-                </Typography>
-                <Typography variant='subtitle2'>
-                  {detail.description}
-                </Typography>
-              </Box>
-            </Box>
-          ))}
-        </Stack>
-        {/*   </AccordionDetails> */}
-        {/* </Accordion> */}
+        <Accordion defaultExpanded>
+          <AccordionSummary
+            expandIcon={<GridExpandMoreIcon />}
+            aria-controls='panel1-content'
+            id='panel1-header'
+          >
+            <Typography variant='body1'>
+              {order.details.length} productos
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Stack spacing={1} sx={{}}>
+              {order.details.map((detail) => (
+                <Box key={detail.id} display='flex'>
+                  <Typography variant='body1' width='10%'>
+                    {detail.quantity}
+                    {/* {index < order.details.length - 1 ? "," : "."} */}
+                  </Typography>
+                  <Box display='flex' flexDirection='column'>
+                    <Typography variant='body1'>
+                      {detail.product.name}
+                      {detail.productOption && `: ${detail.productOption.name}`}
+                    </Typography>
+                    <Typography variant='subtitle2'>
+                      {detail.description}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
+            </Stack>
+          </AccordionDetails>
+        </Accordion>
         <CardContent>
           <Stack spacing={2}>
             {/* <Stack

@@ -64,9 +64,14 @@ interface Props {
   title: string;
   action?: React.ReactNode;
   breadcrumbEnd?: string;
+  showBreadcrumbs?: boolean;
 }
 
-export const TitlePage: FC<Props> = ({ title, action }) => {
+export const TitlePage: FC<Props> = ({
+  title,
+  action,
+  showBreadcrumbs = false
+}) => {
   const location = useLocation();
 
   const pathnames = location.pathname.split('/').filter((x) => x);
@@ -81,34 +86,36 @@ export const TitlePage: FC<Props> = ({ title, action }) => {
     >
       <Stack direction='row' alignItems='center' justifyContent='flex-start'>
         <Box>
-          <Typography variant='h3' fontWeight={500}>
+          <Typography variant='h5' fontWeight={500}>
             {title}
           </Typography>
-          <Breadcrumbs
-            separator={<CircleRounded sx={{ fontSize: 6, color: '#888' }} />}
-          >
-            {pathnames.map((value, index) => {
-              const last = index === pathnames.length - 1;
-              const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+          {showBreadcrumbs && (
+            <Breadcrumbs
+              separator={<CircleRounded sx={{ fontSize: 4, color: '#888' }} />}
+            >
+              {pathnames.map((value, index) => {
+                const last = index === pathnames.length - 1;
+                const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
-              if (breadcrumbNameMap[to]) {
-                return last ? (
-                  <Typography color='text.primary' key={to}>
-                    {breadcrumbNameMap[to]}
-                  </Typography>
-                ) : (
-                  <LinkRouter
-                    underline='hover'
-                    color='inherit'
-                    to={to}
-                    key={to}
-                  >
-                    {breadcrumbNameMap[to]}
-                  </LinkRouter>
-                );
-              }
-            })}
-          </Breadcrumbs>
+                if (breadcrumbNameMap[to]) {
+                  return last ? (
+                    <Typography color='text.primary' key={to}>
+                      {breadcrumbNameMap[to]}
+                    </Typography>
+                  ) : (
+                    <LinkRouter
+                      underline='hover'
+                      color='inherit'
+                      to={to}
+                      key={to}
+                    >
+                      {breadcrumbNameMap[to]}
+                    </LinkRouter>
+                  );
+                }
+              })}
+            </Breadcrumbs>
+          )}
         </Box>
       </Stack>
 
