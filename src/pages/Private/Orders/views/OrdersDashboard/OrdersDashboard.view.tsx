@@ -22,8 +22,11 @@ import { Order, OrderStatus, TypeOrder } from '../../../../../models';
 import { useNewOrderStore } from '../../store/newOrderStore';
 import { Label } from '../../../../../components/ui';
 import { TakeAwayOrders } from './components/TakeAwayOrders.component';
-import { useSelector } from 'react-redux';
-import { selectOrders } from '../../../../../redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectOrders,
+  setActiveOrder as setActiveOrderAction
+} from '../../../../../redux';
 import NiceModal from '@ebay/nice-modal-react';
 import { NewOrderModal } from '../../components/modals/NewOrderModal.component';
 import { OrderList } from './components/OrderList.component';
@@ -72,6 +75,7 @@ export const OrdersDashboard = () => {
 
   const { orders } = useSelector(selectOrders);
   const [activeOrder, setActiveOrder] = useState<Order | null>(null);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -175,11 +179,16 @@ export const OrdersDashboard = () => {
                       >
                         <OrderCard
                           order={order}
-                          onClick={() =>
-                            activeOrder?.id === order.id
-                              ? setActiveOrder(null)
-                              : setActiveOrder(order)
-                          }
+                          onClick={() => {
+                            if (activeOrder?.id === order.id) {
+                              setActiveOrder(null);
+                              dispatch(setActiveOrderAction(null));
+                              return;
+                            }
+
+                            setActiveOrder(order);
+                            dispatch(setActiveOrderAction(order));
+                          }}
                           selected={activeOrder?.id === order.id}
                         />
                       </Grid>

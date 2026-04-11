@@ -93,11 +93,16 @@ export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
 
   return (
     <>
-      <Card
+      <Box
         sx={{
           border: 1,
           borderColor: selected ? 'primary.main' : 'divider',
-          boxShadow: 'none'
+          boxShadow: 'none',
+          borderRadius: 1,
+          p: 1.5,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1
         }}
         onClick={handleClick}
       >
@@ -107,35 +112,45 @@ export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
           navigate(`/orders/list/edit/${order.id}`);
         }}
       > */}
-        <CardHeader
-          title={
-            <Box display='flex' alignItems='center' gap={1}>
-              {order.type === TypeOrder.TAKE_AWAY ? (
-                <>
-                  <TakeoutDiningOutlined fontSize='small' />
-                  {getTypeOrder(order.type)}
-                </>
-              ) : (
-                <>
-                  {<TableBarOutlined fontSize='small' />}
-                  {`Mesa ${order.table?.name}`}
-                </>
-              )}
-            </Box>
-          }
-          subheader={`${order.user.person.firstName} ${order.user.person.lastName} `}
-          action={
+        <Stack direction='row' spacing={1} alignItems='center'>
+          <LabelStatusOrder status={order.status} />
+          <LabelStatusPaid isPaid={order.isPaid} />
+        </Stack>
+        <Box display='flex' alignItems='center' gap={1}>
+          {order.type === TypeOrder.TAKE_AWAY ? (
             <>
-              <Stack direction='row' spacing={1} alignItems='center'>
-                <LabelStatusOrder status={order.status} simple />
-                {/* <IconButton {...bindTrigger(popupState)}> */}
-                {/*   <MoreVert /> */}
-                {/* </IconButton> */}
-              </Stack>
+              <TakeoutDiningOutlined fontSize='small' />
+              <Typography variant='h6'>{getTypeOrder(order.type)}</Typography>
             </>
-          }
-          // avatar={<TableRestaurant />}
-        />
+          ) : (
+            <>
+              {<TableBarOutlined fontSize='small' />}
+              <Typography variant='h6'>
+                {`Mesa ${order.table?.name}`}
+              </Typography>
+            </>
+          )}
+        </Box>
+
+        <Box display='flex' alignItems='center' color='text.secondary' gap={2}>
+          <Box display='flex' alignItems='center' gap={0.5}>
+            <AssignmentOutlined
+              fontSize='small'
+              sx={{ fontSize: 18, mr: 0.5 }}
+            />
+            <Typography>N° {order.num}</Typography>
+          </Box>
+          <Box display='flex' alignItems='center' gap={0.5}>
+            <TimerOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
+            <Typography fontSize='0.8rem'>{date}</Typography>
+          </Box>
+          <Box display='flex' alignItems='center' gap={0.5}>
+            <PeopleOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
+            <Typography fontSize='0.8rem' fontWeight='bold'>
+              {order.people}
+            </Typography>
+          </Box>
+        </Box>
         {order.notes && (
           <Box display='flex' flexDirection='column' px={2}>
             <Typography variant='subtitle1'>Notas</Typography>
@@ -144,18 +159,7 @@ export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
           </Box>
         )}
 
-        {/* <Accordion defaultExpanded> */}
-        {/*   <AccordionSummary */}
-        {/*     expandIcon={<GridExpandMoreIcon />} */}
-        {/*     aria-controls='panel1-content' */}
-        {/*     id='panel1-header' */}
-        {/*   > */}
-        {/*     <Typography variant='body1'> */}
-        {/*       {order.details.length} productos */}
-        {/*     </Typography> */}
-        {/*   </AccordionSummary> */}
-        {/*   <AccordionDetails> */}
-        <Stack spacing={1} sx={{ px: 2, py: 0 }}>
+        <Stack spacing={1} sx={{ px: 2, my: 1 }}>
           {order.details.map((detail) => (
             <Box key={detail.id} display='flex'>
               <Typography variant='body1' width='10%'>
@@ -176,59 +180,22 @@ export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
         </Stack>
         {/*   </AccordionDetails> */}
         {/* </Accordion> */}
-        <CardContent>
-          <Stack spacing={2}>
-            {/* <Stack
-            direction="row"
-            spacing={1}
-            alignItems="center"
-            sx={{
-              maxWidth: "auto", // Establecer el ancho máximo aquí
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
+        <Stack spacing={2}>
+          <Box
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
           >
-            {order.details.map((detail, index) => (
-              <Typography variant="body1" key={index}>
-                {detail.quantity} {detail.product.name}
-                {index < order.details.length - 1 ? "," : "."}
-              </Typography>
-            ))}
-          </Stack> */}
-            <Box display='flex' alignItems='center'>
-              <TimerOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
-              <Typography fontSize='0.8rem'>{date}</Typography>
-              <Divider orientation='vertical' flexItem sx={{ mx: 1 }} />
-              <PeopleOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
-              <Typography fontSize='0.8rem' fontWeight='bold'>
-                {order.people}
+            <Typography variant='body1'>{`${order.user.person.firstName} ${order.user.person.lastName} `}</Typography>
+            <Box display='flex' alignItems='center' gap={0.5}>
+              <Typography align='right' variant='h6'>
+                {formatMoney(order.total)}
               </Typography>
             </Box>
-            <Box
-              display='flex'
-              justifyContent='space-between'
-              alignItems='center'
-            >
-              <Box display='flex' alignItems='center' gap={0.5}>
-                <AssignmentOutlined
-                  fontSize='small'
-                  sx={{ fontSize: 18, mr: 0.5 }}
-                />
-                <Typography>N° {order.num}</Typography>
-              </Box>
-              <Box display='flex' alignItems='center' gap={0.5}>
-                <LabelStatusPaid isPaid={order.isPaid} />
-                <Divider orientation='vertical' flexItem />
-                <Typography align='right' variant='h6'>
-                  {formatMoney(order.total)}
-                </Typography>
-              </Box>
-            </Box>
-          </Stack>
-        </CardContent>
+          </Box>
+        </Stack>
         {/* </CardActionArea> */}
-      </Card>
+      </Box>
       <Popover
         {...bindPopover(popupState)}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}

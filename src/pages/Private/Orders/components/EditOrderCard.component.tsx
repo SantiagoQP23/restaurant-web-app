@@ -1,22 +1,6 @@
-import {
-  TimerOutlined,
-  People,
-  Receipt,
-  MoreVert,
-  Assignment,
-  TableRestaurant,
-  TakeoutDining,
-  TableBar,
-  EditOutlined,
-  Done,
-  TakeoutDiningOutlined,
-  TableBarOutlined,
-  AssignmentOutlined,
-  PeopleOutlined
-} from '@mui/icons-material';
+import { Done, DeleteOutline, MoreVert } from '@mui/icons-material';
 import {
   Card,
-  CardActionArea,
   CardHeader,
   Typography,
   Stack,
@@ -24,30 +8,32 @@ import {
   Divider,
   IconButton,
   CardContent,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Popover,
   MenuItem,
-  Alert
+  Grid,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select
 } from '@mui/material';
-import { format, formatDistance, formatRelative } from 'date-fns';
-import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { es } from 'date-fns/locale';
-import { GridExpandMoreIcon } from '@mui/x-data-grid';
+import { FC, useEffect, useMemo, useState } from 'react';
 import {
   bindTrigger,
   usePopupState,
   bindPopover
 } from 'material-ui-popup-state/hooks';
 import NiceModal from '@ebay/nice-modal-react';
+import { useSelector } from 'react-redux';
+import { format } from 'date-fns';
 import { Order, OrderStatus, TypeOrder } from '@/models';
+import { selectTables } from '@/redux/slices/tables/tables.slice';
 import { ModalCloseOrder } from './modals';
-import { getTypeOrder } from '../../Common/helpers/get-type-order.helper';
+import { statusModalDeleteOrder } from '../services/orders.service';
 import { LabelStatusOrder } from './LabelStatusOrder.component';
 import { LabelStatusPaid } from './LabelStatusPaid.component';
 import { formatMoney } from '../../Common/helpers/format-money.helper';
+import { OrderDetailCard } from '../views/EditOrder/components/OrderDetailCard.component';
+import { useUpdateOrder } from '../hooks';
 
 interface Props {
   order: Order;
@@ -59,25 +45,35 @@ export const EditOrderCard: FC<Props> = ({ order, onClick }) => {
     variant: 'popover',
     popupId: 'popoverOrder1'
   });
-  const navigate = useNavigate();
 
-  const date = formatDistance(new Date(order.createdAt), new Date(), {
-    locale: es
-  });
+  const { tables } = useSelector(selectTables);
+  const { mutate: updateOrder } = useUpdateOrder();
 
-  const handleEdit = () => {
-    popupState.close();
-    handleClick();
-    navigate(`/orders/list/edit/${order.id}`);
-  };
+  const [tableId, setTableId] = useState(order.table?.id || '');
+  const [people, setPeople] = useState(order.people || 0);
+  const [notes, setNotes] = useState(order.notes || '');
+  const [deliveryTime, setDeliveryTime] = useState(
+    format(new Date(order.deliveryTime), "yyyy-MM-dd'T'HH:mm")
+  );
+
+  useEffect(() => {
+    setTableId(order.table?.id || '');
+    setPeople(order.people || 0);
+    setNotes(order.notes || '');
+    setDeliveryTime(format(new Date(order.deliveryTime), "yyyy-MM-dd'T'HH:mm"));
+  }, [order]);
 
   const handleClick = () => {
     onClick && onClick();
   };
 
+  const paidBills = order.bills.filter((bill) => bill.isPaid).length;
+
+  const isDeleteableOrder =
+    order.status === OrderStatus.PENDING && paidBills === 0;
+
   const isCloseableOrder =
-    (order.status === OrderStatus.DELIVERED && order.isPaid) ||
-    order.status === OrderStatus.CANCELLED;
+    order.status === OrderStatus.DELIVERED && order.isPaid && !order.isClosed;
 
   const showModalCloseOrder = () => {
     NiceModal.show(ModalCloseOrder, {
@@ -91,6 +87,56 @@ export const EditOrderCard: FC<Props> = ({ order, onClick }) => {
     showModalCloseOrder();
   };
 
+  const handleDelete = () => {
+    popupState.close();
+    handleClick();
+    statusModalDeleteOrder.setSubject(true, order);
+  };
+
+  const canEdit = useMemo(
+    () => !order.isClosed && order.status !== OrderStatus.CANCELLED,
+    [order.isClosed, order.status]
+  );
+
+  const submitUpdate = (payload: {
+    tableId?: string;
+    people?: number;
+    notes?: string;
+    deliveryTime?: Date;
+  }) => {
+    if (!canEdit) return;
+
+    updateOrder({
+      id: order.id,
+      ...payload
+    });
+  };
+
+  const handleChangeTable = (value: string) => {
+    setTableId(value);
+    submitUpdate({ tableId: value || undefined });
+  };
+
+  const handlePeopleBlur = () => {
+    if (people === order.people) return;
+    submitUpdate({ people });
+  };
+
+  const handleNotesBlur = () => {
+    if (notes === (order.notes || '')) return;
+    submitUpdate({ notes });
+  };
+
+  const handleDeliveryBlur = () => {
+    const next = new Date(deliveryTime);
+    const current = new Date(order.deliveryTime);
+
+    if (Number.isNaN(next.getTime())) return;
+    if (next.getTime() === current.getTime()) return;
+
+    submitUpdate({ deliveryTime: next });
+  };
+
   return (
     <>
       <Card
@@ -100,134 +146,116 @@ export const EditOrderCard: FC<Props> = ({ order, onClick }) => {
           my: 1
         }}
       >
-        {/* <CardActionArea
-        onClick={() => {
-          onClick && onClick();
-          navigate(`/orders/list/edit/${order.id}`);
-        }}
-      > */}
         <CardHeader
-          title={
-            <Box display='flex' alignItems='center' gap={1}>
-              {order.type === TypeOrder.TAKE_AWAY ? (
-                <>
-                  <TakeoutDiningOutlined fontSize='small' />
-                  {getTypeOrder(order.type)}
-                </>
-              ) : (
-                <>
-                  {<TableBarOutlined fontSize='small' />}
-                  {`Mesa ${order.table?.name}`}
-                </>
-              )}
-            </Box>
-          }
-          subheader={`${order.user.person.firstName} ${order.user.person.lastName} `}
+          title={<Typography variant='h5'>{`Pedido #${order.num}`}</Typography>}
+          subheader={format(new Date(order.createdAt), 'dd/MM/yyyy HH:mm')}
           action={
-            <>
-              <Stack direction='row' spacing={1} alignItems='center'>
-                <LabelStatusOrder status={order.status} simple />
-                <IconButton {...bindTrigger(popupState)}>
-                  <MoreVert />
-                </IconButton>
-              </Stack>
-            </>
-          }
-          // avatar={<TableRestaurant />}
-        />
-        {order.notes && (
-          <Box display='flex' flexDirection='column' px={2}>
-            <Typography variant='subtitle1'>Notas</Typography>
-
-            <Typography variant='body1'>{order.notes}</Typography>
-          </Box>
-        )}
-
-        <Accordion defaultExpanded>
-          <AccordionSummary
-            expandIcon={<GridExpandMoreIcon />}
-            aria-controls='panel1-content'
-            id='panel1-header'
-          >
-            <Typography variant='body1'>
-              {order.details.length} productos
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Stack spacing={1} sx={{}}>
-              {order.details.map((detail) => (
-                <Box key={detail.id} display='flex'>
-                  <Typography variant='body1' width='10%'>
-                    {detail.quantity}
-                    {/* {index < order.details.length - 1 ? "," : "."} */}
-                  </Typography>
-                  <Box display='flex' flexDirection='column'>
-                    <Typography variant='body1'>
-                      {detail.product.name}
-                      {detail.productOption && `: ${detail.productOption.name}`}
-                    </Typography>
-                    <Typography variant='subtitle2'>
-                      {detail.description}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
+            <Stack direction='row' spacing={1} alignItems='center'>
+              <LabelStatusOrder status={order.status} simple />
+              <IconButton {...bindTrigger(popupState)}>
+                <MoreVert />
+              </IconButton>
             </Stack>
-          </AccordionDetails>
-        </Accordion>
+          }
+        />
+
         <CardContent>
           <Stack spacing={2}>
-            {/* <Stack
-            direction="row"
-            spacing={1}
-            alignItems="center"
-            sx={{
-              maxWidth: "auto", // Establecer el ancho máximo aquí
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {order.details.map((detail, index) => (
-              <Typography variant="body1" key={index}>
-                {detail.quantity} {detail.product.name}
-                {index < order.details.length - 1 ? "," : "."}
-              </Typography>
-            ))}
-          </Stack> */}
-            <Box display='flex' alignItems='center'>
-              <TimerOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
-              <Typography fontSize='0.8rem'>{date}</Typography>
-              <Divider orientation='vertical' flexItem sx={{ mx: 1 }} />
-              <PeopleOutlined fontSize='small' sx={{ fontSize: 18, mr: 0.5 }} />
-              <Typography fontSize='0.8rem' fontWeight='bold'>
-                {order.people}
+            <Box display='flex' gap={1} alignItems='center'>
+              <LabelStatusPaid isPaid={order.isPaid} />
+              <Divider orientation='vertical' flexItem />
+              <Typography align='right' variant='h6'>
+                {formatMoney(order.total)}
               </Typography>
             </Box>
-            <Box
-              display='flex'
-              justifyContent='space-between'
-              alignItems='center'
-            >
-              <Box display='flex' alignItems='center' gap={0.5}>
-                <AssignmentOutlined
-                  fontSize='small'
-                  sx={{ fontSize: 18, mr: 0.5 }}
+
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label='Tipo de pedido'
+                  value={
+                    order.type === TypeOrder.IN_PLACE
+                      ? 'Para servir'
+                      : 'Para llevar'
+                  }
+                  disabled
                 />
-                <Typography>N° {order.num}</Typography>
-              </Box>
-              <Box display='flex' alignItems='center' gap={0.5}>
-                <LabelStatusPaid isPaid={order.isPaid} />
-                <Divider orientation='vertical' flexItem />
-                <Typography align='right' variant='h6'>
-                  {formatMoney(order.total)}
-                </Typography>
-              </Box>
-            </Box>
+              </Grid>
+
+              {order.type === TypeOrder.IN_PLACE && (
+                <Grid item xs={12}>
+                  <FormControl fullWidth disabled={!canEdit}>
+                    <InputLabel id='edit-order-card-table-id'>Mesa</InputLabel>
+                    <Select
+                      labelId='edit-order-card-table-id'
+                      label='Mesa'
+                      value={tableId}
+                      onChange={(e) => handleChangeTable(e.target.value)}
+                    >
+                      <MenuItem value=''>Ninguna</MenuItem>
+                      {tables.map((table) => (
+                        <MenuItem key={table.id} value={table.id}>
+                          Mesa {table.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              )}
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label='Hora de entrega'
+                  type='datetime-local'
+                  value={deliveryTime}
+                  onChange={(e) => setDeliveryTime(e.target.value)}
+                  onBlur={handleDeliveryBlur}
+                  disabled={!canEdit}
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  fullWidth
+                  label='Personas'
+                  type='number'
+                  value={people}
+                  onChange={(e) => setPeople(Number(e.target.value))}
+                  onBlur={handlePeopleBlur}
+                  disabled={!canEdit}
+                  inputProps={{ min: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  minRows={3}
+                  label='Notas'
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  onBlur={handleNotesBlur}
+                  disabled={!canEdit}
+                />
+              </Grid>
+            </Grid>
+
+            <Divider />
+
+            <Stack spacing={1}>
+              <Typography variant='subtitle1'>Productos</Typography>
+              {order.details.map((detail) => (
+                <OrderDetailCard key={detail.id} detail={detail} />
+              ))}
+            </Stack>
           </Stack>
         </CardContent>
-        {/* </CardActionArea> */}
       </Card>
+
       <Popover
         {...bindPopover(popupState)}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
@@ -241,13 +269,17 @@ export const EditOrderCard: FC<Props> = ({ order, onClick }) => {
           }
         }}
       >
-        <MenuItem onClick={handleEdit}>
-          <EditOutlined fontSize='small' sx={{ mr: 2 }} />
-          Editar
-        </MenuItem>
         <MenuItem onClick={handleClose} disabled={!isCloseableOrder}>
           <Done fontSize='small' sx={{ mr: 2 }} />
           Cerrar
+        </MenuItem>
+        <MenuItem
+          onClick={handleDelete}
+          disabled={!isDeleteableOrder}
+          sx={{ color: 'error.main' }}
+        >
+          <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
+          Eliminar
         </MenuItem>
       </Popover>
     </>
