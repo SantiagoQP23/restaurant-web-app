@@ -181,6 +181,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                         margin='dense'
                         label='Nombre del producto'
                         type='text'
+                        size='small'
                         fullWidth
                         {...register('name', {
                           required: 'Este campo es requerido',
