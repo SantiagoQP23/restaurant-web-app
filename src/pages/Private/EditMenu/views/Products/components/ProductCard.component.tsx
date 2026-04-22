@@ -45,7 +45,7 @@ interface Props {
   producto: IProduct;
 }
 
-export const Product: FC<Props> = ({ producto }) => {
+export const ProductCard: FC<Props> = ({ producto }) => {
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -137,7 +137,18 @@ export const Product: FC<Props> = ({ producto }) => {
               </IconButton>
             </Box>
 
-            <Typography variant='h6'>{producto.name}</Typography>
+            <Typography
+              variant='h6'
+              onClick={navitateToEditProduct}
+              sx={{
+                cursor: 'pointer',
+                '&:hover': {
+                  textDecoration: 'underline'
+                }
+              }}
+            >
+              {producto.name}
+            </Typography>
             <Typography variant='body1'>
               {formatMoney(producto.price)}
             </Typography>
@@ -148,9 +159,9 @@ export const Product: FC<Props> = ({ producto }) => {
             <Typography fontSize='0.8rem' color='text.secondary'>
               {producto.productionArea.name}
             </Typography>
-            <Typography fontSize='0.8rem' color='text.secondary'>
-              {producto.quantity} disponibles
-            </Typography>
+            {/* <Typography fontSize='0.8rem' color='text.secondary'> */}
+            {/*   {producto.quantity} disponibles */}
+            {/* </Typography> */}
           </Stack>
         </CardContent>
       </Card>

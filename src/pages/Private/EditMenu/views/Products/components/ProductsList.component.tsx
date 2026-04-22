@@ -19,7 +19,7 @@ import {
 import { SearchOutlined, ClearOutlined } from '@mui/icons-material';
 
 import { IProduct } from '../../../../../../models';
-import { Product } from './Product.component';
+import { ProductCard } from './ProductCard.component';
 
 import { selectMenu, setActiveCategory } from '../../../../../../redux';
 
@@ -161,7 +161,7 @@ export const ProductsList: FC<Props> = () => {
           {displayedProducts.length > 0 &&
             displayedProducts.map((producto) => (
               <Grid key={producto.id!} item xs={12} sm={6} lg={3}>
-                <Product producto={producto} />
+                <ProductCard producto={producto} />
               </Grid>
             ))}
         </Grid>
