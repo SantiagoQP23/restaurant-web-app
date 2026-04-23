@@ -1,12 +1,16 @@
 import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 import {
+  Box,
   Button,
   CardContent,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogTitle,
+  FormControlLabel,
   Grid,
   InputAdornment,
+  InputLabel,
   TextField
 } from '@mui/material';
 import { IProduct } from '../../../../../../models';
@@ -30,14 +34,21 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
       handleSubmit,
       formState: { errors, isDirty },
       register,
-      reset
+      reset,
+      watch
     } = useForm<CreateProductOptionDto>({
       defaultValues: {
         name: '',
         productId: product.id,
-        price: product.price
+        price: product.price,
+        cost: 0,
+        trackStock: false,
+        quantity: 0,
+        isDefault: false
       }
     });
+
+    const manageStock = watch('trackStock');
 
     const onSubmit = (data: CreateProductOptionDto) => {
       mutateAsync(data).then(() => {
@@ -64,9 +75,10 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
             >
               <Grid container spacing={2}>
                 <Grid item xs={12}>
+                  <InputLabel>Nombre de la variante</InputLabel>
                   <TextField
                     autoFocus
-                    label='Nombre del producto'
+                    size='small'
                     type='text'
                     fullWidth
                     {...register('name', {
@@ -77,12 +89,14 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
                       }
                     })}
                     helperText={errors.name?.message}
+                    error={!!errors.name}
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
+                  <InputLabel>Precio</InputLabel>
                   <TextField
-                    label='Precio'
+                    size='small'
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position='start'>
@@ -107,6 +121,75 @@ export const ModalCreateProductOption = NiceModal.create<Props>(
                     error={!!errors.price}
                   />
                 </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <InputLabel>Costo</InputLabel>
+                  <TextField
+                    size='small'
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <AttachMoney />
+                        </InputAdornment>
+                      )
+                    }}
+                    fullWidth
+                    type='number'
+                    inputProps={{
+                      step: 0.05
+                    }}
+                    {...register('cost', {
+                      required: 'Este campo es requerido',
+                      min: {
+                        value: 0,
+                        message: 'El valor debe ser mayor o igual a $0'
+                      },
+                      valueAsNumber: true
+                    })}
+                    helperText={errors.cost?.message}
+                    error={!!errors.cost}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Box
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='flex-start'
+                    minHeight='44px'
+                  >
+                    <FormControlLabel
+                      control={<Checkbox {...register('trackStock')} />}
+                      label='Manejar inventario'
+                    />
+                  </Box>
+                </Grid>
+
+                {manageStock && (
+                  <Grid item xs={12} md={6}>
+                    <InputLabel>Stock inicial</InputLabel>
+                    <TextField
+                      size='small'
+                      fullWidth
+                      type='number'
+                      inputProps={{
+                        step: 1,
+                        min: 0
+                      }}
+                      {...register('quantity', {
+                        required:
+                          'Este campo es requerido cuando se maneja inventario',
+                        min: {
+                          value: 0,
+                          message: 'El valor debe ser mayor o igual a 0'
+                        },
+                        valueAsNumber: true
+                      })}
+                      helperText={errors.quantity?.message}
+                      error={!!errors.quantity}
+                    />
+                  </Grid>
+                )}
               </Grid>
             </CardContent>
 

@@ -551,7 +551,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                   </Button>
                 }
               />
-              <List>
+              <Stack spacing={1} sx={{ p: 2 }}>
                 {product.options?.map((option) => (
                   <ProductOptionItem
                     key={option.id}
@@ -559,7 +559,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
                     productId={selectedProduct.id}
                   />
                 ))}
-              </List>
+              </Stack>
             </Card>
           </Grid>
 

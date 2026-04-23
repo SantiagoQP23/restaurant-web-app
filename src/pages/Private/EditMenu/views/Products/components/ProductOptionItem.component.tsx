@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import { ProductOption } from '../../../../../../models';
 import {
+  Box,
   IconButton,
   ListItem,
   ListItemText,
   MenuItem,
-  Popover
+  Popover,
+  Typography
 } from '@mui/material';
 import {
   DeleteOutlined,
@@ -43,24 +45,17 @@ export const ProductOptionItem: FC<Props> = ({ productOption, productId }) => {
 
   return (
     <>
-      <ListItem
-        secondaryAction={
-          <IconButton {...bindTrigger(popupState)}>
-            <MoreVert />
-          </IconButton>
-        }
-      >
-        <ListItemText
-          primary={`${productOption.name} - ${formatMoney(
-            productOption.price
-          )}`}
-          primaryTypographyProps={{
-            color: !productOption.isAvailable
-              ? 'text.secondary'
-              : 'text.primary'
-          }}
-        />
-      </ListItem>
+      <Box display='flex' alignItems='center' justifyContent='space-between'>
+        <Box display='flex' flexDirection='column'>
+          <Typography variant='subtitle2'>{productOption.name}</Typography>
+          <Typography variant='caption' color='text.secondary'>
+            {formatMoney(productOption.price)}
+          </Typography>
+        </Box>
+        <IconButton {...bindTrigger(popupState)}>
+          <MoreVert />
+        </IconButton>
+      </Box>
 
       <Popover
         {...bindPopover(popupState)}

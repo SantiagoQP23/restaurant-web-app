@@ -1,15 +1,16 @@
 import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 import {
+  Box,
   Button,
   CardContent,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogTitle,
+  FormControlLabel,
   Grid,
   InputAdornment,
-  List,
-  ListItem,
-  ListItemText,
+  InputLabel,
   Switch,
   TextField
 } from '@mui/material';
@@ -41,13 +42,19 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
       handleSubmit,
       formState: { errors, isDirty },
       register,
-      reset
+      reset,
+      watch
     } = useForm<UpdateProductOptionDto>({
       defaultValues: {
         ...productOption,
+        cost: productOption.cost ?? 0,
+        trackStock: productOption.manageStock ?? false,
+        quantity: productOption.quantity ?? 0,
         productId: productId
       }
     });
+
+    const manageStock = watch('trackStock');
 
     const onSubmit = (data: UpdateProductOptionDto) => {
       mutateAsync({ id: productOption.id, productionArea: data }).then(() => {
@@ -72,9 +79,10 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
             >
               <Grid container spacing={2}>
                 <Grid item xs={12}>
+                  <InputLabel>Nombre de la variante</InputLabel>
                   <TextField
                     autoFocus
-                    label='Nombre del producto'
+                    size='small'
                     type='text'
                     fullWidth
                     {...register('name', {
@@ -85,12 +93,14 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
                       }
                     })}
                     helperText={errors.name?.message}
+                    error={!!errors.name}
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
+                  <InputLabel>Precio</InputLabel>
                   <TextField
-                    label='Precio'
+                    size='small'
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position='start'>
@@ -116,26 +126,92 @@ export const ModalUpdateProductOption = NiceModal.create<Props>(
                   />
                 </Grid>
 
+                <Grid item xs={12} md={6}>
+                  <InputLabel>Costo</InputLabel>
+                  <TextField
+                    size='small'
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <AttachMoney />
+                        </InputAdornment>
+                      )
+                    }}
+                    fullWidth
+                    type='number'
+                    inputProps={{
+                      step: 0.05
+                    }}
+                    {...register('cost', {
+                      required: 'Este campo es requerido',
+                      min: {
+                        value: 0,
+                        message: 'El valor debe ser mayor o igual a $0'
+                      },
+                      valueAsNumber: true
+                    })}
+                    helperText={errors.cost?.message}
+                    error={!!errors.cost}
+                  />
+                </Grid>
+
                 <Grid item xs={12}>
-                  <List>
-                    <ListItem
-                      secondaryAction={
-                        <Controller
-                          name='isAvailable'
-                          control={control}
-                          render={({ field: { onChange, value } }) => (
-                            <Switch
-                              checked={value}
-                              onChange={onChange}
-                              color='success'
-                            />
-                          )}
-                        />
-                      }
-                    >
-                      <ListItemText primary='Disponible' />
-                    </ListItem>
-                  </List>
+                  <Box
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='flex-start'
+                    minHeight='44px'
+                  >
+                    <FormControlLabel
+                      control={<Checkbox {...register('trackStock')} />}
+                      label='Manejar inventario'
+                    />
+                  </Box>
+                </Grid>
+
+                {manageStock && (
+                  <Grid item xs={12} md={6}>
+                    <InputLabel>Stock inicial</InputLabel>
+                    <TextField
+                      size='small'
+                      fullWidth
+                      type='number'
+                      inputProps={{
+                        step: 1,
+                        min: 0
+                      }}
+                      {...register('quantity', {
+                        required:
+                          'Este campo es requerido cuando se maneja inventario',
+                        min: {
+                          value: 0,
+                          message: 'El valor debe ser mayor o igual a 0'
+                        },
+                        valueAsNumber: true
+                      })}
+                      helperText={errors.quantity?.message}
+                      error={!!errors.quantity}
+                    />
+                  </Grid>
+                )}
+
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    label='Disponible'
+                    control={
+                      <Controller
+                        name='isAvailable'
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <Switch
+                            checked={value}
+                            onChange={onChange}
+                            color='success'
+                          />
+                        )}
+                      />
+                    }
+                  />
                 </Grid>
               </Grid>
             </CardContent>
