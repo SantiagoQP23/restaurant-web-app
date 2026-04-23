@@ -9,6 +9,7 @@ import {
   createProduct,
   getProduct,
   removeTagFromProduct,
+  setDefaultVariant,
   updateProduct,
   updateProductImage
 } from '../services/menu.service';
@@ -80,6 +81,36 @@ export const useUpdateProduct = () => {
     },
     onError: () => {
       enqueueSnackbar('No se pudo actualizar', { variant: 'error' });
+    }
+  });
+};
+
+interface SetDefaultVariantVars {
+  productId: string;
+  variantId: number;
+}
+
+export const useSetDefaultVariant = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
+
+  return useMutation<IProduct, unknown, SetDefaultVariantVars>({
+    mutationFn: ({ productId, variantId }) =>
+      setDefaultVariant(productId, variantId),
+    onSuccess: (data: IProduct, variables) => {
+      enqueueSnackbar('Variante predeterminada actualizada', {
+        variant: 'success'
+      });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.products.detail(variables.productId)
+      });
+      queryClient.invalidateQueries({ queryKey: queryKeys.menu.all });
+      queryClient.setQueryData(queryKeys.products.detail(variables.productId), data);
+    },
+    onError: () => {
+      enqueueSnackbar('No se pudo actualizar la variante predeterminada', {
+        variant: 'error'
+      });
     }
   });
 };

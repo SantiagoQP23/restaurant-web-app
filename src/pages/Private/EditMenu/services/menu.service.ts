@@ -116,6 +116,18 @@ export const updateProduct = async (
   return resp.data;
 };
 
+export const setDefaultVariant = async (
+  productId: string,
+  variantId: number
+): Promise<IProduct> => {
+  const resp = await restauranteApi.patch<IProduct>(
+    `/products/${productId}/default-variant`,
+    { variantId }
+  );
+
+  return resp.data;
+};
+
 export const getProduct = async (id: string): Promise<IProduct> => {
   const resp = await restauranteApi.get<IProduct>(`/products/${id}`);
 

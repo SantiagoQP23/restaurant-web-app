@@ -90,10 +90,10 @@ export interface ProductOption {
   price: number;
   cost?: number;
   manageStock?: boolean;
-  defaultStock?: number;
   quantity: number;
   isActive: boolean;
   isAvailable: boolean;
+  isDefault: boolean;
 }
 
 export interface ICreateProduct {
