@@ -34,11 +34,11 @@ export const EditProduct = () => {
 
       {product && <FormProduct product={product} />}
 
-      <Grid container spacing={2} sx={{ mt: 1, mb: 6 }}>
-        <Grid item xs={12} md={6}>
-          <ProductTags product={product} />
-        </Grid>
-      </Grid>
+      {/* <Grid container spacing={2} sx={{ mt: 1, mb: 6 }}> */}
+      {/*   <Grid item xs={12} md={6}> */}
+      {/*     <ProductTags product={product} /> */}
+      {/*   </Grid> */}
+      {/* </Grid> */}
     </>
   );
 };

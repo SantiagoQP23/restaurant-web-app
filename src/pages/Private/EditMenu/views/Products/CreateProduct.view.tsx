@@ -2,11 +2,14 @@ import { useEffect } from 'react';
 import { TitlePage } from '../../../components';
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
+  Checkbox,
   Container,
   FormControl,
+  FormControlLabel,
   FormHelperText,
   Grid,
   InputAdornment,
@@ -14,19 +17,30 @@ import {
   ListSubheader,
   MenuItem,
   Select,
-  TextField
+  Stack,
+  Switch,
+  TextField,
+  Typography
 } from '@mui/material';
 import { CreateProductDto } from '../../dto';
-import { Controller, useForm } from 'react-hook-form';
+import {
+  Controller,
+  useForm,
+  useFieldArray,
+  FormProvider
+} from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, selectMenu } from '../../../../../redux';
 import { IProduct, ProductStatus } from '../../../../../models';
-import { AttachMoney } from '@mui/icons-material';
+import { AttachMoney, Add } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { useCreateProduct } from '../../hooks/useProducts';
 import { useNavigate } from 'react-router-dom';
 import { useEditMenuStore } from '../../hooks/useEditMenuStore';
 import { useProductionAreasStore } from '../../../Common/store/production-areas-store';
+import { VariantForm } from './components/VariantForm.component';
+import NiceModal from '@ebay/nice-modal-react';
+import { ModalSelectDefaultVariant } from './components/ModalSelectDefaultVariant.component';
 
 export interface ProductForm {
   name: string;
@@ -37,6 +51,16 @@ export interface ProductForm {
   productionAreaId?: number | '';
   unitCost?: number;
   quantity?: number;
+  trackStock?: boolean;
+  hasVariants?: boolean;
+  defaultVariantIndex?: number;
+  productOptions?: Array<{
+    name: string;
+    price: number;
+    cost: number;
+    trackStock: boolean;
+    defaultStock?: number;
+  }>;
 }
 
 const initialForm: ProductForm = {
@@ -47,7 +71,10 @@ const initialForm: ProductForm = {
   categoryId: '',
   productionAreaId: '',
   unitCost: 0,
-  quantity: 0
+  quantity: 0,
+  trackStock: false,
+  hasVariants: false,
+  productOptions: []
 };
 
 export const CreateProduct = () => {
@@ -60,15 +87,43 @@ export const CreateProduct = () => {
 
   const { findCategoryById, addProductToCategory } = useEditMenuStore();
 
+  const methods = useForm<ProductForm>({
+    defaultValues: initialForm
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-    reset
-  } = useForm<ProductForm>({
-    defaultValues: initialForm
+    watch,
+    reset,
+    setValue
+  } = methods;
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'productOptions'
   });
+
+  const hasVariants = watch('hasVariants');
+
+  // Initialize variants when hasVariants is toggled
+  useEffect(() => {
+    if (hasVariants && fields.length === 0) {
+      // Add 2 empty variant forms when toggling on
+      append({ name: '', price: 0, cost: 0, trackStock: false });
+      append({ name: '', price: 0, cost: 0, trackStock: false });
+    } else if (!hasVariants) {
+      // Clear variants when toggling off
+      setValue('productOptions', []);
+    }
+  }, [hasVariants, append, remove, setValue, fields.length]);
+
+  const onRemoveVariant = (index: number) => {
+    if (fields.length <= 2) return; // Prevent removing if there are 2 or less variants
+    remove(index);
+  };
 
   const updateCategoryProducts = (product: IProduct) => {
     const category = findCategoryById(product.category.id);
@@ -78,18 +133,49 @@ export const CreateProduct = () => {
     addProductToCategory(product, category);
   };
 
-  const onSubmit = (data: ProductForm) => {
-    console.log(data);
+  const submitProduct = (data: ProductForm) => {
     const productData: CreateProductDto = {
       ...data,
       productionAreaId:
         data.productionAreaId === '' ? undefined : data.productionAreaId
     };
+
     mutateAsync(productData).then((product) => {
       dispatch(addProduct(product));
       updateCategoryProducts(product);
       navigateToEditProduct(product.id);
     });
+  };
+
+  const onSubmit = (data: ProductForm) => {
+    // If product has variants, show modal to select default variant
+    console.log('Form data on submit:', data);
+    if (
+      data.hasVariants &&
+      data.productOptions &&
+      data.productOptions.length > 0
+    ) {
+      NiceModal.show(ModalSelectDefaultVariant, {
+        variants: data.productOptions,
+        onConfirm: (selectedIndex: number) => {
+          // Add the default variant index to the data
+          const productOptions = data.productOptions?.map((option, index) => ({
+            ...option,
+            isDefault: index === selectedIndex
+          }));
+
+          const updatedData = {
+            ...data,
+            productOptions
+          };
+
+          submitProduct(updatedData);
+        }
+      });
+    } else {
+      // No variants, proceed directly
+      submitProduct(data);
+    }
   };
 
   const navigateToEditProduct = (productId: string) => {
@@ -106,290 +192,347 @@ export const CreateProduct = () => {
 
   return (
     <>
-      <Container>
-        <TitlePage title='Crear producto' />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardHeader title='Información del producto' />
-                <CardContent>
-                  <Grid item xs={12}>
-                    <Grid container spacing={2}>
+      <Container maxWidth='sm' sx={{ py: 4 }}>
+        <Stack spacing={2}>
+          {/* <TitlePage title='Crear producto' /> */}
+          <Typography variant='h4' component='h1' gutterBottom fontWeight={500}>
+            Crear producto
+          </Typography>
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Card
+                    sx={{
+                      border: 1,
+                      borderColor: 'divider',
+                      boxShadow: 'none'
+                    }}
+                  >
+                    <CardHeader title='Información del producto' />
+                    <CardContent>
                       <Grid item xs={12}>
-                        <TextField
-                          autoFocus
-                          label='Nombre del producto'
-                          type='text'
-                          fullWidth
-                          {...register('name', {
-                            required: 'Este campo es requerido',
-                            minLength: {
-                              value: 2,
-                              message: 'Minimo 2 caracteres'
-                            }
-                          })}
-                          helperText={errors.name?.message}
-                          error={!!errors.name}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          label='Descripcion del producto'
-                          multiline
-                          rows={4}
-                          fullWidth
-                          {...register('description', {
-                            minLength: {
-                              value: 2,
-                              message: 'Minimo 2 caracteres'
-                            }
-                          })}
-                          helperText={errors.description?.message}
-                          error={!!errors.description}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Controller
-                          name='categoryId'
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <>
-                              <FormControl
-                                fullWidth
-                                {...register('categoryId', {
-                                  required: 'Este campo es requerido'
-                                })}
-                                error={!!errors.categoryId}
-                              >
-                                <InputLabel htmlFor='grouped-select'>
-                                  Categoría
-                                </InputLabel>
-                                <Select
-                                  id='grouped-select'
-                                  label='Categoría'
-                                  margin='dense'
-                                  fullWidth
-                                  value={value}
-                                  onChange={onChange}
-                                  onBlur={onBlur}
-                                >
-                                  {sections.map((section) => [
-                                    <ListSubheader
-                                      key={section.id}
-                                      sx={{
-                                        fontWeight: 'bold'
-                                      }}
+                        <Grid container spacing={2}>
+                          <Grid item xs={12}>
+                            <InputLabel>Nombre</InputLabel>
+                            <TextField
+                              autoFocus
+                              type='text'
+                              fullWidth
+                              size='small'
+                              {...register('name', {
+                                required: 'Este campo es requerido',
+                                minLength: {
+                                  value: 2,
+                                  message: 'Minimo 2 caracteres'
+                                }
+                              })}
+                              helperText={errors.name?.message}
+                              error={!!errors.name}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <InputLabel>Descripcion</InputLabel>
+                            <TextField
+                              multiline
+                              rows={4}
+                              fullWidth
+                              {...register('description', {
+                                minLength: {
+                                  value: 2,
+                                  message: 'Minimo 2 caracteres'
+                                }
+                              })}
+                              helperText={errors.description?.message}
+                              error={!!errors.description}
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                            <Controller
+                              name='categoryId'
+                              control={control}
+                              render={({
+                                field: { onChange, onBlur, value }
+                              }) => (
+                                <>
+                                  <FormControl
+                                    fullWidth
+                                    {...register('categoryId', {
+                                      required: 'Este campo es requerido'
+                                    })}
+                                    error={!!errors.categoryId}
+                                  >
+                                    <InputLabel htmlFor='grouped-select'>
+                                      Categoría
+                                    </InputLabel>
+                                    <Select
+                                      id='grouped-select'
+                                      label='Categoría'
+                                      margin='dense'
+                                      fullWidth
+                                      value={value}
+                                      onChange={onChange}
+                                      onBlur={onBlur}
                                     >
-                                      {section.name}
-                                    </ListSubheader>,
+                                      {sections.map((section) => [
+                                        <ListSubheader
+                                          key={section.id}
+                                          sx={{
+                                            fontWeight: 'bold'
+                                          }}
+                                        >
+                                          {section.name}
+                                        </ListSubheader>,
 
-                                    ...section.categories.map((category) => (
-                                      <MenuItem
-                                        key={category.id}
-                                        value={category.id}
-                                        sx={{ pl: 3 }}
-                                      >
-                                        {category.name}
-                                      </MenuItem>
-                                    ))
-                                  ])}
-                                </Select>
-                                {errors.categoryId && (
-                                  <FormHelperText>
-                                    {errors.categoryId?.message}
-                                  </FormHelperText>
-                                )}
-                              </FormControl>
-                            </>
-                          )}
-                        />
+                                        ...section.categories.map(
+                                          (category) => (
+                                            <MenuItem
+                                              key={category.id}
+                                              value={category.id}
+                                              sx={{ pl: 3 }}
+                                            >
+                                              {category.name}
+                                            </MenuItem>
+                                          )
+                                        )
+                                      ])}
+                                    </Select>
+                                    {errors.categoryId && (
+                                      <FormHelperText>
+                                        {errors.categoryId?.message}
+                                      </FormHelperText>
+                                    )}
+                                  </FormControl>
+                                </>
+                              )}
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                            <Controller
+                              name='productionAreaId'
+                              control={control}
+                              render={({
+                                field: { onChange, onBlur, value }
+                              }) => (
+                                <>
+                                  <FormControl
+                                    fullWidth
+                                    {...register('productionAreaId', {
+                                      required: 'Este campo es requerido'
+                                    })}
+                                    error={!!errors.productionAreaId}
+                                  >
+                                    <InputLabel id='select-area'>
+                                      Área de producción
+                                    </InputLabel>
+                                    <Select
+                                      labelId='select-area'
+                                      label='Área de producción'
+                                      margin='dense'
+                                      // disabled
+                                      value={value}
+                                      onChange={onChange}
+                                      onBlur={onBlur}
+                                    >
+                                      {productionAreas.map((area) => (
+                                        <MenuItem key={area.id} value={area.id}>
+                                          {area.name}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                    {errors.productionAreaId && (
+                                      <FormHelperText>
+                                        {errors.productionAreaId?.message}
+                                      </FormHelperText>
+                                    )}
+                                  </FormControl>
+                                </>
+                              )}
+                            />
+                          </Grid>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Controller
-                          name='productionAreaId'
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <>
-                              <FormControl
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Box
+                    display='flex'
+                    justifyContent='center'
+                    alignItems='center'
+                    mb={2}
+                  >
+                    <FormControlLabel
+                      control={<Switch />}
+                      label='El producto tiene variantes'
+                      {...register('hasVariants')}
+                    />
+                  </Box>
+
+                  {/* Conditional: Show Variants or Price Card */}
+                  {hasVariants ? (
+                    <Stack spacing={2}>
+                      {/* Variants List */}
+                      {fields.map((field, index) => (
+                        <VariantForm
+                          key={field.id}
+                          index={index}
+                          onRemove={onRemoveVariant}
+                        />
+                      ))}
+
+                      {/* Add Variant Button */}
+                      <Button
+                        variant='outlined'
+                        startIcon={<Add />}
+                        fullWidth
+                        onClick={() =>
+                          append({
+                            name: '',
+                            price: 0,
+                            cost: 0,
+                            trackStock: false
+                          })
+                        }
+                      >
+                        Agregar variante
+                      </Button>
+                    </Stack>
+                  ) : (
+                    <Card
+                      sx={{
+                        mb: 2,
+                        border: 1,
+                        borderColor: 'divider',
+                        boxShadow: 'none'
+                      }}
+                    >
+                      <CardHeader title='Precios' />
+                      <CardContent>
+                        <Grid container spacing={2}>
+                          <Grid item xs={12} md={6}>
+                            <InputLabel>Precio</InputLabel>
+                            <TextField
+                              size='small'
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position='start'>
+                                    <AttachMoney />
+                                  </InputAdornment>
+                                )
+                              }}
+                              fullWidth
+                              type='number'
+                              inputProps={{
+                                step: 0.05
+                              }}
+                              {...register('price', {
+                                required: 'Este campo es requerido',
+                                min: {
+                                  value: 0.25,
+                                  message: 'El valor debe ser mayor a $0.25'
+                                },
+                                valueAsNumber: true
+                              })}
+                              helperText={errors.price?.message}
+                              error={!!errors.price}
+                            />
+                          </Grid>
+                          <Grid item xs={12} md={6}>
+                            <InputLabel>Costo</InputLabel>
+                            <TextField
+                              size='small'
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position='start'>
+                                    <AttachMoney />
+                                  </InputAdornment>
+                                )
+                              }}
+                              fullWidth
+                              type='number'
+                              inputProps={{
+                                step: 0.05
+                              }}
+                              {...register('unitCost', {
+                                min: {
+                                  value: 0,
+                                  message:
+                                    'El valor debe ser mayor o igual a $0'
+                                },
+                                valueAsNumber: true
+                              })}
+                              helperText={errors.unitCost?.message}
+                              error={!!errors.unitCost}
+                            />
+                          </Grid>
+                          <Grid item xs={12} md={6}>
+                            <Box
+                              display='flex'
+                              alignItems='center'
+                              justifyContent='center'
+                              height='100%'
+                            >
+                              <FormControlLabel
+                                control={<Checkbox />}
+                                {...register('trackStock')}
+                                label='Manejar inventario'
+                              />
+                            </Box>
+                          </Grid>
+
+                          {watch('trackStock') && (
+                            <Grid item xs={12} md={6}>
+                              <InputLabel>Stock inicial</InputLabel>
+                              <TextField
+                                size='small'
                                 fullWidth
-                                {...register('productionAreaId', {
-                                  required: 'Este campo es requerido'
+                                type='number'
+                                inputProps={{
+                                  step: 1,
+                                  min: 0
+                                }}
+                                {...register('quantity', {
+                                  min: {
+                                    value: 0,
+                                    message:
+                                      'El valor debe ser mayor o igual a 0'
+                                  },
+                                  valueAsNumber: true
                                 })}
-                                error={!!errors.productionAreaId}
-                              >
-                                <InputLabel id='select-area'>
-                                  Área de producción
-                                </InputLabel>
-                                <Select
-                                  labelId='select-area'
-                                  label='Área de producción'
-                                  margin='dense'
-                                  // disabled
-                                  value={value}
-                                  onChange={onChange}
-                                  onBlur={onBlur}
-                                >
-                                  {productionAreas.map((area) => (
-                                    <MenuItem key={area.id} value={area.id}>
-                                      {area.name}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                                {errors.productionAreaId && (
-                                  <FormHelperText>
-                                    {errors.productionAreaId?.message}
-                                  </FormHelperText>
-                                )}
-                              </FormControl>
-                            </>
+                                helperText={errors.quantity?.message}
+                                error={!!errors.quantity}
+                              />
+                            </Grid>
                           )}
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Card>
+                  )}
+                </Grid>
 
-            <Grid item xs={12} md={6}>
-              <Card sx={{ mb: 2 }}>
-                <CardHeader title='Precios' />
-                <CardContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        label='Precio'
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position='start'>
-                              <AttachMoney />
-                            </InputAdornment>
-                          )
-                        }}
-                        fullWidth
-                        type='number'
-                        inputProps={{
-                          step: 0.05
-                        }}
-                        {...register('price', {
-                          required: 'Este campo es requerido',
-                          min: {
-                            value: 0.25,
-                            message: 'El valor debe ser mayor a $0.25'
-                          },
-                          valueAsNumber: true
-                        })}
-                        helperText={errors.price?.message}
-                        error={!!errors.price}
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        label='Costo unitario'
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position='start'>
-                              <AttachMoney />
-                            </InputAdornment>
-                          )
-                        }}
-                        fullWidth
-                        type='number'
-                        inputProps={{
-                          step: 0.05
-                        }}
-                        {...register('unitCost', {
-                          min: {
-                            value: 0,
-                            message: 'El valor debe ser mayor a $0'
-                          },
-                          valueAsNumber: true
-                        })}
-                        helperText={errors.unitCost?.message}
-                        error={!!errors.unitCost}
-                      />
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader title='Inventario' />
-                <CardContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
-                      <Controller
-                        name='status'
-                        control={control}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                          <>
-                            <FormControl fullWidth>
-                              <InputLabel id='select-estado'>Estado</InputLabel>
-
-                              <Select
-                                labelId='select-estado'
-                                label='Estado'
-                                fullWidth
-                                margin='dense'
-                                value={value}
-                                onChange={onChange}
-                                onBlur={onBlur}
-                                error={!!errors.status?.type}
-                              >
-                                <MenuItem value={ProductStatus.AVAILABLE}>
-                                  Disponible
-                                </MenuItem>
-                                <MenuItem value={ProductStatus.OUT_OF_SEASON}>
-                                  Fuera de temporada
-                                </MenuItem>
-                                <MenuItem value={ProductStatus.OUT_OF_STOCK}>
-                                  Fuera de stock
-                                </MenuItem>
-                              </Select>
-                            </FormControl>
-                          </>
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        label='Cantidad disponible'
-                        fullWidth
-                        type='number'
-                        inputProps={{
-                          min: 0,
-                          step: 1
-                        }}
-                        {...register('quantity', {
-                          min: {
-                            value: 0,
-                            message: 'El valor debe ser mayor a 0'
-                          },
-                          valueAsNumber: true
-                        })}
-                        helperText={errors.quantity?.message}
-                        error={!!errors.quantity}
-                      />
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} md={6}></Grid>
-          </Grid>
-          <Box display='flex' justifyContent='flex-end' mt={2}>
-            <LoadingButton
-              variant='contained'
-              type='submit'
-              // disabled={isDirty && !isValid}
-              loading={isPending}
-            >
-              Crear
-            </LoadingButton>
-          </Box>
-        </form>
+                <Grid item xs={12} md={6}></Grid>
+              </Grid>
+              <Box display='flex' justifyContent='space-between' mt={2}>
+                <Button
+                  variant='text'
+                  onClick={() => navigate('/menu/products')}
+                >
+                  Cancelar
+                </Button>
+                <LoadingButton
+                  variant='contained'
+                  type='submit'
+                  // disabled={isDirty && !isValid}
+                  loading={isPending}
+                >
+                  Crear
+                </LoadingButton>
+              </Box>
+            </form>
+          </FormProvider>
+        </Stack>
       </Container>
     </>
   );

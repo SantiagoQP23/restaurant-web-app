@@ -1,11 +1,15 @@
 import { FC } from 'react';
 import { ProductOption } from '../../../../../../models';
 import {
+  Box,
   IconButton,
   ListItem,
   ListItemText,
   MenuItem,
-  Popover
+  Popover,
+  Radio,
+  Stack,
+  Typography
 } from '@mui/material';
 import {
   DeleteOutlined,
@@ -21,12 +25,15 @@ import {
 import NiceModal from '@ebay/nice-modal-react';
 import { ModalUpdateProductOption } from './ModalUpdateProductOption.component';
 import { formatMoney } from '../../../../Common/helpers/format-money.helper';
+import { useSetDefaultVariant } from '../../../hooks/useProducts';
 
 interface Props {
   productOption: ProductOption;
   productId: string;
 }
 export const ProductOptionItem: FC<Props> = ({ productOption, productId }) => {
+  const { mutateAsync: setDefaultVariant, isPending } = useSetDefaultVariant();
+
   const popupState = usePopupState({
     variant: 'popover',
     popupId: 'productOptionMenu'
@@ -40,27 +47,42 @@ export const ProductOptionItem: FC<Props> = ({ productOption, productId }) => {
     popupState.close();
     showModalUpdateProductOption();
   };
+  const handleChange = async () => {
+    if (productOption.isDefault) return;
+
+    await setDefaultVariant({
+      productId,
+      variantId: productOption.id
+    });
+  };
 
   return (
     <>
-      <ListItem
-        secondaryAction={
-          <IconButton {...bindTrigger(popupState)}>
-            <MoreVert />
-          </IconButton>
-        }
-      >
-        <ListItemText
-          primary={`${productOption.name} - ${formatMoney(
-            productOption.price
-          )}`}
-          primaryTypographyProps={{
-            color: !productOption.isAvailable
-              ? 'text.secondary'
-              : 'text.primary'
-          }}
-        />
-      </ListItem>
+      <Box display='flex' alignItems='center' justifyContent='space-between'>
+        <Box display='flex' alignItems='center' gap={2}>
+          <Radio
+            checked={productOption.isDefault}
+            onChange={handleChange}
+            value={productOption.id}
+            name='radio-buttons'
+            // disabled={isPending || productOption.isDefault}
+          />
+          <Box display='flex' flexDirection='column' gap={0.5}>
+            <Typography variant='subtitle2'>{productOption.name}</Typography>
+            <Stack direction='row' gap={1} alignItems='center'>
+              <Typography variant='caption' color='text.secondary'>
+                {formatMoney(productOption.price)}
+              </Typography>
+              <Typography variant='caption' color='text.secondary'>
+                {productOption.quantity}
+              </Typography>
+            </Stack>
+          </Box>
+        </Box>
+        <IconButton {...bindTrigger(popupState)}>
+          <MoreVert />
+        </IconButton>
+      </Box>
 
       <Popover
         {...bindPopover(popupState)}
