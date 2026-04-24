@@ -51,10 +51,10 @@ export interface ProductForm {
   productionAreaId?: number | '';
   unitCost?: number;
   quantity?: number;
-  manageInventory?: boolean;
+  trackStock?: boolean;
   hasVariants?: boolean;
   defaultVariantIndex?: number;
-  variants?: Array<{
+  productOptions?: Array<{
     name: string;
     price: number;
     cost: number;
@@ -72,9 +72,9 @@ const initialForm: ProductForm = {
   productionAreaId: '',
   unitCost: 0,
   quantity: 0,
-  manageInventory: false,
+  trackStock: false,
   hasVariants: false,
-  variants: []
+  productOptions: []
 };
 
 export const CreateProduct = () => {
@@ -103,7 +103,7 @@ export const CreateProduct = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'variants'
+    name: 'productOptions'
   });
 
   const hasVariants = watch('hasVariants');
@@ -116,7 +116,7 @@ export const CreateProduct = () => {
       append({ name: '', price: 0, cost: 0, manageStock: false });
     } else if (!hasVariants) {
       // Clear variants when toggling off
-      setValue('variants', []);
+      setValue('productOptions', []);
     }
   }, [hasVariants, append, remove, setValue, fields.length]);
 
@@ -149,9 +149,13 @@ export const CreateProduct = () => {
 
   const onSubmit = (data: ProductForm) => {
     // If product has variants, show modal to select default variant
-    if (data.hasVariants && data.variants && data.variants.length > 0) {
+    if (
+      data.hasVariants &&
+      data.productOptions &&
+      data.productOptions.length > 0
+    ) {
       NiceModal.show(ModalSelectDefaultVariant, {
-        variants: data.variants,
+        variants: data.productOptions,
         onConfirm: (selectedIndex: number) => {
           // Add the default variant index to the data
           const updatedData = {
@@ -465,13 +469,13 @@ export const CreateProduct = () => {
                             >
                               <FormControlLabel
                                 control={<Checkbox />}
-                                {...register('manageInventory')}
+                                {...register('trackStock')}
                                 label='Manejar inventario'
                               />
                             </Box>
                           </Grid>
 
-                          {watch('manageInventory') && (
+                          {watch('trackStock') && (
                             <Grid item xs={12} md={6}>
                               <InputLabel>Stock inicial</InputLabel>
                               <TextField
