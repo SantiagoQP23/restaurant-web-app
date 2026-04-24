@@ -58,7 +58,7 @@ export interface ProductForm {
     name: string;
     price: number;
     cost: number;
-    manageStock: boolean;
+    trackStock: boolean;
     defaultStock?: number;
   }>;
 }
@@ -112,8 +112,8 @@ export const CreateProduct = () => {
   useEffect(() => {
     if (hasVariants && fields.length === 0) {
       // Add 2 empty variant forms when toggling on
-      append({ name: '', price: 0, cost: 0, manageStock: false });
-      append({ name: '', price: 0, cost: 0, manageStock: false });
+      append({ name: '', price: 0, cost: 0, trackStock: false });
+      append({ name: '', price: 0, cost: 0, trackStock: false });
     } else if (!hasVariants) {
       // Clear variants when toggling off
       setValue('productOptions', []);
@@ -134,12 +134,12 @@ export const CreateProduct = () => {
   };
 
   const submitProduct = (data: ProductForm) => {
-    console.log(data);
     const productData: CreateProductDto = {
       ...data,
       productionAreaId:
         data.productionAreaId === '' ? undefined : data.productionAreaId
     };
+
     mutateAsync(productData).then((product) => {
       dispatch(addProduct(product));
       updateCategoryProducts(product);
@@ -149,6 +149,7 @@ export const CreateProduct = () => {
 
   const onSubmit = (data: ProductForm) => {
     // If product has variants, show modal to select default variant
+    console.log('Form data on submit:', data);
     if (
       data.hasVariants &&
       data.productOptions &&
@@ -158,10 +159,16 @@ export const CreateProduct = () => {
         variants: data.productOptions,
         onConfirm: (selectedIndex: number) => {
           // Add the default variant index to the data
+          const productOptions = data.productOptions?.map((option, index) => ({
+            ...option,
+            isDefault: index === selectedIndex
+          }));
+
           const updatedData = {
             ...data,
-            defaultVariantIndex: selectedIndex
+            productOptions
           };
+
           submitProduct(updatedData);
         }
       });
@@ -385,7 +392,7 @@ export const CreateProduct = () => {
                             name: '',
                             price: 0,
                             cost: 0,
-                            manageStock: false
+                            trackStock: false
                           })
                         }
                       >

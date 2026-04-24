@@ -29,7 +29,7 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
     watch
   } = useFormContext<ProductForm>();
 
-  const manageStockFieldName = `variants.${index}.manageStock` as const;
+  const manageStockFieldName = `productOptions.${index}.trackStock` as const;
   const manageStock = watch(manageStockFieldName);
 
   return (
@@ -64,15 +64,15 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
               size='small'
               fullWidth
               type='text'
-              {...register(`variants.${index}.name`, {
+              {...register(`productOptions.${index}.name`, {
                 required: 'Este campo es requerido',
                 minLength: {
                   value: 2,
                   message: 'Mínimo 2 caracteres'
                 }
               })}
-              helperText={errors.variants?.[index]?.name?.message}
-              error={!!errors.variants?.[index]?.name}
+              helperText={errors.productOptions?.[index]?.name?.message}
+              error={!!errors.productOptions?.[index]?.name}
             />
           </Grid>
 
@@ -93,7 +93,7 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
                   </InputAdornment>
                 )
               }}
-              {...register(`variants.${index}.price`, {
+              {...register(`productOptions.${index}.price`, {
                 required: 'Este campo es requerido',
                 min: {
                   value: 0.25,
@@ -101,8 +101,8 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
                 },
                 valueAsNumber: true
               })}
-              helperText={errors.variants?.[index]?.price?.message}
-              error={!!errors.variants?.[index]?.price}
+              helperText={errors.productOptions?.[index]?.price?.message}
+              error={!!errors.productOptions?.[index]?.price}
             />
           </Grid>
 
@@ -123,7 +123,7 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
                   </InputAdornment>
                 )
               }}
-              {...register(`variants.${index}.cost`, {
+              {...register(`productOptions.${index}.cost`, {
                 required: 'Este campo es requerido',
                 min: {
                   value: 0,
@@ -131,8 +131,8 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
                 },
                 valueAsNumber: true
               })}
-              helperText={errors.variants?.[index]?.cost?.message}
-              error={!!errors.variants?.[index]?.cost}
+              helperText={errors.productOptions?.[index]?.cost?.message}
+              error={!!errors.productOptions?.[index]?.cost}
             />
           </Grid>
 
@@ -146,7 +146,9 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
             >
               <FormControlLabel
                 control={
-                  <Checkbox {...register(`variants.${index}.manageStock`)} />
+                  <Checkbox
+                    {...register(`productOptions.${index}.trackStock`)}
+                  />
                 }
                 label='Manejar inventario'
               />
@@ -165,7 +167,7 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
                   step: 1,
                   min: 0
                 }}
-                {...register(`variants.${index}.defaultStock`, {
+                {...register(`productOptions.${index}.defaultStock`, {
                   required:
                     'Este campo es requerido cuando se maneja inventario',
                   min: {
@@ -174,8 +176,10 @@ export const VariantForm = ({ index, onRemove }: VariantFormProps) => {
                   },
                   valueAsNumber: true
                 })}
-                helperText={errors.variants?.[index]?.defaultStock?.message}
-                error={!!errors.variants?.[index]?.defaultStock}
+                helperText={
+                  errors.productOptions?.[index]?.defaultStock?.message
+                }
+                error={!!errors.productOptions?.[index]?.defaultStock}
               />
             </Grid>
           )}

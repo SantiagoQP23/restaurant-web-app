@@ -19,7 +19,7 @@ import { AttachMoney } from '@mui/icons-material';
 import { ProductForm } from '../CreateProduct.view';
 
 interface ModalSelectDefaultVariantProps {
-  variants: ProductForm['variants'];
+  variants: ProductForm['productOptions'];
   onConfirm: (selectedIndex: number) => void;
 }
 
