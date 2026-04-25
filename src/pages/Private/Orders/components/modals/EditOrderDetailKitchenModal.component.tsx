@@ -136,6 +136,9 @@ export const EditOrderDetailKitchenModal = NiceModal.create<Props>(
       setTypeOrder(type);
     };
 
+    const showProductOptionName =
+      detail.product.options.length > 1 && detail.productOption;
+
     return (
       <Dialog {...muiDialogV5(modal)} maxWidth='xs' fullWidth>
         {/* ── Title ─────────────────────────────────────────── */}
@@ -169,7 +172,8 @@ export const EditOrderDetailKitchenModal = NiceModal.create<Props>(
 
         <DialogContent sx={{ pt: 0 }}>
           <Typography variant='h5' color='text.primary' fontWeight={600} mb={1}>
-            {detail?.product.name}
+            {detail?.product.name}{' '}
+            {showProductOptionName && `${detail.productOption?.name}`}
           </Typography>
           <Grid container spacing={1.5}>
             {/* ── Section: Entrega ──────────────────────────── */}

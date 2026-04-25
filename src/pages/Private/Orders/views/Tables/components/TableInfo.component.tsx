@@ -17,8 +17,8 @@ import { ITable, Order, TypeOrder } from '@/models';
 import { selectOrders, setActiveTable } from '@/redux';
 import { useNewOrderStore } from '../../../store/newOrderStore';
 import { useUpdateTable } from '../../../hooks';
-import { OrderCard } from './OrderCard.component';
 import { Scrollbar } from '@/pages/Private/components';
+import { OrderCard } from '../../OrdersDashboard/components/OrderCard.component';
 
 interface Props {
   table: ITable;

@@ -160,23 +160,27 @@ export const OrderCard: FC<Props> = ({ order, selected, onClick }) => {
         )}
 
         <Stack spacing={1} sx={{ px: 2, my: 1 }}>
-          {order.details.map((detail) => (
-            <Box key={detail.id} display='flex'>
-              <Typography variant='body1' width='10%'>
-                {detail.quantity}
-                {/* {index < order.details.length - 1 ? "," : "."} */}
-              </Typography>
-              <Box display='flex' flexDirection='column'>
-                <Typography variant='body1'>
-                  {detail.product.name}
-                  {detail.productOption && `: ${detail.productOption.name}`}
+          {order.details.map((detail) => {
+            const showProductOptionName =
+              detail.product.options.length > 1 && detail.productOption;
+            return (
+              <Box key={detail.id} display='flex'>
+                <Typography variant='body1' width='10%'>
+                  {detail.quantity}
+                  {/* {index < order.details.length - 1 ? "," : "."} */}
                 </Typography>
-                <Typography variant='subtitle2'>
-                  {detail.description}
-                </Typography>
+                <Box display='flex' flexDirection='column'>
+                  <Typography variant='body1'>
+                    {detail.product.name}{' '}
+                    {showProductOptionName && detail.productOption?.name}
+                  </Typography>
+                  <Typography variant='subtitle2'>
+                    {detail.description}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-          ))}
+            );
+          })}
         </Stack>
         {/*   </AccordionDetails> */}
         {/* </Accordion> */}

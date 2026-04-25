@@ -188,6 +188,9 @@ export const DetailInProgress: FC<Props> = ({
     );
   }, [detail.description, detail.tags, detail.qtyDelivered]);
 
+  const showProductOptionName =
+    detail.product.options.length > 1 && detail.productOption;
+
   return (
     <Box
       sx={{
@@ -242,7 +245,10 @@ export const DetailInProgress: FC<Props> = ({
                 }}
               >
                 {detail.quantity} {detail.product.name}{' '}
-                {detail.price !== detail.product.price && `($${detail.price})`}
+                {detail.productOption &&
+                  detail.price !== detail.productOption?.price &&
+                  `($${detail.price})`}
+                {showProductOptionName && detail.productOption?.name}
               </Typography>
             </Stack>
 
