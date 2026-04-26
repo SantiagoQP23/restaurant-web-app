@@ -5,8 +5,12 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
-  Box,
-  Grid
+  Grid,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { DespachoDetalle, ListActiveOrders } from './components';
@@ -23,6 +27,7 @@ import { useActiveOrders } from '../../hooks';
 import { Order } from '@/models';
 import { OrderCard } from '../OrdersDashboard/components/OrderCard.component';
 import { useOrdersStore } from '@/pages/Private/Common/store/useOrdersStore';
+import { useProductionAreasStore } from '@/pages/Private/Common/store/production-areas-store';
 
 export type ViewMode = 'tabs' | 'sections' | 'products';
 
@@ -32,6 +37,8 @@ export const ActiveOrders = () => {
   const { activeOrdersQuery } = useActiveOrders();
   const setActiveOrder = useOrdersStore((state) => state.setActiveOrder);
   const activeOrder = useOrdersStore((state) => state.activeOrder);
+  const { productionAreas, productionAreaActive, setProductionAreaActive } =
+    useProductionAreasStore();
 
   // View mode state with localStorage persistence
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
@@ -43,6 +50,21 @@ export const ActiveOrders = () => {
   useEffect(() => {
     localStorage.setItem('active-orders-view-mode', viewMode);
   }, [viewMode]);
+
+  useEffect(() => {
+    if (!productionAreaActive && productionAreas.length > 0) {
+      setProductionAreaActive(productionAreas[0]);
+    }
+  }, [productionAreas, productionAreaActive, setProductionAreaActive]);
+
+  const handleProductionAreaChange = (event: SelectChangeEvent<number>) => {
+    const selectedAreaId = Number(event.target.value);
+    const selectedArea = productionAreas.find((area) => area.id === selectedAreaId);
+
+    if (selectedArea) {
+      setProductionAreaActive(selectedArea);
+    }
+  };
 
   // Custom styling for toggle buttons - light gray instead of primary color
   const toggleButtonSx = {
@@ -77,6 +99,25 @@ export const ActiveOrders = () => {
               title='Pedidos activos'
               action={
                 <Stack direction='row' spacing={3}>
+                  <FormControl
+                    size='small'
+                    sx={{ minWidth: 180, display: { xs: 'none', md: 'inline-flex' } }}
+                  >
+                    <InputLabel id='production-area-select-label'>Area</InputLabel>
+                    <Select
+                      labelId='production-area-select-label'
+                      value={productionAreaActive?.id ?? ''}
+                      label='Area'
+                      onChange={handleProductionAreaChange}
+                      disabled={productionAreas.length === 0}
+                    >
+                      {productionAreas.map((area) => (
+                        <MenuItem key={area.id} value={area.id}>
+                          {area.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                   <Tooltip title='Actualizar pedidos' arrow>
                     <IconButton
                       onClick={() => activeOrdersQuery.refetch()}

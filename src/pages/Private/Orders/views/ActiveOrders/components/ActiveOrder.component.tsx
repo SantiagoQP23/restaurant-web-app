@@ -57,6 +57,14 @@ export const ActiveOrder: FC<Props> = ({
   // const adjustedDeliveryTime = addMinutes(new Date(order.deliveryTime), 30);
   const timeUrgency = useTimeUrgency(new Date(order.deliveryTime));
 
+  const areasToRender = useMemo(() => {
+    if (productionArea) {
+      return [productionArea];
+    }
+
+    return productionAreas;
+  }, [productionArea, productionAreas]);
+
   // Prefetch order details for quick access
   useMemo(() => {
     queryClient.prefetchQuery({
@@ -118,7 +126,7 @@ export const ActiveOrder: FC<Props> = ({
       {/* Products by Production Area */}
       <Stack spacing={1.5} sx={{ px: 2, py: 1 }}>
         <Stack spacing={1.5} direction='column'>
-          {productionAreas.map((area) => (
+          {areasToRender.map((area) => (
             <ProductionAreaOrder
               key={area.id}
               details={order.details}
