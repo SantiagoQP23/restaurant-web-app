@@ -109,182 +109,108 @@ export const ProductionAreaOrder = ({
 
   return (
     <Box>
-      <Accordion
-        sx={{
-          '& .MuiAccordionSummary-content': {
-            alignItems: 'center',
-            margin: '12px 0'
-          },
-          borderRadius: '12px !important',
-          mb: 1.5,
-          overflow: 'hidden',
-          transition: 'all 0.3s ease',
-          '&:before': {
-            display: 'none'
-          },
-          background: alpha(areaColor, 0.02)
-        }}
-        defaultExpanded
-      >
-        <AccordionSummary
-          expandIcon={
-            <ExpandMore
-              sx={{
-                color: areaColor,
-                fontSize: 28
-              }}
-            />
-          }
+      {/* Tabs for Pending/Delivered */}
+      {order.status !== OrderStatus.DELIVERED && (
+        <Tabs
+          value={expanded ? 1 : 0}
+          onChange={handleExpanded}
+          variant='fullWidth'
+          sx={{
+            minHeight: 42,
+            borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+            '& .MuiTabs-indicator': {
+              height: 3,
+              borderRadius: '3px 3px 0 0',
+              backgroundColor: '#eee',
+              border: 'none'
+            },
+            '& .MuiTab-root': {
+              minHeight: 42,
+              textTransform: 'none',
+              fontWeight: 500,
+              fontSize: '0.875rem',
+              color: theme.palette.text.secondary,
+              transition: 'all 0.2s ease',
+              '&.Mui-selected': {
+                color: theme.palette.primary.main,
+                backgroundColor: alpha('#eee', 0.02),
+                fontWeight: 600
+              },
+              '&:hover': {
+                backgroundColor: alpha(theme.palette.primary.main, 0.04)
+              }
+            }
+          }}
         >
-          <Stack
-            direction='row'
-            spacing={1.5}
-            alignItems='center'
-            sx={{ width: '100%', pr: 2 }}
-          >
-            {/* Icon */}
-            <Box
-              sx={{
-                bgcolor: alpha(areaColor, 0.15),
-                color: areaColor,
-                borderRadius: '50%',
-                width: 40,
-                height: 40,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}
-            >
-              <Restaurant fontSize='small' />
-            </Box>
-
-            {/* Title and Stats */}
-            <Stack spacing={0.5} flexGrow={1}>
+          <Tab
+            label={
               <Stack direction='row' spacing={1} alignItems='center'>
-                <Typography variant='subtitle1' fontWeight={600}>
-                  {productionArea.name}
-                </Typography>
-                <Typography
-                  variant='caption'
-                  fontWeight={600}
+                <span>Por entregar</span>
+                <Badge
+                  badgeContent={statistics.pendingCount}
+                  color='warning'
                   sx={{
-                    color: areaColor,
-                    textAlign: 'right'
+                    '& .MuiBadge-badge': {
+                      bgcolor: alpha(theme.palette.warning.main, 0.2),
+                      color: theme.palette.warning.main,
+                      fontWeight: 'bold',
+                      fontSize: '0.7rem'
+                    }
                   }}
                 >
-                  {Math.round(statistics.completionPercentage)}%
-                </Typography>
+                  <Box sx={{ width: 8 }} />
+                </Badge>
               </Stack>
-            </Stack>
-          </Stack>
-        </AccordionSummary>
+            }
+          />
+          <Tab
+            label={
+              <Stack direction='row' spacing={1} alignItems='center'>
+                <span>Entregado</span>
+                <Badge
+                  badgeContent={statistics.deliveredCount}
+                  color='success'
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      bgcolor: alpha(theme.palette.success.main, 0.2),
+                      color: theme.palette.success.main,
+                      fontWeight: 'bold',
+                      fontSize: '0.7rem'
+                    }
+                  }}
+                >
+                  <Box sx={{ width: 8 }} />
+                </Badge>
+              </Stack>
+            }
+          />
+        </Tabs>
+      )}
 
-        <AccordionDetails sx={{ p: 0 }}>
-          {/* Tabs for Pending/Delivered */}
-          {order.status !== OrderStatus.DELIVERED && (
-            <Tabs
-              value={expanded ? 1 : 0}
-              onChange={handleExpanded}
-              variant='fullWidth'
-              sx={{
-                minHeight: 42,
-                borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-                '& .MuiTabs-indicator': {
-                  height: 3,
-                  borderRadius: '3px 3px 0 0',
-                  backgroundColor: '#eee',
-                  border: 'none'
-                },
-                '& .MuiTab-root': {
-                  minHeight: 42,
-                  textTransform: 'none',
-                  fontWeight: 500,
-                  fontSize: '0.875rem',
-                  color: theme.palette.text.secondary,
-                  transition: 'all 0.2s ease',
-                  '&.Mui-selected': {
-                    color: theme.palette.primary.main,
-                    backgroundColor: alpha('#eee', 0.02),
-                    fontWeight: 600
-                  },
-                  '&:hover': {
-                    backgroundColor: alpha(theme.palette.primary.main, 0.04)
-                  }
-                }
-              }}
-            >
-              <Tab
-                label={
-                  <Stack direction='row' spacing={1} alignItems='center'>
-                    <span>Por entregar</span>
-                    <Badge
-                      badgeContent={statistics.pendingCount}
-                      color='warning'
-                      sx={{
-                        '& .MuiBadge-badge': {
-                          bgcolor: alpha(theme.palette.warning.main, 0.2),
-                          color: theme.palette.warning.main,
-                          fontWeight: 'bold',
-                          fontSize: '0.7rem'
-                        }
-                      }}
-                    >
-                      <Box sx={{ width: 8 }} />
-                    </Badge>
-                  </Stack>
-                }
+      {/* Details List */}
+      <Stack spacing={0}>
+        {detailsStatus.length > 0 ? (
+          detailsStatus.map((detail, index) => (
+            <Box key={detail.id}>
+              <DetailInProgress
+                detail={detail}
+                orderId={orderId}
+                typeOrder={order.type}
+                orderCreationDate={new Date(order.createdAt)}
+                orderUserId={order.user.id}
               />
-              <Tab
-                label={
-                  <Stack direction='row' spacing={1} alignItems='center'>
-                    <span>Entregado</span>
-                    <Badge
-                      badgeContent={statistics.deliveredCount}
-                      color='success'
-                      sx={{
-                        '& .MuiBadge-badge': {
-                          bgcolor: alpha(theme.palette.success.main, 0.2),
-                          color: theme.palette.success.main,
-                          fontWeight: 'bold',
-                          fontSize: '0.7rem'
-                        }
-                      }}
-                    >
-                      <Box sx={{ width: 8 }} />
-                    </Badge>
-                  </Stack>
-                }
-              />
-            </Tabs>
-          )}
-
-          {/* Details List */}
-          <Stack spacing={0}>
-            {detailsStatus.length > 0 ? (
-              detailsStatus.map((detail, index) => (
-                <Box key={detail.id}>
-                  <DetailInProgress
-                    detail={detail}
-                    orderId={orderId}
-                    typeOrder={order.type}
-                    orderCreationDate={new Date(order.createdAt)}
-                    orderUserId={order.user.id}
-                  />
-                </Box>
-              ))
-            ) : (
-              <Box sx={{ py: 4, textAlign: 'center' }}>
-                <Typography variant='body2' color='text.secondary'>
-                  {expanded
-                    ? 'No hay productos entregados'
-                    : 'Todos los productos han sido entregados'}
-                </Typography>
-              </Box>
-            )}
-          </Stack>
-        </AccordionDetails>
-      </Accordion>
+            </Box>
+          ))
+        ) : (
+          <Box sx={{ py: 4, textAlign: 'center' }}>
+            <Typography variant='body2' color='text.secondary'>
+              {expanded
+                ? 'No hay productos entregados'
+                : 'Todos los productos han sido entregados'}
+            </Typography>
+          </Box>
+        )}
+      </Stack>
     </Box>
   );
 };
