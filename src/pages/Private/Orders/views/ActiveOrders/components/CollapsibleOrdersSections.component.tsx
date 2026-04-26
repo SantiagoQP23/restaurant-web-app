@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Accordion,
   AccordionSummary,
@@ -14,9 +13,10 @@ import {
   ExpandMore,
   PendingOutlined,
   Restaurant,
-  DoneAllOutlined
+  DoneAllOutlined,
+  CheckCircleOutline
 } from '@mui/icons-material';
-import { Order, OrderStatus } from '@/models/orders.model';
+import { Order, OrderDetailStatus } from '@/models/orders.model';
 import { ProductionArea } from '@/pages/Private/Common/models/production-area.model';
 import { ActiveOrder } from './ActiveOrder.component';
 import { useOrdersStore } from '@/pages/Private/Common/store/useOrdersStore';
@@ -27,10 +27,10 @@ interface CollapsibleOrdersSectionsProps {
 }
 
 interface OrderSection {
-  status: OrderStatus;
+  status: OrderDetailStatus;
   title: string;
   icon: React.ReactNode;
-  color: 'warning' | 'info' | 'success';
+  color: 'warning' | 'info' | 'success' | 'secondary';
   defaultExpanded: boolean;
 }
 
@@ -39,38 +39,54 @@ export const CollapsibleOrdersSections = ({
   productionAreaActive
 }: CollapsibleOrdersSectionsProps) => {
   const activeOrder = useOrdersStore((state) => state.activeOrder);
+
   const sections: OrderSection[] = [
     {
-      status: OrderStatus.PENDING,
+      status: OrderDetailStatus.PENDING,
       title: 'Pendientes',
       icon: <PendingOutlined />,
       color: 'warning',
       defaultExpanded: true
     },
     {
-      status: OrderStatus.IN_PROGRESS,
+      status: OrderDetailStatus.IN_PROGRESS,
       title: 'En preparación',
       icon: <Restaurant />,
       color: 'info',
       defaultExpanded: true
     },
     {
-      status: OrderStatus.DELIVERED,
+      status: OrderDetailStatus.READY,
+      title: 'Listos',
+      icon: <CheckCircleOutline />,
+      color: 'success',
+      defaultExpanded: true
+    },
+    {
+      status: OrderDetailStatus.DELIVERED,
       title: 'Entregados',
       icon: <DoneAllOutlined />,
-      color: 'success',
+      color: 'secondary',
       defaultExpanded: false
     }
   ];
 
-  const getOrdersByStatus = (status: OrderStatus): Order[] => {
-    return orders.filter((order) => order.status === status);
+  const getOrdersByDetailStatus = (status: OrderDetailStatus): Order[] => {
+    return orders.filter((order) => {
+      const detailsInArea = productionAreaActive
+        ? order.details.filter(
+            (detail) => detail.product.productionArea.id === productionAreaActive.id
+          )
+        : order.details;
+
+      return detailsInArea.some((detail) => detail.status === status);
+    });
   };
 
   return (
     <Box sx={{ mt: 2 }}>
       {sections.map((section) => {
-        const filteredOrders = getOrdersByStatus(section.status);
+        const filteredOrders = getOrdersByDetailStatus(section.status);
         const orderCount = filteredOrders.length;
 
         return (
