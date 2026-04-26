@@ -4,13 +4,16 @@ import { Card, Divider, Stack, alpha, useTheme } from '@mui/material';
 import { addMinutes } from 'date-fns';
 
 import { UpdateOrderDto } from '../../../dto/update-order.dto';
-import { OrderStatus } from '../../../../../../models/orders.model';
+import {
+  OrderDetailStatus,
+  OrderStatus
+} from '../../../../../../models/orders.model';
 
 import { Order } from '../../../../../../models';
 import { statusModalStartOrder } from '../../../services/orders.service';
 import { BtnAddProduct } from './BtnAddProduct.component';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUpdateOrder } from '../../../hooks';
+import { useUpdateMultipleOrderDetailsStatus, useUpdateOrder } from '../../../hooks';
 import { useOrderHelper } from '../../../hooks/useOrders';
 import { ProductionArea } from '../../../../Common/models/production-area.model';
 import { useProductionAreasStore } from '../../../../Common/store/production-areas-store';
@@ -52,6 +55,8 @@ export const ActiveOrder: FC<Props> = ({
   const { productionAreas } = useProductionAreasStore();
   const queryClient = useQueryClient();
   const { mutate: updateOrder } = useUpdateOrder();
+  const { mutate: updateMultipleOrderDetailsStatus } =
+    useUpdateMultipleOrderDetailsStatus();
   const setActiveOrder = useOrdersStore((state) => state.setActiveOrder);
   const activeOrder = useOrdersStore((state) => state.activeOrder);
   // const adjustedDeliveryTime = addMinutes(new Date(order.deliveryTime), 30);
@@ -88,6 +93,28 @@ export const ActiveOrder: FC<Props> = ({
 
   const changeStatusOrder = useCallback(
     (status: OrderStatus) => {
+      const detailsInCurrentArea = order.details.filter((detail) => {
+        if (!productionArea) {
+          return true;
+        }
+
+        return detail.product.productionArea.id === productionArea.id;
+      });
+
+      const detailsStatusByOrderStatus: Record<OrderStatus, OrderDetailStatus> = {
+        [OrderStatus.PENDING]: OrderDetailStatus.PENDING,
+        [OrderStatus.IN_PROGRESS]: OrderDetailStatus.IN_PROGRESS,
+        [OrderStatus.DELIVERED]: OrderDetailStatus.READY,
+        [OrderStatus.CANCELLED]: OrderDetailStatus.PENDING
+      };
+
+      if (detailsInCurrentArea.length > 0) {
+        updateMultipleOrderDetailsStatus({
+          orderDetails: detailsInCurrentArea.map((detail) => detail.id),
+          status: detailsStatusByOrderStatus[status]
+        });
+      }
+
       const data: UpdateOrderDto = {
         id: order.id,
         status
@@ -95,7 +122,13 @@ export const ActiveOrder: FC<Props> = ({
 
       updateOrder(data);
     },
-    [order.id, updateOrder]
+    [
+      order.details,
+      order.id,
+      productionArea,
+      updateMultipleOrderDetailsStatus,
+      updateOrder
+    ]
   );
 
   return (

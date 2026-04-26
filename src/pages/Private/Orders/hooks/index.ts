@@ -10,3 +10,4 @@ export * from './useOrderDetails';
 export * from './useOrders';
 export * from './useUpdateTable';
 export * from './useTimeUrgency';
+export * from './useOrderDetailStatusColor';

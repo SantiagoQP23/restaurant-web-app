@@ -3,7 +3,11 @@ import { EventsEmitSocket } from '../interfaces/events-sockets.interface';
 import { useSnackbar } from 'notistack';
 import { useEmitWebSocketsEvent } from '../../../../hooks';
 import { Order } from '../../../../models';
-import { DeleteOrderDetailDto, UpdateOrderDetailDto } from '../dto';
+import {
+  DeleteOrderDetailDto,
+  UpdateMultipleOrderDetailsStatusDto,
+  UpdateOrderDetailDto
+} from '../dto';
 
 /**
  * Custom hook to create a new order detail with websockets
@@ -54,6 +58,25 @@ export const useDeleteOrderDetail = () => {
 
   return useEmitWebSocketsEvent<Order, DeleteOrderDetailDto>(
     EventsEmitSocket.deleteOrderDetail,
+    {
+      onSuccess: (resp) => {
+        enqueueSnackbar(resp.msg, { variant: 'success' });
+      },
+      onError: (resp) => {
+        enqueueSnackbar(resp.msg, { variant: 'error' });
+      }
+    }
+  );
+};
+
+/**
+ * Custom hook to update status for multiple order details with websockets
+ */
+export const useUpdateMultipleOrderDetailsStatus = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  return useEmitWebSocketsEvent<Order, UpdateMultipleOrderDetailsStatusDto>(
+    EventsEmitSocket.updateOrderDetailsStatus,
     {
       onSuccess: (resp) => {
         enqueueSnackbar(resp.msg, { variant: 'success' });

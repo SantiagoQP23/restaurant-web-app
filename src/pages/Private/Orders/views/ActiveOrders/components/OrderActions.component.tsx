@@ -75,7 +75,7 @@ export const OrderActions: FC<Props> = ({
             startIcon={<Check />}
             onClick={handleDeliveredClick}
           >
-            Entregado
+            Listo
           </Button>
         </Stack>
       ) : (
@@ -105,7 +105,7 @@ export const OrderActions: FC<Props> = ({
               startIcon={<Check />}
               onClick={handleDeliveredClick}
             >
-              Entregado
+              Listo
             </Button>
           </Stack>
         )

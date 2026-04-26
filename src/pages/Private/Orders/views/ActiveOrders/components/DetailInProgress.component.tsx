@@ -28,7 +28,10 @@ import {
   EditOutlined
 } from '@mui/icons-material';
 import { UpdateOrderDetailDto } from '../../../dto';
-import { useUpdateOrderDetail } from '../../../hooks';
+import {
+  useOrderDetailStatusColor,
+  useUpdateOrderDetail
+} from '../../../hooks';
 import NiceModal from '@ebay/nice-modal-react';
 import { ModalEditOrderDetail } from '../../../components';
 import { EditOrderDetailKitchenModal } from '../../../components/modals/EditOrderDetailKitchenModal.component';
@@ -81,6 +84,7 @@ export const DetailInProgress: FC<Props> = ({
 }) => {
   const theme = useTheme();
   const { mutate: update } = useUpdateOrderDetail();
+  const detailStatusColor = useOrderDetailStatusColor(detail.status);
 
   const [checked, setChecked] = useState(
     detail.qtyDelivered === detail.quantity
@@ -250,6 +254,15 @@ export const DetailInProgress: FC<Props> = ({
                   `($${detail.price})`}
                 {showProductOptionName && detail.productOption?.name}
               </Typography>
+              <Box
+                sx={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: '50%',
+                  bgcolor: detailStatusColor,
+                  flexShrink: 0
+                }}
+              />
             </Stack>
 
             {/* Type Indicator */}

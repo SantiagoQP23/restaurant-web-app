@@ -60,7 +60,7 @@ export const EditOrderDetailKitchenModal = NiceModal.create<Props>(
     const theme = useTheme();
 
     const [quantity, setQuantity] = useState(detail.quantity);
-    const [qtyDelivered, setQtyDelivered] = useState(detail.qtyDelivered);
+    const [readyQuantity, setReadyQuantity] = useState(detail.readyQuantity);
     const [typeOrder, setTypeOrder] = useState(detail.typeOrderDetail);
     const [description, setDescription] = useState(detail.description);
     const [price, setPrice] = useState(detail.price);
@@ -80,16 +80,16 @@ export const EditOrderDetailKitchenModal = NiceModal.create<Props>(
     const isDirty = useMemo(
       () =>
         quantity !== detail.quantity ||
-        qtyDelivered !== detail.qtyDelivered ||
+         readyQuantity !== detail.readyQuantity ||
         typeOrder !== detail.typeOrderDetail ||
         description !== detail.description ||
         price !== detail.price,
-      [quantity, qtyDelivered, typeOrder, description, price, detail]
+      [quantity, readyQuantity, typeOrder, description, price, detail]
     );
 
     const deliveryProgress = useMemo(
-      () => (quantity > 0 ? (qtyDelivered / quantity) * 100 : 0),
-      [qtyDelivered, quantity]
+      () => (quantity > 0 ? (readyQuantity / quantity) * 100 : 0),
+      [readyQuantity, quantity]
     );
 
     const createdAt = useMemo(
@@ -109,11 +109,7 @@ export const EditOrderDetailKitchenModal = NiceModal.create<Props>(
       const data: UpdateOrderDetailDto = {
         orderId,
         id: detail!.id,
-        qtyDelivered,
-        quantity,
-        description,
-        price,
-        typeOrderDetail: typeOrder
+        readyQuantity
       };
 
       if (selectedOption) {
@@ -190,10 +186,10 @@ export const EditOrderDetailKitchenModal = NiceModal.create<Props>(
                   color='text.secondary'
                   lineHeight={1}
                 >
-                  Entrega
+                  Listo
                 </Typography>
                 <Typography variant='caption' color='text.secondary'>
-                  {qtyDelivered} / {quantity}
+                  {readyQuantity} / {quantity}
                 </Typography>
               </Stack>
 
@@ -212,11 +208,11 @@ export const EditOrderDetailKitchenModal = NiceModal.create<Props>(
 
               <Box display='flex' justifyContent='flex-end'>
                 <CounterInput
-                  value={qtyDelivered}
-                  onChange={setQtyDelivered}
-                  min={0}
-                  max={detail?.quantity}
-                />
+                    value={readyQuantity}
+                    onChange={setReadyQuantity}
+                    min={0}
+                    max={detail?.quantity}
+                  />
               </Box>
             </Grid>
 

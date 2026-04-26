@@ -9,6 +9,7 @@ export interface UpdateOrderDetailDto {
   id: string;
   quantity?: number;
   qtyDelivered?: number;
+  readyQuantity?: number;
   description?: string;
   orderId: string;
   price?: number;

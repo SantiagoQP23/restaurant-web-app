@@ -12,6 +12,13 @@ export enum OrderStatus {
   CANCELLED = 'CANCELLED'
 }
 
+export enum OrderDetailStatus {
+  PENDING = 'PENDING',
+  IN_PROGRESS = 'IN_PROGRESS',
+  READY = 'READY',
+  DELIVERED = 'DELIVERED'
+}
+
 export enum OrderStatusPay {
   NO_PAY = 'NO_PAY',
   PAY = 'PAY',
@@ -72,6 +79,7 @@ export interface IOrderDetail {
   quantity: number;
 
   qtyDelivered: number;
+  readyQuantity: number;
 
   qtyPaid: number;
 
@@ -84,6 +92,7 @@ export interface IOrderDetail {
   updatedAt: string;
 
   product: IProduct;
+  status: OrderDetailStatus;
 
   isActive: boolean;
 

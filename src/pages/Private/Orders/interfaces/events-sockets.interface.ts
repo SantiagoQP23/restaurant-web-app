@@ -16,6 +16,7 @@ export enum EventsEmitSocket {
   changeTable = 'change-table',
   changeClient = 'change-client',
   updateOrderDetail = 'update-order-detail',
+  updateOrderDetailsStatus = 'update-order-details-status',
   addOrderDetail = 'add-order-detail',
   deleteOrderDetail = 'delete-order-detail',
   updateqtyDeliveredDetail = 'update-qty-delivered-detail',
