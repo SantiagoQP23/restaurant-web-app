@@ -205,6 +205,7 @@ export const ActiveOrder: FC<Props> = ({
         onStartOrder={handleStartOrder}
         onChangeStatus={changeStatusOrder}
         setStatusFilter={setStatusFilter}
+        detailStatusSection={detailStatusSection}
       />
     </Card>
   );

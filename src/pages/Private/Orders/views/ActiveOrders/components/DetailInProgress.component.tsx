@@ -27,7 +27,9 @@ import {
   CheckCircleOutline,
   PlusOneOutlined,
   EditOutlined,
-  PlayArrowOutlined
+  PlayArrowOutlined,
+  PauseOutlined,
+  PauseCircleOutline
 } from '@mui/icons-material';
 import { UpdateOrderDetailDto } from '../../../dto';
 import {
@@ -190,6 +192,16 @@ export const DetailInProgress: FC<Props> = ({
       orderId,
       id: detail.id,
       status: OrderDetailStatus.IN_PROGRESS
+    };
+
+    update(data);
+  }, [detail.id, orderId, update]);
+
+  const handleMarkPending = useCallback(() => {
+    const data: UpdateOrderDetailDto = {
+      orderId,
+      id: detail.id,
+      status: OrderDetailStatus.PENDING
     };
 
     update(data);
@@ -400,13 +412,26 @@ export const DetailInProgress: FC<Props> = ({
                   size='small'
                   onClick={handleMarkInProgress}
                   sx={{
-                    color: theme.palette.info.main,
                     '&:hover': {
                       bgcolor: alpha(theme.palette.info.main, 0.08)
                     }
                   }}
                 >
                   <PlayArrowOutlined fontSize='small' />
+                </IconButton>
+              )}
+              {detail.status === OrderDetailStatus.IN_PROGRESS && (
+                <IconButton
+                  size='small'
+                  onClick={handleMarkPending}
+                  sx={{
+                    '&:hover': {
+                      bgcolor: alpha(theme.palette.warning.main, 0.08)
+                    }
+                  }}
+                >
+                  {/* Stop icon */}
+                  <PauseCircleOutline />
                 </IconButton>
               )}
 
