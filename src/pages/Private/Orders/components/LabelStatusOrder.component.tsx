@@ -26,7 +26,7 @@ const colorStatusOrderMap: {
   IN_PROGRESS: 'info',
   READY: 'success',
   unpaid: 'warning',
-  DELIVERED: 'success',
+  DELIVERED: 'secondary',
   CANCELLED: 'error'
 };
 
@@ -49,7 +49,7 @@ export const colorStatusMap = new Map<OrderStatus, string>();
 colorStatusMap.set(OrderStatus.PENDING, 'warning');
 colorStatusMap.set(OrderStatus.IN_PROGRESS, 'info');
 colorStatusMap.set(OrderStatus.READY, 'success');
-colorStatusMap.set(OrderStatus.DELIVERED, 'success');
+colorStatusMap.set(OrderStatus.DELIVERED, 'secondary');
 colorStatusMap.set(OrderStatus.CANCELLED, 'error');
 
 export const orderStatusIconMap = new Map<OrderStatus, JSX.Element>();
@@ -67,7 +67,7 @@ orderStatusIconMap.set(
 );
 orderStatusIconMap.set(
   OrderStatus.DELIVERED,
-  <LocalDining fontSize='small' color='success' />
+  <LocalDining fontSize='small' color='secondary' />
 );
 
 export const LabelStatusOrder: FC<Props> = ({

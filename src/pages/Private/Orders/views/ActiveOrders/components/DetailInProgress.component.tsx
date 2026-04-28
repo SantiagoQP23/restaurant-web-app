@@ -219,6 +219,15 @@ export const DetailInProgress: FC<Props> = ({
         '&:hover': {
           bgcolor: alpha(theme.palette.action.hover, 0.05)
         },
+        '& .detail-actions': {
+          opacity: 0,
+          pointerEvents: 'none',
+          transition: 'opacity 0.2s ease'
+        },
+        '&:hover .detail-actions': {
+          opacity: 1,
+          pointerEvents: 'auto'
+        },
         ...(isHighlighted && {
           animation: `${highlightPulse} 2.5s ease-out 3`
         })
@@ -377,7 +386,12 @@ export const DetailInProgress: FC<Props> = ({
         </Stack>
 
         {/* Action Buttons */}
-        <Stack direction='row' spacing={0.5} alignItems='center'>
+        <Stack
+          direction='row'
+          spacing={0.5}
+          alignItems='center'
+          className='detail-actions'
+        >
           {!isCompleted && (
             <>
               {/* Add One Button (only if quantity > 1) */}
