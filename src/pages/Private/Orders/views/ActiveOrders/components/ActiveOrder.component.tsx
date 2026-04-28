@@ -13,7 +13,10 @@ import { Order } from '../../../../../../models';
 import { statusModalStartOrder } from '../../../services/orders.service';
 import { BtnAddProduct } from './BtnAddProduct.component';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUpdateMultipleOrderDetailsStatus, useUpdateOrder } from '../../../hooks';
+import {
+  useUpdateMultipleOrderDetailsStatus,
+  useUpdateOrder
+} from '../../../hooks';
 import { useOrderHelper } from '../../../hooks/useOrders';
 import { ProductionArea } from '../../../../Common/models/production-area.model';
 import { useProductionAreasStore } from '../../../../Common/store/production-areas-store';
@@ -24,6 +27,8 @@ import { OrderMetadata } from './OrderMetadata.component';
 import { OrderActions } from './OrderActions.component';
 import { useTimeUrgency } from '../../../hooks/useTimeUrgency';
 import { useOrdersStore } from '@/pages/Private/Common/store/useOrdersStore';
+import NiceModal from '@ebay/nice-modal-react';
+import { ModalStartOrder } from './ModalStartOrder.component';
 
 interface Props {
   order: Order;
@@ -31,6 +36,7 @@ interface Props {
   color: 'success' | 'error' | 'warning' | 'info' | 'primary' | 'secondary';
   index: number;
   productionArea?: ProductionArea;
+  detailStatusSection?: OrderDetailStatus;
   onClick?: () => void;
 }
 
@@ -48,7 +54,8 @@ export const ActiveOrder: FC<Props> = ({
   color,
   index,
   onClick,
-  productionArea
+  productionArea,
+  detailStatusSection
 }) => {
   const theme = useTheme();
   const { getFirstPendingOrder } = useOrderHelper();
@@ -70,6 +77,16 @@ export const ActiveOrder: FC<Props> = ({
     return productionAreas;
   }, [productionArea, productionAreas]);
 
+  const detailsToRender = useMemo(() => {
+    if (!detailStatusSection) {
+      return order.details;
+    }
+
+    return order.details.filter(
+      (detail) => detail.status === detailStatusSection
+    );
+  }, [detailStatusSection, order.details]);
+
   // Prefetch order details for quick access
   useMemo(() => {
     queryClient.prefetchQuery({
@@ -85,7 +102,9 @@ export const ActiveOrder: FC<Props> = ({
       if (firstOrder.id === order.id) {
         changeStatusOrder(OrderStatus.IN_PROGRESS);
       } else {
-        statusModalStartOrder.setSubject({ value: true, order });
+        NiceModal.show(ModalStartOrder, {
+          onStartOrder: () => changeStatusOrder(OrderStatus.IN_PROGRESS)
+        });
       }
     },
     [getFirstPendingOrder]
@@ -101,12 +120,14 @@ export const ActiveOrder: FC<Props> = ({
         return detail.product.productionArea.id === productionArea.id;
       });
 
-      const detailsStatusByOrderStatus: Record<OrderStatus, OrderDetailStatus> = {
-        [OrderStatus.PENDING]: OrderDetailStatus.PENDING,
-        [OrderStatus.IN_PROGRESS]: OrderDetailStatus.IN_PROGRESS,
-        [OrderStatus.DELIVERED]: OrderDetailStatus.READY,
-        [OrderStatus.CANCELLED]: OrderDetailStatus.PENDING
-      };
+      const detailsStatusByOrderStatus: Record<OrderStatus, OrderDetailStatus> =
+        {
+          [OrderStatus.PENDING]: OrderDetailStatus.PENDING,
+          [OrderStatus.IN_PROGRESS]: OrderDetailStatus.IN_PROGRESS,
+          [OrderStatus.READY]: OrderDetailStatus.READY,
+          [OrderStatus.DELIVERED]: OrderDetailStatus.READY,
+          [OrderStatus.CANCELLED]: OrderDetailStatus.PENDING
+        };
 
       if (detailsInCurrentArea.length > 0) {
         updateMultipleOrderDetailsStatus({
@@ -162,10 +183,11 @@ export const ActiveOrder: FC<Props> = ({
           {areasToRender.map((area) => (
             <ProductionAreaOrder
               key={area.id}
-              details={order.details}
+              details={detailsToRender}
               productionArea={area}
               orderId={order.id}
               order={order}
+              detailStatusFilter={detailStatusSection}
             />
           ))}
         </Stack>

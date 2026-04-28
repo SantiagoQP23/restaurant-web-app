@@ -5,6 +5,7 @@ import { OrderStatus } from '../../../../models';
 import { Box, Typography, useTheme } from '@mui/material';
 import {
   Circle,
+  CheckCircleOutline,
   LocalDining,
   Pending,
   PendingActions,
@@ -23,6 +24,7 @@ const colorStatusOrderMap: {
 } = {
   PENDING: 'warning',
   IN_PROGRESS: 'info',
+  READY: 'success',
   unpaid: 'warning',
   DELIVERED: 'success',
   CANCELLED: 'error'
@@ -31,6 +33,7 @@ const colorStatusOrderMap: {
 const textStatusOrderMap: { [key: string]: string } = {
   PENDING: 'Pendiente',
   IN_PROGRESS: 'En preparación',
+  READY: 'Listo',
   unpaid: 'Por pagar',
   DELIVERED: 'Entregado',
   CANCELLED: 'Cancelado'
@@ -45,6 +48,7 @@ interface Props {
 export const colorStatusMap = new Map<OrderStatus, string>();
 colorStatusMap.set(OrderStatus.PENDING, 'warning');
 colorStatusMap.set(OrderStatus.IN_PROGRESS, 'info');
+colorStatusMap.set(OrderStatus.READY, 'success');
 colorStatusMap.set(OrderStatus.DELIVERED, 'success');
 colorStatusMap.set(OrderStatus.CANCELLED, 'error');
 
@@ -56,6 +60,10 @@ orderStatusIconMap.set(
 orderStatusIconMap.set(
   OrderStatus.IN_PROGRESS,
   <SoupKitchen fontSize='small' color='info' />
+);
+orderStatusIconMap.set(
+  OrderStatus.READY,
+  <CheckCircleOutline fontSize='small' color='success' />
 );
 orderStatusIconMap.set(
   OrderStatus.DELIVERED,

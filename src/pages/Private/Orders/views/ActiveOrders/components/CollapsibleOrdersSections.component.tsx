@@ -75,7 +75,8 @@ export const CollapsibleOrdersSections = ({
     return orders.filter((order) => {
       const detailsInArea = productionAreaActive
         ? order.details.filter(
-            (detail) => detail.product.productionArea.id === productionAreaActive.id
+            (detail) =>
+              detail.product.productionArea.id === productionAreaActive.id
           )
         : order.details;
 
@@ -162,6 +163,7 @@ export const CollapsibleOrdersSections = ({
                           index={index}
                           color={section.color}
                           productionArea={productionAreaActive}
+                          detailStatusSection={section.status}
                         />
                       </Grid>
                     ))}

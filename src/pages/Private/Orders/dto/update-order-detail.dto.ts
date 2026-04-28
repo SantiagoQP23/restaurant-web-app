@@ -1,4 +1,4 @@
-import { TypeOrder } from '@/models';
+import { OrderDetailStatus, TypeOrder } from '@/models';
 
 /**
  * Update Order Detail DTO
@@ -10,6 +10,7 @@ export interface UpdateOrderDetailDto {
   quantity?: number;
   qtyDelivered?: number;
   readyQuantity?: number;
+  status?: OrderDetailStatus;
   description?: string;
   orderId: string;
   price?: number;

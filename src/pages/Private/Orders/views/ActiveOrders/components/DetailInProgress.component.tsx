@@ -6,8 +6,6 @@ import {
   styled,
   LinearProgress,
   IconButton,
-  ListItemIcon,
-  ListItemText,
   Stack,
   Chip,
   Checkbox,
@@ -19,13 +17,17 @@ import {
 import { format, isSameDay } from 'date-fns';
 import { es } from 'date-fns/locale';
 
-import { IOrderDetail, TypeOrder } from '../../../../../../models';
+import {
+  IOrderDetail,
+  OrderDetailStatus,
+  TypeOrder
+} from '../../../../../../models';
 import {
   CheckCircle,
   CheckCircleOutline,
   PlusOneOutlined,
-  MoreVertOutlined,
-  EditOutlined
+  EditOutlined,
+  PlayArrowOutlined
 } from '@mui/icons-material';
 import { UpdateOrderDetailDto } from '../../../dto';
 import {
@@ -33,7 +35,6 @@ import {
   useUpdateOrderDetail
 } from '../../../hooks';
 import NiceModal from '@ebay/nice-modal-react';
-import { ModalEditOrderDetail } from '../../../components';
 import { EditOrderDetailKitchenModal } from '../../../components/modals/EditOrderDetailKitchenModal.component';
 
 const LinearProgressWrapper = styled(LinearProgress)(
@@ -87,7 +88,7 @@ export const DetailInProgress: FC<Props> = ({
   const detailStatusColor = useOrderDetailStatusColor(detail.status);
 
   const [checked, setChecked] = useState(
-    detail.qtyDelivered === detail.quantity
+    detail.readyQuantity === detail.quantity
   );
 
   const createdBy = detail.createdBy;
@@ -111,18 +112,18 @@ export const DetailInProgress: FC<Props> = ({
 
   // Memoized calculations
   const isCompleted = useMemo(
-    () => detail.qtyDelivered === detail.quantity,
-    [detail.qtyDelivered, detail.quantity]
+    () => detail.readyQuantity === detail.quantity,
+    [detail.readyQuantity, detail.quantity]
   );
 
   const remainingQuantity = useMemo(
-    () => detail.quantity - detail.qtyDelivered,
-    [detail.quantity, detail.qtyDelivered]
+    () => detail.quantity - detail.readyQuantity,
+    [detail.quantity, detail.readyQuantity]
   );
 
   const progressPercentage = useMemo(
-    () => (detail.qtyDelivered * 100) / detail.quantity,
-    [detail.qtyDelivered, detail.quantity]
+    () => (detail.readyQuantity * 100) / detail.quantity,
+    [detail.readyQuantity, detail.quantity]
   );
 
   const isDifferentType = useMemo(
@@ -152,12 +153,12 @@ export const DetailInProgress: FC<Props> = ({
     });
   }, [detail, orderId]);
 
-  const updateQtyDelivered = useCallback(
-    (qtyDelivered: number) => {
+  const updateReadyQuantity = useCallback(
+    (readyQuantity: number) => {
       const data: UpdateOrderDetailDto = {
         orderId: orderId!,
         id: detail!.id,
-        qtyDelivered: qtyDelivered
+        readyQuantity
       };
 
       update(data);
@@ -170,27 +171,37 @@ export const DetailInProgress: FC<Props> = ({
       const value = event.target.checked;
 
       if (value) {
-        updateQtyDelivered(detail.quantity);
+        updateReadyQuantity(detail.quantity);
       } else {
-        updateQtyDelivered(0);
+        updateReadyQuantity(0);
       }
 
       setChecked(value);
     },
-    [detail.quantity, updateQtyDelivered]
+    [detail.quantity, updateReadyQuantity]
   );
 
   const handleAddOne = useCallback(() => {
-    updateQtyDelivered(detail.qtyDelivered + 1);
-  }, [detail.qtyDelivered, updateQtyDelivered]);
+    updateReadyQuantity(detail.readyQuantity + 1);
+  }, [detail.readyQuantity, updateReadyQuantity]);
+
+  const handleMarkInProgress = useCallback(() => {
+    const data: UpdateOrderDetailDto = {
+      orderId,
+      id: detail.id,
+      status: OrderDetailStatus.IN_PROGRESS
+    };
+
+    update(data);
+  }, [detail.id, orderId, update]);
 
   const showSecondaryInfo = useMemo(() => {
     return (
       detail.description ||
       (detail.tags && detail.tags.length > 0) ||
-      detail.qtyDelivered > 0
+      detail.readyQuantity > 0
     );
-  }, [detail.description, detail.tags, detail.qtyDelivered]);
+  }, [detail.description, detail.tags, detail.readyQuantity]);
 
   const showProductOptionName =
     detail.product.options.length > 1 && detail.productOption;
@@ -321,7 +332,7 @@ export const DetailInProgress: FC<Props> = ({
                 )}
 
                 {/* Progress Bar */}
-                {!isCompleted && detail.qtyDelivered > 0 && (
+                {!isCompleted && detail.readyQuantity > 0 && (
                   <Stack spacing={0.5} mt={0.5}>
                     <LinearProgressWrapper
                       value={progressPercentage}
@@ -370,11 +381,26 @@ export const DetailInProgress: FC<Props> = ({
           {!isCompleted && (
             <>
               {/* Add One Button (only if quantity > 1) */}
+              {detail.status === OrderDetailStatus.PENDING && (
+                <IconButton
+                  size='small'
+                  onClick={handleMarkInProgress}
+                  sx={{
+                    color: theme.palette.info.main,
+                    '&:hover': {
+                      bgcolor: alpha(theme.palette.info.main, 0.08)
+                    }
+                  }}
+                >
+                  <PlayArrowOutlined fontSize='small' />
+                </IconButton>
+              )}
+
               {detail.quantity > 1 && (
                 <IconButton
                   size='small'
                   onClick={handleAddOne}
-                  disabled={detail.qtyDelivered >= detail.quantity}
+                  disabled={detail.readyQuantity >= detail.quantity}
                   sx={{
                     color: theme.palette.primary.main,
                     '&:hover': {

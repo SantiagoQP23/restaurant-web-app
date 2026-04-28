@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react';
-import { statusModalStartOrder } from '../../../services/orders.service';
 import { Order, OrderStatus } from '../../../../../../models';
-import { useModal } from '../../../../../../hooks';
 import {
   Dialog,
   DialogActions,
@@ -11,58 +8,40 @@ import {
 } from '@mui/material';
 import { Button } from '@mui/material/';
 import { useUpdateOrder } from '../../../hooks';
-import { UpdateOrderDto } from '../../../dto';
 import { LoadingButton } from '@mui/lab';
+import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react';
 
+interface Props {
+  onStartOrder: () => void;
+}
 /**
  * Component that shows a modal to start an order if there are pending orders
  * @version 1.1 28/12/2023 Updates useUpdateOrder hook.
  */
-export const ModalStartOrder = () => {
-  const [order, setOrder] = useState<Order | null>(null);
-
-  const { isOpen, handleClose, setOpen } = useModal();
-
-  const suspcription$ = statusModalStartOrder.getSubject();
+export const ModalStartOrder = NiceModal.create<Props>(({ onStartOrder }) => {
+  const modal = useModal();
 
   const { mutate: updateOrder, isLoading } = useUpdateOrder();
 
   const handleStartOrder = () => {
-    const data: UpdateOrderDto = {
-      id: order!.id,
-      status: OrderStatus.IN_PROGRESS
-    };
-
-    updateOrder(data);
-
-    handleClose();
+    // const data: UpdateOrderDto = {
+    //   id: order!.id
+    // };
+    //
+    // updateOrder(data);
+    //
+    //
+    onStartOrder();
+    modal.hide();
   };
 
-  useEffect(() => {
-    const subscription = suspcription$.subscribe((data) => {
-      console.log(data);
-      setOrder(data.order);
-      setOpen(data.value);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
   return (
-    <Dialog open={isOpen} onClose={handleClose}>
-      <DialogTitle variant='h4' textAlign='center' color='warning.main'>
-        Advertencia
-      </DialogTitle>
+    <Dialog {...muiDialogV5(modal)} maxWidth='xs'>
+      <DialogTitle variant='h6'>¿Desea iniciar el pedido?</DialogTitle>
 
       <DialogContent>
-        <Typography color='warning.main' variant='h5' textAlign='center'>
+        <Typography variant='body1' color='textSecondary'>
           Hay pedidos pendientes que deben ser entregados antes que este pedido.
-        </Typography>
-
-        <Typography variant='h6' textAlign='center' mt={2}>
-          ¿Desea iniciar el pedido?
         </Typography>
       </DialogContent>
       <DialogActions
@@ -70,13 +49,13 @@ export const ModalStartOrder = () => {
           justifyContent: 'center'
         }}
       >
-        <Button color='inherit' onClick={handleClose}>
+        <Button color='inherit' onClick={() => modal.hide()}>
           Cancelar
         </Button>
 
         <LoadingButton
           variant='contained'
-          color='secondary'
+          color='primary'
           onClick={handleStartOrder}
           loading={isLoading}
         >
@@ -85,4 +64,4 @@ export const ModalStartOrder = () => {
       </DialogActions>
     </Dialog>
   );
-};
+});

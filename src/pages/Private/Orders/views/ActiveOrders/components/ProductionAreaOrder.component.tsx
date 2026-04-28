@@ -1,4 +1,9 @@
-import { Order, IOrderDetail, OrderStatus } from '../../../../../../models';
+import {
+  Order,
+  IOrderDetail,
+  OrderStatus,
+  OrderDetailStatus
+} from '../../../../../../models';
 import { ProductionArea } from '../../../../Common/models/production-area.model';
 import {
   Accordion,
@@ -25,6 +30,7 @@ interface Props {
   details: IOrderDetail[];
   productionArea: ProductionArea;
   order: Order;
+  detailStatusFilter?: OrderDetailStatus;
 }
 
 /**
@@ -36,7 +42,8 @@ export const ProductionAreaOrder = ({
   details,
   productionArea,
   orderId,
-  order
+  order,
+  detailStatusFilter
 }: Props) => {
   const theme = useTheme();
   const [expanded, setExpanded] = useState<boolean>(
@@ -53,15 +60,16 @@ export const ProductionAreaOrder = ({
   );
 
   const detailsStatus = useMemo(
-    () =>
-      expanded
-        ? detailsArea.filter(
-            (detail) => detail.quantity === detail.qtyDelivered
-          )
-        : detailsArea.filter(
-            (detail) => detail.quantity !== detail.qtyDelivered
-          ),
-    [expanded, detailsArea]
+    () => {
+      if (detailStatusFilter) {
+        return detailsArea.filter((detail) => detail.status === detailStatusFilter);
+      }
+
+      return expanded
+        ? detailsArea.filter((detail) => detail.quantity === detail.qtyDelivered)
+        : detailsArea.filter((detail) => detail.quantity !== detail.qtyDelivered);
+    },
+    [detailStatusFilter, expanded, detailsArea]
   );
 
   const statistics = useMemo(() => {
@@ -110,7 +118,7 @@ export const ProductionAreaOrder = ({
   return (
     <Box>
       {/* Tabs for Pending/Delivered */}
-      {order.status !== OrderStatus.DELIVERED && (
+      {!detailStatusFilter && order.status !== OrderStatus.DELIVERED && (
         <Tabs
           value={expanded ? 1 : 0}
           onChange={handleExpanded}

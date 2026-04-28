@@ -92,7 +92,6 @@ export const ListActiveOrders = ({
 
   return (
     <>
-      <ModalStartOrder />
       {/* <Box
         sx={{
           display: "flex",
