@@ -257,12 +257,15 @@ export const DetailInProgress: FC<Props> = ({
           alignItems='items-center'
           flexGrow={1}
         >
-          <Checkbox
-            icon={<CheckCircleOutline />}
-            checkedIcon={<CheckCircle />}
-            checked={checked}
-            onChange={handleChangeChecked}
-          />
+          {(detail.status === OrderDetailStatus.PENDING ||
+            detail.status === OrderDetailStatus.IN_PROGRESS) && (
+            <Checkbox
+              icon={<CheckCircleOutline />}
+              checkedIcon={<CheckCircle />}
+              checked={checked}
+              onChange={handleChangeChecked}
+            />
+          )}
 
           {/* Product Info */}
           <Stack
@@ -272,14 +275,21 @@ export const DetailInProgress: FC<Props> = ({
             justifyContent='center'
           >
             <Stack direction='row' alignItems='center' spacing={1}>
-              <Typography
-                variant='subtitle1'
-                fontWeight={isCompleted ? 400 : 500}
-                color={isCompleted ? 'text.secondary' : 'text.primary'}
-                sx={{
-                  textDecoration: isCompleted ? 'line-through' : 'none'
-                }}
-              >
+              {/* <Typography */}
+              {/*   variant='subtitle1' */}
+              {/*   fontWeight={isCompleted ? 400 : 500} */}
+              {/*   color={isCompleted ? 'text.secondary' : 'text.primary'} */}
+              {/*   sx={{ */}
+              {/*     textDecoration: isCompleted ? 'line-through' : 'none' */}
+              {/*   }} */}
+              {/* > */}
+              {/*   {detail.quantity} {detail.product.name}{' '} */}
+              {/*   {detail.productOption && */}
+              {/*     detail.price !== detail.productOption?.price && */}
+              {/*     `($${detail.price})`} */}
+              {/*   {showProductOptionName && detail.productOption?.name} */}
+              {/* </Typography> */}
+              <Typography variant='subtitle1' fontWeight={500}>
                 {detail.quantity} {detail.product.name}{' '}
                 {detail.productOption &&
                   detail.price !== detail.productOption?.price &&
@@ -456,18 +466,20 @@ export const DetailInProgress: FC<Props> = ({
           )}
 
           {/* Edit Button */}
-          <IconButton
-            onClick={editDetail}
-            size='small'
-            sx={{
-              color: theme.palette.text.secondary,
-              '&:hover': {
-                bgcolor: alpha(theme.palette.action.hover, 0.1)
-              }
-            }}
-          >
-            <EditOutlined fontSize='small' />
-          </IconButton>
+          {detail.status !== OrderDetailStatus.DELIVERED && (
+            <IconButton
+              onClick={editDetail}
+              size='small'
+              sx={{
+                color: theme.palette.text.secondary,
+                '&:hover': {
+                  bgcolor: alpha(theme.palette.action.hover, 0.1)
+                }
+              }}
+            >
+              <EditOutlined fontSize='small' />
+            </IconButton>
+          )}
         </Stack>
       </Box>
     </Box>

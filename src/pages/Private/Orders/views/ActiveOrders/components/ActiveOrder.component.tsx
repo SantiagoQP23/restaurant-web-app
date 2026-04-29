@@ -1,6 +1,14 @@
 import { FC, useCallback, useMemo } from 'react';
 
-import { Card, Divider, Stack, alpha, useTheme } from '@mui/material';
+import {
+  Box,
+  Card,
+  Divider,
+  Stack,
+  Typography,
+  alpha,
+  useTheme
+} from '@mui/material';
 import { addMinutes } from 'date-fns';
 
 import { UpdateOrderDto } from '../../../dto/update-order.dto';
@@ -129,19 +137,23 @@ export const ActiveOrder: FC<Props> = ({
           [OrderStatus.CANCELLED]: OrderDetailStatus.PENDING
         };
 
+      const detailsToUpdate = detailsInCurrentArea.filter(
+        (detail) => detail.status === detailStatusSection
+      );
+
       if (detailsInCurrentArea.length > 0) {
         updateMultipleOrderDetailsStatus({
-          orderDetails: detailsInCurrentArea.map((detail) => detail.id),
+          orderDetails: detailsToUpdate.map((detail) => detail.id),
           status: detailsStatusByOrderStatus[status]
         });
       }
 
-      const data: UpdateOrderDto = {
-        id: order.id,
-        status
-      };
-
-      updateOrder(data);
+      // const data: UpdateOrderDto = {
+      //   id: order.id,
+      //   status
+      // };
+      //
+      // updateOrder(data);
     },
     [
       order.details,
@@ -207,6 +219,21 @@ export const ActiveOrder: FC<Props> = ({
         setStatusFilter={setStatusFilter}
         detailStatusSection={detailStatusSection}
       />
+      <Box
+        position='absolute'
+        top={8}
+        right={8}
+        bgcolor='background.paper'
+        px={1}
+        borderRadius={1}
+      >
+        <Typography
+          variant='subtitle2'
+          sx={{ color: 'text.secondary', fontSize: '0.5' }}
+        >
+          Pedido #{order.num}
+        </Typography>
+      </Box>
     </Card>
   );
 };

@@ -44,10 +44,6 @@ export const OrderActions: FC<Props> = ({
     onStartOrder(order);
   }, [onStartOrder, order]);
 
-  if (order.status === OrderStatus.DELIVERED) {
-    return null;
-  }
-
   if (detailStatusSection === OrderDetailStatus.PENDING) {
     return (
       <CardActions
@@ -155,100 +151,5 @@ export const OrderActions: FC<Props> = ({
     );
   }
 
-  return (
-    <CardActions
-      sx={{
-        p: 2,
-        pt: 1.5,
-        flexDirection: 'column',
-        gap: 1,
-        bgcolor: alpha(theme.palette.background.default, 0.5)
-      }}
-    >
-      {order.status === OrderStatus.PENDING ? (
-        <Stack
-          direction='row'
-          spacing={1}
-          width='100%'
-          sx={{
-            '& .MuiButton-root': {
-              flex: 1,
-              py: 1.25,
-              fontWeight: 600
-            }
-          }}
-        >
-          <Button
-            fullWidth
-            size='large'
-            startIcon={<PlayCircleOutline />}
-            onClick={handleStartClick}
-            variant='outlined'
-          >
-            Iniciar
-          </Button>
-          <Button
-            variant='outlined'
-            startIcon={<Check />}
-            onClick={handleReadyClick}
-          >
-            Listo
-          </Button>
-        </Stack>
-      ) : (
-        order.status === OrderStatus.IN_PROGRESS && (
-          <Stack
-            direction='row'
-            spacing={1}
-            width='100%'
-            sx={{
-              '& .MuiButton-root': {
-                flex: 1,
-                py: 1.25,
-                fontWeight: 600
-              }
-            }}
-          >
-            <Button
-              onClick={handlePendingClick}
-              variant='outlined'
-              startIcon={<Undo />}
-            >
-              Pendiente
-            </Button>
-
-            <Button
-              variant='outlined'
-              startIcon={<Check />}
-              onClick={handleReadyClick}
-            >
-              Listo
-            </Button>
-          </Stack>
-        )
-      )}
-      {order.status === OrderStatus.READY && (
-        <Stack
-          direction='row'
-          spacing={1}
-          width='100%'
-          sx={{
-            '& .MuiButton-root': {
-              flex: 1,
-              py: 1.25,
-              fontWeight: 600
-            }
-          }}
-        >
-          <Button
-            variant='outlined'
-            startIcon={<Check />}
-            onClick={handleDeliveredClick}
-          >
-            Entregar
-          </Button>
-        </Stack>
-      )}
-    </CardActions>
-  );
+  return null;
 };
