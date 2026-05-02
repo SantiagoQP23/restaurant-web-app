@@ -30,7 +30,7 @@ interface OrderSection {
   status: OrderDetailStatus;
   title: string;
   icon: React.ReactNode;
-  color: 'warning' | 'info' | 'success' | 'secondary';
+  color: 'warning' | 'info' | 'success' | 'secondary' | 'error';
   defaultExpanded: boolean;
 }
 
@@ -41,6 +41,13 @@ export const CollapsibleOrdersSections = ({
   const activeOrder = useOrdersStore((state) => state.activeOrder);
 
   const sections: OrderSection[] = [
+    {
+      status: OrderDetailStatus.CANCELLED,
+      title: 'Cancelados',
+      icon: <PendingOutlined />,
+      color: 'error',
+      defaultExpanded: true
+    },
     {
       status: OrderDetailStatus.PENDING,
       title: 'Pendientes',

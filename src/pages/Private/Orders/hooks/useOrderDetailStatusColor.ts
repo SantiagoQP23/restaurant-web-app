@@ -15,6 +15,8 @@ export const useOrderDetailStatusColor = (status: OrderDetailStatus) => {
         return theme.palette.success.main;
       case OrderDetailStatus.DELIVERED:
         return theme.palette.grey[500];
+      case OrderDetailStatus.CANCELLED:
+        return theme.palette.error.main;
       default:
         return theme.palette.text.disabled;
     }
