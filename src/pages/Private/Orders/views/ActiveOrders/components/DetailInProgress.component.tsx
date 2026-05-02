@@ -88,6 +88,7 @@ export const DetailInProgress: FC<Props> = ({
   const theme = useTheme();
   const { mutate: update } = useUpdateOrderDetail();
   const detailStatusColor = useOrderDetailStatusColor(detail.status);
+  const isCancelled = detail.status === OrderDetailStatus.CANCELLED;
 
   const [checked, setChecked] = useState(
     detail.readyQuantity === detail.quantity
@@ -138,6 +139,12 @@ export const DetailInProgress: FC<Props> = ({
 
     return Number.isNaN(date.getTime()) ? null : date;
   }, [detail.createdAt]);
+
+  const detailUpdatedAt = useMemo(() => {
+    const date = new Date(detail.updatedAt);
+
+    return Number.isNaN(date.getTime()) ? null : date;
+  }, [detail.updatedAt]);
 
   const showDetailCreationDate = useMemo(() => {
     if (!detailCreatedAt) {
@@ -257,15 +264,16 @@ export const DetailInProgress: FC<Props> = ({
           alignItems='items-center'
           flexGrow={1}
         >
-          {(detail.status === OrderDetailStatus.PENDING ||
-            detail.status === OrderDetailStatus.IN_PROGRESS) && (
-            <Checkbox
-              icon={<CheckCircleOutline />}
-              checkedIcon={<CheckCircle />}
-              checked={checked}
-              onChange={handleChangeChecked}
-            />
-          )}
+          {!isCancelled &&
+            (detail.status === OrderDetailStatus.PENDING ||
+              detail.status === OrderDetailStatus.IN_PROGRESS) && (
+              <Checkbox
+                icon={<CheckCircleOutline />}
+                checkedIcon={<CheckCircle />}
+                checked={checked}
+                onChange={handleChangeChecked}
+              />
+            )}
 
           {/* Product Info */}
           <Stack
@@ -289,13 +297,7 @@ export const DetailInProgress: FC<Props> = ({
               {/*     `($${detail.price})`} */}
               {/*   {showProductOptionName && detail.productOption?.name} */}
               {/* </Typography> */}
-              <Typography variant='subtitle1' fontWeight={500}>
-                {detail.quantity} {detail.product.name}{' '}
-                {detail.productOption &&
-                  detail.price !== detail.productOption?.price &&
-                  `($${detail.price})`}
-                {showProductOptionName && detail.productOption?.name}
-              </Typography>
+
               <Box
                 sx={{
                   width: 10,
@@ -305,6 +307,27 @@ export const DetailInProgress: FC<Props> = ({
                   flexShrink: 0
                 }}
               />
+              <Typography variant='subtitle1' fontWeight={500}>
+                {detail.quantity} - {detail.product.name}{' '}
+                {detail.productOption &&
+                  detail.price !== detail.productOption?.price &&
+                  `($${detail.price})`}
+                {showProductOptionName && detail.productOption?.name}
+              </Typography>
+              {isCancelled && detailUpdatedAt && (
+                <Chip
+                  label={format(detailUpdatedAt, 'HH:mm', { locale: es })}
+                  size='small'
+                  variant='outlined'
+                  sx={{
+                    height: 20,
+                    fontSize: '0.7rem',
+                    fontWeight: 500,
+                    borderColor: alpha(theme.palette.divider, 0.5),
+                    color: theme.palette.text.secondary
+                  }}
+                />
+              )}
             </Stack>
 
             {/* Type Indicator */}
@@ -408,79 +431,81 @@ export const DetailInProgress: FC<Props> = ({
         </Stack>
 
         {/* Action Buttons */}
-        <Stack
-          direction='row'
-          spacing={0.5}
-          alignItems='center'
-          className='detail-actions'
-        >
-          {!isCompleted && (
-            <>
-              {/* Add One Button (only if quantity > 1) */}
-              {detail.status === OrderDetailStatus.PENDING && (
-                <IconButton
-                  size='small'
-                  onClick={handleMarkInProgress}
-                  sx={{
-                    '&:hover': {
-                      bgcolor: alpha(theme.palette.info.main, 0.08)
-                    }
-                  }}
-                >
-                  <PlayArrowOutlined fontSize='small' />
-                </IconButton>
-              )}
-              {detail.status === OrderDetailStatus.IN_PROGRESS && (
-                <IconButton
-                  size='small'
-                  onClick={handleMarkPending}
-                  sx={{
-                    '&:hover': {
-                      bgcolor: alpha(theme.palette.warning.main, 0.08)
-                    }
-                  }}
-                >
-                  {/* Stop icon */}
-                  <PauseCircleOutline />
-                </IconButton>
-              )}
+        {!isCancelled && (
+          <Stack
+            direction='row'
+            spacing={0.5}
+            alignItems='center'
+            className='detail-actions'
+          >
+            {!isCompleted && (
+              <>
+                {/* Add One Button (only if quantity > 1) */}
+                {detail.status === OrderDetailStatus.PENDING && (
+                  <IconButton
+                    size='small'
+                    onClick={handleMarkInProgress}
+                    sx={{
+                      '&:hover': {
+                        bgcolor: alpha(theme.palette.info.main, 0.08)
+                      }
+                    }}
+                  >
+                    <PlayArrowOutlined fontSize='small' />
+                  </IconButton>
+                )}
+                {detail.status === OrderDetailStatus.IN_PROGRESS && (
+                  <IconButton
+                    size='small'
+                    onClick={handleMarkPending}
+                    sx={{
+                      '&:hover': {
+                        bgcolor: alpha(theme.palette.warning.main, 0.08)
+                      }
+                    }}
+                  >
+                    {/* Stop icon */}
+                    <PauseCircleOutline />
+                  </IconButton>
+                )}
 
-              {detail.quantity > 1 && (
-                <IconButton
-                  size='small'
-                  onClick={handleAddOne}
-                  disabled={detail.readyQuantity >= detail.quantity}
-                  sx={{
-                    color: theme.palette.primary.main,
-                    '&:hover': {
-                      bgcolor: alpha(theme.palette.primary.main, 0.08)
-                    }
-                  }}
-                >
-                  <PlusOneOutlined fontSize='small' />
-                </IconButton>
-              )}
+                {detail.quantity > 1 && (
+                  <IconButton
+                    size='small'
+                    onClick={handleAddOne}
+                    disabled={detail.readyQuantity >= detail.quantity}
+                    sx={{
+                      color: theme.palette.primary.main,
+                      '&:hover': {
+                        bgcolor: alpha(theme.palette.primary.main, 0.08)
+                      }
+                    }}
+                  >
+                    <PlusOneOutlined fontSize='small' />
+                  </IconButton>
+                )}
 
-              {/* Complete Checkbox */}
-            </>
-          )}
+                {/* Complete Checkbox */}
+              </>
+            )}
 
-          {/* Edit Button */}
-          {detail.status !== OrderDetailStatus.DELIVERED && (
-            <IconButton
-              onClick={editDetail}
-              size='small'
-              sx={{
-                color: theme.palette.text.secondary,
-                '&:hover': {
-                  bgcolor: alpha(theme.palette.action.hover, 0.1)
-                }
-              }}
-            >
-              <EditOutlined fontSize='small' />
-            </IconButton>
-          )}
-        </Stack>
+            {/* Edit Button */}
+            {detail.status !== OrderDetailStatus.DELIVERED && (
+              <IconButton
+                onClick={editDetail}
+                size='small'
+                sx={{
+                  color: theme.palette.text.secondary,
+                  '&:hover': {
+                    bgcolor: alpha(theme.palette.action.hover, 0.1)
+                  }
+                }}
+              >
+                <EditOutlined fontSize='small' />
+              </IconButton>
+            )}
+          </Stack>
+        )}
       </Box>
     </Box>
   );
