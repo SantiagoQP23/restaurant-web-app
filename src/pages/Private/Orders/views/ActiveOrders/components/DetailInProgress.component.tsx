@@ -29,7 +29,9 @@ import {
   EditOutlined,
   PlayArrowOutlined,
   PauseOutlined,
-  PauseCircleOutline
+  PauseCircleOutline,
+  RestaurantMenu,
+  AccessTime
 } from '@mui/icons-material';
 import { UpdateOrderDetailDto } from '../../../dto';
 import {
@@ -232,7 +234,7 @@ export const DetailInProgress: FC<Props> = ({
         flexDirection: 'column',
         gap: 1,
         // px: 1,
-        py: 0.5,
+        py: 1,
         borderRadius: 1,
         transition: 'background-color 0.2s ease',
         '&:hover': {
@@ -349,84 +351,96 @@ export const DetailInProgress: FC<Props> = ({
             {/*     }} */}
             {/*   /> */}
             {/* )} */}
-            {showSecondaryInfo && (
-              <Stack spacing={0.5} mt={0.5}>
-                {/* Description */}
-                {detail.description && (
-                  <Typography
-                    variant='body2'
-                    color='text.secondary'
-                    sx={{
-                      whiteSpace: 'pre-wrap',
-                      fontSize: '0.813rem',
-                      opacity: isCompleted ? 0.7 : 1
-                    }}
-                  >
-                    {detail.description}
-                  </Typography>
-                )}
+            <Stack spacing={0.5} mt={0.5}>
+              {/* Description */}
+              {detail.description && (
+                <Typography
+                  variant='body2'
+                  color='text.secondary'
+                  sx={{
+                    whiteSpace: 'pre-wrap',
+                    fontSize: '0.813rem',
+                    opacity: isCompleted ? 0.7 : 1
+                  }}
+                >
+                  {detail.description}
+                </Typography>
+              )}
 
-                {/* Tags */}
-                {detail.tags && detail.tags.length > 0 && (
-                  <Stack direction='row' flexWrap='wrap' gap={0.5}>
-                    {detail.tags.map((tag) => (
-                      <Chip
-                        key={tag.id}
-                        label={tag.name}
-                        size='small'
-                        variant='outlined'
-                        sx={{
-                          height: 20,
-                          fontSize: '0.7rem',
-                          opacity: isCompleted ? 0.6 : 1
-                        }}
-                      />
-                    ))}
-                  </Stack>
-                )}
-
-                {/* Progress Bar */}
-                {!isCompleted && detail.readyQuantity > 0 && (
-                  <Stack spacing={0.5} mt={0.5}>
-                    <LinearProgressWrapper
-                      value={progressPercentage}
-                      color='primary'
-                      variant='determinate'
+              {/* Tags */}
+              {detail.tags && detail.tags.length > 0 && (
+                <Stack direction='row' flexWrap='wrap' gap={0.5}>
+                  {detail.tags.map((tag) => (
+                    <Chip
+                      key={tag.id}
+                      label={tag.name}
+                      size='small'
+                      variant='outlined'
+                      sx={{
+                        height: 20,
+                        fontSize: '0.7rem',
+                        opacity: isCompleted ? 0.6 : 1
+                      }}
                     />
-                    <Box
-                      display='flex'
-                      justifyContent='space-between'
-                      alignItems='center'
-                      gap={1}
-                    >
+                  ))}
+                </Stack>
+              )}
+
+              {/* Progress Bar */}
+              <Stack spacing={1} mt={10}>
+                {!isCompleted && detail.readyQuantity > 0 && (
+                  <LinearProgressWrapper
+                    value={progressPercentage}
+                    color='primary'
+                    variant='determinate'
+                  />
+                )}
+                <Box display='flex' alignItems='center' gap={1}>
+                  {detail.readyQuantity > 0 &&
+                    detail.readyQuantity !== detail.quantity && (
                       <Typography
                         variant='caption'
                         color='text.secondary'
                         fontWeight={500}
                         sx={{ fontSize: '0.75rem' }}
                       >
-                        {remainingQuantity}{' '}
-                        {remainingQuantity === 1
-                          ? 'por entregar'
-                          : 'por entregar'}
+                        {remainingQuantity}
+                        {' por entregar'}
                       </Typography>
-                      {showDetailCreationDate && detailCreatedAt && (
-                        <Typography
-                          variant='caption'
-                          color='text.secondary'
-                          fontWeight={500}
-                          sx={{ fontSize: '0.75rem' }}
-                        >
-                          {format(detailCreatedAt, 'HH:mm', {
-                            locale: es
-                          })}
-                        </Typography>
-                      )}
-                    </Box>
-                  </Stack>
-                )}
+                    )}
+
+                  {detailCreatedAt && (
+                    <Chip
+                      label={format(detailCreatedAt, 'HH:mm', {
+                        locale: es
+                      })}
+                      size='small'
+                      icon={<AccessTime />}
+                      sx={{
+                        height: 20,
+                        fontSize: '0.7rem',
+                        fontWeight: 500,
+                        borderColor: alpha(theme.palette.divider, 0.5),
+                        color: theme.palette.text.secondary
+                      }}
+                    />
+                  )}
+
+                  <Chip
+                    label={detail.qtyDelivered}
+                    size='small'
+                    icon={<RestaurantMenu />}
+                    sx={{
+                      height: 20,
+                      fontSize: '0.7rem',
+                      fontWeight: 500,
+                      borderColor: alpha(theme.palette.divider, 0.5),
+                      color: theme.palette.text.secondary
+                    }}
+                  />
+                </Box>
               </Stack>
-            )}
+            </Stack>
           </Stack>
         </Stack>
 
